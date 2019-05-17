@@ -1,0 +1,13 @@
+<template>
+  <div id="Content-view">
+    <h3>2. Select data</h3>
+  </div>
+</template>
+
+<script>
+import Vue from 'vue'
+
+export default Vue.extend({
+  name: 'ContentView'
+})
+</script>

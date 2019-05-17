@@ -5,7 +5,7 @@ describe('MainView.vue', () => {
   it('renders sidebar and content', () => {
     const wrapper = shallowMount(MainView)
 
-    expect(wrapper.find('div.row > .col-sm-3').text()).toMatch('sidebar')
-    expect(wrapper.find('div.row > .col-sm-9').text()).toMatch('content')
+    expect(wrapper.exists()).toBeTruthy()
+    expect(wrapper.find('#main-view.row').exists()).toBeTruthy()
   })
 })
