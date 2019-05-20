@@ -33,7 +33,7 @@ pipeline {
                 container('node') {
                     sh "yarn install"
                     sh "yarn test:unit"
-                    sh "yarn test:e2e --env ci_chrome,ci_safari,ci_ie11,ci_firefox"
+                    sh "yarn test:e2e --env ci_chrome
                 }
             }
             post {
