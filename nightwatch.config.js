@@ -46,7 +46,7 @@ const ciIE11Settings = {
 module.exports = {
   test_settings: {
     ci_chrome: deepmerge(ciSettings, ciChromeSettings),
-    ci_ci_firefox: deepmerge(ciSettings, ciFirefoxSettings),
+    ci_firefox: deepmerge(ciSettings, ciFirefoxSettings),
     ci_safari: deepmerge(ciSettings, ciSafariSettings),
     ci_ie11: deepmerge(ciSettings, ciIE11Settings),
     firefox: {
