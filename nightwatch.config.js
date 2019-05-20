@@ -1,26 +1,26 @@
 var packageJson = require('./package.json')
 const deepmerge = require('deepmerge')
- 
+
 // Shared config for CI env
 const ciSettings = {
-    launch_url: 'http://ondemand.saucelabs.com:80',
-    selenium_port: 80,
-    selenium_host: 'ondemand.saucelabs.com',
-    silent: true,
-    username: process.env.SAUCE_CRED_USR,
-    access_key: process.env.SAUCE_CRED_PSW,
-    desiredCapabilities: {
-      name: packageJson.name,
-      build: packageJson.name + '#PR-' + process.env.CHANGE_ID + '-build-' + process.env.BUILD_NUMBER,
-      'tunnel-identifier': process.env.TUNNEL_IDENTIFIER,
-    }
+  launch_url: 'http://ondemand.saucelabs.com:80',
+  selenium_port: 80,
+  selenium_host: 'ondemand.saucelabs.com',
+  silent: true,
+  username: process.env.SAUCE_CRED_USR,
+  access_key: process.env.SAUCE_CRED_PSW,
+  desiredCapabilities: {
+    name: packageJson.name,
+    build: packageJson.name + '#PR-' + process.env.CHANGE_ID + '-build-' + process.env.BUILD_NUMBER,
+    'tunnel-identifier': process.env.TUNNEL_IDENTIFIER
   }
+}
 
-  // Specific config for different browsers/OS combinations for CI env
+// Specific config for different browsers/OS combinations for CI env
 const ciChromeSettings = {
-    desiredCapabilities: {
-        browserName: 'chrome'
-    }
+  desiredCapabilities: {
+    browserName: 'chrome'
+  }
 }
 
 module.exports = {
