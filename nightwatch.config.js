@@ -1,4 +1,5 @@
 var packageJson = require('./package.json')
+const deepmerge = require('deepmerge')
  
 // Shared config for CI env
 const ciSettings = {
@@ -16,27 +17,15 @@ const ciSettings = {
   }
 
   // Specific config for different browsers/OS combinations for CI env
-let ci_chrome = ciSettings
-ci_chrome.desiredCapabilities.browserName = 'chrome'
-
-let ci_firefox = ciSettings
-ci_firefox.desiredCapabilities.browserName = 'firefox'
-
-let ci_ie11 = ciSettings
-ci_ie11.desiredCapabilities.browserName = 'internet explorer'
-ci_ie11.desiredCapabilities.platform = 'Windows 10'
-ci_ie11.desiredCapabilities.version = '11.103'
-
-let ci_safari = ciSettings
-ci_safari.desiredCapabilities.browserName = 'safari'
+const ciChromeSettings = {
+    desiredCapabilities: {
+        browserName: 'chrome'
+    }
+}
 
 module.exports = {
-
   test_settings: {
-    ci_chrome,
-    ci_firefox,
-    ci_ie11,
-    ci_safari,
+    ci_chrome: deepmerge(ciSettings, ciChromeSettings),
     firefox: {
       desiredCapabilities: {
         browserName: 'firefox',
