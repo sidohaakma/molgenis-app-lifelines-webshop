@@ -23,9 +23,32 @@ const ciChromeSettings = {
   }
 }
 
+const ciFirefoxSettings = {
+  desiredCapabilities: {
+    browserName: 'firefox'
+  }
+}
+
+const ciSafariSettings = {
+  desiredCapabilities: {
+    browserName: 'safari'
+  }
+}
+
+const ciIE11Settings = {
+  desiredCapabilities: {
+    browserName: 'internet explorer',
+    platform: 'Windows 10',
+    version: '11.103'
+  }
+}
+
 module.exports = {
   test_settings: {
     ci_chrome: deepmerge(ciSettings, ciChromeSettings),
+    ci_ci_firefox: deepmerge(ciSettings, ciFirefoxSettings),
+    ci_safari: deepmerge(ciSettings, ciSafariSettings),
+    ci_ie11: deepmerge(ciSettings, ciIE11Settings),
     firefox: {
       desiredCapabilities: {
         browserName: 'firefox',
