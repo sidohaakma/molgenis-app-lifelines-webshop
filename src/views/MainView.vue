@@ -1,18 +1,17 @@
 <template>
   <div id="main-view" class="row">
-    <div class="col-sm-3">
-      sidebar
-    </div>
-    <div class="col-sm-9">
-      content
-    </div>
+    <sidebar-view class="col-sm-3" />
+    <content-view class="col-sm-9" />
   </div>
 </template>
 
 <script>
 import Vue from 'vue'
+import ContentView from './ContentView.vue'
+import SidebarView from './SidebarView.vue'
 
 export default Vue.extend({
-  name: 'MainView'
+  name: 'MainView',
+  components: { ContentView, SidebarView }
 })
 </script>
