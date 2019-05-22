@@ -1,0 +1,29 @@
+<template>
+  <div id="tree-view">
+    tree
+    <ul class="list-group">
+      <li class="list-group-item active">Cras justo odio</li>
+      <li class="list-group-item">
+
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">Cras justo odio</li>
+          <li class="list-group-item">Dapibus ac facilisis in</li>
+          <li class="list-group-item">Vestibulum at eros</li>
+        </ul>
+
+      </li>
+      <li class="list-group-item">Morbi leo risus</li>
+      <li class="list-group-item">Porta ac consectetur ac</li>
+      <li class="list-group-item">Vestibulum at eros</li>
+    </ul>
+
+  </div>
+</template>
+
+<script>
+  import Vue from 'vue'
+
+  export default Vue.extend({
+    name: 'MainView',
+  })
+</script>
