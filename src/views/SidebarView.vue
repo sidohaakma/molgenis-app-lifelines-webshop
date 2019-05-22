@@ -1,11 +1,11 @@
 <template>
   <div id="Sidebar-view">
     <h3>1. Select cohorts</h3>
-    <ul>
+    <ul class="list-unstyled">
       <li>
         <gender-facet
-        label="gender facet"
         :options="genderOptions"
+        :value="selectedGenderOptions"
         />
       </li>
     </ul>
@@ -23,7 +23,8 @@ export default Vue.extend({
     return {
       genderOptions: [
         { value: '1', text: 'Male' }, { value: '2', text: 'Female' }
-      ]
+      ],
+      selectedGenderOptions: ['2']
     }
   }
 })

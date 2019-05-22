@@ -1,5 +1,12 @@
 <template>
-    <button class="ll-facet-option">{{ text }}</button>
+    <button
+    type="button"
+    class="ll-facet-option btn"
+    :class="{ 'btn-secondary': !!isSelected, 'btn-outline-secondary': !isSelected }"
+    @click.stop="$emit('facetToggled')"
+    >
+        {{text}}
+    </button>
 </template>
 
 <script>

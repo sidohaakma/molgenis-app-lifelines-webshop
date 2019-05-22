@@ -1,26 +1,15 @@
 <template>
-  <div id="age-facet" class="facet-container">
-      <label for="gender-options">{{ label }}</label>
-      <ul id="gender-options">
-          <li v-for="option in options" :key=option.value>
-              <facet-option :text="option.text" />
-          </li>
-      </ul>
-  </div>
+  <toggle-facet facetId="gender" label="Gender facet" :options="options" :value="value" />
 </template>
 
 <script>
 import Vue from 'vue'
-import FacetOption from './components/FacetOption.vue'
+import ToggleFacet from './components/ToggleFacet.vue'
 
 export default Vue.extend({
   name: 'GenderFacet',
-  components: { FacetOption },
+  components: { ToggleFacet },
   props: {
-    label: {
-      type: String,
-      required: true
-    },
     options: {
       type: Array,
       required: true
