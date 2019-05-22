@@ -1,5 +1,5 @@
 import { shallowMount } from '@vue/test-utils'
-import Genderfacet from '@/components/facets/Genderfacet.vue'
+import Genderfacet from '@/components/facets/GenderFacet.vue'
 
 describe('Genderfacet.vue', () => {
   it('should render a facet with the label "gender facet"', () => {
