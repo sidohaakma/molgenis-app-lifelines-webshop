@@ -67,7 +67,7 @@ export default Vue.extend({
     }
   },
   props: {
-    value:{
+    value: {
       type: String,
       required: true
     },
@@ -82,7 +82,7 @@ export default Vue.extend({
     }
   },
   methods: {
-    selectElement (name){
+    selectElement (name) {
       this.$emit('input', name)
     },
     toggleCollapse (name) {

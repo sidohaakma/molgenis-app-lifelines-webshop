@@ -13,7 +13,7 @@ export default Vue.extend({
   name: 'MainView',
   data: function () {
     return {
-      selection:'',
+      selection: '',
       structure: [
         {
           name: 'foo',
