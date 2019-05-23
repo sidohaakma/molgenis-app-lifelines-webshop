@@ -13,7 +13,7 @@
 import Vue from 'vue'
 
 export default Vue.extend({
-  name: 'GenderFacet',
+  name: 'FacetOption',
   props: {
     text: {
       type: String,

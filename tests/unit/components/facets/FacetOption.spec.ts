@@ -1,6 +1,6 @@
 import { shallowMount, Wrapper } from '@vue/test-utils'
 import Vue from 'vue'
-import FacetOption from '@/components/facets/components/FacetOption.vue'
+import FacetOption from '@/components/facets/FacetOption.vue'
 
 describe('FacetOption.vue', () => {
   describe('when passed "option-text" as text', () => {

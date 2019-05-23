@@ -1,6 +1,6 @@
 import { shallowMount, Wrapper } from '@vue/test-utils'
 import Vue from 'vue'
-import ToggleFacet from '@/components/facets/components/ToggleFacet.vue'
+import ToggleFacet from '@/components/facets/ToggleFacet.vue'
 
 describe('ToggleFacet.vue', () => {
   describe('Given an option set', () => {

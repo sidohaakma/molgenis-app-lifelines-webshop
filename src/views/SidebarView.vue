@@ -3,16 +3,10 @@
     <h3>{{ 'lifelines-webshop-sidebar-header' | i18n }}</h3>
     <ul class="list-unstyled">
       <li>
-        <gender-facet
-        :options="genderOptions"
-        :value="selectedGenderOptions"
-        />
+        <toggle-facet facetId="gender" label="Gender facet" :options="genderOptions" v-model="selectedGenderOptions" />
       </li>
       <li>
-        <cohort-facet
-        :options="cohortOptions"
-        :value="selectedCohortOptions"
-        />
+        <toggle-facet facetId="cohort" label="Cohort facet" :options="cohortOptions" :value="selectedCohortOptions" />
       </li>
     </ul>
   </div>
@@ -20,12 +14,11 @@
 
 <script>
 import Vue from 'vue'
-import GenderFacet from '../components/facets/GenderFacet.vue'
-import CohortFacet from '../components/facets/CohortFacet.vue'
+import ToggleFacet from '../components/facets/ToggleFacet.vue'
 
 export default Vue.extend({
   name: 'SidebarView',
-  components: { GenderFacet, CohortFacet },
+  components: { ToggleFacet },
   data () {
     return {
       genderOptions: [
