@@ -4,7 +4,7 @@
       <template v-for="parent in structure">
         <li
           :key="parent.name"
-          class="list-group-item list-group-item-primary list-group-item-action text-truncate"
+          class="list-group-item list-group-item-primary list-group-item-action text-truncate pr-3"
           :title="parent.name"
           role="button"
           @click="toggleCollapse(parent.name)"
@@ -29,7 +29,7 @@
             <ul class="list-group list-group-flush">
               <li
                 :class="(value===child.name)&&'active'"
-                class="list-group-item list-group-item-secondary list-group-item-action px-4"
+                class="list-group-item list-group-item-secondary list-group-item-action px-3"
                 role="button"
                 v-for="child in parent.children"
                 :key="child.name"
