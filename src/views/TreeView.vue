@@ -1,29 +1,50 @@
 <template>
   <div id="tree-view">
-    tree
-    <ul class="list-group">
-      <li class="list-group-item active">Cras justo odio</li>
-      <li class="list-group-item">
-
-        <ul class="list-group list-group-flush">
-          <li class="list-group-item">Cras justo odio</li>
-          <li class="list-group-item">Dapibus ac facilisis in</li>
-          <li class="list-group-item">Vestibulum at eros</li>
-        </ul>
-
-      </li>
-      <li class="list-group-item">Morbi leo risus</li>
-      <li class="list-group-item">Porta ac consectetur ac</li>
-      <li class="list-group-item">Vestibulum at eros</li>
-    </ul>
-
+    <collapsible-tree :structure="structure"/>
   </div>
 </template>
 
 <script>
   import Vue from 'vue'
+  import CollapsibleTree from '../components/tree/CollapsibleTree.vue'
+
 
   export default Vue.extend({
     name: 'MainView',
+    data: function () {
+      return {
+        structure: [
+          {
+            name: 'foo',
+            children: [
+              {
+                name: 'test-child 1',
+              },
+              {
+                name: 'test-child 2',
+              },
+              {
+                name: 'test-child 3',
+              },
+              {
+                name: 'test-child 4',
+              }
+            ]
+          },
+          {
+            name: 'bar',
+          },
+          {
+            name: 'baz',
+            children: [
+              {
+                name: 'test-child with a very long line of text',
+              }
+            ]
+          }
+        ]
+      }
+    },
+    components: { CollapsibleTree }
   })
 </script>
