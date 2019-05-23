@@ -3,7 +3,7 @@ import Vue from 'vue'
 import ToggleFacet from '@/components/facets/components/ToggleFacet.vue'
 
 describe('ToggleFacet.vue', () => {
-  describe('Given an opton set', () => {
+  describe('Given an option set', () => {
     let wrapper: Wrapper<Vue>
 
     beforeEach(() => {
