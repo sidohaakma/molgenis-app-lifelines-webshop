@@ -9,8 +9,8 @@
 </template>
 
 <script>
-  import Vue from 'vue'
-  import TreeView from './TreeView.vue'
+import Vue from 'vue'
+import TreeView from './TreeView.vue'
 
 export default Vue.extend({
   name: 'ContentView',

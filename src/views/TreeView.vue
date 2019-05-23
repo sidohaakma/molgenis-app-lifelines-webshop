@@ -1,50 +1,66 @@
 <template>
   <div id="tree-view">
-    <collapsible-tree :structure="structure"/>
+    <collapsible-tree v-model="selection" :structure="structure" />
+    <code>selected: {{selection}}</code>
   </div>
 </template>
 
 <script>
-  import Vue from 'vue'
-  import CollapsibleTree from '../components/tree/CollapsibleTree.vue'
+import Vue from 'vue'
+import CollapsibleTree from '../components/tree/CollapsibleTree.vue'
 
-
-  export default Vue.extend({
-    name: 'MainView',
-    data: function () {
-      return {
-        structure: [
-          {
-            name: 'foo',
-            children: [
-              {
-                name: 'test-child 1',
-              },
-              {
-                name: 'test-child 2',
-              },
-              {
-                name: 'test-child 3',
-              },
-              {
-                name: 'test-child 4',
-              }
-            ]
-          },
-          {
-            name: 'bar',
-          },
-          {
-            name: 'baz',
-            children: [
-              {
-                name: 'test-child with a very long line of text',
-              }
-            ]
-          }
-        ]
-      }
-    },
-    components: { CollapsibleTree }
-  })
+export default Vue.extend({
+  name: 'MainView',
+  data: function () {
+    return {
+      selection:'',
+      structure: [
+        {
+          name: 'foo',
+          count: 44,
+          children: [
+            {
+              name: 'test-child 1',
+              count: 12
+            },
+            {
+              name: 'test-child 2',
+              count: 40453
+            },
+            {
+              name: 'test-child 3',
+              count: 0
+            },
+            {
+              name: 'test-child 4'
+            }
+          ]
+        },
+        {
+          name: 'bar'
+        },
+        {
+          name: 'baz',
+          children: [
+            {
+              name: 'Hello world',
+              count: 25
+            }
+          ]
+        },
+        {
+          name: 'a long text to fill the line',
+          count: 25,
+          children: [
+            {
+              name: 'test-child with a very long line of text',
+              count: 25
+            }
+          ]
+        }
+      ]
+    }
+  },
+  components: { CollapsibleTree }
+})
 </script>
