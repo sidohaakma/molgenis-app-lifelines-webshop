@@ -41,12 +41,14 @@ export default Vue.extend({
   },
   methods: {
     handleFacetToggle (option) {
+      // clone to break reactive loop
+      const valueClone = [...this.value]
       if (this.value.includes(option.value)) {
-        this.value.splice(this.value.indexOf(option.value), 1)
+        valueClone.splice(this.value.indexOf(option.value), 1)
       } else {
-        this.value.push(option.value)
+        valueClone.push(option.value)
       }
-      this.$emit('change', this.value)
+      this.$emit('input', valueClone)
     }
   }
 })

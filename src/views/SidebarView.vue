@@ -6,7 +6,7 @@
         <toggle-facet facetId="gender" label="Gender facet" :options="genderOptions" v-model="selectedGenderOptions" />
       </li>
       <li>
-        <toggle-facet facetId="cohort" label="Cohort facet" :options="cohortOptions" :value="selectedCohortOptions" />
+        <toggle-facet facetId="cohort" label="Cohort facet" :options="cohortOptions" v-model="selectedCohortOptions" />
       </li>
     </ul>
   </div>
@@ -15,23 +15,35 @@
 <script>
 import Vue from 'vue'
 import ToggleFacet from '../components/facets/ToggleFacet.vue'
+import { mapMutations } from 'vuex'
 
 export default Vue.extend({
   name: 'SidebarView',
   components: { ToggleFacet },
-  data () {
-    return {
-      selectedGenderOptions: ['2'],
-      selectedCohortOptions: []
-    }
-  },
   computed: {
     genderOptions () {
       return this.$store.state.genderOptions
     },
     cohortOptions () {
       return this.$store.state.cohortOptions
+    },
+    selectedGenderOptions: {
+      get () {
+        return this.$store.state.facetFilter.gender
+      },
+      set (value) {
+        this.$store.commit('updateGenderFilter', value)
+      }
+    },
+    selectedCohortOptions: {
+      get () {
+        return this.$store.state.facetFilter.cohort
+      },
+      set (value) {
+        this.$store.commit('updateCohortfilter', value)
+      }
     }
+
   }
 })
 </script>
