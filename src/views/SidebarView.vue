@@ -21,14 +21,16 @@ export default Vue.extend({
   components: { ToggleFacet },
   data () {
     return {
-      genderOptions: [
-        { value: '1', text: 'Male' }, { value: '2', text: 'Female' }
-      ],
       selectedGenderOptions: ['2'],
-      cohortOptions: [
-        { value: '101', text: 'baseline' }, { value: '102', text: 'next' }, { value: '103', text: 'gwas' }
-      ],
       selectedCohortOptions: []
+    }
+  },
+  computed: {
+    genderOptions () {
+      return this.$store.state.genderOptions
+    },
+    cohortOptions () {
+      return this.$store.state.cohortOptions
     }
   }
 })
