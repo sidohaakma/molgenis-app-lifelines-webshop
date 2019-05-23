@@ -1,5 +1,5 @@
 <template>
-  <toggle-facet facetId="gender" label="Gender facet" :options="options" v-model="value" />
+  <toggle-facet facetId="cohort" label="Cohort facet" :options="options" :value="value" />
 </template>
 
 <script>
@@ -7,7 +7,7 @@ import Vue from 'vue'
 import ToggleFacet from './components/ToggleFacet.vue'
 
 export default Vue.extend({
-  name: 'GenderFacet',
+  name: 'CohortFacet',
   components: { ToggleFacet },
   props: {
     options: {
