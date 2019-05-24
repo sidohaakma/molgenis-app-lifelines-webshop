@@ -15,7 +15,6 @@ describe('SidebarView.vue', () => {
   let commitMock = jest.fn()
 
   beforeEach(() => {
-
     state = {
       genderOptions: [{ value: '1', text: 'Male' }],
       cohortOptions: [{ value: '101', text: 'baseline' }],
@@ -29,7 +28,7 @@ describe('SidebarView.vue', () => {
       mocks: {
         $store: {
           state,
-          commit: commitMock,
+          commit: commitMock
         }
       },
       localVue
