@@ -63,7 +63,7 @@ export default Vue.extend({
   name: 'CollapsibleTree',
   data: function () {
     return {
-      collapsed: {}
+      collapsed: this.startOpen()
     }
   },
   props: {
@@ -82,6 +82,11 @@ export default Vue.extend({
     }
   },
   methods: {
+    startOpen () {
+      let toOpen = []
+      this.structure.map((item) => { if (item.open) toOpen[item.name] = true })
+      return toOpen
+    },
     selectElement (name) {
       this.$emit('input', name)
     },
@@ -91,6 +96,7 @@ export default Vue.extend({
       } else {
         this.collapsed[name] = true
       }
+      console.log(this.collapsed)
       this.$forceUpdate()
     }
   },

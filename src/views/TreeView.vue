@@ -18,14 +18,14 @@ export default Vue.extend({
         {
           name: 'foo',
           count: 44,
+          open: true,
           children: [
             {
               name: 'test-child 1',
               count: 12
             },
             {
-              name: 'test-child 2',
-              count: 40453
+              name: 'test-child 2'
             },
             {
               name: 'test-child 3',
