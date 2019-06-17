@@ -96,7 +96,6 @@ export default Vue.extend({
       } else {
         this.collapsed[name] = true
       }
-      console.log(this.collapsed)
       this.$forceUpdate()
     }
   },
