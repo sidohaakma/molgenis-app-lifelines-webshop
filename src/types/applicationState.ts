@@ -6,5 +6,7 @@ export default interface ApplicationState {
     facetFilter: {
       gender: String[],
       cohort: String[]
-    }
+    },
+    treeStructure: Object[]
+    treeSelected: String | null
   }

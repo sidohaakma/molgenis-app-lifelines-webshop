@@ -21,7 +21,9 @@ describe('SidebarView.vue', () => {
       facetFilter: {
         gender: [],
         cohort: []
-      }
+      },
+      treeStructure: [],
+      treeSelected: ''
     }
 
     wrapper = shallowMount(SidebarView, {

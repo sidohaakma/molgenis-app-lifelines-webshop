@@ -13,6 +13,9 @@ export default new Vuex.Store({
     },
     updateCohortfilter (state: ApplicationState, selectedCohorts: String[]) {
       state.facetFilter.cohort = selectedCohorts
+    },
+    updateTreeSelection (state: ApplicationState, selection: String) {
+      state.treeSelected = selection
     }
   },
   actions: {
