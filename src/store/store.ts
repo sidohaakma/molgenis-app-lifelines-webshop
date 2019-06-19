@@ -11,8 +11,8 @@ export default new Vuex.Store({
     updateGenderFilter (state: ApplicationState, selectedGenders: String[]) {
       state.facetFilter.gender = selectedGenders
     },
-    updateCohortfilter (state: ApplicationState, selectedCohorts: String[]) {
-      state.facetFilter.cohort = selectedCohorts
+    updateSubcohortfilter (state: ApplicationState, selectedSubcohorts: String[]) {
+      state.facetFilter.subcohort = selectedSubcohorts
     }
   },
   actions: {

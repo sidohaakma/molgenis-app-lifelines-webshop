@@ -3,10 +3,10 @@
     <h3>{{ 'lifelines-webshop-sidebar-header' | i18n }}</h3>
     <ul class="list-unstyled">
       <li>
-        <toggle-facet facetId="gender" label="Gender facet" :options="genderOptions" v-model="selectedGenderOptions" />
+        <toggle-facet facetId="gender" label="Gender" :options="genderOptions" v-model="selectedGenderOptions" />
       </li>
       <li>
-        <toggle-facet facetId="cohort" label="Cohort facet" :options="cohortOptions" v-model="selectedCohortOptions" />
+        <toggle-facet facetId="cohort" label="Subcohorts" :options="subcohortOptions" v-model="selectedSubcohortOptions" />
       </li>
     </ul>
   </div>
@@ -24,8 +24,8 @@ export default Vue.extend({
     genderOptions () {
       return this.$store.state.genderOptions
     },
-    cohortOptions () {
-      return this.$store.state.cohortOptions
+    subcohortOptions () {
+      return this.$store.state.subcohortOptions
     },
     selectedGenderOptions: {
       get () {
@@ -35,12 +35,12 @@ export default Vue.extend({
         this.$store.commit('updateGenderFilter', value)
       }
     },
-    selectedCohortOptions: {
+    selectedSubcohortOptions: {
       get () {
         return this.$store.state.facetFilter.cohort
       },
       set (value) {
-        this.$store.commit('updateCohortfilter', value)
+        this.$store.commit('updateSubcohortfilter', value)
       }
     }
 
