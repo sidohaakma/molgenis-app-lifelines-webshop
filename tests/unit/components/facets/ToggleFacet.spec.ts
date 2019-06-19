@@ -40,7 +40,7 @@ describe('ToggleFacet.vue', () => {
     it('should remove it from the value list', () => {
       // @ts-ignore
       wrapper.vm.handleFacetToggle({ value: '2' })
-      expect(wrapper.emitted().change[0]).toEqual([['1', '3']])
+      expect(wrapper.emitted().input[0]).toEqual([['1', '3']])
     })
   })
 
@@ -60,7 +60,7 @@ describe('ToggleFacet.vue', () => {
     it('should add it from the value list', () => {
       // @ts-ignore
       wrapper.vm.handleFacetToggle({ value: '2' })
-      expect(wrapper.emitted().change[0]).toEqual([['3', '2']])
+      expect(wrapper.emitted().input[0]).toEqual([['3', '2']])
     })
   })
 })
