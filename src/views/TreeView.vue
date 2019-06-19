@@ -10,7 +10,7 @@ import Vue from 'vue'
 import CollapsibleTree from '../components/tree/CollapsibleTree.vue'
 
 export default Vue.extend({
-  name: 'MainView',
+  name: 'TreeView',
   data: function () {
     return {
       selection: '',
