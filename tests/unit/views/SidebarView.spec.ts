@@ -17,10 +17,10 @@ describe('SidebarView.vue', () => {
   beforeEach(() => {
     state = {
       genderOptions: [{ value: '1', text: 'Male' }],
-      cohortOptions: [{ value: '101', text: 'baseline' }],
+      subcohortOptions: [{ value: '101', text: 'baseline' }],
       facetFilter: {
         gender: [],
-        cohort: []
+        subcohort: []
       }
     }
 
@@ -50,9 +50,9 @@ describe('SidebarView.vue', () => {
     expect(commitMock).toBeCalledWith('updateGenderFilter', ['1'])
   })
 
-  it('should commit the new cohort filter to the store when selectedCohortOptions is updated', () => {
+  it('should commit the new subcohort filter to the store when selectedsubcohortOptions is updated', () => {
     // @ts-ignore
-    wrapper.vm.selectedCohortOptions = ['123']
-    expect(commitMock).toBeCalledWith('updateCohortfilter', ['123'])
+    wrapper.vm.selectedSubcohortOptions = ['123']
+    expect(commitMock).toBeCalledWith('updateSubcohortfilter', ['123'])
   })
 })
