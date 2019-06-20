@@ -37,7 +37,7 @@ export default Vue.extend({
     },
     selectedSubcohortOptions: {
       get () {
-        return this.$store.state.facetFilter.cohort
+        return this.$store.state.facetFilter.subcohort
       },
       set (value) {
         this.$store.commit('updateSubcohortfilter', value)
