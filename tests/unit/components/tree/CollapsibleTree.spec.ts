@@ -47,5 +47,4 @@ describe('CollapsibleTree.vue', () => {
     wrapper.find('[title="test-child"]').trigger('click')
     expect(wrapper.emitted().input[0]).toEqual(['test-child'])
   })
-
 })

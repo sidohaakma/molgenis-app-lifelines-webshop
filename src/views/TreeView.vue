@@ -1,7 +1,6 @@
 <template>
   <div id="tree-view">
     <collapsible-tree v-model="selection" :structure="structure" />
-    <code>selected: {{selection}}</code>
   </div>
 </template>
 
@@ -23,6 +22,9 @@ export default Vue.extend({
         this.$store.commit('updateTreeSelection', value)
       }
     }
+  },
+  created () {
+    this.$store.dispatch('loadTreeStructure')
   },
   components: { CollapsibleTree }
 })

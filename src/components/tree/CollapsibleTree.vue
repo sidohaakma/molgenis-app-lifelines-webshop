@@ -8,12 +8,12 @@
           :title="parent.name"
           role="button"
           @click="toggleCollapse(parent.name)"
-          v-if="parent.children && parent.children.length > 0"
           style="z-index: 1"
         >
           <div class="row">
             <div class="text-truncate col pr-0">
               <collapse-tree-icon
+                v-if="parent.children && parent.children.length > 0"
                 class="mr-2"
                 :state="parent.name in collapsed"
               />
@@ -24,6 +24,7 @@
             </div>
           </div>
         </li>
+
         <transition-expand :key="parent.name+'-children'" >
           <li class="list-group-item p-0" v-if="parent.name in collapsed && parent.children && parent.children.length > 0">
             <ul class="list-group list-group-flush">

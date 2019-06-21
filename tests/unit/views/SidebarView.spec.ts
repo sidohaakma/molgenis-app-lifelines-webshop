@@ -23,6 +23,8 @@ describe('SidebarView.vue', () => {
         cohort: []
       },
       treeStructure: [],
+      sectionList: [],
+      subSectionList: [],
       treeSelected: ''
     }
 

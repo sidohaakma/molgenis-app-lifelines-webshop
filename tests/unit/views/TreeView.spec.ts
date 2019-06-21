@@ -31,6 +31,8 @@ describe('TreeView.vue', () => {
           }
         ]
       }],
+      sectionList: [],
+      subSectionList: [],
       treeSelected: ''
     }
 
@@ -41,7 +43,8 @@ describe('TreeView.vue', () => {
       mocks: {
         $store: {
           state,
-          commit: commitMock
+          commit: commitMock,
+          dispatch: jest.fn()
         }
       },
       localVue
