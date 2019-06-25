@@ -1,11 +1,19 @@
 import ApplicationState from '@/types/ApplicationState'
 
 const state: ApplicationState = {
-  genderOptions: [{ value: '1', text: 'Male' }, { value: '2', text: 'Female' }],
-  cohortOptions: [{ value: '101', text: 'baseline' }, { value: '102', text: 'next' }, { value: '103', text: 'gwas' }],
+  genderOptions: [
+    { value: '1', text: 'Male' },
+    { value: '2', text: 'Female' }
+  ],
+  subcohortOptions: [
+    { value: 'gwas', text: 'GWAS' },
+    { value: 'ugli', text: 'UGLI' },
+    { value: 'deep', text: 'DEEP' },
+    { value: 'dag3', text: 'DAG3' }
+  ],
   facetFilter: {
     gender: [],
-    cohort: []
+    subcohort: []
   },
   sectionList: [],
   subSectionList: [],
