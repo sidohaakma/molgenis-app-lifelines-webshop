@@ -1,11 +1,17 @@
-import ToggleFacetOption from '@/types/toggleFacetOption'
+import FacetOption from '@/types/facetOption'
 
 export default interface ApplicationState {
-  genderOptions: ToggleFacetOption[],
-  subcohortOptions: ToggleFacetOption[],
+  genderOptions: FacetOption[],
+  subcohortOptions: FacetOption[],
+  ageGroupOptions: FacetOption[],
+  ageAtOptions: FacetOption[],
   facetFilter: {
     gender: String[],
-    subcohort: String[]
+    subcohort: String[],
+    ageGroupAt1A: String[],
+    ageGroupAt2A: String[],
+    ageGroupAt3A: String[],
+    yearOfBirthRange: Number[]
   },
   sectionList: String[],
   subSectionList: String[],
