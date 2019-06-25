@@ -17,10 +17,10 @@ describe('TreeView.vue', () => {
   beforeEach(() => {
     state = {
       genderOptions: [{ value: '1', text: 'Male' }],
-      cohortOptions: [{ value: '101', text: 'baseline' }],
+      subcohortOptions: [{ value: '101', text: 'baseline' }],
       facetFilter: {
         gender: [],
-        cohort: []
+        subcohort: []
       },
       treeStructure: [{
         name: 'parent',
