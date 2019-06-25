@@ -32,7 +32,6 @@ export default new Vuex.Store({
   actions: {
     loadTreeStructure ({ dispatch, commit } : any) {
       // Show simple initial tree (only the parents)
-      // TODO error handeling
       const sections = api.get('/api/v2/lifelines_section?num=100').then((response: any) => {
         let sections:String[][] = []
         response.items.map((item:any) => { sections[item.id] = item.name })
@@ -76,7 +75,6 @@ export default new Vuex.Store({
             children: item.list.map((id:Number) => { return { name: subSections[id] } })
           }
         })
-        console.log(final)
         commit('updateTreeStructure', final)
       })
     }

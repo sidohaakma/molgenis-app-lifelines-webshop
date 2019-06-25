@@ -8,9 +8,14 @@
 
 <script>
 import Vue from 'vue'
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faCaretRight } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+library.add(faCaretRight)
 
 export default Vue.extend({
   name: 'CollapseTreeIcon',
+  components: { FontAwesomeIcon },
   props: {
     state: {
       type: Boolean,

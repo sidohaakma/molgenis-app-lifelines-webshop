@@ -77,11 +77,6 @@ export default Vue.extend({
       required: true
     }
   },
-  computed: {
-    exists (name) {
-      return name in this.collapsed
-    }
-  },
   methods: {
     startOpen () {
       let toOpen = []
