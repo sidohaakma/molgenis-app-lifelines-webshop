@@ -1,4 +1,5 @@
 import ToggleFacetOption from '@/types/toggleFacetOption'
+import Assesment from './Assesment'
 
 export default interface ApplicationState {
     genderOptions: ToggleFacetOption[],
@@ -6,5 +7,6 @@ export default interface ApplicationState {
     facetFilter: {
       gender: String[],
       subcohort: String[]
-    }
+    },
+    assesments: Assesment[]
   }

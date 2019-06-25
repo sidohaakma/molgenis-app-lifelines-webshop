@@ -14,7 +14,10 @@ const state: ApplicationState = {
   facetFilter: {
     gender: [],
     subcohort: []
-  }
+  },
+  assesments: [
+    { id: '', label: '' }
+  ]
 }
 
 export default state
