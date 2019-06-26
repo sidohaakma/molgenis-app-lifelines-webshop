@@ -15,7 +15,6 @@ describe('CollapsibleTree.vue', () => {
         structure: [
           {
             name: 'test-parent',
-            open: true,
             children: [
               {
                 name: 'test-child'
@@ -28,6 +27,7 @@ describe('CollapsibleTree.vue', () => {
   })
 
   it('should render a list with a test-parent and test-child', () => {
+    wrapper.find('[title="test-parent"]').trigger('click')
     const items = wrapper.findAll('[title]')
     expect(items.length).toEqual(2)
     expect(items.at(0).text()).toEqual('test-parent')
@@ -35,7 +35,6 @@ describe('CollapsibleTree.vue', () => {
   })
 
   it('can close and hide children', () => {
-    wrapper.find('[title="test-parent"]').trigger('click')
     let items = wrapper.findAll('[title]')
     expect(items.length).toEqual(1)
     wrapper.find('[title="test-parent"]').trigger('click')
@@ -43,7 +42,8 @@ describe('CollapsibleTree.vue', () => {
     expect(items.length).toEqual(2)
   })
 
-  it('can can select child', () => {
+  it('can select child', () => {
+    wrapper.find('[title="test-parent"]').trigger('click')
     wrapper.find('[title="test-child"]').trigger('click')
     expect(wrapper.emitted().input[0]).toEqual(['test-child'])
   })
