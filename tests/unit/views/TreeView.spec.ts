@@ -61,7 +61,6 @@ describe('TreeView.vue', () => {
     expect(wrapper.exists()).toBeTruthy()
     wrapper.find('[title="parent"]').trigger('click')
     wrapper.find('[title="child"]').trigger('click')
-    console.log(commitMock.mock.calls)
     expect(commitMock.mock.calls).toEqual([ [ 'updateTreeSelection', 'child' ] ])
   })
 })

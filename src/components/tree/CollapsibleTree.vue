@@ -100,15 +100,12 @@ export default Vue.extend({
   [role="button"]{
     cursor: pointer;
   }
-  .parent-list{
-    font-weight: 600;
-  }
   .child-list{
-    padding-left:35px;
+    font-weight: lighter;
+    padding-left:2.1rem;
   }
   .child-list.active{
-    background-color: rgb(108, 117, 125);
-    border-color: rgb(108, 117, 125);
-    text-color: white;
+    background-color: var(--secondary);
+    border-color: var(--secondary);
   }
 </style>
