@@ -59,7 +59,7 @@
 <script>
 import Vue from 'vue'
 import CollapseTreeIcon from '../animations/CollapseTreeIcon.vue'
-import Spinner from '../animations/Spinner.vue'
+import Spinner from '../animations/SpinnerAnimation.vue'
 import TransitionExpand from '../animations/TransitionExpand.vue'
 
 export default Vue.extend({
