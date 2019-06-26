@@ -1,6 +1,6 @@
 <template>
   <div id="tree-view">
-    <spinner v-if="structure.length == 0"/>
+    <spinner-animation v-if="structure.length == 0"/>
     <ul v-else class="list-group">
       <template v-for="parent in structure">
         <li
@@ -59,7 +59,7 @@
 <script>
 import Vue from 'vue'
 import CollapseTreeIcon from '../animations/CollapseTreeIcon.vue'
-import Spinner from '../animations/SpinnerAnimation.vue'
+import SpinnerAnimation from '../animations/SpinnerAnimation.vue'
 import TransitionExpand from '../animations/TransitionExpand.vue'
 
 export default Vue.extend({
@@ -92,7 +92,7 @@ export default Vue.extend({
       this.$forceUpdate()
     }
   },
-  components: { TransitionExpand, CollapseTreeIcon, Spinner }
+  components: { TransitionExpand, CollapseTreeIcon, SpinnerAnimation }
 })
 </script>
 
