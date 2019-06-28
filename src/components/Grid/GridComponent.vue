@@ -5,7 +5,7 @@
     >
       <tr>
         <th>Variable</th>
-        <th :colspan="gridAssessments.length + 1">Collection Round</th>
+        <th :colspan="gridAssessments.length + 1">Assessments</th>
       </tr>
       <tr>
         <th class="w-0"></th>
@@ -14,7 +14,7 @@
           v-for="assessment in gridAssessments"
           :key="assessment.id"
           class="text-center">
-          {{assessment.name}}
+          <div class="assessments-title"><span>{{assessment.name}}</span></div>
         </th>
       </tr>
       <tr>
@@ -33,7 +33,7 @@
         :key="rowIndex"
       >
         <th>
-          <span class="title">
+          <span class="variable-title">
             {{variableName(variables[rowIndex])}}
           </span>
         </th>
@@ -105,17 +105,35 @@ export default Vue.extend({
   table th {
     white-space: nowrap;
     vertical-align: middle;
+    font-weight: normal;
   }
-  table td, th{
+  table td, th {
     padding: 0 1px;
   }
-  table tr th:first-child .title{
+  .variable-title {
     max-width: 12rem;
     display: inline-block;
     overflow: hidden;
     text-overflow: ellipsis;
     padding-right: 1rem;
-    font-weight: normal;
+  }
+  .assessments-title {
+    height: 6em;
+    width: auto;
+    position: relative;
+  }
+  .assessments-title span{
+    position: absolute;
+    bottom: -1rem;
+    left: 1.3rem;
+    max-width: 7rem;
+    padding-left: 0.7rem;
+    display: inline-block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: right;
+    transform: rotate(-60deg);
+    transform-origin: 0% 50%;
   }
   .w-0 {
     width: 0;
