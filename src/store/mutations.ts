@@ -57,7 +57,11 @@ export default {
       const selectedAssessments = gridSelection[variableId]
       const assessmentIndex = selectedAssessments.indexOf(assessmentId)
       if (assessmentIndex >= 0) {
-        selectedAssessments.splice(assessmentIndex, 1)
+        if (selectedAssessments.length == 1) {
+          delete gridSelection[variableId]
+        } else {
+          selectedAssessments.splice(assessmentIndex, 1)
+        }
       } else {
         selectedAssessments.push(assessmentId)
       }
