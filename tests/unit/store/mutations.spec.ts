@@ -68,6 +68,17 @@ describe('mutations', () => {
     })
   })
 
+  describe('updateGridSelection', () => {
+    it('updates grid selection', () => {
+      const myState = {
+        ...state,
+        gridSelection: {}
+      }
+      mutations.updateGridSelection(myState, {1: [2,3]})
+      expect(myState.gridSelection).toEqual({1: [2,3]})
+    })
+  })
+
   describe('toggleGridSelection', () => {
     it('selects if none selected', () => {
       const state = {
