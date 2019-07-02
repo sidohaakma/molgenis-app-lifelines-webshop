@@ -55,6 +55,9 @@ export default {
   updateVariantCounts (state: ApplicationState, variantCounts: Count[]) {
     state.variantCounts = variantCounts
   },
+  updateGridSelection (state: ApplicationState, gridSelection: GridSelection) {
+    state.gridSelection = gridSelection
+  },
   toggleGridSelection ({ gridSelection }: { gridSelection: GridSelection },
     { variableId, assessmentId }: { variableId: number, assessmentId: number }) {
     if (!gridSelection.hasOwnProperty(variableId)) {

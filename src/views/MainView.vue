@@ -24,6 +24,7 @@ import ContentView from './ContentView.vue'
 import SidebarView from './SidebarView.vue'
 import ToastComponent from '../components/ToastComponent.vue'
 import { mapState, mapMutations } from 'vuex'
+import { mapActions } from 'vuex'
 
 export default Vue.extend({
   name: 'MainView',
