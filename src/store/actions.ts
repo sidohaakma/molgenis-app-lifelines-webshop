@@ -86,10 +86,10 @@ export default {
     const body = { selection: JSON.stringify(gridSelection) }
     const response = await api.post('/api/v1/aaaac25subz7tdqidk7exmyaae', { body: JSON.stringify(body) })
     const location: string = response.headers.get('Location')
-    const id: string = location.substring(location.lastIndexOf('/')+1)
+    const id: string = location.substring(location.lastIndexOf('/') + 1)
     console.log('id:', id)
   },
-  async load ({commit}:any, id: string) {
+  async load ({ commit }:any, id: string) {
     const response = await api.get(`/api/v2/aaaac25subz7tdqidk7exmyaae/${id}`)
     const gridSelection = JSON.parse(response.selection)
     commit('updateGridSelection', gridSelection)

@@ -16,7 +16,7 @@ import { mapActions } from 'vuex'
 
 export default Vue.extend({
   name: 'MainView',
-  data() {
+  data () {
     return { cartId: '' }
   },
   components: { ContentView, SidebarView },

@@ -74,8 +74,8 @@ describe('mutations', () => {
         ...state,
         gridSelection: {}
       }
-      mutations.updateGridSelection(myState, {1: [2,3]})
-      expect(myState.gridSelection).toEqual({1: [2,3]})
+      mutations.updateGridSelection(myState, { 1: [2, 3] })
+      expect(myState.gridSelection).toEqual({ 1: [2, 3] })
     })
   })
 

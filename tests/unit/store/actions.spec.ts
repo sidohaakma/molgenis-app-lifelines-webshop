@@ -1,5 +1,8 @@
 import actions from '@/store/actions'
 
+// @ts-ignore
+import { post } from '@molgenis/molgenis-api-client'
+
 jest.mock('@molgenis/molgenis-api-client', () => {
   const responses: {[key:string]: Object} = {
     '/api/v2/aaaac25subz7tdqidk7exmyaae/fghij': {
@@ -87,9 +90,6 @@ jest.mock('@molgenis/molgenis-api-client', () => {
   }
 })
 
-//@ts-ignore
-import {post} from '@molgenis/molgenis-api-client'
-
 describe('actions', () => {
   describe('loadAssessments', () => {
     it('loads the assessments and commits them', async (done) => {
@@ -148,11 +148,11 @@ describe('actions', () => {
   describe('save', () => {
     it('saves grid selection', async (done) => {
       const headers = { get: jest.fn() }
-      post.mockReturnValueOnce({headers})
+      post.mockReturnValueOnce({ headers })
       headers.get.mockReturnValueOnce('https://lifelines.dev.molgenis.org/api/v1/aaaac25subz7tdqidk7exmyaae/fghij')
-      await actions.save({state: {gridSelection: {1: [2,3]}}})
+      await actions.save({ state: { gridSelection: { 1: [2, 3] } } })
       expect(headers.get).toHaveBeenCalledWith('Location')
-      expect(post).toHaveBeenCalledWith('/api/v1/aaaac25subz7tdqidk7exmyaae', {body: '{"selection":"{\\\"1\\\":[2,3]}"}'})
+      expect(post).toHaveBeenCalledWith('/api/v1/aaaac25subz7tdqidk7exmyaae', { body: '{"selection":"{\\\"1\\\":[2,3]}"}' })
       done()
     })
   })
@@ -160,8 +160,8 @@ describe('actions', () => {
   describe('load', () => {
     it('loads grid selection', async (done) => {
       const commit = jest.fn()
-      await actions.load({commit}, 'fghij')
-      expect(commit).toHaveBeenCalledWith('updateGridSelection', {1: [2,3]})
+      await actions.load({ commit }, 'fghij')
+      expect(commit).toHaveBeenCalledWith('updateGridSelection', { 1: [2, 3] })
       done()
     })
   })
