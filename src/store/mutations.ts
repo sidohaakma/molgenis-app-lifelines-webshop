@@ -58,7 +58,7 @@ export default {
       const assessmentIndex = selectedAssessments.indexOf(assessmentId)
       if (assessmentIndex >= 0) {
         if (selectedAssessments.length === 1) {
-          Vue.delete(gridSelection,variableId)
+          Vue.delete(gridSelection, variableId)
         } else {
           selectedAssessments.splice(assessmentIndex, 1)
         }
