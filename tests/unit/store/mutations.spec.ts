@@ -96,6 +96,14 @@ describe('mutations', () => {
       expect(state.gridSelection).toEqual({ 123: [1, 3] })
     })
 
+    it('removes variable if last selected assessment is removed', () => {
+      const state = {
+        gridSelection: { 123: [1, 2, 3], 456: [4] }
+      }
+      mutations.toggleGridSelection(state, { variableId: 456, assessmentId: 4 })
+      expect(state.gridSelection).toEqual({ 123: [1, 2, 3] })
+    })
+
     it('appends assessment to variable', () => {
       const state = {
         gridSelection: { 123: [1] }
