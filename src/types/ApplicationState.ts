@@ -25,11 +25,12 @@ export default interface ApplicationState {
   },
   sectionList: string[],
   subSectionList: string[],
+  treeStructure: Object[]
   variables: { [key:number]: Variable }
   gridVariables: VariableWithVariants[]
   variantCounts: Count[]
   assessments: Assessment[]
-  treeStructure: Object[]
   treeSelected: number
+  treeOpenSection: string
   gridSelection: GridSelection
 }

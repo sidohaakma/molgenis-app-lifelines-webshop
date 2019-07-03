@@ -37,14 +37,14 @@ export default {
   updateTreeSelection (state: ApplicationState, selection: number) {
     state.treeSelected = selection
   },
-  updateSection (state: ApplicationState, sections: string[]) {
+  updateSections (state: ApplicationState, sections: string[]) {
     state.sectionList = sections
   },
-  updateTreeStructure (state: ApplicationState, sections: string[]) {
-    state.treeStructure = sections
-  },
-  updateSubSection (state: ApplicationState, subSections: string[]) {
+  updateSubSections (state: ApplicationState, subSections: string[]) {
     state.subSectionList = subSections
+  },
+  updateSectionTree (state: ApplicationState, sections: string[]) {
+    state.treeStructure = sections
   },
   updateVariables (state: ApplicationState, variables: {[key:number]: Variable}) {
     state.variables = variables

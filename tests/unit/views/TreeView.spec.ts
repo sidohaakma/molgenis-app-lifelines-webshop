@@ -12,36 +12,39 @@ Vue.filter('i18n', (value: string) => value) // Add dummy filter for i18n
 
 describe('TreeView.vue', () => {
   let wrapper: Wrapper<Vue>
-  let state: ApplicationState
-  let commitMock = jest.fn()
+  let store: any
+  let treeUpdate = jest.fn()
 
   beforeEach(() => {
-    state = {
-      ...emptyState,
-      treeStructure: [{
-        name: 'parent',
-        open: true,
-        children: [
-          {
-            id: 10,
-            name: 'child'
-          }
-        ]
-      }],
-      treeSelected: -1
-    }
+    store = new Vuex.Store({
+      getters: {
+        treeStructure: () => [{
+          name: 'parent',
+          open: true,
+          children: [
+            {
+              id: 10,
+              name: 'child'
+            }
+          ]
+        }]
+      },
+      actions: {
+        loadSections: jest.fn(),
+        loadSubSections: jest.fn(),
+        loadSectionTree: jest.fn()
+      },
+      mutations: {
+        updateTreeSelection: treeUpdate
+      }
+    })
+    store.state.treeSelected = -1
 
     wrapper = mount(TreeView, {
       stubs: {
         'font-awesome-icon': '<div/>'
       },
-      mocks: {
-        $store: {
-          state,
-          commit: commitMock,
-          dispatch: jest.fn()
-        }
-      },
+      store,
       localVue
     })
   })
@@ -50,6 +53,6 @@ describe('TreeView.vue', () => {
     expect(wrapper.exists()).toBeTruthy()
     wrapper.find('[title="parent"]').trigger('click')
     wrapper.find('[title="child"]').trigger('click')
-    expect(commitMock.mock.calls).toEqual([ [ 'updateTreeSelection', 10 ] ])
+    expect(treeUpdate.mock.calls).toEqual([ [ { treeSelected: -1 }, 10 ] ])
   })
 })
