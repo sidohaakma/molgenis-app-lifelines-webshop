@@ -1,5 +1,5 @@
 import FacetOption from '@/types/FacetOption'
-import { Variable, VarableWithVariants } from '@/types/Variable'
+import { Variable, VariableWithVariants } from '@/types/Variable'
 import Count from '@/types/Count'
 import Assessment from '@/types/Assessment'
 import GridSelection from '@/types/GridSelection'
