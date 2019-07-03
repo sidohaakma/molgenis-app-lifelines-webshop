@@ -2,7 +2,10 @@
 import api from '@molgenis/molgenis-api-client'
 import { tryAction } from './helpers'
 import GridSelection from '@/types/GridSelection'
-import { Variable, VariableWithVariants } from '@/types/Variable'
+import { Variable } from '@/types/Variable'
+import Assessment from '@/types/Assessment'
+import FacetOption from '@/types/FacetOption';
+import { Cart, Selection } from '@/types/Cart';
 
 export default {
   loadTreeStructure: tryAction(({ commit } : any) => {
@@ -97,8 +100,22 @@ export default {
     }))
     commit('updateVariantCounts', variantCounts)
   }),
-  save: tryAction(async ({ state: { gridSelection } }: { state: {gridSelection: GridSelection} }) => {
-    const body = { selection: JSON.stringify(gridSelection) }
+  save: tryAction(async ({ state: { gridSelection, facetFilter, assessments, variables } }: { state: {gridSelection: GridSelection, facetFilter: object, assessments: Assessment[], variables: { [key:number]: Variable }} }) => {
+    const reducer = (result: Selection[], assessmentId: string): Selection[] => {
+      const assessment = assessments.find(it => it.id === parseInt(assessmentId))
+      if (assessment !== undefined) {
+        result.push({
+          assessment: assessment.name, 
+          variables: gridSelection[parseInt(assessmentId)].map(variableId => variables[variableId].name)
+        })
+      }
+      return result
+    }
+    const selection: Selection[] = Object.keys(gridSelection).reduce(reducer, [])
+
+    const body = {
+      content: JSON.stringify({ selection, filters: facetFilter })
+    }
     const response = await api.post('/api/v1/lifelines_cart', { body: JSON.stringify(body) })
     const location: string = response.headers.get('Location')
     const id: string = location.substring(location.lastIndexOf('/') + 1)
