@@ -1,7 +1,7 @@
 // @ts-ignore
 import api from '@molgenis/molgenis-api-client'
 import GridSelection from '@/types/GridSelection'
-import {Variable, VariableWithVariants} from '@/types/Variable'
+import { Variable, VariableWithVariants } from '@/types/Variable'
 
 export default {
   loadTreeStructure ({ commit } : any) {
@@ -58,12 +58,15 @@ export default {
   },
   async loadVariables ({ state, commit } : any) {
     const [response0, response1] = await Promise.all([
-      api.get('/api/v2/lifelines_variable?attrs=id,name,label&num=10000'), 
+      api.get('/api/v2/lifelines_variable?attrs=id,name,label&num=10000'),
       api.get('/api/v2/lifelines_variable?attrs=id,name,label&num=10000&start=10000')
     ])
     const variables: Variable[] = [...response0.items, ...response1.items]
-    const variableMap: {[key:number]: Variable} = 
-      variables.reduce((soFar: {[key:number]: Variable}, variable: Variable) => {soFar[variable.id] = variable; return soFar}, {})
+    const variableMap: {[key:number]: Variable} =
+      variables.reduce((soFar: {[key:number]: Variable}, variable: Variable) => {
+        soFar[variable.id] = variable
+        return soFar
+      }, {})
     commit('updateVariables', variableMap)
   },
   async loadGridVariables ({ state, commit } : any) {

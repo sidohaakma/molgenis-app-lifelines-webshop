@@ -4,14 +4,14 @@
   </div>
 </template>
 <script lang="ts">
-  import Vue from 'vue'
-  import { mapActions } from 'vuex'
-  export default Vue.extend({
-    methods: {
-      ...mapActions(['loadVariables'])
-    },
-    created () {
-      this.loadVariables()
-    }
-  })
+import Vue from 'vue'
+import { mapActions } from 'vuex'
+export default Vue.extend({
+  methods: {
+    ...mapActions(['loadVariables'])
+  },
+  created () {
+    this.loadVariables()
+  }
+})
 </script>
