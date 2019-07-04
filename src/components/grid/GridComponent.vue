@@ -168,7 +168,9 @@ export default Vue.extend({
   }
   table td,
   table th:not(:first-child){
-    width: 65px;
+    width: 4rem;
+    max-width: 4rem;
+    min-width: 4rem;
   }
   table th {
     white-space: nowrap;
