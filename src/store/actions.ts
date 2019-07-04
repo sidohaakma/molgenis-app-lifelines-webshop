@@ -62,30 +62,36 @@ export default {
   }),
   loadGridVariables: tryAction(async ({ state, commit } : any) => {
     commit('updateGridVariables', [])
-    const response = await api.get(`/api/v2/lifelines_subsection_variable?q=subsection_id==${state.treeSelected}&attrs=~id,id,subsection_id,variable_id(id,name,label,variants(id,assessment_id))&num=10000`)
-    commit('updateGridVariables', response.items
+    const subsectionId = state.treeSelected
+    const response = await api.get(`/api/v2/lifelines_subsection_variable?q=subsection_id==${subsectionId}&attrs=~id,id,subsection_id,variable_id(id,name,label,variants(id,assessment_id))&num=10000`)
+    if (state.treeSelected === subsectionId) {
+      commit('updateGridVariables', response.items
       // map assessment_id to assessmentId somewhere deep in the structure
-      .map((sv: any) => ({
-        ...sv.variable_id,
-        variants: sv.variable_id.variants
-          .map((variant: any) => ({
-            ...variant,
-            assessmentId: variant.assessment_id
-          }))
-      })))
+        .map((sv: any) => ({
+          ...sv.variable_id,
+          variants: sv.variable_id.variants
+            .map((variant: any) => ({
+              ...variant,
+              assessmentId: variant.assessment_id
+            }))
+        })))
+    }
   }),
   loadGridData: tryAction(async ({ commit, getters }: any) => {
     commit('updateVariantCounts', [])
     let url = '/api/v2/lifelines_who_when?aggs=x==variant_id'
-    if (getters.rsql) {
-      url = `${url}&q=${encodeURIComponent(getters.rsql)}`
+    const rsql = getters.rsql
+    if (rsql) {
+      url = `${url}&q=${encodeURIComponent(rsql)}`
     }
     const { aggs: { matrix, xLabels } } = await api.get(url)
-    const variantCounts = matrix.map((cell: any, index: number) => ({
-      variantId: parseInt(xLabels[index].id),
-      count: cell[0]
-    }))
-    commit('updateVariantCounts', variantCounts)
+    if (getters.rsql === rsql) {
+      const variantCounts = matrix.map((cell: any, index: number) => ({
+        variantId: parseInt(xLabels[index].id),
+        count: cell[0]
+      }))
+      commit('updateVariantCounts', variantCounts)
+    }
   }),
   save: tryAction(async ({ state: { gridSelection } }: { state: {gridSelection: GridSelection} }) => {
     const body = { selection: JSON.stringify(gridSelection) }
