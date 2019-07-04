@@ -1,12 +1,13 @@
 <template>
   <div id="main-view">
-    <div class="pt-3">
+    <div class="py-4">
       <img src="logo.svg" alt="Lifelines" />
+      <div class="hr bg-secondary mt-3"></div>
     </div>
-    <div class="row justify-content-md-center pt-3">
+    <div class="row justify-content-md-center">
         <div class="col-6">
           <toast-component
-          class="toast-component"
+          class="toast-component mt-3"
           v-if="toast"
           :type="toast.type"
           :message="toast.message"
@@ -14,7 +15,7 @@
           </toast-component>
         </div>
     </div>
-    <div class="row pt-3">
+    <div class="row">
       <div class="col-12" >
           <ul class="nav nav-tabs">
               <li class="nav-item">
@@ -66,3 +67,9 @@ export default Vue.extend({
   }
 })
 </script>
+
+<style scoped>
+  .hr{
+    height: 4px;
+  }
+</style>

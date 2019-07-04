@@ -3,7 +3,7 @@ $primary:            #276daa;
 $secondary:          #00ACC7;
 $warning:            #fc5c61;
 $light:              #e9f6f9;
-$link-color:         #fc5c61;
+$link-color:         $primary;
 
 // Typography
 $font-size-base:     1rem;
@@ -15,5 +15,8 @@ $headings-color:     $primary;
 $input-border-color: #00ACC7;
 $input-color:        #00ACC7;
 $custom-select-indicator-color: #00ACC7;
+
+// container
+$grid-gutter-width: 3rem;
 
 @import "node_modules/bootstrap/scss/bootstrap";
