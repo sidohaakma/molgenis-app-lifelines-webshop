@@ -17,7 +17,7 @@ export default interface ApplicationState {
   ageGroupOptions: FacetOption[],
   ageAtOptions: FacetOption[],
   facetFilter: Filter,
-  sectionList: string[],
+  sections: { [key:number]: Section },
   subSectionList: string[],
   treeStructure: Object[]
   variables: { [key:number]: Variable }

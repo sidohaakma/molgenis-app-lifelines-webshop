@@ -202,4 +202,31 @@ describe('getters', () => {
         .toEqual([[true, true], [true, false], [false, false]])
     })
   })
+
+  describe('treeStructure', () => {
+    describe('when section data has not been loaded', () => {
+      const state: ApplicationState = {
+        ...emptyState
+      }
+      const gettersParam: Getters = {
+        ...emptyGetters
+      }
+      it('should return a empty array', () => {
+        expect(getters.treeStructure(state, emptyGetters)).toEqual([])
+      })
+    })
+
+    describe('when section was loaded but subsection was not', () => {
+      const state: ApplicationState = {
+        ...emptyState,
+        sectionList: ['section1']
+      }
+      const gettersParam: Getters = {
+        ...emptyGetters
+      }
+      it('should return a empty array', () => {
+        expect(getters.treeStructure(state, emptyGetters)).toEqual([{ 'name': 'section1' }])
+      })
+    })
+  })
 })

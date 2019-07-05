@@ -9,11 +9,12 @@ import router from '@/router'
 
 export default {
   loadSections: tryAction(async ({ commit, state } : any) => {
-    if (state.sectionList.length === 0) {
-      const response = await api.get('/api/v2/lifelines_section?num=10000')
-      let sections:String[] = []
-      response.items.map((item:any) => { sections[item.id] = item.name })
-      commit('updateSections', sections)
+    if (!Object.keys(state.sections).length) {
+      const response = await api.get('/api/v2/lifelines_section?num=10000') 
+      commit('updateSections', response.items.reduce((sections: { [key:number]: Section }, item:any) => { 
+        sections[item.id] = item.name 
+        return sections
+      }, {}))
     }
   }),
   loadSubSections: tryAction(async ({ commit, state } : any) => {
