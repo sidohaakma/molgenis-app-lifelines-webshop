@@ -34,14 +34,22 @@
           <tr>
             <th></th>
             <td>
-              <facet-option class="selectAll gridItem" v-on:facetToggled="toggleGrid">All</facet-option>
+              <button class="ll-facet-option btn btn-sm selectAll gridItem btn-outline-secondary"
+                      @click="toggleGrid"
+                      @mouseenter="onMouseEnter('gridItem')"
+                      @mouseleave="onMouseLeave('gridItem')">
+                All
+              </button>
             </td>
-            <td v-for="assessment in gridAssessments"
+            <td v-for="(assessment, colIndex) in gridAssessments"
                 :key="assessment.id"
             >
-              <facet-option class="selectCol gridItem" v-on:facetToggled="selectColumn(assessment.id)">
+              <button class="ll-facet-option btn btn-sm selectCol gridItem btn-outline-secondary"
+                      @click="selectColumn(assessment.id)"
+                      @mouseenter="onMouseEnter('grid-button-col-'+colIndex)"
+                      @mouseleave="onMouseLeave('grid-button-col-'+colIndex)">
                 <font-awesome-icon icon="arrow-down"/>
-              </facet-option>
+              </button>
             </td>
           </tr>
 
@@ -58,19 +66,22 @@
               </span>
             </th>
             <td>
-              <facet-option class="selectRow gridItem" v-on:facetToggled="toggleRow(gridVariables[rowIndex].id)">
+              <button class="ll-facet-option btn btn-sm selectRow gridItem btn-outline-secondary"
+                      @click="toggleRow(gridVariables[rowIndex].id)"
+                      @mouseenter="onMouseEnter('grid-button-row-'+rowIndex)"
+                      @mouseleave="onMouseLeave('grid-button-row-'+rowIndex)">
                 <font-awesome-icon icon="arrow-right"/>
-              </facet-option>
+              </button>
             </td>
             <td :key="colIndex"
                 v-for="(count,colIndex) in row"
             >
-              <facet-option
-                @facetToggled="toggle(rowIndex, colIndex)"
-                :isSelected="gridSelections[rowIndex][colIndex]"
-                class="selectItem gridItem">
+              <button
+                @click="toggle(rowIndex, colIndex)"
+                :class="getGridCellClass(rowIndex, colIndex)"
+                class="ll-facet-option btn btn-sm selectItem gridItem">
                 {{formatter(count)}}
-              </facet-option>
+              </button>
             </td>
           </tr>
         </table>
@@ -82,7 +93,6 @@
 <script>
 import Vue from 'vue'
 import { mapActions, mapState, mapGetters, mapMutations } from 'vuex'
-import FacetOption from '../facets/FacetOption.vue'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faArrowDown, faArrowRight, faArrowsAlt } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
@@ -91,7 +101,7 @@ import SpinnerAnimation from '../animations/SpinnerAnimation.vue'
 library.add(faArrowDown, faArrowRight, faArrowsAlt)
 
 export default Vue.extend({
-  components: { FacetOption, FontAwesomeIcon, SpinnerAnimation },
+  components: { FontAwesomeIcon, SpinnerAnimation },
   data: function () {
     return {
       stickyTableHeader: false
@@ -109,11 +119,26 @@ export default Vue.extend({
     selectColumn (assessmentId) {
       this.toggleGridColumn({ assessmentId })
     },
+    onMouseEnter (className) {
+      const collection = Array.from(document.getElementsByClassName(className))
+      collection.forEach((button) => button.classList.add('gridHover'))
+    },
+    onMouseLeave (className) {
+      const collection = Array.from(document.getElementsByClassName(className))
+      collection.forEach((button) => button.classList.remove('gridHover'))
+    },
     toggleRow (variableId) {
       this.toggleGridRow({
         variableId,
         gridAssessments: this.gridAssessments
       })
+    },
+    getGridCellClass (rowIndex, colIndex) {
+      const selected = !!this.gridSelections[rowIndex][colIndex]
+      const selectedClass = selected ? 'btn-secondary' : 'btn-outline-secondary'
+      const colClass = ' grid-button-col-' + colIndex
+      const rowClass = ' grid-button-row-' + rowIndex
+      return selectedClass + rowClass + colClass
     },
     toggleGrid () {
       this.toggleAll({ gridAssessments: this.gridAssessments })
@@ -125,7 +150,7 @@ export default Vue.extend({
       })
     },
     ...mapMutations(['toggleGridSelection', 'toggleGridRow', 'toggleGridColumn', 'toggleAll']),
-    ...mapActions(['loadGridVariables', 'loadAssessments', 'loadGridData'])
+    ...mapActions(['loadGridVariables', 'loadGridData'])
   },
   created: function () {
     this.loadAssessments()
@@ -281,8 +306,4 @@ export default Vue.extend({
     height: 100%;
     margin: 1px;
   }
-  .row-hover:hover {
-    background-color: #e9f6f9;
-  }
-
 </style>

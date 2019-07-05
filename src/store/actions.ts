@@ -1,9 +1,11 @@
 // @ts-ignore
 import api from '@molgenis/molgenis-api-client'
-import { tryAction } from './helpers'
-import GridSelection from '@/types/GridSelection'
-import { Variable, VariableWithVariants } from '@/types/Variable'
+import { tryAction, toCart, fromCart } from './helpers'
+import { Variable } from '@/types/Variable'
 import Assessment from '@/types/Assessment'
+import { Cart } from '@/types/Cart'
+import ApplicationState from '@/types/ApplicationState'
+import router from '@/router'
 
 export default {
   loadSections: tryAction(async ({ commit, state } : any) => {
@@ -62,40 +64,51 @@ export default {
   }),
   loadGridVariables: tryAction(async ({ state, commit } : any) => {
     commit('updateGridVariables', [])
-    const response = await api.get(`/api/v2/lifelines_subsection_variable?q=subsection_id==${state.treeSelected}&attrs=~id,id,subsection_id,variable_id(id,name,label,variants(id,assessment_id))&num=10000`)
-    commit('updateGridVariables', response.items
+    const subsectionId = state.treeSelected
+    const response = await api.get(`/api/v2/lifelines_subsection_variable?q=subsection_id==${subsectionId}&attrs=~id,id,subsection_id,variable_id(id,name,label,variants(id,assessment_id))&num=10000`)
+    if (state.treeSelected === subsectionId) {
+      commit('updateGridVariables', response.items
       // map assessment_id to assessmentId somewhere deep in the structure
-      .map((sv: any) => ({
-        ...sv.variable_id,
-        variants: sv.variable_id.variants
-          .map((variant: any) => ({
-            ...variant,
-            assessmentId: variant.assessment_id
-          }))
-      })))
+        .map((sv: any) => ({
+          ...sv.variable_id,
+          variants: sv.variable_id.variants
+            .map((variant: any) => ({
+              ...variant,
+              assessmentId: variant.assessment_id
+            }))
+        })))
+    }
   }),
   loadGridData: tryAction(async ({ commit, getters }: any) => {
     commit('updateVariantCounts', [])
     let url = '/api/v2/lifelines_who_when?aggs=x==variant_id'
-    if (getters.rsql) {
-      url = `${url}&q=${encodeURIComponent(getters.rsql)}`
+    const rsql = getters.rsql
+    if (rsql) {
+      url = `${url}&q=${encodeURIComponent(rsql)}`
     }
     const { aggs: { matrix, xLabels } } = await api.get(url)
-    const variantCounts = matrix.map((cell: any, index: number) => ({
-      variantId: parseInt(xLabels[index].id),
-      count: cell[0]
-    }))
-    commit('updateVariantCounts', variantCounts)
+    if (getters.rsql === rsql) {
+      const variantCounts = matrix.map((cell: any, index: number) => ({
+        variantId: parseInt(xLabels[index].id),
+        count: cell[0]
+      }))
+      commit('updateVariantCounts', variantCounts)
+    }
   }),
-  save: tryAction(async ({ state: { gridSelection } }: { state: {gridSelection: GridSelection} }) => {
-    const body = { selection: JSON.stringify(gridSelection) }
+  save: tryAction(async ({ state, commit }: {state: ApplicationState, commit: any}) => {
+    const body = { contents: JSON.stringify(toCart(state)) }
     const response = await api.post('/api/v1/lifelines_cart', { body: JSON.stringify(body) })
     const location: string = response.headers.get('Location')
     const id: string = location.substring(location.lastIndexOf('/') + 1)
+    commit('setToast', { type: 'success', message: 'Saved order with id ' + id })
+    router.push({name: 'load', params: {cartId: id}})
   }),
-  load: tryAction(async ({ commit }:any, id: string) => {
+  load: tryAction(async ({ state, commit }: {state: ApplicationState, commit: any}, id: string) => {
     const response = await api.get(`/api/v2/lifelines_cart/${id}`)
-    const gridSelection = JSON.parse(response.selection)
+    const cart: Cart = JSON.parse(response.contents)
+    const { facetFilter, gridSelection } = fromCart(cart, state)
+    commit('updateFacetFilter', facetFilter)
     commit('updateGridSelection', gridSelection)
+    commit('setToast', { type: 'success', message: 'Loaded order with id ' + id })
   })
 }
