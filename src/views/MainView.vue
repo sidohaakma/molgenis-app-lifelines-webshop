@@ -2,7 +2,7 @@
   <div id="main-view">
     <div class="py-4">
       <img src="logo.svg" alt="Lifelines" />
-      <div class="hr bg-secondary mt-3"></div>
+      <div class="header-divider bg-secondary mt-3"></div>
     </div>
     <div class="row justify-content-md-center">
         <div class="col-6">
@@ -32,7 +32,7 @@
           </div>
 
           <div v-else>
-              <cart-view  class="mt-3" />
+              <cart-view class="mt-3" />
           </div>
       </div>
       </div>

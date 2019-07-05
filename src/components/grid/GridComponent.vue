@@ -182,7 +182,7 @@ export default Vue.extend({
     top:0;
     background-color: white;
     background: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(255,255,255,0.9) 75%, rgba(255,255,255,0) 100%);
-    z-index: 2000;
+    z-index: 1030;
   }
   .sticky .assessments-title{
     height: 8rem;
@@ -191,7 +191,7 @@ export default Vue.extend({
     bottom: 1rem;
   }
   .space-holder{
-    height: 96px;
+    height: 6em;
   }
 
   table td, th {
