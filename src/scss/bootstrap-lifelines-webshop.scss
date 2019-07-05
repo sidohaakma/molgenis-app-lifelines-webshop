@@ -21,6 +21,10 @@ $grid-gutter-width: 3rem;
 
 @import "node_modules/bootstrap/scss/bootstrap";
 
-.header-divider{
-  height:4px;
+nav.navbar{
+  border-bottom:4px solid $secondary
+}
+
+.row-hover:hover {
+  background-color: #e9f6f9;
 }

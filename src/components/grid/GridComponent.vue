@@ -307,10 +307,6 @@ export default Vue.extend({
     margin: 1px;
   }
 
-  .row-hover:hover {
-    background-color: #e9f6f9;
-  }
-
   .gridHover {
     color: #fff;
     background-color: var(--secondary);
