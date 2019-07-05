@@ -181,7 +181,9 @@ export default Vue.extend({
 })
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+  @import "../../scss/variables";
+
   table {
     overflow: hidden;
     position: relative;
@@ -230,8 +232,7 @@ export default Vue.extend({
     right: 0;
     display: inline-block;
     position: absolute;
-    background-color: #eee;
-    background-color: var(--secondary);
+    background-color: $light;
     top: -5000px;
     height: 10000px;
     z-index: -1;
@@ -310,9 +311,7 @@ export default Vue.extend({
 
   .gridHover {
     color: #fff;
-    background-color: #eee;
-    border-color: #eee;
-    background-color: var(--secondary);
-    border-color: var(--secondary);
+    background-color: $secondary;
+    border-color: $secondary;
   }
 </style>
