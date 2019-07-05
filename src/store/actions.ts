@@ -101,7 +101,7 @@ export default {
     const location: string = response.headers.get('Location')
     const id: string = location.substring(location.lastIndexOf('/') + 1)
     commit('setToast', { type: 'success', message: 'Saved order with id ' + id })
-    router.push({name: 'load', params: {cartId: id}})
+    router.push({ name: 'load', params: { cartId: id } })
   }),
   load: tryAction(async ({ state, commit }: {state: ApplicationState, commit: any}, id: string) => {
     const response = await api.get(`/api/v2/lifelines_cart/${id}`)
