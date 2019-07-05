@@ -14,7 +14,9 @@ export const getErrorMessage = (response: any) =>
       ? response.statusText
         ? `${response.statusText} (${response.status})`
         : `Error status: ${response.status}`
-      : 'Unknown error'
+      : response.message
+        ? response.message
+        : 'Unknown error'
 
 export const tryAction = (action: any): any =>
   (context: any, payload: any) =>
