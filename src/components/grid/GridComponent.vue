@@ -310,7 +310,7 @@ export default Vue.extend({
   }
 
   .gridHover {
-    color: #fff;
+    color: white;
     background-color: $secondary;
     border-color: $secondary;
   }
