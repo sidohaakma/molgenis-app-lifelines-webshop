@@ -230,7 +230,8 @@ export default Vue.extend({
     right: 0;
     display: inline-block;
     position: absolute;
-    background-color: #e9f6f9;
+    background-color: #eee;
+    background-color: var(--secondary);
     top: -5000px;
     height: 10000px;
     z-index: -1;
@@ -309,6 +310,8 @@ export default Vue.extend({
 
   .gridHover {
     color: #fff;
+    background-color: #eee;
+    border-color: #eee;
     background-color: var(--secondary);
     border-color: var(--secondary);
   }

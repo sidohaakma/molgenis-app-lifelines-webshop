@@ -86,10 +86,3 @@ export default Vue.extend({
   }
 })
 </script>
-
-<style>
-  .toast-holder{
-    width: 100%;
-    z-index: 1060;
-  }
-  </style>
