@@ -150,7 +150,7 @@ export default Vue.extend({
       })
     },
     ...mapMutations(['toggleGridSelection', 'toggleGridRow', 'toggleGridColumn', 'toggleAll']),
-    ...mapActions(['loadGridVariables', 'loadGridData'])
+    ...mapActions(['loadGridVariables', 'loadGridData', 'loadAssessments'])
   },
   created: function () {
     this.loadAssessments()
@@ -305,5 +305,15 @@ export default Vue.extend({
     width: 100%;
     height: 100%;
     margin: 1px;
+  }
+
+  .row-hover:hover {
+    background-color: #e9f6f9;
+  }
+
+  .gridHover {
+    color: #fff;
+    background-color: var(--secondary);
+    border-color: var(--secondary);
   }
 </style>
