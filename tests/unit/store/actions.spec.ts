@@ -22,6 +22,12 @@ const mockResponses: {[key:string]: Object} = {
   '/api/v2/lifelines_cart/fghij': {
     contents: cartContents
   },
+  '/api/v2/lifelines_section?num=10000': {
+    items: [
+      { id: 1, name: 'section1' },
+      { id: 2, name: 'section2' }
+    ]
+  },
   '/api/v2/lifelines_assessment': {
     items: [
       { id: 1, name: '1A' },
@@ -131,6 +137,25 @@ jest.mock('@/router', () => ({
 }))
 
 describe('actions', () => {
+  describe('loadSections', () => {
+    it('fetch the sections and commits them', async (done) => {
+      const commit = jest.fn()
+      await actions.loadSections({ state: { sections: {} }, commit })
+      expect(commit).toHaveBeenCalledWith('updateSections', {
+        1: { id: 1, name: 'section1' },
+        2: { id: 2, name: 'section2' }
+      })
+      done()
+    })
+
+    it('not fetch the sections if already in state', async (done) => {
+      const commit = jest.fn()
+      await actions.loadSections({ state: { sections: { 1: { id: 1, name: 'section1' } } }, commit })
+      expect(commit).toHaveBeenCalledTimes(0)
+      done()
+    })
+  })
+
   describe('loadAssessments', () => {
     it('loads the assessments and commits them', async (done) => {
       const commit = jest.fn()
