@@ -230,7 +230,7 @@ describe('getters', () => {
         ...emptyGetters
       }
       it('should return a empty array', () => {
-        expect(getters.treeStructure(state, emptyGetters)).toEqual( {1: {"id": 1, "name": "section"}})
+        expect(getters.treeStructure(state, emptyGetters)).toEqual({ 1: { 'id': 1, 'name': 'section' } })
       })
     })
   })
