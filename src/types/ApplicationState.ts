@@ -4,6 +4,7 @@ import Count from '@/types/Count'
 import Assessment from '@/types/Assessment'
 import GridSelection from '@/types/GridSelection'
 import Filter from './Filter'
+import { Section } from '@/types/Section.ts'
 
 export type Toast = {
   type: 'danger' | 'success',

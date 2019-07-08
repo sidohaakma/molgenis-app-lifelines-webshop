@@ -5,6 +5,7 @@ import Count from '@/types/Count'
 import Vue from 'vue'
 import GridSelection from '@/types/GridSelection'
 import Filter from '@/types/Filter'
+import { Section } from '@/types/Section.ts'
 
 export default {
   setToast (state: ApplicationState, toast: Toast) {

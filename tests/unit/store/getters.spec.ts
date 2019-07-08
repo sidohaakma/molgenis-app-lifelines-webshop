@@ -219,13 +219,18 @@ describe('getters', () => {
     describe('when section was loaded but subsection was not', () => {
       const state: ApplicationState = {
         ...emptyState,
-        sectionList: ['section1']
+        sections: {
+          1: {
+            id: 1,
+            name: 'section'
+          }
+        }
       }
       const gettersParam: Getters = {
         ...emptyGetters
       }
       it('should return a empty array', () => {
-        expect(getters.treeStructure(state, emptyGetters)).toEqual([{ 'name': 'section1' }])
+        expect(getters.treeStructure(state, emptyGetters)).toEqual( {1: {"id": 1, "name": "section"}})
       })
     })
   })

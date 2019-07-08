@@ -111,7 +111,7 @@ export default {
       )
     }),
   treeStructure: (state: ApplicationState, getters: Getters) => {
-    const loadedSection:Boolean = state.sectionList.length > 0
+    const loadedSection:Boolean = Object.keys(state.sections).length > 0
     const loadedSubSection:Boolean = state.subSectionList.length > 0
     const loadedTreeStructure:Boolean = state.treeStructure.length > 0
 
@@ -119,14 +119,14 @@ export default {
       // return full tree
       const final = state.treeStructure.map((item:any) => {
         return {
-          name: state.sectionList[item.key],
+          name: state.sections[item.key],
           children: item.list.map((id:number) => { return { name: state.subSectionList[id], id } })
         }
       })
       return final
     } else if (loadedSection) {
       // return temporary partial tree
-      return state.sectionList.map((item:string) => { if (item) return { 'name': item } }).filter(Boolean)
+      return state.sections
     }
 
     return []
