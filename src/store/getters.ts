@@ -117,16 +117,15 @@ export default {
 
     if (loadedSection && loadedSubSection && loadedTreeStructure) {
       // return full tree
-      const final = state.treeStructure.map((item:any) => {
+      return state.treeStructure.map((item:any) => {
         return {
-          name: state.sections[item.key],
+          ...state.sections[item.key],
           children: item.list.map((id:number) => { return { name: state.subSectionList[id], id } })
         }
       })
-      return final
     } else if (loadedSection) {
       // return temporary partial tree
-      return state.sections
+      return Object.values(state.sections)
     }
 
     return []

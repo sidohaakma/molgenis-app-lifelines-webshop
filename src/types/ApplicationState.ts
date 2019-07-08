@@ -12,19 +12,19 @@ export type Toast = {
 }
 
 export default interface ApplicationState {
+  variables: { [key:number]: Variable },
+  assessments: { [key:number]: Assessment },
+  sections: { [key:number]: Section },
+  subSectionList: string[],
   toast: Toast | null,
   genderOptions: FacetOption[],
   subcohortOptions: FacetOption[],
   ageGroupOptions: FacetOption[],
   ageAtOptions: FacetOption[],
   facetFilter: Filter,
-  sections: { [key:number]: Section },
-  subSectionList: string[],
   treeStructure: Object[]
-  variables: { [key:number]: Variable }
   gridVariables: VariableWithVariants[]
   variantCounts: Count[]
-  assessments: { [key:number]: Assessment }
   treeSelected: number
   treeOpenSection: string
   gridSelection: GridSelection

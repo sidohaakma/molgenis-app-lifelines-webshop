@@ -212,7 +212,7 @@ describe('getters', () => {
         ...emptyGetters
       }
       it('should return a empty array', () => {
-        expect(getters.treeStructure(state, emptyGetters)).toEqual([])
+        expect(getters.treeStructure(state, gettersParam)).toEqual([])
       })
     })
 
@@ -229,8 +229,29 @@ describe('getters', () => {
       const gettersParam: Getters = {
         ...emptyGetters
       }
-      it('should return a empty array', () => {
-        expect(getters.treeStructure(state, emptyGetters)).toEqual({ 1: { 'id': 1, 'name': 'section' } })
+      it('should return the section list', () => {
+        expect(getters.treeStructure(state, gettersParam)).toEqual([{ 'id': 1, 'name': 'section' }])
+      })
+    })
+
+    describe('when sections, subSections and treeStructure are loaded', () => {
+      const state: ApplicationState = {
+        ...emptyState,
+        sections: {
+          1: {
+            id: 1,
+            name: 'section'
+          }
+        },
+        subSectionList: ['sub-section1'],
+        treeStructure: [{ key: 1, list: [0] }]
+      }
+
+      const gettersParam: Getters = {
+        ...emptyGetters
+      }
+      it('should return the complete tree structure', () => {
+        expect(getters.treeStructure(state, gettersParam)).toEqual([{ 'children': [{ 'id': 0, 'name': 'sub-section1' }], 'id': 1, 'name': 'section' }])
       })
     })
   })

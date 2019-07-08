@@ -13,7 +13,7 @@ export default {
     if (!Object.keys(state.sections).length) {
       const response = await api.get('/api/v2/lifelines_section?num=10000')
       commit('updateSections', response.items.reduce((sections: { [key:number]: Section }, item:any) => {
-        sections[item.id] = item.name
+        sections[item.id] = item
         return sections
       }, {}))
     }
