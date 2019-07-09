@@ -40,7 +40,7 @@ const mockResponses: {[key:string]: Object} = {
       { id: 2, name: '1B' }
     ]
   },
-  '/api/v2/lifelines_variable?attrs=id,name,label&num=10000': {
+  '/api/v2/lifelines_variable?attrs=id,name,label&num=10000&sort=id': {
     items: [{
       id: 2,
       name: 'ARZON',
@@ -51,7 +51,7 @@ const mockResponses: {[key:string]: Object} = {
       label: 'SAF'
     }]
   },
-  '/api/v2/lifelines_variable?attrs=id,name,label&num=10000&start=10000': {
+  '/api/v2/lifelines_variable?attrs=id,name,label&num=10000&start=10000&sort=id': {
     items: [{
       id: 4,
       name: 'UVREFLECT',
@@ -62,7 +62,7 @@ const mockResponses: {[key:string]: Object} = {
       label: 'Skin cream used'
     }]
   },
-  '/api/v2/lifelines_subsection_variable?q=subsection_id==4&attrs=~id,id,subsection_id,variable_id(id,name,label,variants(id,assessment_id))&num=10000': {
+  '/api/v2/lifelines_subsection_variable?q=subsection_id==4&attrs=~id,id,subsection_id,variable_id(id,name,label,variants(id,assessment_id))&num=10000&sort=variable_id': {
     items: [{
       variable_id: {
         id: 2,
