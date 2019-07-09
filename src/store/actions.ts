@@ -3,17 +3,19 @@ import api from '@molgenis/molgenis-api-client'
 import { tryAction, toCart, fromCart } from './helpers'
 import { Variable } from '@/types/Variable'
 import Assessment from '@/types/Assessment'
+import { Section } from '@/types/Section.ts'
 import { Cart } from '@/types/Cart'
 import ApplicationState from '@/types/ApplicationState'
 import router from '@/router'
 
 export default {
   loadSections: tryAction(async ({ commit, state } : any) => {
-    if (state.sectionList.length === 0) {
+    if (!Object.keys(state.sections).length) {
       const response = await api.get('/api/v2/lifelines_section?num=10000')
-      let sections:String[] = []
-      response.items.map((item:any) => { sections[item.id] = item.name })
-      commit('updateSections', sections)
+      commit('updateSections', response.items.reduce((sections: { [key:number]: Section }, item:any) => {
+        sections[item.id] = item
+        return sections
+      }, {}))
     }
   }),
   loadSubSections: tryAction(async ({ commit, state } : any) => {

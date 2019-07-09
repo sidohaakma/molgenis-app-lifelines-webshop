@@ -1,5 +1,6 @@
-import { getErrorMessage, tryAction } from '@/store/helpers'
+import { getErrorMessage, tryAction, fromCart } from '@/store/helpers'
 import Vue from 'vue'
+import emptyState from '@/store/state'
 
 describe('store', () => {
   describe('helpers', () => {
@@ -57,6 +58,46 @@ describe('store', () => {
           expect(commit).toHaveBeenCalledWith('setToast', toast)
           done()
         })
+      })
+    })
+
+    describe('fromCart', () => {
+      const filters = {
+        gender: [],
+        subcohort: [],
+        ageGroupAt1A: [],
+        ageGroupAt2A: [],
+        ageGroupAt3A: [],
+        yearOfBirthRange: []
+      }
+      it('should throw an error if the cart selection assessments are non found in the application state', () => {
+        const cart = {
+          selection: [
+            {
+              assessment: 'assessment1',
+              variables: []
+            }
+          ],
+          filters
+        }
+        expect(() => (fromCart(cart, emptyState))).toThrowError('Cannot find assessment with name assessment1.')
+      })
+
+      it('should throw an error if the cart selection assessments are non found in the application state', () => {
+        const cart = {
+          selection: [
+            {
+              assessment: 'assessment1',
+              variables: ['variable1']
+            }
+          ],
+          filters
+        }
+        let state = { ...emptyState }
+        state.assessments = {
+          1: { id: 1, name: 'assessment1' }
+        }
+        expect(() => (fromCart(cart, state))).toThrowError('Cannot find variable with name variable1.')
       })
     })
   })
