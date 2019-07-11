@@ -1,7 +1,7 @@
 <template>
   <div id="grid">
     <div class="row">
-      <div class="col vld-parent grid-col" v-if="treeSelected!=-1">
+      <div class="col vld-parent grid-col">
         <loading :active="isLoading" loader="dots" :is-full-page="false" color="var(--secondary)" background-color="var(--light)"></loading>
 
         <table
@@ -22,9 +22,7 @@
         </table>
         <div :class="{'space-holder':stickyTableHeader}"></div>
 
-        <table class="grid-table col-hover"
-               v-if="!isLoading && treeSelected!=-1"
-        >
+        <table class="grid-table col-hover" v-if="!isLoading">
           <tr>
             <th></th>
             <td>
@@ -39,7 +37,7 @@
                 :key="assessment.id"
             >
               <button class="ll-facet-option btn btn-sm selectCol gridItem btn-outline-secondary"
-                      @click.prevent="selectColumn(assessment.id)"
+                      @click.prevent="toggleColumn(assessment.id)"
                       @mouseenter="onMouseEnter('grid-button-col-'+colIndex)"
                       @mouseleave="onMouseLeave('grid-button-col-'+colIndex)">
                 <font-awesome-icon icon="arrow-down"/>
@@ -71,7 +69,7 @@
                 v-for="(count,colIndex) in row"
             >
               <button
-                @click.prevent="toggle(rowIndex, colIndex)"
+                @click.prevent="toggleCell(rowIndex, colIndex)"
                 :class="getGridCellClass(rowIndex, colIndex)"
                 class="ll-facet-option btn btn-sm selectItem gridItem">
                 {{count | formatSI}}
@@ -89,7 +87,6 @@ import Vue from 'vue'
 // Import component
 import Loading from 'vue-loading-overlay'
 
-import { mapActions, mapState, mapGetters, mapMutations } from 'vuex'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faArrowDown, faArrowRight, faArrowsAlt } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
@@ -99,7 +96,26 @@ import { formatSI } from 'format-si-prefix'
 library.add(faArrowDown, faArrowRight, faArrowsAlt)
 
 export default Vue.extend({
+  name: 'GridComponent',
   components: { FontAwesomeIcon, Loading },
+  props: {
+    grid: {
+      type: Array,
+      required: true
+    },
+    gridAssessments: {
+      type: Array,
+      required: true
+    },
+    gridVariables: {
+      type: Array,
+      required: true
+    },
+    gridSelections: {
+      type: Array,
+      required: true
+    }
+  },
   data: function () {
     return {
       stickyTableHeader: false
@@ -111,9 +127,6 @@ export default Vue.extend({
       if (scrollTop > 170) this.stickyTableHeader = true
       else this.stickyTableHeader = false
     },
-    selectColumn (assessmentId) {
-      this.toggleGridColumn({ assessmentId })
-    },
     onMouseEnter (className) {
       const collection = Array.from(document.getElementsByClassName(className))
       collection.forEach((button) => button.classList.add('gridHover'))
@@ -123,10 +136,16 @@ export default Vue.extend({
       collection.forEach((button) => button.classList.remove('gridHover'))
     },
     toggleRow (variableId) {
-      this.toggleGridRow({
-        variableId,
-        gridAssessments: this.gridAssessments
-      })
+      this.$emit('gridRowToggle', variableId)
+    },
+    toggleColumn (assessmentId) {
+      this.$emit('gridColumnToggle', assessmentId)
+    },
+    toggleCell (rowIndex, colIndex) {
+      this.$emit('gridCellToggle', rowIndex, colIndex)
+    },
+    toggleGrid () {
+      this.$emit('gridAllToggle')
     },
     getGridCellClass (rowIndex, colIndex) {
       const selected = !!this.gridSelections[rowIndex][colIndex]
@@ -134,43 +153,20 @@ export default Vue.extend({
       const colClass = ' grid-button-col-' + colIndex
       const rowClass = ' grid-button-row-' + rowIndex
       return selectedClass + rowClass + colClass
-    },
-    toggleGrid () {
-      this.toggleAll({ gridAssessments: this.gridAssessments })
-    },
-    toggle (rowIndex, colIndex) {
-      this.toggleGridSelection({
-        variableId: this.gridVariables[rowIndex].id,
-        assessmentId: this.gridAssessments[colIndex].id
-      })
-    },
-    ...mapMutations(['toggleGridSelection', 'toggleGridRow', 'toggleGridColumn', 'toggleAll']),
-    ...mapActions(['loadGridVariables', 'loadGridData', 'loadAssessments'])
+    }
   },
   created: function () {
-    this.loadAssessments()
-    this.loadGridData()
     window.addEventListener('scroll', this.scroll)
   },
   destroyed: function () {
     window.removeEventListener('scroll', this.scroll)
   },
   computed: {
-    ...mapState(['treeSelected', 'gridVariables', 'assessments', 'variantCounts']),
-    ...mapGetters(['rsql', 'gridAssessments', 'grid', 'gridSelections']),
     variableName () {
       return variable => variable.label ? variable.label : variable.name
     },
     isLoading () {
       return this.grid.length === 0
-    }
-  },
-  watch: {
-    treeSelected: function () {
-      this.loadGridVariables()
-    },
-    rsql: function () {
-      this.loadGridData()
     }
   },
   filters: { formatSI }
