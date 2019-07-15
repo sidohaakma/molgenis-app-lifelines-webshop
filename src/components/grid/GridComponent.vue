@@ -1,5 +1,5 @@
 <template>
-  <div id="grid">
+  <div id="grid" class="variable-grid">
     <div class="row">
       <div class="col vld-parent grid-col">
         <loading :active="isLoading" loader="dots" :is-full-page="false" color="var(--secondary)" background-color="var(--light)"></loading>
@@ -58,7 +58,7 @@
               </span>
             </th>
             <td>
-              <button class="ll-facet-option btn btn-sm selectRow gridItem btn-outline-secondary"
+              <button class="ll-facet-option btn btn-sm select-row gridItem btn-outline-secondary"
                       @click.prevent="toggleRow(gridVariables[rowIndex].id)"
                       @mouseenter="onMouseEnter('grid-button-row-'+rowIndex)"
                       @mouseleave="onMouseLeave('grid-button-row-'+rowIndex)">
@@ -216,6 +216,9 @@ export default Vue.extend({
     padding: 0 1px;
     position: relative;
   }
+  .row-hover:hover:not(.select-row) {
+    background-color: $light;
+  }
   .col-hover td:hover::after {
     content: "";
     left: 0;
@@ -265,7 +268,7 @@ export default Vue.extend({
   button.selectItem {
     border-radius: 0;
   }
-  button.selectRow {
+  button.select-row {
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
   }
@@ -284,6 +287,13 @@ export default Vue.extend({
     background-color: $secondary;
     border-color: $secondary;
   }
+
+  tr:hover {
+    color: white;
+    background-color: $secondary;
+    border-color: $secondary;
+  }
+
   .grid-col {
     height: 90vh;
   }
