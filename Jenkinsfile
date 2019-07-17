@@ -84,6 +84,11 @@ pipeline {
                 GIT_COMMITTER_NAME = 'molgenis-jenkins'
             }
             steps {
+                timeout(time: 30, unit: 'MINUTES') {
+                    script {
+                        input(message: 'Do you want to release?', ok: 'Release')
+                    }
+                }
                 milestone 2
                 container('node') {
                     sh "npx semantic-release"
