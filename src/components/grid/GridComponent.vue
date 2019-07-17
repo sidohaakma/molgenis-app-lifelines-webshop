@@ -216,9 +216,6 @@ export default Vue.extend({
     padding: 0 1px;
     position: relative;
   }
-  .row-hover:hover:not(.select-row) {
-    background-color: $light;
-  }
   .col-hover td:hover::after {
     content: "";
     left: 0;
