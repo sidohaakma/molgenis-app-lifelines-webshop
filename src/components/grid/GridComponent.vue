@@ -288,12 +288,6 @@ export default Vue.extend({
     border-color: $secondary;
   }
 
-  tr:hover {
-    color: white;
-    background-color: $secondary;
-    border-color: $secondary;
-  }
-
   .grid-col {
     height: 90vh;
   }
