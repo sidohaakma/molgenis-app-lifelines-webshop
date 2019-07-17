@@ -26,17 +26,17 @@
           <tr>
             <th></th>
             <td>
-              <button class="ll-facet-option btn btn-sm selectAll gridItem btn-outline-secondary"
+              <button class="ll-facet-option btn btn-sm select-all grid-item btn-outline-secondary"
                       @click.prevent="toggleGrid"
-                      @mouseenter="onMouseEnter('gridItem')"
-                      @mouseleave="onMouseLeave('gridItem')">
+                      @mouseenter="onMouseEnter('grid-item')"
+                      @mouseleave="onMouseLeave('grid-item')">
                 All
               </button>
             </td>
             <td v-for="(assessment, colIndex) in gridAssessments"
                 :key="assessment.id"
             >
-              <button class="ll-facet-option btn btn-sm selectCol gridItem btn-outline-secondary"
+              <button class="ll-facet-option btn btn-sm select-col grid-item btn-outline-secondary"
                       @click.prevent="toggleColumn(assessment.id)"
                       @mouseenter="onMouseEnter('grid-button-col-'+colIndex)"
                       @mouseleave="onMouseLeave('grid-button-col-'+colIndex)">
@@ -58,7 +58,7 @@
               </span>
             </th>
             <td>
-              <button class="ll-facet-option btn btn-sm select-row gridItem btn-outline-secondary"
+              <button class="ll-facet-option btn btn-sm select-row grid-item btn-outline-secondary"
                       @click.prevent="toggleRow(gridVariables[rowIndex].id)"
                       @mouseenter="onMouseEnter('grid-button-row-'+rowIndex)"
                       @mouseleave="onMouseLeave('grid-button-row-'+rowIndex)">
@@ -71,7 +71,7 @@
               <button
                 @click.prevent="toggleCell(rowIndex, colIndex)"
                 :class="getGridCellClass(rowIndex, colIndex)"
-                class="ll-facet-option btn btn-sm selectItem gridItem">
+                class="ll-facet-option btn btn-sm select-item grid-item">
                 {{count | formatSI}}
               </button>
             </td>
@@ -129,11 +129,11 @@ export default Vue.extend({
     },
     onMouseEnter (className) {
       const collection = Array.from(document.getElementsByClassName(className))
-      collection.forEach((button) => button.classList.add('gridHover'))
+      collection.forEach((button) => button.classList.add('grid-hover'))
     },
     onMouseLeave (className) {
       const collection = Array.from(document.getElementsByClassName(className))
-      collection.forEach((button) => button.classList.remove('gridHover'))
+      collection.forEach((button) => button.classList.remove('grid-hover'))
     },
     toggleRow (variableId) {
       this.$emit('gridRowToggle', variableId)
@@ -216,6 +216,9 @@ export default Vue.extend({
     padding: 0 1px;
     position: relative;
   }
+  .row-hover:hover {
+    background-color: $light;
+  }
   .col-hover td:hover::after {
     content: "";
     left: 0;
@@ -232,7 +235,6 @@ export default Vue.extend({
     overflow: hidden;
     text-overflow: ellipsis;
     padding-right: 1rem;
-    vertical-align: middle;
     padding-left: 1rem;
   }
   .assessments-title {
@@ -257,34 +259,33 @@ export default Vue.extend({
   .w-0 {
     width: 0;
   }
-  button.selectAll {
+  button.select-all {
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
     border-bottom-left-radius: 0;
   }
-  button.selectItem {
+  button.select-item {
     border-radius: 0;
   }
   button.select-row {
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
   }
-  button.selectCol {
+  button.select-col {
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
   }
-  .gridItem {
+  .grid-item {
     display: block;
     width: 100%;
     height: 100%;
     margin: 1px;
   }
-  .gridHover {
+  .grid-hover {
     color: white;
     background-color: $secondary;
     border-color: $secondary;
   }
-
   .grid-col {
     height: 90vh;
   }

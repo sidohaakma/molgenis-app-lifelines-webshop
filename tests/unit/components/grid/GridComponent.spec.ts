@@ -41,5 +41,4 @@ describe('GridComponent.vue', () => {
       expect(window.removeEventListener).toHaveBeenCalled()
     })
   })
-
 })
