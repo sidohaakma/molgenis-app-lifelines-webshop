@@ -12,7 +12,7 @@ $wait Inherit LIFELINES_SHOPPER role in ANONYMOUSE role
 give --role LIFELINES_SHOPPER read --plugin app
 
 $wait Please import all the lifelines data
-import lifelines
+import -p deployment/data/lifelines.zip
 
 # Give package permissions
 give --role LIFELINES_SHOPPER readmeta --package lifelines
