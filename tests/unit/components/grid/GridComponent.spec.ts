@@ -7,7 +7,8 @@ describe('GridComponent.vue', () => {
     grid: [],
     gridAssessments: [],
     gridVariables: [],
-    gridSelections: []
+    gridSelections: [],
+    isLoading: false
   }
 
   describe('when created', () => {

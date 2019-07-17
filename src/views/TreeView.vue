@@ -2,7 +2,7 @@
   <div id="tree-view">
     <collapsible-tree
       :selection="treeSelected"
-      :structure="treeStructure"
+      :structure="filteredTreeStructure"
       :opensection="treeOpenSection"
       @updateselection="updateSelection"
       @updateopensection="updateOpenSection" />
@@ -16,14 +16,8 @@ import { mapGetters, mapState } from 'vuex'
 
 export default Vue.extend({
   name: 'TreeView',
-  data: function () {
-    return {
-      selection: -1,
-      open: ''
-    }
-  },
   computed: {
-    ...mapGetters(['treeStructure']),
+    ...mapGetters(['filteredTreeStructure']),
     ...mapState(['treeSelected', 'treeOpenSection'])
   },
   methods: {

@@ -5,6 +5,7 @@
         <loading :active="isLoading" loader="dots" :is-full-page="false" color="var(--secondary)" background-color="var(--light)"></loading>
 
         <table
+          ref="gridheader"
           class="grid-table"
                :class="{'sticky':stickyTableHeader}"
         >
@@ -22,7 +23,7 @@
         </table>
         <div :class="{'space-holder':stickyTableHeader}"></div>
 
-        <table class="grid-table col-hover" v-if="!isLoading">
+        <table ref="grid" class="grid-table col-hover" v-if="!isLoading && grid.length">
           <tr>
             <th></th>
             <td>
@@ -114,6 +115,10 @@ export default Vue.extend({
     gridSelections: {
       type: Array,
       required: true
+    },
+    isLoading: {
+      type: Boolean,
+      required: true
     }
   },
   data: function () {
@@ -123,8 +128,9 @@ export default Vue.extend({
   },
   methods: {
     scroll () {
-      const scrollTop = window.pageYOffset || (document.documentElement || document.body.parentNode || document.body).scrollTop
-      if (scrollTop > 170) this.stickyTableHeader = true
+      const table = this.$refs.grid.getBoundingClientRect()
+      const header = this.$refs.gridheader.getBoundingClientRect()
+      if (table.top - header.height < 0) this.stickyTableHeader = true
       else this.stickyTableHeader = false
     },
     onMouseEnter (className) {
@@ -164,9 +170,6 @@ export default Vue.extend({
   computed: {
     variableName () {
       return variable => variable.label ? variable.label : variable.name
-    },
-    isLoading () {
-      return this.grid.length === 0
     }
   },
   filters: { formatSI }
@@ -183,6 +186,7 @@ export default Vue.extend({
   table th:first-child {
     width: 15rem;
     max-width: 15rem;
+    min-width: 15rem;
     overflow: hidden;
   }
   table td,

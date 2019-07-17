@@ -6,6 +6,8 @@ import Variant from '@/types/Variant'
 import { Variable, VariableWithVariants } from '@/types/Variable'
 import { TreeChild, TreeParentInternal } from '@/types/Tree'
 import Assessment from '@/types/Assessment'
+import { TreeNode } from '@/types/TreeNode'
+import { Section } from '@/types/Section'
 
 export default {
   variants: (state: ApplicationState): Variant[] =>
@@ -140,5 +142,25 @@ export default {
       return Object.values(state.sections)
     }
     return []
+  },
+  filteredTreeStructure: ({ filteredSections, filteredSubsections }: ApplicationState, { treeStructure }: Getters) => {
+    if (filteredSections === null || filteredSubsections === null) {
+      return treeStructure
+    }
+    return treeStructure.reduce((result: TreeNode[], section: TreeNode) => {
+      if (filteredSections.includes(section.id)) {
+        result.push(section)
+      } else {
+        const filteredChildren = section.children.filter(({ id }) => filteredSubsections.includes(id))
+        if (filteredChildren.length > 0) {
+          result.push({ ...section, children: filteredChildren })
+        }
+      }
+      return result
+    }, [])
+  },
+  searchTermQuery: (state: ApplicationState) => state.searchTerm && transformToRSQL({ selector: '*', comparison: '=q=', arguments: state.searchTerm }),
+  isSearchResultEmpty: (state: ApplicationState, { filteredTreeStructure }: Getters): boolean => {
+    return !!(state.searchTerm && filteredTreeStructure.length === 0)
   }
 }

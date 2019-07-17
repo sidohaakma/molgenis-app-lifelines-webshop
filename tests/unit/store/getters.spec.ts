@@ -5,6 +5,8 @@ import ApplicationState from '@/types/ApplicationState'
 import Variant from '@/types/Variant'
 import Assessment from '@/types/Assessment'
 import { Variable, VariableWithVariants } from '@/types/Variable'
+import { Section } from '@/types/Section'
+import { TreeNode } from '@/types/TreeNode'
 
 describe('getters', () => {
   const emptyGetters: Getters = {
@@ -13,7 +15,11 @@ describe('getters', () => {
     rsql: '',
     grid: [],
     gridAssessments: [],
+    searchTermQuery: null,
+    treeStructure: [],
+    filteredTreeStructure: [],
     gridSelections: [],
+    isSearchResultEmpty: false,
     numberOfSelectedItems: 0
   }
 
@@ -263,6 +269,81 @@ describe('getters', () => {
       }
       it('should return the complete tree structure', () => {
         expect(getters.treeStructure(state, gettersParam)).toEqual([{ 'children': [{ 'count': 0, 'id': 0, 'name': 'sub-section1' }], 'count': 0, 'id': 1, 'name': 'section' }])
+      })
+    })
+
+    describe('searchTermQuery', () => {
+      it('should be null if the search term is null', () => {
+        expect(getters.searchTermQuery(emptyState)).toBeNull()
+      })
+
+      it('should give rsql for the search term', () => {
+        expect(getters.searchTermQuery({ ...emptyState, searchTerm: 'hello' })).toBe('*=q=hello')
+      })
+
+      it('should escape rsql characters', () => {
+        expect(getters.searchTermQuery({ ...emptyState, searchTerm: 'a==b' })).toBe('*=q=\'a==b\'')
+      })
+    })
+
+    describe('filteredTreeStructure', () => {
+      const education: TreeNode = {
+        id: 1,
+        name: 'Education',
+        children: [
+          { id: 1, name: 'Primary education' },
+          { id: 2, name: 'Secondary education' }
+        ]
+      }
+      const breakfast = { id: 3, name: 'Breakfast' }
+      const lunch = { id: 4, name: 'Lunch' }
+      const dinner = { id: 5, name: 'Dinner' }
+      const food: TreeNode = {
+        id: 2,
+        name: 'Food',
+        children: [ breakfast, lunch, dinner ]
+      }
+      const treeStructure = [education, food]
+
+      it('does not filter if there are no filters', () => {
+        const result = getters.filteredTreeStructure(
+          { ...emptyState, filteredSections: null, filteredSubsections: null },
+          { ...emptyGetters, treeStructure })
+        expect(result).toEqual(treeStructure)
+      })
+
+      it('filters the tree if there are filters', () => {
+        const result = getters.filteredTreeStructure(
+          { ...emptyState, filteredSections: [], filteredSubsections: [4] },
+          { ...emptyGetters, treeStructure })
+        expect(result).toEqual([{ ...food, children: [lunch] }])
+      })
+
+      it('prunes empty sections when filtering', () => {
+        const result = getters.filteredTreeStructure(
+          { ...emptyState, filteredSections: [1], filteredSubsections: [4] },
+          { ...emptyGetters, treeStructure })
+        expect(result).toEqual([education, { ...food, children: [lunch] }])
+      })
+    })
+
+    describe('isSearchResultEmpty', () => {
+      it('should be false is no search term is given', () => {
+        expect(getters.isSearchResultEmpty(emptyState, { ...emptyGetters })).toBeFalsy()
+      })
+
+      it('should be false if search term is given but search result in non empty', () => {
+        let searchTermState = { ...emptyState }
+        searchTermState.searchTerm = 'test'
+        let nonEmptyResultGetters = { ...emptyGetters }
+        nonEmptyResultGetters.filteredTreeStructure = [{ id: 1, name: 'name', children: [] }]
+        expect(getters.isSearchResultEmpty(searchTermState, nonEmptyResultGetters)).toBeFalsy()
+      })
+
+      it('should be true if search term is given but search result are empty', () => {
+        let searchTermState = { ...emptyState }
+        searchTermState.searchTerm = 'test'
+        expect(getters.isSearchResultEmpty(searchTermState, { ...emptyGetters })).toBeTruthy()
       })
     })
   })

@@ -73,6 +73,15 @@ export default {
   updateGridSelection (state: ApplicationState, gridSelection: GridSelection) {
     state.gridSelection = gridSelection
   },
+  updateSearchTerm (state: ApplicationState, searchTerm: string|null) {
+    state.searchTerm = searchTerm
+  },
+  updateFilteredSections (state: ApplicationState, sections: number[]) {
+    state.filteredSections = sections
+  },
+  updateFilteredSubsections (state: ApplicationState, subsections: number[]) {
+    state.filteredSubsections = subsections
+  },
   setTreeCount (state: ApplicationState, count: number) {
     const item:TreeChild|undefined = state.treeStructure[state.treeOpenSection - 1].list.find((item:TreeChild) => item.id === state.treeSelected)
     if (item) {
