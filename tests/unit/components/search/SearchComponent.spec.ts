@@ -18,7 +18,7 @@ describe('Search Component', () => {
   describe('when search prop is passed', () => {
     beforeEach(() => {
       wrapper = shallowMount(SearchComponent, { propsData: {
-        value: 'testing'
+        searchTerm: 'testing'
       } })
     })
 
