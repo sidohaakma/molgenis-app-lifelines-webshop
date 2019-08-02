@@ -1,52 +1,55 @@
 <template>
-  <div id="Sidebar-view">
-    <h3>{{ 'lifelines-webshop-sidebar-header' | i18n }}</h3>
-    <ul class="list-unstyled">
-      <li>
-        <facet-container
-          facetId="age"
-          label="Age"
-          :collapsable="true"
-          :collapsed="activeAgeFacetId !== 'age'"
-          @facetToggle="handleAgeToggle">
-            <age-facet
+  <div id="sidebar-view" :class="{'hide-bar':!value}">
+    <div class="label" @click="toggleVisibility" v-click-outside="hide">{{ 'lifelines-webshop-sidebar-header' | i18n }}</div>
+    <div class="overflow-hidden">
+      <h3 class="px-4">{{ 'lifelines-webshop-sidebar-header' | i18n }}</h3>
+      <ul class="list-unstyled sidebar-content p-4">
+        <li>
+          <facet-container
             facetId="age"
-            :ageGroupOptions="ageGroupOptions"
-            :ageAtOptions="ageAtOptions"
-            v-model="selectedAgeAt" />
-        </facet-container>
-      </li>
-      <li>
-        <facet-container
-          facetId="yob"
-          label="Year of birth"
-          :collapsable="true"
-          :collapsed="activeAgeFacetId !== 'yob'"
-          @facetToggle="handleAgeToggle">
-            <range-facet
+            label="Age"
+            :collapsable="true"
+            :collapsed="activeAgeFacetId !== 'age'"
+            @facetToggle="handleAgeToggle">
+              <age-facet
+              facetId="age"
+              :ageGroupOptions="ageGroupOptions"
+              :ageAtOptions="ageAtOptions"
+              v-model="selectedAgeAt" />
+          </facet-container>
+        </li>
+        <li>
+          <facet-container
             facetId="yob"
-            :min="1900" :max="2050"
-            v-model="selectedAgeRange"/>
-        </facet-container>
-      </li>
-      <li>
-        <facet-container facetId="gender" label="Gender">
-          <toggle-facet
-          facetId="gender"
-          :options="genderOptions"
-          v-model="selectedGenderOptions" />
-        </facet-container>
-      </li>
-      <li>
-        <facet-container facetId="cohort" label="Subcohorts">
-          <toggle-facet
-          facetId="cohort"
-          :options="subcohortOptions"
-          v-model="selectedSubcohortOptions" />
-        </facet-container>
-      </li>
-    </ul>
-    <count-view></count-view>
+            label="Year of birth"
+            :collapsable="true"
+            :collapsed="activeAgeFacetId !== 'yob'"
+            @facetToggle="handleAgeToggle">
+              <range-facet
+              facetId="yob"
+              :min="1900" :max="2050"
+              v-model="selectedAgeRange"/>
+          </facet-container>
+        </li>
+        <li>
+          <facet-container facetId="gender" label="Gender">
+            <toggle-facet
+            facetId="gender"
+            :options="genderOptions"
+            v-model="selectedGenderOptions" />
+          </facet-container>
+        </li>
+        <li>
+          <facet-container facetId="cohort" label="Subcohorts">
+            <toggle-facet
+            facetId="cohort"
+            :options="subcohortOptions"
+            v-model="selectedSubcohortOptions" />
+          </facet-container>
+        </li>
+      </ul>
+      <count-view class="px-4"></count-view>
+    </div>
   </div>
 </template>
 
@@ -58,10 +61,18 @@ import AgeFacet from '../components/facets/AgeFacet.vue'
 import RangeFacet from '../components/facets/RangeFacet.vue'
 import { mapMutations } from 'vuex'
 import CountView from '@/views/CountView'
+import ClickOutside from 'vue-click-outside'
 
 export default Vue.extend({
   name: 'SidebarView',
   components: { FacetContainer, ToggleFacet, AgeFacet, RangeFacet, CountView },
+  props: {
+    value: {
+      type: Boolean,
+      required: false,
+      default: () => true
+    }
+  },
   data: function () {
     return {
       activeAgeFacetId: 'age',
@@ -69,6 +80,13 @@ export default Vue.extend({
     }
   },
   methods: {
+    hide () {
+      console.log('hoi')
+      this.$emit('input', false)
+    },
+    toggleVisibility () {
+      this.$emit('input', !this.value)
+    },
     handleAgeToggle (event) {
       const { collapsed, facetId } = event
       if (facetId === 'yob') {
@@ -145,7 +163,48 @@ export default Vue.extend({
         this.$store.commit('updateYearOfBirthRangefilter', value)
       }
     }
-
-  }
+  },
+  mounted () {
+    this.popupItem = this.$el
+  },
+  directives: { ClickOutside }
 })
 </script>
+
+<style scoped lang="scss">
+  @import "../scss/variables";
+  #sidebar-view{
+    padding: 0rem;
+    transition: max-width 0.3s, padding 0.3s;
+    .sidebar-content{
+      background-color: $light;
+      position: relative;
+    }
+    .overflow-hidden{
+    }
+    .label{
+      position: absolute;
+      right: 0;
+      padding: 0 1rem;
+      line-height: 2rem;
+      transform-origin: 100% 100%;
+      transform: rotate(-90deg) translate(0, 1rem);
+      top: 4rem;
+      background-color: $light;
+      display: inline-block;
+      z-index: 1050;
+      overflow: hidden;
+      transition: height 0.3s;
+      height: 0;
+      white-space: nowrap;
+      cursor: pointer;
+    }
+    &.hide-bar{
+      .label{
+        height: 2rem;
+      }
+      max-width: 1rem;
+      padding: 0;
+    }
+  }
+</style>

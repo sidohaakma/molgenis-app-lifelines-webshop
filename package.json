@@ -29,6 +29,7 @@
     "format-si-prefix": "^0.3.2",
     "lodash.debounce": "^4.0.8",
     "vue": "^2.6.10",
+    "vue-click-outside": "^1.0.7",
     "vue-loading-overlay": "^3.2.0",
     "vue-router": "^3.0.3",
     "vue-slider-component": "^3.0.32",

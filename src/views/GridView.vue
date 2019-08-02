@@ -1,5 +1,5 @@
 <template>
-  <div id="Grid-view">
+  <div id="grid-view">
     <grid-component
     v-if="treeSelected != -1"
     :grid="grid"
@@ -25,7 +25,7 @@ export default Vue.extend({
   components: { GridComponent },
   computed: {
     ...mapState(['treeSelected', 'gridVariables', 'isGridLoading']),
-    ...mapGetters(['rsql', 'gridAssessments', 'grid', 'gridSelections', 'numberOfSelectedItems']),
+    ...mapGetters(['rsql', 'gridAssessments', 'grid', 'gridSelections', 'numberOfSelectedItems'])
   },
   methods: {
     ...mapMutations(['toggleGridSelection', 'toggleGridRow', 'toggleGridColumn', 'toggleAll', 'setTreeCount']),

@@ -4,8 +4,8 @@
       <h3>{{ 'lifelines-webshop-cart-header' | i18n }}</h3>
       <template v-if="selectedVariableIds.length">
         <div class="mb-3" v-if="selectedVariableIds.length > 0">
-          <button type="button" class="btn btn-warning mr-2">Order</button>
           <button type="button" class="btn btn-primary" @click="save">Save</button>
+          <button type="button" class="btn btn-warning mr-2">Order</button>
         </div>
         <h5>Selected variables</h5>
         <spinner-animation v-show="loading" />
@@ -17,8 +17,8 @@
           </li>
         </ul>
         <div class="mb-3" v-if="selectedVariableIds.length > 10">
-          <button type="button" class="btn btn-warning mr-2" >Order</button>
           <button type="button" class="btn btn-primary" @click="save">Save</button>
+          <button type="button" class="btn btn-warning mr-2" >Order</button>
         </div>
       </template>
       <template v-else>

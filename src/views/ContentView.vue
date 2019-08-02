@@ -1,12 +1,12 @@
 <template>
-  <div id="Content-view">
-      <div class="row" >
+  <div id="content-view">
+      <div class="row flex-nowrap" >
         <template v-if="!isEmptySearchResult">
-          <div class="col col-4" >
+          <div class="col-sm-auto info-bar" >
             <h3>{{ 'lifelines-webshop-content-header' | i18n }}</h3>
             <tree-view  />
           </div>
-          <div class="col-8" >
+          <div class="col" >
             <grid-view />
           </div>
         </template>

@@ -201,6 +201,7 @@ export default Vue.extend({
     font-weight: normal;
   }
   .sticky {
+    pointer-events: none;
     position: fixed;
     top: 0;
     background-color: white;

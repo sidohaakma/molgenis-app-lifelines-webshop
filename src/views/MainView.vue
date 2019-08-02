@@ -35,9 +35,9 @@
                 </li>
             </ul>
 
-            <div v-if="activeTab == 'variables'" class="row mt-3">
-              <sidebar-view class="col-sm-4 col-md-3 col-xl-2" />
-              <content-view class="col-sm-8 col-md-9 col-xl-10"/>
+            <div v-if="activeTab == 'variables'" class="row mt-3 flex-nowrap">
+              <sidebar-view class="col-sm-auto info-bar" v-model="showSidebar" />
+              <content-view class="col" />
             </div>
 
             <div v-else>
@@ -65,7 +65,8 @@ export default Vue.extend({
     return {
       activeTab: 'variables',
       publicPath: process.env.BASE_URL,
-      searching: false
+      searching: false,
+      showSidebar: true
     }
   },
   computed: {
