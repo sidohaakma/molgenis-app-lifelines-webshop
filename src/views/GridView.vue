@@ -24,11 +24,8 @@ export default Vue.extend({
   name: 'GridView',
   components: { GridComponent },
   computed: {
-    ...mapState(['treeSelected', 'gridVariables']),
+    ...mapState(['treeSelected', 'gridVariables', 'isGridLoading']),
     ...mapGetters(['rsql', 'gridAssessments', 'grid', 'gridSelections', 'numberOfSelectedItems']),
-    isGridLoading () {
-      return this.$store.state.isGridLoading
-    }
   },
   methods: {
     ...mapMutations(['toggleGridSelection', 'toggleGridRow', 'toggleGridColumn', 'toggleAll', 'setTreeCount']),

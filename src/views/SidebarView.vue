@@ -1,6 +1,6 @@
 <template>
   <div id="Sidebar-view">
-    <h3 class="my-3">{{ 'lifelines-webshop-sidebar-header' | i18n }}</h3>
+    <h3>{{ 'lifelines-webshop-sidebar-header' | i18n }}</h3>
     <ul class="list-unstyled">
       <li>
         <facet-container
@@ -149,9 +149,3 @@ export default Vue.extend({
   }
 })
 </script>
-
-<style>
-.facet {
-  margin-top: 0.5rem;
-}
-</style>

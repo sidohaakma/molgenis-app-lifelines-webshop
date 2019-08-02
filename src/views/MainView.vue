@@ -7,10 +7,11 @@
       </a>
       <ul class="nav justify-content-end">
         <li class="nav-item">
-          <button type="button" class="btn btn-primary btn-lg mx-1" id="save" @click="save">Save</button>
-        </li>
-        <li class="nav-item">
-          <button type="button" class="btn btn-warning btn-lg mx-1" id="order" >Order</button>
+          <search-component
+            :searchTerm="searchTerm"
+            :searching="isGridLoading"
+            @seachChanged="onSearchChange"
+          ></search-component>
         </li>
       </ul>
     </nav>
@@ -55,28 +56,33 @@ import SidebarView from './SidebarView.vue'
 import CartView from './CartView.vue'
 import ToastComponent from '../components/ToastComponent.vue'
 import { mapState, mapMutations, mapActions } from 'vuex'
+import SearchComponent from '../components/search/SearchComponent.vue'
 
 export default Vue.extend({
   name: 'MainView',
-  components: { ContentView, SidebarView, CartView, ToastComponent },
+  components: { ContentView, SidebarView, CartView, ToastComponent, SearchComponent },
   data: () => {
     return {
       activeTab: 'variables',
-      publicPath: process.env.BASE_URL
+      publicPath: process.env.BASE_URL,
+      searching: false
     }
   },
   computed: {
-    ...mapState([
-      'toast'
-    ])
+    ...mapState(['searchTerm', 'toast', 'isGridLoading'])
   },
   methods: {
-    ...mapMutations([
-      'clearToast'
-    ]),
-    ...mapActions([
-      'save', 'load', 'loadVariables', 'loadAssessments'
-    ])
+    ...mapMutations(['updateSearchTerm', 'clearToast']),
+    ...mapActions(['filterSections', 'filterSubsections', 'loadGridVariables', 'load', 'loadVariables', 'loadAssessments']),
+    onSearchChange (value) {
+      this.searching = true
+      this.updateSearchTerm(value || null)
+      this.filterSections()
+      this.filterSubsections()
+      if (this.treeSelection !== -1) {
+        this.loadGridVariables()
+      }
+    }
   },
   async created () {
     const promises = Promise.all([this.loadVariables(), this.loadAssessments()])
