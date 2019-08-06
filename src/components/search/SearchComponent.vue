@@ -6,7 +6,7 @@
         <font-awesome-icon v-else icon="search" />
       </span>
     </div>
-    <input class="form-control" type="search" placeholder="Search..." v-model="searchValue" @input="handleSeachValueChange"/>
+    <input class="form-control" type="search" placeholder="Search..." v-model="searchValue" @input="handleSearchValueChange"/>
   </div>
 </template>
 
@@ -39,8 +39,8 @@ export default Vue.extend({
     }
   },
   methods: {
-    handleSeachValueChange: debounce(function () {
-      this.$emit('seachChanged', this.searchValue)
+    handleSearchValueChange: debounce(function () {
+      this.$emit('searchChanged', this.searchValue)
     }, 300)
   }
 })

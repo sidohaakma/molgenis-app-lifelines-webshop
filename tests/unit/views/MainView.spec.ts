@@ -70,9 +70,9 @@ describe('MainView.vue', () => {
     }, 0)
   })
   it('updates search term and dispatches filter actions when the search term changes', () => {
-    const wrapper = shallowMount(MainView, { store, localVue })
+    const wrapper = shallowMount(MainView, { store, localVue, mocks })
 
-    wrapper.find(SearchComponent).vm.$emit('seachChanged', 'mini')
+    wrapper.find(SearchComponent).vm.$emit('searchChanged', 'mini')
 
     expect(updateSearchTerm).toHaveBeenCalled()
     expect(filterSections).toHaveBeenCalled()

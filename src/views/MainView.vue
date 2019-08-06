@@ -10,7 +10,7 @@
           <search-component
             :searchTerm="searchTerm"
             :searching="isGridLoading"
-            @seachChanged="onSearchChange"
+            @searchChanged="onSearchChange"
           ></search-component>
         </li>
       </ul>
