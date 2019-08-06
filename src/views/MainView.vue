@@ -28,10 +28,14 @@
         <div class="col-12" >
             <ul class="nav nav-tabs">
                 <li class="nav-item">
-                    <a class="nav-link" :class="{active: (activeTab == 'variables')}" href="#" @click="activeTab = 'variables'">Shop</a>
+                    <a class="nav-link" :class="{active: (activeTab == 'variables')}" href="#" @click="activeTab = 'variables'">
+                      <font-awesome-icon icon="store" /> Shop
+                    </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" :class="{active: (activeTab == 'selection')}" href="#" @click="activeTab = 'selection'">Cart</a>
+                    <a class="nav-link" :class="{active: (activeTab == 'selection')}" href="#" @click="activeTab = 'selection'">
+                      <font-awesome-icon icon="shopping-cart" /> Cart
+                    </a>
                 </li>
             </ul>
 
@@ -58,9 +62,14 @@ import ToastComponent from '../components/ToastComponent.vue'
 import { mapState, mapMutations, mapActions } from 'vuex'
 import SearchComponent from '../components/search/SearchComponent.vue'
 
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faStore, faShoppingCart } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+library.add(faStore, faShoppingCart)
+
 export default Vue.extend({
   name: 'MainView',
-  components: { ContentView, SidebarView, CartView, ToastComponent, SearchComponent },
+  components: { ContentView, SidebarView, CartView, ToastComponent, SearchComponent, FontAwesomeIcon },
   data: () => {
     return {
       activeTab: 'variables',
