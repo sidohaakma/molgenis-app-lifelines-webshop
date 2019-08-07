@@ -49,7 +49,7 @@ export default Vue.extend({
 </script>
 
 <style scoped>
-  .col.tree{
+  .col.tree {
     max-width: 22rem;
   }
 </style>

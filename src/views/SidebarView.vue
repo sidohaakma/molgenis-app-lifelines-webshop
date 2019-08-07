@@ -2,53 +2,56 @@
   <div id="sidebar-view" :class="{'hide-bar':!value}">
     <div class="label" @click="toggleVisibility" v-click-outside="hide">{{ 'lifelines-webshop-sidebar-header' | i18n }}</div>
     <div class="overflow-hidden">
-      <h3 class="px-4">{{ 'lifelines-webshop-sidebar-header' | i18n }}</h3>
-      <ul class="list-unstyled sidebar-content p-4">
-        <li>
-          <facet-container
-            facetId="age"
-            label="Age"
-            :collapsable="true"
-            :collapsed="activeAgeFacetId !== 'age'"
-            @facetToggle="handleAgeToggle">
-              <age-facet
+      <div class="sidebar-width">
+        <h3 class="px-4">{{ 'lifelines-webshop-sidebar-header' | i18n }}</h3>
+        <ul class="list-unstyled sidebar-content p-4">
+          <li class="hide-sidebar" @click="hide"><font-awesome-icon icon="minus-circle" size="lg" /></li>
+          <li>
+            <facet-container
               facetId="age"
-              :ageGroupOptions="ageGroupOptions"
-              :ageAtOptions="ageAtOptions"
-              v-model="selectedAgeAt" />
-          </facet-container>
-        </li>
-        <li>
-          <facet-container
-            facetId="yob"
-            label="Year of birth"
-            :collapsable="true"
-            :collapsed="activeAgeFacetId !== 'yob'"
-            @facetToggle="handleAgeToggle">
-              <range-facet
+              label="Age"
+              :collapsable="true"
+              :collapsed="activeAgeFacetId !== 'age'"
+              @facetToggle="handleAgeToggle">
+                <age-facet
+                facetId="age"
+                :ageGroupOptions="ageGroupOptions"
+                :ageAtOptions="ageAtOptions"
+                v-model="selectedAgeAt" />
+            </facet-container>
+          </li>
+          <li>
+            <facet-container
               facetId="yob"
-              :min="1900" :max="2050"
-              v-model="selectedAgeRange"/>
-          </facet-container>
-        </li>
-        <li>
-          <facet-container facetId="gender" label="Gender">
-            <toggle-facet
-            facetId="gender"
-            :options="genderOptions"
-            v-model="selectedGenderOptions" />
-          </facet-container>
-        </li>
-        <li>
-          <facet-container facetId="cohort" label="Subcohorts">
-            <toggle-facet
-            facetId="cohort"
-            :options="subcohortOptions"
-            v-model="selectedSubcohortOptions" />
-          </facet-container>
-        </li>
-      </ul>
-      <count-view class="px-4"></count-view>
+              label="Year of birth"
+              :collapsable="true"
+              :collapsed="activeAgeFacetId !== 'yob'"
+              @facetToggle="handleAgeToggle">
+                <range-facet
+                facetId="yob"
+                :min="1900" :max="2050"
+                v-model="selectedAgeRange"/>
+            </facet-container>
+          </li>
+          <li>
+            <facet-container facetId="gender" label="Gender">
+              <toggle-facet
+              facetId="gender"
+              :options="genderOptions"
+              v-model="selectedGenderOptions" />
+            </facet-container>
+          </li>
+          <li>
+            <facet-container facetId="cohort" label="Subcohorts">
+              <toggle-facet
+              facetId="cohort"
+              :options="subcohortOptions"
+              v-model="selectedSubcohortOptions" />
+            </facet-container>
+          </li>
+        </ul>
+        <count-view class="px-4"></count-view>
+      </div>
     </div>
   </div>
 </template>
@@ -62,10 +65,14 @@ import RangeFacet from '../components/facets/RangeFacet.vue'
 import { mapMutations } from 'vuex'
 import CountView from '@/views/CountView'
 import ClickOutside from 'vue-click-outside'
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faMinusCircle } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+library.add(faMinusCircle)
 
 export default Vue.extend({
   name: 'SidebarView',
-  components: { FacetContainer, ToggleFacet, AgeFacet, RangeFacet, CountView },
+  components: { FacetContainer, ToggleFacet, AgeFacet, RangeFacet, CountView, FontAwesomeIcon },
   props: {
     value: {
       type: Boolean,
@@ -172,16 +179,20 @@ export default Vue.extend({
 
 <style scoped lang="scss">
   @import "../scss/variables";
-  #sidebar-view{
+  #sidebar-view {
     padding: 0rem;
+    position: relative;
     transition: max-width 0.3s, padding 0.3s;
-    .sidebar-content{
+    .sidebar-content {
       background-color: $light;
       position: relative;
     }
-    .overflow-hidden{
+    .sidebar-width {
+      min-width: 19rem;
     }
-    .label{
+    .overflow-hidden {
+    }
+    .label {
       position: absolute;
       right: 0;
       padding: 0 1rem;
@@ -198,12 +209,27 @@ export default Vue.extend({
       white-space: nowrap;
       cursor: pointer;
     }
-    &.hide-bar{
+    &.hide-bar {
       .label{
         height: 2rem;
       }
       max-width: 1rem;
       padding: 0;
+    }
+    .hide-sidebar {
+      position: absolute;
+      top: 0;
+      right: 0;
+      padding: 1.25rem;
+      display: inline-block;
+      cursor: pointer;
+      path {
+        transition: fill 0.1s;
+        fill: $secondary;
+      }
+      &:hover path {
+        fill: $warning;
+      }
     }
   }
 </style>
