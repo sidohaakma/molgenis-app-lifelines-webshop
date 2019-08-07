@@ -28,24 +28,24 @@
         <div class="col-12" >
             <ul class="nav nav-tabs">
                 <li class="nav-item">
-                    <a class="nav-link" :class="{active: (activeTab == 'variables')}" href="#" @click="activeTab = 'variables'">
-                      <font-awesome-icon icon="store" /> Shop
+                    <a class="nav-link" :class="{active: (activeTab === 'variables')}" href="#" @click="activeTab = 'variables'">
+                      <font-awesome-icon icon="store"></font-awesome-icon> Shop
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" :class="{active: (activeTab == 'selection')}" href="#" @click="activeTab = 'selection'">
-                      <font-awesome-icon icon="shopping-cart" /> Cart
+                    <a class="nav-link" :class="{active: (activeTab === 'selection')}" href="#" @click="activeTab = 'selection'">
+                      <font-awesome-icon icon="shopping-cart"></font-awesome-icon> Cart
                     </a>
                 </li>
             </ul>
 
             <div v-if="activeTab == 'variables'" class="row mt-3 flex-nowrap">
-              <sidebar-view class="col-sm-auto info-bar" v-model="showSidebar" />
-              <content-view class="col" />
+              <sidebar-view class="col-sm-auto info-bar" v-model="showSidebar"></sidebar-view>
+              <content-view class="col"></content-view>
             </div>
 
             <div v-else>
-                <cart-view class="mt-3" />
+              <cart-view class="mt-3"></cart-view>
             </div>
         </div>
       </div>

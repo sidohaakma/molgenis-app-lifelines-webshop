@@ -64,7 +64,7 @@ describe('CartView.vue', () => {
 
   it('renders an save button that saves the current state', () => {
     const wrapper = shallowMount(CartView, { store, localVue })
-    wrapper.find('#save').trigger('click')
+    wrapper.find('.save').trigger('click')
     expect(actions.save).toHaveBeenCalled()
   })
 })

@@ -4,7 +4,7 @@
       <h3>{{ 'lifelines-webshop-cart-header' | i18n }}</h3>
       <template v-if="selectedVariableIds.length">
         <div class="mb-3" v-if="selectedVariableIds.length > 0">
-          <button id="save" type="button" class="btn btn-primary" @click="save">Save</button>
+          <button type="button" class="btn btn-primary save" @click="save">Save</button>
           <button type="button" class="btn btn-warning ml-2">Order</button>
         </div>
         <h5>Selected variables</h5>

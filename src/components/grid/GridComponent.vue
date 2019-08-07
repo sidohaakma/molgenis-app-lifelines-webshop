@@ -131,8 +131,11 @@ export default Vue.extend({
       if (!this.$refs.grid && !this.$refs.gridheader) {
         const table = this.$refs.grid.getBoundingClientRect()
         const header = this.$refs.gridheader.getBoundingClientRect()
-        if (table.top - header.height < 0) this.stickyTableHeader = true
-        else this.stickyTableHeader = false
+        if (table.top - header.height < 0) {
+          this.stickyTableHeader = true
+        } else {
+          this.stickyTableHeader = false
+        }
       }
     },
     onMouseEnter (className) {
