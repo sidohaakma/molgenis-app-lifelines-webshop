@@ -39,7 +39,7 @@
                 </li>
             </ul>
 
-            <div v-if="activeTab == 'variables'" class="row mt-3 flex-nowrap">
+            <div v-if="activeTab === 'variables'" class="row mt-3 flex-nowrap">
               <sidebar-view class="col-sm-auto info-bar" v-model="showSidebar"></sidebar-view>
               <content-view class="col"></content-view>
             </div>
