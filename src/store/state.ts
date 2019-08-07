@@ -37,6 +37,7 @@ const state: ApplicationState = {
   treeStructure: [],
   treeSelected: -1,
   treeOpenSection: -1,
+  treeOpenPageSection: -1,
   gridSelection: {},
   variantCounts: [],
   participantCount: null,
