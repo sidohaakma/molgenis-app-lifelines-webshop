@@ -128,7 +128,7 @@ export default Vue.extend({
   },
   methods: {
     scroll () {
-      if (!this.isLoading) {
+      if (!this.$refs.grid && !this.$refs.gridheader) {
         const table = this.$refs.grid.getBoundingClientRect()
         const header = this.$refs.gridheader.getBoundingClientRect()
         if (table.top - header.height < 0) this.stickyTableHeader = true
