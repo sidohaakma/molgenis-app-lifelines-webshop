@@ -1,7 +1,8 @@
 /* eslint-disable */
 const en = {
-  "lifelines-webshop-sidebar-header": "1. Select cohorts",
-  "lifelines-webshop-content-header": "2. Select data"
+  "lifelines-webshop-sidebar-header": "Select cohorts",
+  "lifelines-webshop-content-header": "Select data",
+  "lifelines-webshop-cart-header": "Order variables"
 }
 
 module.exports = {

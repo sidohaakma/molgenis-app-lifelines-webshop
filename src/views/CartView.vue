@@ -1,8 +1,12 @@
 <template>
   <div id="cart-view" class="row">
     <div class="col">
-      <h3 class="mb-3">3. Order variables</h3>
+      <h3>{{ 'lifelines-webshop-cart-header' | i18n }}</h3>
       <template v-if="selectedVariableIds.length">
+        <div class="mb-3" v-if="selectedVariableIds.length > 0">
+          <button type="button" class="btn btn-primary save" @click="save">Save</button>
+          <button type="button" class="btn btn-warning ml-2">Order</button>
+        </div>
         <h5>Selected variables</h5>
         <spinner-animation v-show="loading" />
         <ul v-if="!loading">
@@ -12,6 +16,10 @@
             <span>{{ variableAssesments[variableId] }}</span>
           </li>
         </ul>
+        <div class="mb-3" v-if="selectedVariableIds.length > 10">
+          <button type="button" class="btn btn-primary" @click="save">Save</button>
+          <button type="button" class="btn btn-warning ml-2" >Order</button>
+        </div>
       </template>
       <template v-else>
         <h5>No variables selected</h5>
@@ -24,10 +32,14 @@
 <script>
 import Vue from 'vue'
 import SpinnerAnimation from '../components/animations/SpinnerAnimation.vue'
+import { mapActions } from 'vuex'
 
 export default Vue.extend({
   name: 'CartView',
   components: { SpinnerAnimation },
+  methods: {
+    ...mapActions(['save'])
+  },
   computed: {
     gridSelection () {
       return this.$store.state.gridSelection

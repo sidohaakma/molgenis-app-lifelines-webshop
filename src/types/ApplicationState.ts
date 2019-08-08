@@ -29,6 +29,7 @@ export default interface ApplicationState {
   participantCount: number | null
   treeSelected: number
   treeOpenSection: number
+  treeOpenPageSection: number
   gridSelection: GridSelection
   searchTerm: string | null
   filteredSubsections: number[] | null
