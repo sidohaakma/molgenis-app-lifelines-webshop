@@ -128,15 +128,17 @@ export default Vue.extend({
   },
   methods: {
     scroll () {
-      if (!this.$refs.grid && !this.$refs.gridheader) {
-        const table = this.$refs.grid.getBoundingClientRect()
-        const header = this.$refs.gridheader.getBoundingClientRect()
-        if (table.top - header.height < 0) {
-          this.stickyTableHeader = true
-        } else {
-          this.stickyTableHeader = false
-        }
+      const table = this.getTableTop()
+      const header = this.getHeaderHeight()
+      if (table && header) {
+        this.stickyTableHeader = table - header < 0
       }
+    },
+    getTableTop () {
+      return this.$refs.grid ? this.$refs.grid.getBoundingClientRect().top : null
+    },
+    getHeaderHeight () {
+      return this.$refs.gridheader ? this.$refs.gridheader.getBoundingClientRect().height : null
     },
     onMouseEnter (className) {
       const collection = Array.from(document.getElementsByClassName(className))

@@ -41,5 +41,18 @@ describe('GridComponent.vue', () => {
       wrapper.destroy()
       expect(window.removeEventListener).toHaveBeenCalled()
     })
+
+    it('should change table header on scroll', () => {
+      const vm:any = wrapper.vm
+      vm.getTableTop = jest.fn().mockReturnValue(10)
+      vm.getHeaderHeight = jest.fn().mockReturnValue(20)
+      expect(vm.$data.stickyTableHeader).toBeFalsy()
+      vm.scroll()
+      expect(vm.$data.stickyTableHeader).toBeTruthy()
+      vm.getTableTop = jest.fn().mockReturnValue(20)
+      vm.getHeaderHeight = jest.fn().mockReturnValue(10)
+      vm.scroll()
+      expect(vm.$data.stickyTableHeader).toBeFalsy()
+    })
   })
 })
