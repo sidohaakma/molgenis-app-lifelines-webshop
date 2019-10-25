@@ -298,7 +298,4 @@ export default Vue.extend({
     background-color: $secondary;
     border-color: $secondary;
   }
-  .grid-col {
-    height: 90vh;
-  }
 </style>
