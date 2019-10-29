@@ -69,6 +69,7 @@ describe('MainView.vue', () => {
       done()
     }, 0)
   })
+
   it('updates search term and dispatches filter actions when the search term changes', () => {
     const wrapper = shallowMount(MainView, { store, localVue, mocks })
 
