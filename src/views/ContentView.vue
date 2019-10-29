@@ -25,7 +25,7 @@ export default Vue.extend({
   name: 'ContentView',
   components: { TreeView, GridView },
   computed: {
-    ...mapState(['isSignedIn']),
+    ...mapState(['isSignedIn'])
   },
   methods: {
     ...mapMutations(['updateSearchTerm']),

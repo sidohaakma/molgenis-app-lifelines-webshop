@@ -90,5 +90,4 @@ describe('TreeView.vue', () => {
     expect(filterSubsections).toHaveBeenCalled()
     expect(loadGridVariables).toHaveBeenCalled()
   })
-
 })
