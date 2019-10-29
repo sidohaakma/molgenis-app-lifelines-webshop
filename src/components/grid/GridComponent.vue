@@ -138,7 +138,7 @@ export default Vue.extend({
       const table = this.getTableTop()
       const header = this.getHeaderHeight()
       if (table && header) {
-        this.stickyTableHeader = table - header < 0
+        this.stickyTableHeader = table - header < 60
       }
     },
     getTableTop () {
@@ -217,10 +217,10 @@ export default Vue.extend({
   .sticky {
     pointer-events: none;
     position: fixed;
-    top: 0;
+    top: 60px;
     background-color: white;
     background: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(255,255,255,0.9) 75%, rgba(255,255,255,0) 100%);
-    z-index: 1030;
+    z-index: 1020;
   }
   .sticky .assessments-title {
     height: 8rem;
@@ -304,8 +304,5 @@ export default Vue.extend({
     color: white;
     background-color: $secondary;
     border-color: $secondary;
-  }
-  .grid-col {
-    height: 90vh;
   }
 </style>
