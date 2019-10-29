@@ -2,7 +2,7 @@
     <div class="container">
         <h1>Order varibles</h1>
         <div class="row">
-          <div class="col">
+          <div class="col-md-6">
             <form-component
             id="order-form"
             :options="options"
@@ -11,7 +11,11 @@
             :formState="formState">
             </form-component>
             <div>
-              <button class="btn btn-secondary btn-outline" type="button">Cancel</button>
+              <router-link
+                class="btn btn-secondary btn-outline"
+                type="button"
+                to="/"
+                tag="button">Cancel</router-link>
               <button class="btn btn-primary ml-1" type="button">Submit</button>
             </div>
           </div>
