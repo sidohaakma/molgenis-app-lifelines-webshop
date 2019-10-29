@@ -11,7 +11,7 @@ const bannerText = `package-name: ${pkgName}
 package-version: ${pkgVersion}
 build-date: ${buildDate}`
 
-const PROXY_TARGET = 'https://backend-lifelines.test.molgenis.org'
+const PROXY_TARGET = 'https://lifelines.test.molgenis.org'
 
 module.exports = {
   outputDir: 'dist',
