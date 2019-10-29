@@ -33,6 +33,10 @@ module.exports = {
         'target': PROXY_TARGET,
         'keepOrigin': true
       },
+      '^/menu': {
+        'target': PROXY_TARGET,
+        'keepOrigin': true
+      },
       '^/app-ui-context': {
         'target': PROXY_TARGET,
         'keepOrigin': true
