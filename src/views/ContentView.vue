@@ -1,13 +1,16 @@
 <template>
   <div id="content-view">
       <div class="row flex-nowrap mb-5" >
-        <div class="col-sm-auto info-bar" >
-          <h3>{{ 'lifelines-webshop-content-header' | i18n }}</h3>
-          <tree-view  />
-        </div>
-        <div class="col" >
-          <grid-view />
-        </div>
+        <template>
+          <div class="col-sm-auto info-bar" >
+            <h3 v-if="isSignedIn">{{ 'lifelines-webshop-content-header' | i18n }}</h3>
+            <h3 v-else>{{ 'lifelines-webshop-signed-out-content-header' | i18n }}</h3>
+            <tree-view  />
+          </div>
+          <div class="col" >
+            <grid-view />
+          </div>
+        </template>
       </div>
   </div>
 </template>
@@ -21,6 +24,9 @@ import { mapMutations, mapActions, mapState } from 'vuex'
 export default Vue.extend({
   name: 'ContentView',
   components: { TreeView, GridView },
+  computed: {
+    ...mapState(['isSignedIn']),
+  },
   methods: {
     ...mapMutations(['updateSearchTerm']),
     ...mapActions(['filterSections', 'filterSubsections', 'loadGridVariables']),

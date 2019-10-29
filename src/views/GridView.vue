@@ -11,6 +11,7 @@
       :gridVariables="gridVariables"
       :gridSelections="gridSelections"
       :isLoading="isGridLoading"
+      :isSignedIn="isSignedIn"
       @gridRowToggle="handleGridRowToggle"
       @gridColumnToggle="handleGridColumnToggle"
       @gridCellToggle="handleGridCellToggle"
@@ -29,7 +30,7 @@ export default Vue.extend({
   name: 'GridView',
   components: { GridComponent },
   computed: {
-    ...mapState(['treeSelected', 'gridVariables', 'isGridLoading']),
+    ...mapState(['treeSelected', 'gridVariables', 'isGridLoading', 'isSignedIn']),
     ...mapGetters(['rsql', 'gridAssessments', 'grid', 'gridSelections', 'numberOfSelectedItems']),
     isEmptySearchResult () {
       return this.$store.getters.isSearchResultEmpty
