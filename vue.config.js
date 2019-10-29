@@ -29,7 +29,7 @@ module.exports = {
     proxy: process.env.NODE_ENV === 'production' ? undefined : {
       '^/api': {
         // 'target': 'http://localhost:8080'
-        'target': 'https://lifelines.dev.molgenis.org',
+        'target': 'https://lifelines.test.molgenis.org/',
         'keepOrigin': true
       }
     },
