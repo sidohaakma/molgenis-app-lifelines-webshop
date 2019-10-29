@@ -63,7 +63,7 @@ describe('GridComponent.vue', () => {
 
     beforeEach(() => {
       props = {
-        grid: [[1, 2],[3, 4]],
+        grid: [[1, 2], [3, 4]],
         gridAssessments: [],
         gridVariables: [{
           name: 'a',
@@ -73,7 +73,7 @@ describe('GridComponent.vue', () => {
           name: 'b',
           id: 102
         }],
-        gridSelections: [[false, false],[false, false]],
+        gridSelections: [[false, false], [false, false]],
         isLoading: false,
         isSignedIn: false
       }
