@@ -12,7 +12,7 @@ Vue.config.productionTip = false
 Vue.use(i18n, {
   lng: 'en',
   fallbackLng: 'en',
-  namespace: ['lifelines-webshop'],
+  namespace: ['lifelines-webshop', 'ui-form'],
   callback () {
     new Vue({
       store,

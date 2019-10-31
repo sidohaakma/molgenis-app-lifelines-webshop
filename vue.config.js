@@ -77,6 +77,12 @@ module.exports = {
       app.get('/api/v2/i18n/lifelines-webshop', function (req, res) {
         res.json(i18n.en)
       })
+      app.get('/api/v2/i18n/ui-form/en', function (req, res) {
+        res.json(i18n.en)
+      })
+      app.get('/api/v2/i18n/ui-form', function (req, res) {
+        res.json(i18n.en)
+      })
       app.get('/app-ui-context', function (req, res) {
         res.json(require('./tests/e2e/resources/uiContext.js'))
       })

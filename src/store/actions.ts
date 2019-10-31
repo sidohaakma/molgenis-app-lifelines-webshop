@@ -8,6 +8,9 @@ import { Cart } from '@/types/Cart'
 import ApplicationState from '@/types/ApplicationState'
 import router from '@/router'
 import Getters from '@/types/Getters'
+import { buildFormData } from '@/services/orderService.ts'
+
+const generateOderId = () => Math.floor(Math.random() * 1000000)
 
 export default {
   loadSections: tryAction(async ({ commit, state } : any) => {
@@ -152,5 +155,44 @@ export default {
     commit('updateFacetFilter', facetFilter)
     commit('updateGridSelection', gridSelection)
     commit('setToast', { type: 'success', message: 'Loaded order with id ' + id })
+  }),
+  submitOrder: tryAction(async ({ state, commit }: {state: ApplicationState, commit: any}, orderFormData: {formData: any, formFields:any }) => {
+    const { formData, formFields } = { ...orderFormData }
+    const fields = [...formFields]
+    fields.push({ id: 'contents', type: 'text' })
+    formData.contents = JSON.stringify(toCart(state))
+
+    // Generate 'unique' order number
+    formData.orderNumber = generateOderId()
+    fields.push({ id: 'orderNumber', type: 'text' })
+
+    const options = {
+      headers: {
+        'Accept': 'application/json',
+        'X-Requested-With': 'XMLHttpRequest'
+      },
+      body: buildFormData(formData, fields),
+      method: 'POST',
+      credentials: 'same-origin'
+    }
+
+    let reTryCount = 0
+
+    const trySubmission = () => {
+      reTryCount++
+      options.body.set('orderNumber', generateOderId().toString())
+      return api.post('/api/v1/lifelines_cart', options, true).then(() => {
+        return 'success'
+      }, (error:any) => {
+        // OrderNumber must be unique, just guess untill we find one
+        if (reTryCount < 10) {
+          return trySubmission()
+        } else {
+          return error
+        }
+      })
+    }
+
+    return trySubmission()
   })
 }
