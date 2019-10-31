@@ -1,4 +1,5 @@
 import { shallowMount, createLocalVue } from '@vue/test-utils'
+import VueRouter from 'vue-router'
 import CartView from '@/views/CartView.vue'
 import Vuex from 'vuex'
 import Vue from 'vue'
@@ -7,6 +8,7 @@ Vue.filter('i18n', (value: string) => value) // Add dummy filter for i18n
 describe('CartView.vue', () => {
   const localVue = createLocalVue()
   localVue.use(Vuex)
+  localVue.use(VueRouter)
   let store: any
   let actions: any
 
