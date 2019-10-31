@@ -33,7 +33,7 @@
                 class="btn btn-primary ml-1"
                 type="submit"
                 @click.prevent="onSubmit"
-                :disabled="formState.$invalid && formState.$touched">
+                :disabled="(formState.$invalid && formState.$touched) || formState.$pending">
                 Submit
               </button>
 
