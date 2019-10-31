@@ -1,5 +1,5 @@
 <template>
-  <page-component id="app">
+  <page-component id="app" @contextLoaded="handleContextLoaded">
     <router-view/>
   </page-component>
 </template>
@@ -11,7 +11,12 @@ import '../node_modules/@molgenis/molgenis-ui-context/public/sticky-footer.css'
 
 export default Vue.extend({
   name: 'app',
-  components: { PageComponent }
+  components: { PageComponent },
+  methods: {
+    handleContextLoaded (context) {
+      console.log(context)
+    }
+  }
 })
 </script>
 
