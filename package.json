@@ -63,6 +63,9 @@
     "typescript": "^3.4.3",
     "vue-template-compiler": "^2.5.21"
   },
+  "resolutions": {
+    "@vue/cli-plugin-e2e-nightwatch/chromedriver": "77.0.0"
+  },
   "release": {
     "plugins": [
       "@semantic-release/commit-analyzer",
