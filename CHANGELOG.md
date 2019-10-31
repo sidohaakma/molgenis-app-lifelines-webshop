@@ -1,3 +1,22 @@
+# [0.5.0](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v0.4.0...v0.5.0) (2019-10-31)
+
+
+### Bug Fixes
+
+* fix typo ([daab8e4](https://github.com/molgenis/molgenis-app-lifelines-webshop/commit/daab8e4))
+* **e2e:** stub context endpoint ([2bed737](https://github.com/molgenis/molgenis-app-lifelines-webshop/commit/2bed737))
+* IE11 fixes for tree view and select cohorts ([#87](https://github.com/molgenis/molgenis-app-lifelines-webshop/issues/87)) ([3b8b291](https://github.com/molgenis/molgenis-app-lifelines-webshop/commit/3b8b291))
+* should change table header on scroll test ([c91ebb8](https://github.com/molgenis/molgenis-app-lifelines-webshop/commit/c91ebb8))
+* some small isues ([ece5537](https://github.com/molgenis/molgenis-app-lifelines-webshop/commit/ece5537))
+
+
+### Features
+
+* add molgenis menu and footer ([e57e9ca](https://github.com/molgenis/molgenis-app-lifelines-webshop/commit/e57e9ca))
+* added better looking icons ([832bf64](https://github.com/molgenis/molgenis-app-lifelines-webshop/commit/832bf64))
+* proxy menu items ([e253baf](https://github.com/molgenis/molgenis-app-lifelines-webshop/commit/e253baf))
+* read only mode for anonymous user ([0ed3db1](https://github.com/molgenis/molgenis-app-lifelines-webshop/commit/0ed3db1))
+
 # [0.4.0](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v0.3.0...v0.4.0) (2019-07-19)
 
 
