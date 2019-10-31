@@ -37,5 +37,5 @@ export default interface ApplicationState {
   filteredSubsections: number[] | null
   filteredSections: number[] | null
   isGridLoading: boolean,
-  orders: Order[]
+  orders: Order[] | null
 }

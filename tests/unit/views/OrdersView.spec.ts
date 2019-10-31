@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import OrdersView from '@/views/OrdersView.vue'
 import moment from 'moment'
 import Vuex from 'vuex'
+import orders from '../fixtures/orders'
 
 describe('OrdersView.vue', () => {
   const localVue = createLocalVue()
@@ -20,14 +21,7 @@ describe('OrdersView.vue', () => {
     let state: any
 
     state = {
-      orders: [
-        {
-          id: 'asfaghresfb',
-          name: 'Rubbish',
-          submissionDate: '2019-09-02',
-          state: 'Draft'
-        }
-      ]
+      orders
     }
 
     store = new Vuex.Store({

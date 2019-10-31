@@ -14,8 +14,14 @@ const generateOderId = () => Math.floor(Math.random() * 1000000)
 
 export default {
   loadOrders: tryAction(async ({ commit, state }: any) => {
+    commit('setOrders', null)
     const response = await api.get('/api/v2/lifelines_cart?num=10000')
     commit('setOrders', response.items)
+  }),
+  deleteOrder: tryAction(async ({ dispatch, commit }: any, orderId: string) => {
+    commit('setOrders', null)
+    await api.delete_(`/api/v2/lifelines_cart/${orderId}`)
+    dispatch('loadOrders')
   }),
   loadSections: tryAction(async ({ commit, state } : any) => {
     if (!Object.keys(state.sections).length) {
