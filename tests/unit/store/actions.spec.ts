@@ -189,7 +189,7 @@ jest.mock('@/router', () => ({
 }))
 
 describe('actions', () => {
-  describe.only('loadOrders', () => {
+  describe('loadOrders', () => {
     it('loads the orders and commits them', async (done) => {
       const commit = jest.fn()
       await actions.loadOrders({ state: {}, commit })
