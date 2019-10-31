@@ -10,6 +10,8 @@ import router from '@/router'
 import Getters from '@/types/Getters'
 import { buildFormData } from '@/services/orderService.ts'
 
+const generateOderId = () => Math.floor(Math.random() * 1000000)
+
 export default {
   loadSections: tryAction(async ({ commit, state } : any) => {
     if (!Object.keys(state.sections).length) {
@@ -161,7 +163,7 @@ export default {
     formData.contents = JSON.stringify(toCart(state))
 
     // Generate 'unique' order number
-    formData.orderNumber = Math.floor(Math.random() * 1000000)
+    formData.orderNumber = generateOderId()
     fields.push({ id: 'orderNumber', type: 'text' })
 
     const options = {
@@ -178,7 +180,7 @@ export default {
 
     const trySubmission = () => {
       reTryCount++
-      options.body.set('orderNumber', Math.floor(Math.random() * 1000000).toString())
+      options.body.set('orderNumber', generateOderId().toString())
       return api.post('/api/v1/lifelines_cart', options, true).then(() => {
         return 'success'
       }, (error:any) => {

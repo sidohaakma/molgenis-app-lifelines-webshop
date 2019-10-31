@@ -2,21 +2,21 @@
     <div class="container">
         <h1>Order varibles</h1>
         <toast-component
-        class="toast-component mt-2"
-        v-if="toast"
-        :type="toast.type"
-        :message="toast.message"
-        @toastCloseBtnClicked="clearToast">
-      </toast-component>
+          class="toast-component mt-2"
+          v-if="toast"
+          :type="toast.type"
+          :message="toast.message"
+          @toastCloseBtnClicked="clearToast">
+        </toast-component>
         <div class="row">
           <div class="col-md-6">
             <form-component
-            id="order-form"
-            :options="options"
-            :formFields="formFields"
-            :initialFormData="initialFormData"
-            :formState="formState"
-            @valueChange="onValueChanged">
+              id="order-form"
+              :options="options"
+              :formFields="formFields"
+              :initialFormData="initialFormData"
+              :formState="formState"
+              @valueChange="onValueChanged">
             </form-component>
             <div>
               <router-link
@@ -33,7 +33,7 @@
                 class="btn btn-primary ml-1"
                 type="submit"
                 @click.prevent="onSubmit"
-                :disabled="formState.$invalid && formState.$touched">
+                :disabled="(formState.$invalid && formState.$touched) || formState.$pending">
                 Submit
               </button>
 
@@ -47,7 +47,7 @@
               </button>
 
               <span v-if="!isSaving && formState.$invalid && formState.$touched" class="alert text-danger">
-                  invalid
+                Invalid
               </span>
 
             </div>
