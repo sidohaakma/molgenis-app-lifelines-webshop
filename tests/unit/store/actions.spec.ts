@@ -487,17 +487,17 @@ describe('actions', () => {
       })
     })
 
-    // describe('when the submission not succesfull', () => {
-    //   let result: any
-    //   beforeEach(async (done) => {
-    //     api.post.mockRejectedValue('error')
-    //     result = await actions.submitOrder({ commit, state }, {formData, formFields })
-    //     done()
-    //   })
+    describe('when the submission not succesfull', () => {
+      let result: any
+      beforeEach(async (done) => {
+        post.mockRejectedValue('error')
+        result = await actions.submitOrder({ commit, state }, { formData, formFields })
+        done()
+      })
 
-    //   it('should resturn error', () => {
-    //     expect(result).toEqual('error')
-    //   })
-    // })
+      it('should resturn error', () => {
+        expect(result).toEqual('error')
+      })
+    })
   })
 })

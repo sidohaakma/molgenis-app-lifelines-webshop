@@ -160,7 +160,7 @@ export default {
     fields.push({ id: 'contents', type: 'text' })
     formData.contents = JSON.stringify(toCart(state))
 
-    // Generate 'unque' order number
+    // Generate 'unique' order number
     formData.orderNumber = Math.floor(Math.random() * 1000000)
     fields.push({ id: 'orderNumber', type: 'text' })
 
@@ -176,21 +176,21 @@ export default {
 
     let reTryCount = 0
 
-    const reTrySubmission = () => {
+    const trySubmission = () => {
       reTryCount++
       options.body.set('orderNumber', Math.floor(Math.random() * 1000000).toString())
-      return api.post('/api/v1/lifelines_cart', options, true)
+      return api.post('/api/v1/lifelines_cart', options, true).then(() => {
+        return 'success'
+      }, (error:any) => {
+        // OrderNumber must be unique, just guess untill we find one
+        if (reTryCount < 10) {
+          return trySubmission()
+        } else {
+          return error
+        }
+      })
     }
 
-    return api.post('/api/v1/lifelines_cart', options, true).then(() => {
-      return 'success'
-    }, (err:any) => {
-      // orderNumber must be unique, just guess untill we find one
-      if (reTryCount < 10) {
-        return reTrySubmission()
-      } else {
-        return err
-      }
-    })
+    return trySubmission()
   })
 }
