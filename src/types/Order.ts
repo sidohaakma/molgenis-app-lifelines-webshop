@@ -14,7 +14,7 @@ export interface File {
 export interface Order {
     id: string
     name?: string
-    submissionDate: Date
+    submissionDate: string
     projectNumber?: string
     orderId?: string
     applicationForm?: File

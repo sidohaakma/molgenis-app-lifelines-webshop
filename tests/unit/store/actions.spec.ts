@@ -6,6 +6,7 @@ import emptyState from '@/store/state'
 // @ts-ignore
 import { post } from '@molgenis/molgenis-api-client'
 import ApplicationState from '@/types/ApplicationState'
+import { Order, OrderState } from '@/types/Order'
 
 const cart: Cart = {
   selection: [{
@@ -17,7 +18,26 @@ const cart: Cart = {
   }
 }
 const cartContents = JSON.stringify(cart)
+
+const orders: Order[] = [{
+  id: 'edcba',
+  state: OrderState.Draft,
+  submissionDate: '2019-10-31T13:48:12Z'
+}, {
+  id: 'abcde',
+  state: OrderState.Submitted,
+  submissionDate: '2019-10-30T13:25:49Z',
+  name: 'My draft order',
+  applicationForm: {
+    filename: 'Motivation.pdf',
+    id: 'aaaac3rcetmgfmudsodb3laaay',
+    url: 'https://lifelines.test.molgenis.org/files/aaaac3rcetmgfmudsodb3laaay'
+  } }]
+
 const mockResponses: {[key:string]: Object} = {
+  '/api/v2/lifelines_cart?num=10000': {
+    items: orders
+  },
   '/api/v2/lifelines_cart/fghij': {
     contents: cartContents
   },
@@ -184,6 +204,15 @@ jest.mock('@/router', () => ({
 }))
 
 describe('actions', () => {
+  describe.only('loadOrders', () => {
+    it('loads the orders and commits them', async (done) => {
+      const commit = jest.fn()
+      await actions.loadOrders({ state: {}, commit })
+      expect(commit).toHaveBeenCalledWith('setOrders', orders)
+      done()
+    })
+  })
+
   describe('loadSections', () => {
     it('fetch the sections and commits them', async (done) => {
       const commit = jest.fn()
