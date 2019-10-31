@@ -6,6 +6,7 @@ import GridSelection from '@/types/GridSelection'
 import Filter from './Filter'
 import { Section } from '@/types/Section.ts'
 import { TreeParentInternal } from '@/types/Tree'
+import { Order } from './Order'
 
 export type Toast = {
   type: 'danger' | 'success',
@@ -35,5 +36,6 @@ export default interface ApplicationState {
   searchTerm: string | null
   filteredSubsections: number[] | null
   filteredSections: number[] | null
-  isGridLoading: boolean
+  isGridLoading: boolean,
+  orders: Order[]
 }

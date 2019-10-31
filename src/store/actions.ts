@@ -13,13 +13,18 @@ import { buildFormData } from '@/services/orderService.ts'
 const generateOderId = () => Math.floor(Math.random() * 1000000)
 
 export default {
+  loadOrders: tryAction(async ({ commit, state }: any) => {
+    const response = await api.get('/api/v2/lifelines_cart?num=10000')
+    commit('setOrders', response.items)
+  }),
   loadSections: tryAction(async ({ commit, state } : any) => {
     if (!Object.keys(state.sections).length) {
       const response = await api.get('/api/v2/lifelines_section?num=10000')
-      commit('updateSections', response.items.reduce((sections: { [key:number]: Section }, item:any) => {
-        sections[item.id] = item
-        return sections
-      }, {}))
+      commit('updateSections'
+        , response.items.reduce((sections: { [key:number]: Section }, item:any) => {
+          sections[item.id] = item
+          return sections
+        }, {}))
     }
   }),
   loadSubSections: tryAction(async ({ commit, state } : any) => {
