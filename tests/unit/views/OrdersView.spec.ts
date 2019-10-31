@@ -6,8 +6,8 @@ import Vuex from 'vuex'
 
 describe('OrdersView.vue', () => {
   const localVue = createLocalVue()
-  localVue.filter('moment', function (value: string, format: string) { return moment(value).format(format); });
-  localVue.filter('i18n', (value: string) => value) 
+  localVue.filter('moment', function (value: string, format: string) { return moment(value).format(format) })
+  localVue.filter('i18n', (value: string) => value)
 
   localVue.use(Vuex)
   localVue.use(VueRouter)
@@ -37,7 +37,6 @@ describe('OrdersView.vue', () => {
   })
 
   it('renders orders view', () => {
-    
     const wrapper = shallowMount(OrdersView, { store, localVue })
     expect(wrapper.find('#orders-view').exists()).toBeTruthy()
   })
