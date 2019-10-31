@@ -13,7 +13,7 @@ import { buildFormData } from '@/services/orderService.ts'
 const generateOderId = () => Math.floor(Math.random() * 1000000)
 
 export default {
-  loadOrders: tryAction(async ({ commit, state }: any) => {
+  loadOrders: tryAction(async ({ commit }: any) => {
     commit('setOrders', null)
     const response = await api.get('/api/v2/lifelines_cart?num=10000')
     commit('setOrders', response.items)
