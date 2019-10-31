@@ -1,3 +1,15 @@
+# [0.6.0](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v0.5.0...v0.6.0) (2019-10-31)
+
+
+### Bug Fixes
+
+* disable form submit while form is revalidating ([e23dc4b](https://github.com/molgenis/molgenis-app-lifelines-webshop/commit/e23dc4b))
+
+
+### Features
+
+* order from view ([992bf68](https://github.com/molgenis/molgenis-app-lifelines-webshop/commit/992bf68))
+
 # [0.5.0](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v0.4.0...v0.5.0) (2019-10-31)
 
 
