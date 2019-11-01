@@ -51,7 +51,7 @@ library.add(faEdit, faDownload, faTrash)
 
 export default Vue.extend({
   components: { FontAwesomeIcon, SpinnerAnimation, ToastComponent },
-  created () {
+  mounted () {
     this.loadOrders()
   },
   data () {
