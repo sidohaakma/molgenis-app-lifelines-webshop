@@ -7,6 +7,7 @@ import GridSelection from '@/types/GridSelection'
 import Filter from '@/types/Filter'
 import { Section } from '@/types/Section.ts'
 import { TreeChild, TreeParentInternal } from '@/types/Tree'
+import { Order } from '@/types/Order'
 
 export default {
   setIsSignedIn (state: ApplicationState, isSignedIn: boolean) {
@@ -17,6 +18,9 @@ export default {
   },
   clearToast (state: ApplicationState) {
     state.toast = null
+  },
+  setOrders (state: ApplicationState, orders: Order[]) {
+    state.orders = orders
   },
   updateFacetFilter (state: ApplicationState, facetFilter: Filter) {
     state.facetFilter = facetFilter

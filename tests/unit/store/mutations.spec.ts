@@ -1,7 +1,16 @@
 import mutations from '@/store/mutations'
 import state from '@/store/state'
+import orders from '../fixtures/orders'
 
 describe('mutations', () => {
+  describe('setOrders', () => {
+    it('sets the orders', () => {
+      const baseAppState = { ...state }
+      mutations.setOrders(baseAppState, orders)
+      expect(baseAppState.orders).toEqual(orders)
+    })
+  })
+
 
   describe('setIsSignedIn', () => {
     it('sets isSignedIn bool to value passed', () => {
