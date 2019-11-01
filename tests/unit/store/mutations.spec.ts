@@ -2,6 +2,15 @@ import mutations from '@/store/mutations'
 import state from '@/store/state'
 
 describe('mutations', () => {
+
+  describe('setIsSignedIn', () => {
+    it('sets isSignedIn bool to value passed', () => {
+      const baseAppState = { ...state }
+      mutations.setIsSignedIn(baseAppState, false)
+      expect(baseAppState.isSignedIn).toEqual(false)
+    })
+  })
+
   describe('updateParticipantCount', () => {
     it('updates participant count', () => {
       const baseAppState = { ...state }

@@ -9,6 +9,9 @@ import { Section } from '@/types/Section.ts'
 import { TreeChild, TreeParentInternal } from '@/types/Tree'
 
 export default {
+  setIsSignedIn (state: ApplicationState, isSignedIn: boolean) {
+    state.isSignedIn = isSignedIn
+  },
   setToast (state: ApplicationState, toast: Toast) {
     state.toast = toast
   },
