@@ -59,4 +59,11 @@ describe('OrdersView.vue', () => {
     store.commit('setOrders', orders)
     expect(wrapper.find('table').isVisible()).toBeTruthy()
   })
+
+  it('checks content of order tables', () => {
+    const wrapper = shallowMount(OrdersView, { store, localVue })
+    store.commit('setOrders', orders)
+    expect(wrapper.find('table')).toMatchSnapshot()
+  })
+
 })
