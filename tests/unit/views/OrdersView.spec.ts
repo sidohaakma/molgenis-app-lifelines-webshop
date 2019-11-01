@@ -9,7 +9,7 @@ import mutations from '@/store/mutations'
 
 describe('OrdersView.vue', () => {
   const localVue = createLocalVue()
-  localVue.filter('moment', function (value: string, format: string) { return moment(value).format(format) })
+  localVue.filter('moment', function (value: string, format: string) { return moment(value).utc().format(format) })
   localVue.filter('i18n', (value: string) => `#${value}#`)
 
   localVue.use(Vuex)
