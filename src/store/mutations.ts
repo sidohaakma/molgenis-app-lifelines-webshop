@@ -19,6 +19,21 @@ export default {
   clearToast (state: ApplicationState) {
     state.toast = null
   },
+  setOrderDetails (state: ApplicationState, order: Order) {
+    state.order.name = order.name
+    state.order.projectNumber = order.projectNumber
+    state.order.applicationForm = order.applicationForm
+  },
+  restoreOrderState (state: ApplicationState, loadOrderResponse: Order) {
+    state.order = {
+      orderNumber: loadOrderResponse.orderNumber,
+      name: loadOrderResponse.name,
+      submissionDate: loadOrderResponse.submissionDate,
+      projectNumber: loadOrderResponse.projectNumber,
+      applicationForm: loadOrderResponse.applicationForm,
+      state: loadOrderResponse.state
+    }
+  },
   setOrders (state: ApplicationState, orders: Order[]) {
     state.orders = orders
   },
