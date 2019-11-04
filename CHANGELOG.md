@@ -1,3 +1,10 @@
+## [0.8.1](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v0.8.0...v0.8.1) (2019-11-04)
+
+
+### Bug Fixes
+
+* select all button ([ef98ed4](https://github.com/molgenis/molgenis-app-lifelines-webshop/commit/ef98ed4))
+
 # [0.8.0](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v0.7.0...v0.8.0) (2019-11-01)
 
 
