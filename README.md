@@ -1,13 +1,5 @@
 # molgenis-app-lifelines-webshop
 
-## i18n
-
-For development and testing you can add your translations to `i18n.schemas.js`
-For production make sure to add the translations to the molgenis entity `Localization` using `lifelines-webshop` as a namespace. 
-
-Tip: 
-Use `i18n.schemas.js` to create the `Localization` entities. For `msgid` add the schema key (for example: "lifelines-webshop-sidebar-header")
-The namespace should be `lifelines-webshop` and than add all of the needed translations.
 
 ## Project setup
 ```
@@ -67,6 +59,13 @@ You need to configure a couple of things to run this app in production.
 
   base: process.env.NODE_ENV === 'production' ? packageJson.name : process.env.BASE_URL,
   ```
+ - **i18n**
+  For development and testing you can add your translations to `i18n.schemas.js`
+  For production make sure to add the translations to the molgenis entity `Localization` using `lifelines-webshop` as a namespace. 
+
+  >tip: 
+  Use `i18n.schemas.js` to create the `Localization` entities. For `msgid` add the schema key (for example: "lifelines-webshop-sidebar-header")
+  The namespace should be `lifelines-webshop` and than add all of the needed translations.
 
 #### Compile and minify
 ```
@@ -91,6 +90,14 @@ yarn run test:e2e
 ### Run your unit tests
 ```
 yarn run test:unit
+```
+
+## Deployment
+You need to run the commander script to setup the server:
+
+```python3.6
+cp ~/molgenis-app-lifelines-webshop/deployment/lifelines ~/.mcmd/scripts/
+mcmd run lifelines -i
 ```
 
 ## Workflow
