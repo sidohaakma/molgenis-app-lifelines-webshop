@@ -10,20 +10,39 @@ describe('OrderView', () => {
   let actions: any
   let state: any
   let saveMock: any
+  let submitMock: any
   let mutations: any
+
+  const touchedState = {
+    projectNumber: {
+      $touched: true
+    },
+    name: {
+      $touched: true
+    },
+    applicationForm: {
+      $touched: true
+    }
+  }
 
   beforeEach(() => {
     localVue = createLocalVue()
     localVue.use(Vuex)
     localVue.use(VueRouter)
     saveMock = jest.fn()
+    submitMock = jest.fn()
     state = {
       toast: null,
       order: {},
-      orderFormFields: []
+      orderFormFields: [
+        { id: 'projectNumber' },
+        { id: 'name' },
+        { id: 'applicationForm' }
+      ]
     }
     actions = {
-      save: saveMock
+      save: saveMock,
+      submit: submitMock
     }
     mutations = {
       setToast: jest.fn(),
@@ -53,27 +72,17 @@ describe('OrderView', () => {
     })
   })
 
-  describe('on onSubmit', () => {
+  describe('on onSave', () => {
     let formState: any
     beforeEach(() => {
-      formState = {
-        projectNumber: {
-          $touched: true
-        },
-        name: {
-          $touched: true
-        },
-        applicationForm: {
-          $touched: true
-        }
-      }
+      formState = { ...touchedState }
     })
 
     describe('when the form is valid', () => {
       beforeEach((done) => {
         formState.$valid = true
         wrapper.setData({ formState: formState })
-        wrapper.vm.onSubmit()
+        wrapper.vm.onSave()
         done()
       })
 
@@ -86,12 +95,46 @@ describe('OrderView', () => {
       beforeEach((done) => {
         formState.$valid = false
         wrapper.setData({ formState: formState })
+        wrapper.vm.onSave()
+        done()
+      })
+
+      it('should still call the save action', () => {
+        expect(saveMock).toHaveBeenCalled()
+      })
+    })
+  })
+
+  describe('on onSubmit', () => {
+    let formState: any
+    beforeEach(() => {
+      formState = { ...touchedState }
+    })
+
+    describe('when the form is valid', () => {
+      beforeEach((done) => {
+        formState.$valid = true
+        wrapper.setData({ formState: formState })
         wrapper.vm.onSubmit()
         done()
       })
 
-      it('should not call the save action', () => {
-        expect(saveMock).not.toHaveBeenCalled()
+      it('should call the save action', () => {
+        expect(submitMock).toHaveBeenCalled()
+      })
+    })
+
+    describe('when the form is invalid', () => {
+      beforeEach((done) => {
+        submitMock.mockReset()
+        formState.$valid = false
+        wrapper.setData({ formState: formState })
+        wrapper.vm.onSubmit()
+        done()
+      })
+
+      it('should not call the submit action', () => {
+        expect(submitMock).not.toHaveBeenCalled()
       })
     })
   })
