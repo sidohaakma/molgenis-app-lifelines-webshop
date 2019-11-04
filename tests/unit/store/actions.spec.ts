@@ -553,4 +553,74 @@ describe('actions', () => {
       })
     })
   })
+
+  describe('submit', () => {
+    describe('if orderNumber is set', () => {
+      it('submits the order', async (done) => {
+        const commit = jest.fn()
+        const state: ApplicationState = {
+          ...emptyState,
+          order: {
+            orderNumber: '12345',
+            name: null,
+            projectNumber: null,
+            applicationForm: null,
+            state: OrderState.Draft,
+            submissionDate: 'submissionDate'
+          }
+        }
+        post.mockResolvedValue('success')
+        await actions.submit({ state, commit })
+        expect(commit).toHaveBeenCalledWith('setToast', { type: 'success', message: 'Submitted order with order number 12345' })
+        done()
+      })
+    })
+    describe('if orderNumber not yet set', () => {
+      it('submits the order', async (done) => {
+        const commit = jest.fn()
+        const state: ApplicationState = {
+          ...emptyState,
+          order: {
+            orderNumber: null,
+            name: null,
+            projectNumber: null,
+            applicationForm: null,
+            state: OrderState.Draft,
+            submissionDate: 'submissionDate'
+          }
+        }
+        post.mockResolvedValue('success')
+        await actions.submit({ state, commit })
+        expect(commit).toHaveBeenCalledWith('setToast', { type: 'success', message: 'Submitted order with order number 12345' })
+        done()
+      })
+    })
+    describe('when the submission not succesfull', () => {
+      let result: any
+      let commit: any
+      let state: ApplicationState
+      beforeEach(async (done) => {
+        commit = jest.fn()
+        state = {
+          ...emptyState,
+          order: {
+            orderNumber: null,
+            name: null,
+            projectNumber: null,
+            applicationForm: null,
+            state: OrderState.Draft,
+            submissionDate: 'submissionDate'
+          }
+        }
+        post.mockRejectedValue('error')
+        result = await actions.submit({ commit, state })
+        done()
+      })
+
+      it('should resturn undefined', () => {
+        expect(result).toBeUndefined()
+        expect(commit).not.toHaveBeenCalledWith('setToast', { type: 'success', message: 'Submitted order with order number 12345' })
+      })
+    })
+  })
 })
