@@ -10,6 +10,7 @@ import router from '@/router'
 import Getters from '@/types/Getters'
 import { buildFormData, generateOrderNumber } from '@/services/orderService.ts'
 import FormField from '@/types/FormField'
+import { OrderState } from '@/types/Order'
 
 const buildPostOptions = (formData: any, formFields: FormField[]) => {
   return {
@@ -205,7 +206,7 @@ export default {
     if (state.order.orderNumber) {
       await updateOrder(formData, formFields)
       commit('setToast', { type: 'success', message: 'Saved order with order number ' + state.order.orderNumber })
-      return state.order.orderNumber
+      router.push({ name: 'load', params: { orderNumber: state.order.orderNumber } })
     } else {
       const orderNumber = await createOrder(formData, formFields).catch(() => {
         return Promise.reject(new Error('Failed to create order'))
@@ -215,6 +216,26 @@ export default {
       commit('setToast', { type: 'success', message: 'Saved order with order number ' + orderNumber })
       router.push({ name: 'load', params: { orderNumber: orderNumber } })
     }
+  }),
+  submit: tryAction(async ({ state, commit }: {state: ApplicationState, commit: any}) => {
+    const formFields = [...state.orderFormFields, { id: 'contents', type: 'text' }]
+    const formData = { ...state.order, ...{ contents: JSON.stringify(toCart(state)) } }
+    // ts enums are numbers, the backends expects strings
+    // @ts-ignore
+    formData.state = OrderState[OrderState.Submitted]
+    let orderNumber = state.order.orderNumber
+
+    if (orderNumber) {
+      await updateOrder(formData, formFields)
+    } else {
+      orderNumber = await createOrder(formData, formFields).catch(() => {
+        return Promise.reject(new Error('Failed to submit order'))
+      })
+    }
+    const newOrderResponse = await api.get(`/api/v2/lifelines_order/${orderNumber}`)
+    commit('restoreOrderState', newOrderResponse)
+    commit('setToast', { type: 'success', message: 'Submitted order with order number ' + orderNumber })
+    router.push({ name: 'orders' })
   }),
   load: tryAction(async ({ state, commit }: {state: ApplicationState, commit: any}, orderNumber: string) => {
     const response = await api.get(`/api/v2/lifelines_order/${orderNumber}`)
