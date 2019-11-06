@@ -55,10 +55,10 @@ describe('MainView.vue', () => {
   it('should show a toast telling the user to signin to select/order if the user is not signed in an no other toest is shown', () => {
     state.toast = null
     state.isSignedIn = false
-    
+
     shallowMount(MainView, { store, localVue, mocks })
 
-    expect(setToastMock).toHaveBeenCalledWith(expect.anything(), {'message': 'Please sign in to select and order variables', 'type': 'info'})
+    expect(setToastMock).toHaveBeenCalledWith(expect.anything(), { 'message': 'Please sign in to select and order variables', 'type': 'info' })
   })
 
   it('loads an order, after loading variables and assessments, if a orderNumber route param is present', (done) => {
@@ -73,8 +73,4 @@ describe('MainView.vue', () => {
       done()
     }, 0)
   })
-
-  // describe('If the user is not signed in and no other toasts are shown', () => {
-    
-  // })
 })
