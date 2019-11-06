@@ -8,8 +8,10 @@ describe('MainView.vue', () => {
   let store: any
   let actions: any
   let state: any
+  let mutations: any
   const mocks: any = { '$route': { params: {} } }
   const isSearchResultEmpty = jest.fn()
+  let setToastMock = jest.fn()
 
   beforeEach(() => {
     state = {
@@ -22,12 +24,16 @@ describe('MainView.vue', () => {
       load: jest.fn(),
       save: jest.fn()
     }
+    mutations = {
+      setToast: setToastMock
+    }
     store = new Vuex.Store({
       state,
       actions,
       getters: {
         isSearchResultEmpty
-      }
+      },
+      mutations
     })
   })
 
@@ -46,6 +52,15 @@ describe('MainView.vue', () => {
     expect(wrapper.find('toast-component-stub').attributes('message')).toEqual('i am not a message')
   })
 
+  it('should show a toast telling the user to signin to select/order if the user is not signed in an no other toest is shown', () => {
+    state.toast = null
+    state.isSignedIn = false
+    
+    shallowMount(MainView, { store, localVue, mocks })
+
+    expect(setToastMock).toHaveBeenCalledWith(expect.anything(), {'message': 'Please sign in to select and order variables', 'type': 'info'})
+  })
+
   it('loads an order, after loading variables and assessments, if a orderNumber route param is present', (done) => {
     actions.loadVariables.mockReturnValueOnce(Promise.resolve())
     actions.loadAssessments.mockReturnValueOnce(Promise.resolve())
@@ -58,4 +73,8 @@ describe('MainView.vue', () => {
       done()
     }, 0)
   })
+
+  // describe('If the user is not signed in and no other toasts are shown', () => {
+    
+  // })
 })
