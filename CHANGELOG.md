@@ -1,3 +1,10 @@
+## [0.9.1](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v0.9.0...v0.9.1) (2019-11-06)
+
+
+### Bug Fixes
+
+* [#118](https://github.com/molgenis/molgenis-app-lifelines-webshop/issues/118) change to hash-based routing ([#120](https://github.com/molgenis/molgenis-app-lifelines-webshop/issues/120)) ([40f0d3b](https://github.com/molgenis/molgenis-app-lifelines-webshop/commit/40f0d3b))
+
 # [0.9.0](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v0.8.1...v0.9.0) (2019-11-05)
 
 
