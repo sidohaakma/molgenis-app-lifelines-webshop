@@ -68,7 +68,6 @@ export default Vue.extend({
   },
   async created () {
     if (!this.isSignedIn && !this.toast) {
-      console.log('call set toast')
       this.setToast({ type: 'info', message: 'Please sign in to select and order variables' })
     }
     const promises = Promise.all([this.loadVariables(), this.loadAssessments()])
