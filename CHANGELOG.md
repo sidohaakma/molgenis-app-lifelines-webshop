@@ -1,3 +1,10 @@
+## [0.10.1](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v0.10.0...v0.10.1) (2019-11-07)
+
+
+### Bug Fixes
+
+* remove counts and selection dots from tree ([e6ee3ba](https://github.com/molgenis/molgenis-app-lifelines-webshop/commit/e6ee3ba))
+
 # [0.10.0](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v0.9.3...v0.10.0) (2019-11-07)
 
 
