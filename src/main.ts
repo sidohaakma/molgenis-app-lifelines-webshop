@@ -6,6 +6,7 @@ import i18n from '@molgenis/molgenis-i18n-js'
 import router from './router'
 // Import stylesheet
 import 'vue-loading-overlay/dist/vue-loading.css'
+import 'bootstrap'
 import fetchPonyfill from 'fetch-ponyfill'
 
 Vue.config.productionTip = false
