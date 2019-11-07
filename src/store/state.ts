@@ -10,6 +10,8 @@ const state: ApplicationState = {
     projectNumber: null,
     applicationForm: null,
     submissionDate: null,
+    creationDate: null,
+    updateDate: null,
     state: null
   },
   orderFormFields: [

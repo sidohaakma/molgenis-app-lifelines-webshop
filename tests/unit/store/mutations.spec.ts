@@ -101,7 +101,9 @@ describe('mutations', () => {
           filename: 'fileName',
           url: 'fileUrl'
         },
-        submissionDate: 'edit',
+        submissionDate: 'ignore',
+        creationDate: 'ignore',
+        updateDate: 'ignore',
         state: OrderState.Draft
       }
       mutations.setOrderDetails(baseAppState, order)
@@ -115,8 +117,10 @@ describe('mutations', () => {
           filename: 'fileName',
           url: 'fileUrl'
         },
+        state: null,
         submissionDate: null,
-        state: null
+        creationDate: null,
+        updateDate: null
       })
     })
   })
@@ -136,6 +140,8 @@ describe('mutations', () => {
           url: 'fileUrl'
         },
         submissionDate: 'edit',
+        creationDate: 'creationDate',
+        updateDate: 'updateDate',
         state: OrderState.Draft
       }
       mutations.restoreOrderState(baseAppState, response)
@@ -150,6 +156,8 @@ describe('mutations', () => {
           url: 'fileUrl'
         },
         submissionDate: 'edit',
+        creationDate: 'creationDate',
+        updateDate: 'updateDate',
         state: OrderState.Draft
       })
     })
