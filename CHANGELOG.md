@@ -1,3 +1,10 @@
+## [0.10.3](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v0.10.2...v0.10.3) (2019-11-07)
+
+
+### Bug Fixes
+
+* submit save data ([#128](https://github.com/molgenis/molgenis-app-lifelines-webshop/issues/128)) ([0594cf8](https://github.com/molgenis/molgenis-app-lifelines-webshop/commit/0594cf8))
+
 ## [0.10.2](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v0.10.1...v0.10.2) (2019-11-07)
 
 
