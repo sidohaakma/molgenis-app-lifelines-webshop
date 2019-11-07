@@ -1,3 +1,10 @@
+## [0.10.2](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v0.10.1...v0.10.2) (2019-11-07)
+
+
+### Bug Fixes
+
+* **mcmd:** Give write permissions on filemeta ([0a56491](https://github.com/molgenis/molgenis-app-lifelines-webshop/commit/0a56491))
+
 ## [0.10.1](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v0.10.0...v0.10.1) (2019-11-07)
 
 
