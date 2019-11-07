@@ -1,3 +1,10 @@
+## [0.9.3](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v0.9.2...v0.9.3) (2019-11-07)
+
+
+### Bug Fixes
+
+* **menu dropdown:** add jquery, popper and boostrap to fix dropdown ([#121](https://github.com/molgenis/molgenis-app-lifelines-webshop/issues/121)) ([141b663](https://github.com/molgenis/molgenis-app-lifelines-webshop/commit/141b663))
+
 ## [0.9.2](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v0.9.1...v0.9.2) (2019-11-07)
 
 
