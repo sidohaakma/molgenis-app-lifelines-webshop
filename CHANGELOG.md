@@ -1,3 +1,10 @@
+# [0.10.0](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v0.9.3...v0.10.0) (2019-11-07)
+
+
+### Features
+
+* **deployment:** Add metadata+styling to deployment+mcmd script+readme ([#122](https://github.com/molgenis/molgenis-app-lifelines-webshop/issues/122)) ([20675be](https://github.com/molgenis/molgenis-app-lifelines-webshop/commit/20675be))
+
 ## [0.9.3](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v0.9.2...v0.9.3) (2019-11-07)
 
 
