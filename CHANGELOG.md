@@ -1,3 +1,10 @@
+## [0.9.2](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v0.9.1...v0.9.2) (2019-11-07)
+
+
+### Bug Fixes
+
+* When not logged in it is not clear why I cannot select items [#113](https://github.com/molgenis/molgenis-app-lifelines-webshop/issues/113) ([41f804d](https://github.com/molgenis/molgenis-app-lifelines-webshop/commit/41f804d))
+
 ## [0.9.1](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v0.9.0...v0.9.1) (2019-11-06)
 
 
