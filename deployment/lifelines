@@ -42,6 +42,7 @@ $wait Please import all the lifelines data
 # Give write LIFELINES_SHOPPER permissions to cart
 enable rls lifelines_order
 give --role LIFELINES_SHOPPER write --entity-type lifelines_order
+give --role LIFELINES_SHOPPER write --entity-type sys_FileMeta
 
 # Set aggregate threshold
 set app aggregate_threshold 15
