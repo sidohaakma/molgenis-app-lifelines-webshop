@@ -3,6 +3,7 @@
 
 ## Project setup
 ```
+cp .lifelinesrc.example .lifelinesrc
 yarn install
 ```
 
@@ -28,7 +29,7 @@ You need to configure a couple of things to run this app in production.
       : '/',
   ```
 - **package.json**
-  Add a scope for the package name to publish to a organisation scope on NPM. 
+  Add a scope for the package name to publish to a organisation scope on NPM.
   ```
   "name": "*scope*/molgenis-app-lifelines-webshop",
   ```
@@ -54,16 +55,16 @@ You need to configure a couple of things to run this app in production.
   Change the default base when you want to serve your app on a path other than ```/```
   ```
   export default new Router({
-  
+
   ...
 
   base: process.env.NODE_ENV === 'production' ? packageJson.name : process.env.BASE_URL,
   ```
  - **i18n**
   For development and testing you can add your translations to `i18n.schemas.js`
-  For production make sure to add the translations to the molgenis entity `Localization` using `lifelines-webshop` as a namespace. 
+  For production make sure to add the translations to the molgenis entity `Localization` using `lifelines-webshop` as a namespace.
 
-  >tip: 
+  >tip:
   Use `i18n.schemas.js` to create the `Localization` entities. For `msgid` add the schema key (for example: "lifelines-webshop-sidebar-header")
   The namespace should be `lifelines-webshop` and than add all of the needed translations.
 
