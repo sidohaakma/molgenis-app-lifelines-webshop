@@ -7,11 +7,9 @@
         <table
           ref="gridheader"
           class="grid-table"
-               :class="{'sticky':stickyTableHeader}"
-        >
+          :class="{'sticky':stickyTableHeader}">
           <tr>
-            <th>
-            </th>
+            <th></th>
             <td v-show="isSignedIn" ></td>
             <td
               v-for="assessment in gridAssessments"
@@ -53,9 +51,7 @@
             v-for="(row, rowIndex) in grid"
             :class="'grid-row-'+rowIndex"
             class="row-hover"
-            :key="rowIndex"
-
-          >
+            :key="rowIndex">
             <th>
               <grid-titel-info :info="gridVariables[rowIndex]" />
             </th>
@@ -74,7 +70,7 @@
                 @click.prevent="isSignedIn && toggleCell(rowIndex, colIndex)"
                 :class="getGridCellClass(rowIndex, colIndex)"
                 class="ll-facet-option btn btn-sm select-item grid-item">
-                {{count | formatSI}}
+                {{count | formatCount}}
               </button>
             </td>
           </tr>
@@ -132,6 +128,16 @@ export default Vue.extend({
       stickyTableHeader: false
     }
   },
+  filters: {
+    formatCount: function (value) {
+      if (value === -1) {
+        return '1-15'
+      } else if (value > 0) {
+        return formatSI(value)
+      }
+      return value
+    }
+  },
   methods: {
     scroll () {
       const table = this.getTableTop()
@@ -179,8 +185,7 @@ export default Vue.extend({
   },
   destroyed: function () {
     window.removeEventListener('scroll', this.scroll)
-  },
-  filters: { formatSI }
+  }
 })
 </script>
 
