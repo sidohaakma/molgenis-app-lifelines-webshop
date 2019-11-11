@@ -100,7 +100,7 @@ export default Vue.extend({
   computed: {
     ...mapState(['toast', 'orderFormFields', 'order']),
     orderFormData () {
-      if (typeof this.order.applicationForm === 'object') {
+      if (this.order && this.order.applicationForm && typeof this.order.applicationForm === 'object') {
         // Form field of type file expects just the filename in update mode
         return {
           ...this.order, ...{ applicationForm: this.order.applicationForm.filename }
