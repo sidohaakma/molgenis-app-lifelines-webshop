@@ -31,6 +31,7 @@ pipeline {
             }
             steps {
                 container('node') {
+                    sh "cp .lifelinesrc.example .lifelinesrc"
                     sh "yarn install"
                     sh "yarn lint"
                     sh "yarn test:unit"
@@ -48,13 +49,14 @@ pipeline {
         stage('Install, test and build: [ master ]') {
             when {
                 branch 'master'
-                not { 
+                not {
                     changelog '.*\\[skip ci\\]$'
                 }
             }
             steps {
                 milestone 1
                 container('node') {
+                    sh "cp .lifelinesrc.example .lifelinesrc"
                     sh "yarn install"
                     sh "yarn test:unit"
                     sh "yarn test:e2e --env ci_chrome,ci_safari,ci_ie11,ci_firefox"
