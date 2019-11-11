@@ -1,3 +1,10 @@
+## [0.10.4](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v0.10.3...v0.10.4) (2019-11-11)
+
+
+### Bug Fixes
+
+* custom formatter to deal with -1 count ([6e32441](https://github.com/molgenis/molgenis-app-lifelines-webshop/commit/6e32441)), closes [#131](https://github.com/molgenis/molgenis-app-lifelines-webshop/issues/131)
+
 ## [0.10.3](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v0.10.2...v0.10.3) (2019-11-07)
 
 
