@@ -7,7 +7,7 @@
       :message="toast.message"
       @toastCloseBtnClicked="clearToast">
     </toast-component>
-    <h1 id="orders-title">{{'lifelines-webshop-orders-title' | i18n}}</h1>
+    <h1 id="orders-title">{{$t('lifelines-webshop-orders-title')}}</h1>
       <spinner-animation v-if="orders === null"/>
       <table v-else class="table" aria-describedby="orders-title">
         <thead>
