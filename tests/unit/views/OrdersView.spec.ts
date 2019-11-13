@@ -1,4 +1,4 @@
-import { shallowMount, createLocalVue } from '@vue/test-utils'
+import { mount, shallowMount, createLocalVue } from '@vue/test-utils'
 import VueRouter from 'vue-router'
 import OrdersView from '@/views/OrdersView.vue'
 import moment from 'moment'
@@ -64,5 +64,12 @@ describe('OrdersView.vue', () => {
     const wrapper = shallowMount(OrdersView, { store, localVue })
     store.commit('setOrders', orders)
     expect(wrapper.find('table')).toMatchSnapshot()
+  })
+
+  it('shows a confirmation modal on delete', () => {
+    const wrapper = mount(OrdersView, { store, localVue })
+    store.commit('setOrders', orders)
+    console.log(wrapper.html())
+    // expect(wrapper.find('table')).toMatchSnapshot()
   })
 })

@@ -18,9 +18,15 @@ export default new Router({
       component: HomeView
     },
     {
-      path: '/orders',
+      path: '/orders/:orderNumber?',
       name: 'orders',
-      component: OrdersView
+      component: OrdersView,
+      children: [
+        {
+          name: 'orderDelete',
+          path: 'delete'
+        }
+      ]
     },
     {
       path: '/shop',
