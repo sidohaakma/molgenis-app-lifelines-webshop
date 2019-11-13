@@ -11,7 +11,11 @@ const bannerText = `package-name: ${pkgName}
 package-version: ${pkgVersion}
 build-date: ${buildDate}`
 
-const PROXY_TARGET = 'https://lifelines.test.molgenis.org'
+const config = require('rc')('lifelines', {
+  development: {
+    proxy: 'https://lifelines.test.molgenis.org'
+  }
+})
 
 module.exports = {
   outputDir: 'dist',
@@ -30,43 +34,43 @@ module.exports = {
     host: process.env.JENKINS_AGENT_NAME || 'localhost',
     proxy: process.env.NODE_ENV === 'production' ? undefined : {
       '^/api': {
-        'target': PROXY_TARGET,
+        'target': config.development.proxy,
         'keepOrigin': true
       },
       '^/menu': {
-        'target': PROXY_TARGET,
+        'target': config.development.proxy,
         'keepOrigin': true
       },
       '^/app-ui-context': {
-        'target': PROXY_TARGET,
+        'target': config.development.proxy,
         'keepOrigin': true
       },
       '^/fonts': {
-        'target': PROXY_TARGET,
+        'target': config.development.proxy,
         'keepOrigin': true
       },
       '^/img': {
-        'target': PROXY_TARGET,
+        'target': config.development.proxy,
         'keepOrigin': true
       },
       '^/css': {
-        'target': PROXY_TARGET,
+        'target': config.development.proxy,
         'changeOrigin': true
       },
       '^/js': {
-        'target': PROXY_TARGET,
+        'target': config.development.proxy,
         'changeOrigin': true
       },
       '^/logo': {
-        'target': PROXY_TARGET,
+        'target': config.development.proxy,
         'changeOrigin': true
       },
       '^/login': {
-        'target': PROXY_TARGET,
+        'target': config.development.proxy,
         'changeOrigin': true
       },
       '^/@molgenis-ui': {
-        'target': PROXY_TARGET,
+        'target': config.development.proxy,
         'changeOrigin': true
       }
     },
