@@ -1,5 +1,6 @@
 import { mount, shallowMount, createLocalVue } from '@vue/test-utils'
-import VueRouter from 'vue-router'
+import Router from 'vue-router'
+import { routes } from '@/router'
 import OrdersView from '@/views/OrdersView.vue'
 import moment from 'moment'
 import Vuex from 'vuex'
@@ -8,23 +9,24 @@ import Spinner from '@/components/animations/SpinnerAnimation.vue'
 import mutations from '@/store/mutations'
 
 describe('OrdersView.vue', () => {
-  const localVue = createLocalVue()
-  localVue.filter('moment', function (value: string, format: string) { return moment(value).utc().format(format) })
-  localVue.filter('i18n', (value: string) => `#${value}#`)
+  let localVue:any
+  let store:any
 
-  localVue.use(Vuex)
-  localVue.use(VueRouter)
-  let store: any
   let actions = {
+    deleteOrder: jest.fn(),
     loadOrders: jest.fn()
   }
 
   beforeEach(() => {
-    let state: any
+    localVue = createLocalVue()
+    localVue.filter('moment', function (value: string, format: string) { return moment(value).utc().format(format) })
+    localVue.filter('i18n', (value: string) => `#${value}#`)
+    localVue.use(Vuex)
 
-    state = {
+    let state:any = {
       orders: null
     }
+
     store = new Vuex.Store({
       state,
       actions,
@@ -43,7 +45,7 @@ describe('OrdersView.vue', () => {
   })
 
   it('fetches orders when mounted', () => {
-    const wrapper = shallowMount(OrdersView, { store, localVue })
+    shallowMount(OrdersView, { store, localVue })
     expect(actions.loadOrders).toHaveBeenCalled()
   })
 
@@ -66,10 +68,20 @@ describe('OrdersView.vue', () => {
     expect(wrapper.find('table')).toMatchSnapshot()
   })
 
-  it('shows a confirmation modal on delete', () => {
-    const wrapper = mount(OrdersView, { store, localVue })
+  it('shows a confirmation modal after pressing the delete button', () => {
+    localVue.use(Router)
+
+    const wrapper = mount(OrdersView, {
+      localVue,
+      store,
+      router: new Router({ routes })
+    })
     store.commit('setOrders', orders)
-    console.log(wrapper.html())
-    // expect(wrapper.find('table')).toMatchSnapshot()
+
+    expect(wrapper.find('.modal-dialog').exists()).toBe(false)
+    wrapper.find('.t-btn-order-delete').trigger('click')
+    expect(wrapper.find('.modal-dialog').exists()).toBe(true)
+    wrapper.find('.t-btn-confirm').trigger('click')
+    expect(actions.deleteOrder).toHaveBeenCalled()
   })
 })

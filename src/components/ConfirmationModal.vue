@@ -16,7 +16,7 @@
                 <router-link class="btn btn-secondary" :to="backRoute">
                   {{$t('lifelines-webshop-modal-button-cancel')}}
                 </router-link>
-                <button type="button" class="btn btn-primary" @click="confirmMethod">{{confirmButton}}</button>
+                <button type="button" class="btn btn-primary t-btn-confirm" @click="confirmMethod">{{confirmButton}}</button>
             </div>
           </div>
       </div>
