@@ -8,8 +8,10 @@ import { TreeParent } from '@/types/Tree'
 import Assessment from '@/types/Assessment'
 import { TreeNode } from '@/types/TreeNode'
 import { Section } from '@/types/Section'
+import { ContextState } from '@molgenis/molgenis-ui-context/src/types'
 
 export default {
+  isSignedIn: (state: {context: ContextState}): boolean => !!state.context.context && state.context.context.authenticated,
   variants: (state: ApplicationState): Variant[] =>
     state.gridVariables.reduce((result: Variant[], variable: VariableWithVariants): Variant[] =>
       variable.variants.reduce((accumulator: Variant[], variant: Variant) =>

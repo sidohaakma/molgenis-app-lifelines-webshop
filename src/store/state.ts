@@ -1,8 +1,8 @@
 import ApplicationState from '@/types/ApplicationState'
+import context from '@molgenis/molgenis-ui-context/src/store/state'
 
 const state: ApplicationState = {
-  isContextLoaded: false,
-  isSignedIn: true, // set true during development
+  context,
   toast: null,
   order: {
     orderNumber: null,

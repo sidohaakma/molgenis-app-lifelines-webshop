@@ -19,13 +19,13 @@
 import Vue from 'vue'
 import TreeView from './TreeView.vue'
 import GridView from './GridView.vue'
-import { mapMutations, mapActions, mapState } from 'vuex'
+import { mapMutations, mapActions, mapGetters } from 'vuex'
 
 export default Vue.extend({
   name: 'ContentView',
   components: { TreeView, GridView },
   computed: {
-    ...mapState(['isSignedIn'])
+    ...mapGetters(['isSignedIn'])
   },
   methods: {
     ...mapMutations(['updateSearchTerm']),

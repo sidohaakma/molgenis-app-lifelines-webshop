@@ -8,6 +8,7 @@ import { Section } from '@/types/Section.ts'
 import { TreeParent } from '@/types/Tree'
 import FormField from './FormField'
 import { Order } from './Order'
+import { ContextState } from '@molgenis/molgenis-ui-context/src/types'
 
 export type Toast = {
   type: 'danger' | 'success',
@@ -15,8 +16,7 @@ export type Toast = {
 }
 
 export default interface ApplicationState {
-  isContextLoaded: boolean,
-  isSignedIn: boolean
+  context: ContextState
   order: Order,
   orderFormFields: FormField[]
   variables: { [key:number]: Variable },
