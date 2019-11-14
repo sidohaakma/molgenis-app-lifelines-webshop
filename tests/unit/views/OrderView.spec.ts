@@ -9,22 +9,50 @@ describe('OrderView', () => {
   let store: any
   let actions: any
   let state: any
-  let submitOrderMock: any
+  let saveMock: any
+  let submitMock: any
+  let mutations: any
+
+  const touchedState = {
+    projectNumber: {
+      $touched: true
+    },
+    name: {
+      $touched: true
+    },
+    applicationForm: {
+      $touched: true
+    }
+  }
 
   beforeEach(() => {
     localVue = createLocalVue()
     localVue.use(Vuex)
     localVue.use(VueRouter)
-    submitOrderMock = jest.fn()
+    saveMock = jest.fn()
+    submitMock = jest.fn()
     state = {
-      toast: null
+      toast: null,
+      order: {},
+      orderFormFields: [
+        { id: 'projectNumber' },
+        { id: 'name' },
+        { id: 'applicationForm' }
+      ]
     }
     actions = {
-      submitOrder: submitOrderMock
+      save: saveMock,
+      submit: submitMock
+    }
+    mutations = {
+      setToast: jest.fn(),
+      clearToast: jest.fn(),
+      setOrderDetails: jest.fn()
     }
     store = new Vuex.Store({
       state,
-      actions
+      actions,
+      mutations
     })
     wrapper = shallowMount(OrderView, { store, localVue })
   })
@@ -32,25 +60,6 @@ describe('OrderView', () => {
   it('should render the component', () => {
     expect(wrapper).toBeDefined()
     expect(wrapper.find('#order-form')).toBeDefined()
-  })
-
-  it('should contain the order fields', () => {
-    expect(wrapper.vm.formFields).toBeDefined()
-
-    expect(wrapper.vm.formFields[0].id).toEqual('projectNumber')
-    expect(wrapper.vm.formFields[0].required()).toEqual(true)
-    expect(wrapper.vm.formFields[0].visible()).toEqual(true)
-    expect(wrapper.vm.formFields[0].validate()).toEqual(true)
-
-    expect(wrapper.vm.formFields[1].id).toEqual('name')
-    expect(wrapper.vm.formFields[1].required()).toEqual(false)
-    expect(wrapper.vm.formFields[1].visible()).toEqual(true)
-    expect(wrapper.vm.formFields[1].validate()).toEqual(true)
-
-    expect(wrapper.vm.formFields[2].id).toEqual('applicationForm')
-    expect(wrapper.vm.formFields[2].required()).toEqual(false)
-    expect(wrapper.vm.formFields[2].visible()).toEqual(true)
-    expect(wrapper.vm.formFields[2].validate()).toEqual(true)
   })
 
   describe('on form value changed', () => {
@@ -63,20 +72,43 @@ describe('OrderView', () => {
     })
   })
 
+  describe('on onSave', () => {
+    let formState: any
+    beforeEach(() => {
+      formState = { ...touchedState }
+    })
+
+    describe('when the form is valid', () => {
+      beforeEach((done) => {
+        formState.$valid = true
+        wrapper.setData({ formState: formState })
+        wrapper.vm.onSave()
+        done()
+      })
+
+      it('should call the save action', () => {
+        expect(saveMock).toHaveBeenCalled()
+      })
+    })
+
+    describe('when the form is invalid', () => {
+      beforeEach((done) => {
+        formState.$valid = false
+        wrapper.setData({ formState: formState })
+        wrapper.vm.onSave()
+        done()
+      })
+
+      it('should still call the save action', () => {
+        expect(saveMock).toHaveBeenCalled()
+      })
+    })
+  })
+
   describe('on onSubmit', () => {
     let formState: any
     beforeEach(() => {
-      formState = {
-        projectNumber: {
-          $touched: true
-        },
-        name: {
-          $touched: true
-        },
-        applicationForm: {
-          $touched: true
-        }
-      }
+      formState = { ...touchedState }
     })
 
     describe('when the form is valid', () => {
@@ -87,21 +119,22 @@ describe('OrderView', () => {
         done()
       })
 
-      it('should call the submitOrder action', () => {
-        expect(submitOrderMock).toHaveBeenCalled()
+      it('should call the save action', () => {
+        expect(submitMock).toHaveBeenCalled()
       })
     })
 
     describe('when the form is invalid', () => {
       beforeEach((done) => {
+        submitMock.mockReset()
         formState.$valid = false
         wrapper.setData({ formState: formState })
         wrapper.vm.onSubmit()
         done()
       })
 
-      it('should not call the submitOrder action', () => {
-        expect(submitOrderMock).not.toHaveBeenCalled()
+      it('should not call the submit action', () => {
+        expect(submitMock).not.toHaveBeenCalled()
       })
     })
   })

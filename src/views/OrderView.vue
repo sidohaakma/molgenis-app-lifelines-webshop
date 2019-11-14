@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <h1>Order varibles</h1>
+        <h1>Order variables</h1>
         <toast-component
           class="toast-component mt-2"
           v-if="toast"
@@ -13,8 +13,8 @@
             <form-component
               id="order-form"
               :options="options"
-              :formFields="formFields"
-              :initialFormData="initialFormData"
+              :formFields="orderFormFields"
+              :initialFormData="order"
               :formState="formState"
               @valueChange="onValueChanged">
             </form-component>
@@ -29,18 +29,37 @@
 
               <button
                 v-if="!isSaving"
-                id="submit-btn"
+                id="save-btn"
                 class="btn btn-primary ml-1"
                 type="submit"
-                @click.prevent="onSubmit"
-                :disabled="(formState.$invalid && formState.$touched) || formState.$pending">
-                Submit
+                @click.prevent="onSave"
+                :disabled="formState.$pending || isSubmitting">
+                Save
               </button>
 
               <button
                 v-else
                 id="save-btn-saving"
-                class="btn btn-primary"
+                class="btn btn-primary ml-1"
+                type="button"
+                disabled="disabled">
+                Saving
+              </button>
+
+              <button
+                v-if="!isSubmitting"
+                id="submit-btn"
+                class="btn btn-warning ml-3"
+                type="submit"
+                @click.prevent="onSubmit"
+                :disabled="(formState.$invalid && formState.$touched) || formState.$pending || isSaving">
+                Submit
+              </button>
+
+              <button
+                v-else
+                id="submit-btn-submitting"
+                class="btn btn-warning ml-3"
                 type="button"
                 disabled="disabled">
                 Submitting
@@ -70,69 +89,37 @@ export default Vue.extend({
   data () {
     return {
       isSaving: false,
+      isSubmitting: false,
       options: {
         showEyeButton: false,
         allowAddingOptions: false
       },
-      formFields: [
-        {
-          type: 'text',
-          id: 'projectNumber',
-          label: 'Project number',
-          description: 'The OV number.',
-          required: () => true,
-          disabled: false,
-          readOnly: false,
-          visible: () => true,
-          validate: () => true
-        },
-        {
-          type: 'text',
-          id: 'name',
-          label: 'Name',
-          description: 'Optional name',
-          required: () => false,
-          disabled: false,
-          readOnly: false,
-          visible: () => true,
-          validate: () => true
-        },
-        {
-          type: 'file',
-          id: 'applicationForm',
-          label: 'Application form ',
-          description: 'Word or text file to describe the request.',
-          required: () => false,
-          disabled: false,
-          readOnly: false,
-          visible: () => true,
-          validate: () => true
-        }
-      ],
-      initialFormData: {},
       formState: {}
     }
   },
   computed: {
-    ...mapState(['toast'])
+    ...mapState(['toast', 'orderFormFields', 'order'])
   },
   methods: {
-    ...mapActions(['submitOrder']),
-    ...mapMutations(['setToast', 'clearToast']),
+    ...mapActions(['save', 'submit']),
+    ...mapMutations(['setToast', 'clearToast', 'setOrderDetails']),
     onValueChanged (updatedFormData) {
       this.formData = updatedFormData
+      this.setOrderDetails(updatedFormData)
+    },
+    async onSave () {
+      this.isSaving = true
+      await this.save()
+      this.isSaving = false
     },
     async onSubmit () {
       const formState = this.formState
       // trigger field to show validation result to user
-      this.formFields.forEach((field) => (formState[field.id].$touched = true))
+      this.orderFormFields.forEach((field) => (formState[field.id].$touched = true))
       if (this.formState.$valid) {
-        this.isSaving = true
-        await this.submitOrder({ formData: this.formData, formFields: this.formFields }).catch(() => {
-          this.isSaving = false
-          this.setToast({ type: 'warning', message: 'Failed to submit order' })
-        })
-        this.$router.push('/')
+        this.isSubmitting = true
+        await this.submit()
+        this.isSubmitting = false
       }
     }
   }

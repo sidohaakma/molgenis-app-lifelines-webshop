@@ -6,8 +6,17 @@ import i18n from '@molgenis/molgenis-i18n-js'
 import router from './router'
 // Import stylesheet
 import 'vue-loading-overlay/dist/vue-loading.css'
+import 'bootstrap'
+import fetchPonyfill from 'fetch-ponyfill'
 
 Vue.config.productionTip = false
+
+// Work around for session key time out
+fetchPonyfill().fetch('/api/v2/i18n/lifelines-webshop/en').then((resp) => {
+  if (resp.status === 401) {
+    window.location.href = '/login'
+  }
+})
 
 Vue.use(i18n, {
   lng: 'en',

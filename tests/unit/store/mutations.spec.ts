@@ -1,7 +1,33 @@
 import mutations from '@/store/mutations'
 import state from '@/store/state'
+import orders from '../fixtures/orders'
+import { OrderState } from '@/types/Order'
 
 describe('mutations', () => {
+  describe('setOrders', () => {
+    it('sets the orders', () => {
+      const baseAppState = { ...state }
+      mutations.setOrders(baseAppState, orders)
+      expect(baseAppState.orders).toEqual(orders)
+    })
+  })
+
+  describe('setIsSignedIn', () => {
+    it('sets isSignedIn bool to value passed', () => {
+      const baseAppState = { ...state }
+      mutations.setIsSignedIn(baseAppState, false)
+      expect(baseAppState.isSignedIn).toEqual(false)
+    })
+  })
+
+  describe('setContextLoaded', () => {
+    it('sets isContextLoaded to true', () => {
+      const baseAppState = { ...state }
+      mutations.setContextLoaded(baseAppState)
+      expect(baseAppState.isContextLoaded).toEqual(true)
+    })
+  })
+
   describe('updateParticipantCount', () => {
     it('updates participant count', () => {
       const baseAppState = { ...state }
@@ -60,6 +86,88 @@ describe('mutations', () => {
       mutations.setToast(baseAppState, { type: 'danger', message: 'message' })
       mutations.clearToast(baseAppState)
       expect(baseAppState.toast).toEqual(null)
+    })
+  })
+
+  describe('updateTreeSelection', () => {
+    it('updates the treeSelected number with the give number', () => {
+      let baseAppState = Object.assign({}, state)
+      mutations.updateTreeSelection(baseAppState, 99)
+      expect(baseAppState.treeSelected).toEqual(99)
+    })
+  })
+
+  describe('setOrderDetails', () => {
+    it('sets the order form values', () => {
+      let baseAppState = Object.assign({}, state)
+      const order = {
+        orderNumber: 'edit',
+        name: 'name',
+        projectNumber: 'projectNumber',
+        applicationForm: {
+          id: 'fileId',
+          filename: 'fileName',
+          url: 'fileUrl'
+        },
+        submissionDate: 'ignore',
+        creationDate: 'ignore',
+        updateDate: 'ignore',
+        state: OrderState.Draft
+      }
+      mutations.setOrderDetails(baseAppState, order)
+
+      expect(baseAppState.order).toEqual({
+        orderNumber: null,
+        name: 'name',
+        projectNumber: 'projectNumber',
+        applicationForm: {
+          id: 'fileId',
+          filename: 'fileName',
+          url: 'fileUrl'
+        },
+        state: null,
+        submissionDate: null,
+        creationDate: null,
+        updateDate: null
+      })
+    })
+  })
+
+  describe('restoreOrderState', () => {
+    it('sets the order fields from the response', () => {
+      let baseAppState = Object.assign({}, state)
+      const response = {
+        href: 'href',
+        meta: 'meta',
+        orderNumber: 'edit',
+        name: 'name',
+        projectNumber: 'projectNumber',
+        applicationForm: {
+          id: 'fileId',
+          filename: 'fileName',
+          url: 'fileUrl'
+        },
+        submissionDate: 'edit',
+        creationDate: 'creationDate',
+        updateDate: 'updateDate',
+        state: OrderState.Draft
+      }
+      mutations.restoreOrderState(baseAppState, response)
+
+      expect(baseAppState.order).toEqual({
+        orderNumber: 'edit',
+        name: 'name',
+        projectNumber: 'projectNumber',
+        applicationForm: {
+          id: 'fileId',
+          filename: 'fileName',
+          url: 'fileUrl'
+        },
+        submissionDate: 'edit',
+        creationDate: 'creationDate',
+        updateDate: 'updateDate',
+        state: OrderState.Draft
+      })
     })
   })
 
@@ -159,25 +267,6 @@ describe('mutations', () => {
       }
       mutations.updateGridSelection(myState, { 1: [2, 3] })
       expect(myState.gridSelection).toEqual({ 1: [2, 3] })
-    })
-  })
-
-  describe('setTreeCount', () => {
-    it('It can update the count ', () => {
-      const myState = {
-        ...state,
-        treeOpenPageSection: 1,
-        treeSelected: 2,
-        treeStructure: [{
-          key: 1,
-          list: [{
-            id: 2,
-            count: 0
-          }]
-        }]
-      }
-      mutations.setTreeCount(myState, 10)
-      expect(myState.treeStructure[0].list[0].count).toEqual(10)
     })
   })
 

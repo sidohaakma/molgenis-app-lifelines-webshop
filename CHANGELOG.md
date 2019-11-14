@@ -1,3 +1,101 @@
+## [0.10.6](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v0.10.5...v0.10.6) (2019-11-13)
+
+
+### Bug Fixes
+
+* fix [#139](https://github.com/molgenis/molgenis-app-lifelines-webshop/issues/139) remove call to removed mutation ([7eb8e29](https://github.com/molgenis/molgenis-app-lifelines-webshop/commit/7eb8e29))
+
+## [0.10.5](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v0.10.4...v0.10.5) (2019-11-13)
+
+
+### Bug Fixes
+
+* [#136](https://github.com/molgenis/molgenis-app-lifelines-webshop/issues/136) apply lifelines config defaults ([#137](https://github.com/molgenis/molgenis-app-lifelines-webshop/issues/137)) ([5ecf031](https://github.com/molgenis/molgenis-app-lifelines-webshop/commit/5ecf031))
+
+## [0.10.4](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v0.10.3...v0.10.4) (2019-11-11)
+
+
+### Bug Fixes
+
+* custom formatter to deal with -1 count ([6e32441](https://github.com/molgenis/molgenis-app-lifelines-webshop/commit/6e32441)), closes [#131](https://github.com/molgenis/molgenis-app-lifelines-webshop/issues/131)
+
+## [0.10.3](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v0.10.2...v0.10.3) (2019-11-07)
+
+
+### Bug Fixes
+
+* submit save data ([#128](https://github.com/molgenis/molgenis-app-lifelines-webshop/issues/128)) ([0594cf8](https://github.com/molgenis/molgenis-app-lifelines-webshop/commit/0594cf8))
+
+## [0.10.2](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v0.10.1...v0.10.2) (2019-11-07)
+
+
+### Bug Fixes
+
+* **mcmd:** Give write permissions on filemeta ([0a56491](https://github.com/molgenis/molgenis-app-lifelines-webshop/commit/0a56491))
+
+## [0.10.1](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v0.10.0...v0.10.1) (2019-11-07)
+
+
+### Bug Fixes
+
+* remove counts and selection dots from tree ([e6ee3ba](https://github.com/molgenis/molgenis-app-lifelines-webshop/commit/e6ee3ba))
+
+# [0.10.0](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v0.9.3...v0.10.0) (2019-11-07)
+
+
+### Features
+
+* **deployment:** Add metadata+styling to deployment+mcmd script+readme ([#122](https://github.com/molgenis/molgenis-app-lifelines-webshop/issues/122)) ([20675be](https://github.com/molgenis/molgenis-app-lifelines-webshop/commit/20675be))
+
+## [0.9.3](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v0.9.2...v0.9.3) (2019-11-07)
+
+
+### Bug Fixes
+
+* **menu dropdown:** add jquery, popper and boostrap to fix dropdown ([#121](https://github.com/molgenis/molgenis-app-lifelines-webshop/issues/121)) ([141b663](https://github.com/molgenis/molgenis-app-lifelines-webshop/commit/141b663))
+
+## [0.9.2](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v0.9.1...v0.9.2) (2019-11-07)
+
+
+### Bug Fixes
+
+* When not logged in it is not clear why I cannot select items [#113](https://github.com/molgenis/molgenis-app-lifelines-webshop/issues/113) ([41f804d](https://github.com/molgenis/molgenis-app-lifelines-webshop/commit/41f804d))
+
+## [0.9.1](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v0.9.0...v0.9.1) (2019-11-06)
+
+
+### Bug Fixes
+
+* [#118](https://github.com/molgenis/molgenis-app-lifelines-webshop/issues/118) change to hash-based routing ([#120](https://github.com/molgenis/molgenis-app-lifelines-webshop/issues/120)) ([40f0d3b](https://github.com/molgenis/molgenis-app-lifelines-webshop/commit/40f0d3b))
+
+# [0.9.0](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v0.8.1...v0.9.0) (2019-11-05)
+
+
+### Features
+
+* submit order ([09501c8](https://github.com/molgenis/molgenis-app-lifelines-webshop/commit/09501c8))
+
+## [0.8.1](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v0.8.0...v0.8.1) (2019-11-04)
+
+
+### Bug Fixes
+
+* select all button ([ef98ed4](https://github.com/molgenis/molgenis-app-lifelines-webshop/commit/ef98ed4))
+
+# [0.8.0](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v0.7.0...v0.8.0) (2019-11-01)
+
+
+### Features
+
+* add orders view ([2577201](https://github.com/molgenis/molgenis-app-lifelines-webshop/commit/2577201))
+
+# [0.7.0](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v0.6.2...v0.7.0) (2019-11-01)
+
+
+### Features
+
+* sigin status in store ([89cfbbf](https://github.com/molgenis/molgenis-app-lifelines-webshop/commit/89cfbbf))
+
 ## [0.6.2](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v0.6.1...v0.6.2) (2019-10-31)
 
 

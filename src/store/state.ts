@@ -1,8 +1,54 @@
 import ApplicationState from '@/types/ApplicationState'
 
 const state: ApplicationState = {
+  isContextLoaded: false,
   isSignedIn: true, // set true during development
   toast: null,
+  order: {
+    orderNumber: null,
+    name: null,
+    projectNumber: null,
+    applicationForm: null,
+    submissionDate: null,
+    creationDate: null,
+    updateDate: null,
+    state: null
+  },
+  orderFormFields: [
+    {
+      type: 'text',
+      id: 'projectNumber',
+      label: 'Project number',
+      description: 'The OV number.',
+      required: () => true,
+      disabled: false,
+      readOnly: false,
+      visible: () => true,
+      validate: () => true
+    },
+    {
+      type: 'text',
+      id: 'name',
+      label: 'Name',
+      description: 'Optional name',
+      required: () => false,
+      disabled: false,
+      readOnly: false,
+      visible: () => true,
+      validate: () => true
+    },
+    {
+      type: 'file',
+      id: 'applicationForm',
+      label: 'Application form ',
+      description: 'Word or text file to describe the request.',
+      required: () => false,
+      disabled: false,
+      readOnly: false,
+      visible: () => true,
+      validate: () => true
+    }
+  ],
   variables: {},
   gridVariables: [],
   genderOptions: [
@@ -46,7 +92,8 @@ const state: ApplicationState = {
   searchTerm: null,
   filteredSubsections: null, // contains the IDs of subsections that either match the search term or contain variables that match the search term
   filteredSections: null, // contains the IDs of sections that match the search term
-  isGridLoading: false
+  isGridLoading: false,
+  orders: null
 }
 
 export default state

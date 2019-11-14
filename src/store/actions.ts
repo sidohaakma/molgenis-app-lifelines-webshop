@@ -8,24 +8,85 @@ import { Cart } from '@/types/Cart'
 import ApplicationState from '@/types/ApplicationState'
 import router from '@/router'
 import Getters from '@/types/Getters'
-import { buildFormData } from '@/services/orderService.ts'
+import { buildFormData, generateOrderNumber } from '@/services/orderService.ts'
+import FormField from '@/types/FormField'
+import { OrderState } from '@/types/Order'
+import moment from 'moment'
+import { TreeParent } from '@/types/Tree'
 
-const generateOderId = () => Math.floor(Math.random() * 1000000)
+const buildPostOptions = (formData: any, formFields: FormField[]) => {
+  return {
+    headers: {
+      'Accept': 'application/json',
+      'X-Requested-With': 'XMLHttpRequest'
+    },
+    body: buildFormData(formData, formFields),
+    method: 'POST',
+    credentials: 'same-origin'
+  }
+}
+
+const createOrder = async (formData: any, formFields:FormField[]) => {
+  // Generate 'unique' order number
+  formData.orderNumber = generateOrderNumber()
+  formFields.push({ id: 'orderNumber', type: 'text' })
+
+  const options = buildPostOptions(formData, formFields)
+
+  let reTryCount = 0
+
+  const trySubmission = () => {
+    const orderNumber = generateOrderNumber().toString()
+    options.body.set('orderNumber', orderNumber)
+    return api.post('/api/v1/lifelines_order', options, true).then(() => {
+      return orderNumber
+    }, (error:any) => {
+      // OrderNumber must be unique, just guess untill we find one
+      if (reTryCount < 10) {
+        reTryCount++
+        return trySubmission()
+      } else {
+        return Promise.reject(error)
+      }
+    })
+  }
+
+  return trySubmission()
+}
+
+const updateOrder = async (formData: any, formFields:FormField[]) => {
+  const options = buildPostOptions(formData, formFields)
+
+  return api.post(`/api/v1/lifelines_order/${formData.orderNumber}?_method=PUT`, options, true).then(() => {
+    return formData.orderNumber
+  })
+}
 
 export default {
+  loadOrders: tryAction(async ({ commit }: any) => {
+    commit('setOrders', null)
+    const response = await api.get('/api/v2/lifelines_order?num=10000')
+    commit('setOrders', response.items)
+  }),
+  deleteOrder: tryAction(async ({ dispatch, commit }: any, orderId: string) => {
+    commit('setOrders', null)
+    await api.delete_(`/api/v2/lifelines_order/${orderId}`)
+    dispatch('loadOrders')
+  }),
   loadSections: tryAction(async ({ commit, state } : any) => {
     if (!Object.keys(state.sections).length) {
       const response = await api.get('/api/v2/lifelines_section?num=10000')
-      commit('updateSections', response.items.reduce((sections: { [key:number]: Section }, item:any) => {
-        sections[item.id] = item
-        return sections
-      }, {}))
+      commit('updateSections'
+        , response.items.reduce((sections: { [key:number]: Section }, item:any) => {
+          sections[item.id] = item
+          return sections
+        }, {}))
     }
   }),
   loadSubSections: tryAction(async ({ commit, state } : any) => {
     if (state.subSectionList.length === 0) {
       const response = await api.get('/api/v2/lifelines_sub_section?num=10000')
-      let subSections:String[] = []
+      let subSections:string[] = []
       response.items.map((item:any) => { subSections[item.id] = item.name })
       commit('updateSubSections', subSections)
     }
@@ -33,17 +94,17 @@ export default {
   loadSectionTree: tryAction(async ({ commit, state } : any) => {
     if (state.treeStructure.length === 0) {
       const response = await api.get('/api/v2/lifelines_tree?num=10000')
-      let structure: any = {}
+      let structure: {[id: number]: number[]} = {}
       response.items.map((item: any) => {
         if (item.section_id.id in structure) {
-          structure[item.section_id.id].push({ id: item.subsection_id.id, count: 0 })
+          structure[item.section_id.id].push(item.subsection_id.id)
         } else {
-          structure[item.section_id.id] = [{ id: item.subsection_id.id, count: 0 }]
+          structure[item.section_id.id] = [item.subsection_id.id]
         }
       })
-      let treeStructure: Array<Object> = []
+      let treeStructure: TreeParent[] = []
       for (let [key, value] of Object.entries(structure)) {
-        treeStructure.push({ key: key, list: value })
+        treeStructure.push({ key: (key as unknown) as number, list: value })
       }
       commit('updateSectionTree', treeStructure)
     }
@@ -141,58 +202,61 @@ export default {
     }
   }),
   save: tryAction(async ({ state, commit }: {state: ApplicationState, commit: any}) => {
-    const body = { contents: JSON.stringify(toCart(state)) }
-    const response = await api.post('/api/v1/lifelines_cart', { body: JSON.stringify(body) })
-    const location: string = response.headers.get('Location')
-    const id: string = location.substring(location.lastIndexOf('/') + 1)
-    commit('setToast', { type: 'success', message: 'Saved order with id ' + id })
-    router.push({ name: 'load', params: { cartId: id } })
-  }),
-  load: tryAction(async ({ state, commit }: {state: ApplicationState, commit: any}, id: string) => {
-    const response = await api.get(`/api/v2/lifelines_cart/${id}`)
-    const cart: Cart = JSON.parse(response.contents)
-    const { facetFilter, gridSelection } = fromCart(cart, state)
-    commit('updateFacetFilter', facetFilter)
-    commit('updateGridSelection', gridSelection)
-    commit('setToast', { type: 'success', message: 'Loaded order with id ' + id })
-  }),
-  submitOrder: tryAction(async ({ state, commit }: {state: ApplicationState, commit: any}, orderFormData: {formData: any, formFields:any }) => {
-    const { formData, formFields } = { ...orderFormData }
-    const fields = [...formFields]
-    fields.push({ id: 'contents', type: 'text' })
-    formData.contents = JSON.stringify(toCart(state))
-
-    // Generate 'unique' order number
-    formData.orderNumber = generateOderId()
-    fields.push({ id: 'orderNumber', type: 'text' })
-
-    const options = {
-      headers: {
-        'Accept': 'application/json',
-        'X-Requested-With': 'XMLHttpRequest'
-      },
-      body: buildFormData(formData, fields),
-      method: 'POST',
-      credentials: 'same-origin'
+    const formFields = [...state.orderFormFields, { id: 'contents', type: 'text' }]
+    const formData = {
+      ...state.order,
+      ...{ contents: JSON.stringify(toCart(state)) },
+      ...{ updateDate: moment().toISOString() }
     }
 
-    let reTryCount = 0
+    if (state.order.orderNumber) {
+      await updateOrder(formData, formFields)
+      commit('setToast', { type: 'success', message: 'Saved order with order number ' + state.order.orderNumber })
+      router.push({ name: 'load', params: { orderNumber: state.order.orderNumber } })
+    } else {
+      const creationDateField = { id: 'creationDate', type: 'date' }
+      const orderNumber = await createOrder(formData, [ ...formFields, creationDateField ]).catch(() => {
+        return Promise.reject(new Error('Failed to create order'))
+      })
+      const newOrderResponse = await api.get(`/api/v2/lifelines_order/${orderNumber}`)
+      commit('restoreOrderState', newOrderResponse)
+      commit('setToast', { type: 'success', message: 'Saved order with order number ' + orderNumber })
+      router.push({ name: 'load', params: { orderNumber: orderNumber } })
+    }
+  }),
+  submit: tryAction(async ({ state, commit }: {state: ApplicationState, commit: any}) => {
+    const formFields = [...state.orderFormFields, { id: 'contents', type: 'text' }]
+    const now = moment().toISOString()
+    const formData = {
+      ...state.order,
+      ...{ contents: JSON.stringify(toCart(state)) },
+      ...{ updateDate: now },
+      ...{ submissionDate: now }
+    }
+    // ts enums are numbers, the backends expects strings
+    // @ts-ignore
+    formData.state = OrderState[OrderState.Submitted]
+    let orderNumber = state.order.orderNumber
 
-    const trySubmission = () => {
-      reTryCount++
-      options.body.set('orderNumber', generateOderId().toString())
-      return api.post('/api/v1/lifelines_cart', options, true).then(() => {
-        return 'success'
-      }, (error:any) => {
-        // OrderNumber must be unique, just guess untill we find one
-        if (reTryCount < 10) {
-          return trySubmission()
-        } else {
-          return error
-        }
+    if (orderNumber) {
+      await updateOrder(formData, formFields)
+    } else {
+      orderNumber = await createOrder(formData, formFields).catch(() => {
+        return Promise.reject(new Error('Failed to submit order'))
       })
     }
-
-    return trySubmission()
+    const newOrderResponse = await api.get(`/api/v2/lifelines_order/${orderNumber}`)
+    commit('restoreOrderState', newOrderResponse)
+    commit('setToast', { type: 'success', message: 'Submitted order with order number ' + orderNumber })
+    router.push({ name: 'orders' })
+  }),
+  load: tryAction(async ({ state, commit }: {state: ApplicationState, commit: any}, orderNumber: string) => {
+    const response = await api.get(`/api/v2/lifelines_order/${orderNumber}`)
+    const cart: Cart = JSON.parse(response.contents)
+    const { facetFilter, gridSelection } = fromCart(cart, state)
+    commit('restoreOrderState', response)
+    commit('updateFacetFilter', facetFilter)
+    commit('updateGridSelection', gridSelection)
+    commit('setToast', { type: 'success', message: 'Loaded order with orderNumber ' + orderNumber })
   })
 }

@@ -2,10 +2,13 @@ import actions from '@/store/actions'
 import router from '@/router'
 import { Cart } from '@/types/Cart'
 import emptyState from '@/store/state'
+import orders from '../fixtures/orders'
 
 // @ts-ignore
 import { post } from '@molgenis/molgenis-api-client'
 import ApplicationState from '@/types/ApplicationState'
+import { OrderState } from '@/types/Order'
+import * as orderService from '@/services/orderService'
 
 const cart: Cart = {
   selection: [{
@@ -17,8 +20,12 @@ const cart: Cart = {
   }
 }
 const cartContents = JSON.stringify(cart)
+
 const mockResponses: {[key:string]: Object} = {
-  '/api/v2/lifelines_cart/fghij': {
+  '/api/v2/lifelines_order?num=10000': {
+    items: orders
+  },
+  '/api/v2/lifelines_order/fghij': {
     contents: cartContents
   },
   '/api/v2/lifelines_section?num=10000': {
@@ -173,17 +180,46 @@ const mockResponses: {[key:string]: Object} = {
     }
   }
 }
+
+const mockDelete = jest.fn()
+
 jest.mock('@molgenis/molgenis-api-client', () => {
   return {
     get: (url: string) => Promise.resolve(mockResponses[url]),
-    post: jest.fn()
+    post: jest.fn(),
+    delete_: function () { mockDelete(...arguments) }
   }
 })
+
 jest.mock('@/router', () => ({
   push: jest.fn()
 }))
 
 describe('actions', () => {
+  describe('loadOrders', () => {
+    it('loads the orders and commits them', async (done) => {
+      const commit = jest.fn()
+      const action = actions.loadOrders({ commit })
+      expect(commit).toHaveBeenCalledWith('setOrders', null)
+      await action
+      expect(commit).toHaveBeenCalledWith('setOrders', orders)
+      done()
+    })
+  })
+
+  describe('deleteOrder', () => {
+    it('deletes the order and loads the orders again', async (done) => {
+      const commit = jest.fn()
+      const dispatch = jest.fn()
+      const action = actions.deleteOrder({ commit, dispatch }, 'abcde')
+      expect(commit).toHaveBeenCalledWith('setOrders', null)
+      await action
+      expect(mockDelete).toHaveBeenCalledWith('/api/v2/lifelines_order/abcde')
+      expect(dispatch).toHaveBeenCalledWith('loadOrders')
+      done()
+    })
+  })
+
   describe('loadSections', () => {
     it('fetch the sections and commits them', async (done) => {
       const commit = jest.fn()
@@ -427,31 +463,6 @@ describe('actions', () => {
     })
   })
 
-  describe('save', () => {
-    it('saves grid selection', async (done) => {
-      const headers = { get: jest.fn() }
-      const commit = jest.fn()
-      post.mockReturnValueOnce({ headers })
-      headers.get.mockReturnValueOnce('https://lifelines.dev.molgenis.org/api/v1/lifelines_cart/fghij')
-      const state: ApplicationState = {
-        ...emptyState,
-        assessments: { 1: { id: 1, name: '1A' } },
-        variables: { 1: { id: 1, name: 'VAR1', label: 'Variable 1' }, 2: { id: 2, name: 'VAR2', label: 'Variable 2' } },
-        gridSelection: { 1: [1], 2: [1] },
-        facetFilter: {
-          ...emptyState.facetFilter,
-          ageGroupAt1A: ['2', '3']
-        }
-      }
-      await actions.save({ state, commit })
-      expect(headers.get).toHaveBeenCalledWith('Location')
-      expect(post).toHaveBeenCalledWith('/api/v1/lifelines_cart', { body: JSON.stringify({ contents: cartContents }) })
-      expect(commit).toHaveBeenCalledWith('setToast', { type: 'success', message: 'Saved order with id fghij' })
-      expect(router.push).toHaveBeenCalledWith({ name: 'load', params: { cartId: 'fghij' } })
-      done()
-    })
-  })
-
   describe('load', () => {
     it('loads grid selection', async (done) => {
       const commit = jest.fn()
@@ -463,40 +474,166 @@ describe('actions', () => {
       await actions.load({ commit, state }, 'fghij')
       expect(commit).toHaveBeenCalledWith('updateGridSelection', { 1: [1], 2: [1] })
       expect(commit).toHaveBeenCalledWith('updateFacetFilter', { ...emptyState.facetFilter, ageGroupAt1A: ['2', '3'] })
-      expect(commit).toHaveBeenCalledWith('setToast', { type: 'success', message: 'Loaded order with id fghij' })
+      expect(commit).toHaveBeenCalledWith('setToast', { type: 'success', message: 'Loaded order with orderNumber fghij' })
       done()
     })
   })
 
-  describe('submitOrder', () => {
-    const commit = jest.fn()
-    const state: ApplicationState = { ...emptyState }
-    const formData = { a: 'a' }
-    const formFields = [{ id: 'a', type: 'text' }]
-
-    describe('when the submission is succesfull', () => {
-      let result: any
-      beforeEach(async (done) => {
+  describe('save', () => {
+    describe('if orderNumber is set', () => {
+      it('saves grid selection', async (done) => {
+        const commit = jest.fn()
+        const state: ApplicationState = {
+          ...emptyState,
+          order: {
+            orderNumber: '12345',
+            name: null,
+            projectNumber: null,
+            applicationForm: null,
+            state: OrderState.Draft,
+            submissionDate: 'submissionDate',
+            creationDate: 'creationDate',
+            updateDate: 'updateDate'
+          }
+        }
         post.mockResolvedValue('success')
-        result = await actions.submitOrder({ commit, state }, { formData, formFields })
+        await actions.save({ state, commit })
+        expect(post).toHaveBeenCalledWith('/api/v1/lifelines_order/12345?_method=PUT', expect.anything(), true)
+        expect(commit).toHaveBeenCalledWith('setToast', { type: 'success', message: 'Saved order with order number 12345' })
         done()
       })
+    })
 
-      it('should return success', () => {
-        expect(result).toEqual('success')
+    describe('if orderNumber not set', () => {
+      it('saves grid selection', async (done) => {
+        const commit = jest.fn()
+        const state: ApplicationState = {
+          ...emptyState,
+          order: {
+            orderNumber: null,
+            name: null,
+            projectNumber: null,
+            applicationForm: null,
+            state: null,
+            submissionDate: null,
+            creationDate: null,
+            updateDate: null
+          }
+        }
+        jest.spyOn(orderService, 'buildFormData').mockImplementation(() => new FormData())
+        jest.spyOn(orderService, 'generateOrderNumber').mockImplementation(() => '12345')
+        post.mockResolvedValue('success')
+        await actions.save({ state, commit })
+        expect(post).toHaveBeenCalledWith('/api/v1/lifelines_order', expect.anything(), true)
+        expect(commit).toHaveBeenCalledWith('setToast', { type: 'success', message: 'Saved order with order number 12345' })
+        done()
       })
     })
 
     describe('when the submission not succesfull', () => {
       let result: any
+      let commit: any
+      let state: ApplicationState
       beforeEach(async (done) => {
+        commit = jest.fn()
+        state = {
+          ...emptyState,
+          order: {
+            orderNumber: null,
+            name: null,
+            projectNumber: null,
+            applicationForm: null,
+            state: OrderState.Draft,
+            submissionDate: 'submissionDate',
+            creationDate: 'creationDate',
+            updateDate: 'updateDate'
+          }
+        }
         post.mockRejectedValue('error')
-        result = await actions.submitOrder({ commit, state }, { formData, formFields })
+        result = await actions.save({ commit, state })
         done()
       })
 
-      it('should resturn error', () => {
-        expect(result).toEqual('error')
+      it('should resturn undefined', () => {
+        expect(result).toBeUndefined()
+        expect(commit).not.toHaveBeenCalledWith('setToast', { type: 'success', message: 'Saved order with order number 12345' })
+      })
+    })
+  })
+
+  describe('submit', () => {
+    describe('if orderNumber is set', () => {
+      it('submits the order', async (done) => {
+        const commit = jest.fn()
+        const state: ApplicationState = {
+          ...emptyState,
+          order: {
+            orderNumber: '12345',
+            name: null,
+            projectNumber: null,
+            applicationForm: null,
+            state: OrderState.Draft,
+            submissionDate: 'submissionDate',
+            creationDate: 'creationDate',
+            updateDate: 'updateDate'
+          }
+        }
+        post.mockResolvedValue('success')
+        await actions.submit({ state, commit })
+        expect(commit).toHaveBeenCalledWith('setToast', { type: 'success', message: 'Submitted order with order number 12345' })
+        done()
+      })
+    })
+    describe('if orderNumber not yet set', () => {
+      it('submits the order', async (done) => {
+        const commit = jest.fn()
+        const state: ApplicationState = {
+          ...emptyState,
+          order: {
+            orderNumber: null,
+            name: null,
+            projectNumber: null,
+            applicationForm: null,
+            state: OrderState.Draft,
+            submissionDate: 'submissionDate',
+            creationDate: 'creationDate',
+            updateDate: 'updateDate'
+          }
+        }
+        post.mockResolvedValue('success')
+        await actions.submit({ state, commit })
+        expect(commit).toHaveBeenCalledWith('setToast', { type: 'success', message: 'Submitted order with order number 12345' })
+        done()
+      })
+    })
+
+    describe('when the submission not succesfull', () => {
+      let result: any
+      let commit: any
+      let state: ApplicationState
+      beforeEach(async (done) => {
+        commit = jest.fn()
+        state = {
+          ...emptyState,
+          order: {
+            orderNumber: null,
+            name: null,
+            projectNumber: null,
+            applicationForm: null,
+            state: OrderState.Draft,
+            submissionDate: 'submissionDate',
+            creationDate: 'creationDate',
+            updateDate: 'updateDate'
+          }
+        }
+        post.mockRejectedValue('error')
+        result = await actions.submit({ commit, state })
+        done()
+      })
+
+      it('should resturn undefined', () => {
+        expect(result).toBeUndefined()
+        expect(commit).not.toHaveBeenCalledWith('setToast', { type: 'success', message: 'Submitted order with order number 12345' })
       })
     })
   })
