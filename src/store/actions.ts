@@ -150,7 +150,7 @@ export default {
     commit('updateVariables', variableMap)
   }),
   loadGridVariables: tryAction(async ({ state, commit, getters } : { state: ApplicationState, commit: any, getters: Getters}) => {
-    state.isGridLoading = true
+    commit('setIsGridLoading', true)
     commit('updateGridVariables', [])
     const subsectionId = state.treeSelected
     const searchTermQuery = getters.searchTermQuery
@@ -171,7 +171,7 @@ export default {
             }))
         })))
     }
-    state.isGridLoading = false
+    commit('setIsGridLoading', false)
   }),
   loadParticipantCount: tryAction(async ({ commit, getters }: any) => {
     commit('updateParticipantCount', null)
@@ -186,6 +186,7 @@ export default {
     }
   }),
   loadGridData: tryAction(async ({ commit, getters }: any) => {
+    commit('setIsGridLoading', true)
     commit('updateVariantCounts', [])
     let url = '/api/v2/lifelines_who_when?aggs=x==variant_id'
     const rsql = getters.rsql
@@ -200,6 +201,7 @@ export default {
       }))
       commit('updateVariantCounts', variantCounts)
     }
+    commit('setIsGridLoading', false)
   }),
   save: tryAction(async ({ state, commit }: {state: ApplicationState, commit: any}) => {
     const formFields = [...state.orderFormFields, { id: 'contents', type: 'text' }]

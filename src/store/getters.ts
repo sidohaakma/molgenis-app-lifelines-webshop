@@ -98,6 +98,7 @@ export default {
   grid: (state: ApplicationState, getters: Getters): number[][] =>
     state.gridVariables.map((variable: VariableWithVariants) =>
       getters.gridAssessments.map((assessment: Assessment) => {
+        if (state.variantCounts.length === 0 ) return NaN
         const variants: Variant[] = variable.variants.filter((variant: Variant) => variant.assessmentId === assessment.id)
         const count: number = variants.reduce((sum: number, variant: Variant) => {
           const variantCount = state.variantCounts.find((variantCount) => variant.id === variantCount.variantId)

@@ -16,6 +16,9 @@ export default {
   setIsSignedIn (state: ApplicationState, isSignedIn: boolean) {
     state.isSignedIn = isSignedIn
   },
+  setIsGridLoading (state: ApplicationState, isGridLoading: boolean) {
+    state.isGridLoading = isGridLoading
+  },
   setToast (state: ApplicationState, toast: Toast) {
     state.toast = toast
   },

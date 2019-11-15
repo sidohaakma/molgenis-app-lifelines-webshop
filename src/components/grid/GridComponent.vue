@@ -2,7 +2,6 @@
   <div id="grid" class="variable-grid">
     <div class="row">
       <div class="col vld-parent grid-col">
-        <loading :active="isLoading" loader="dots" :is-full-page="false" color="var(--secondary)" background-color="var(--light)"></loading>
 
         <table
           ref="gridheader"
@@ -19,62 +18,64 @@
             </td>
           </tr>
         </table>
-        <div :class="{'space-holder':stickyTableHeader}"></div>
+        <div :class="{'space-holder':stickyTableHeader || !grid.length}"></div>
+        <div class="table-holder">
+          <loading :active="isLoading" loader="dots" :is-full-page="false" color="var(--secondary)" background-color="var(--light)"></loading>
+          <table ref="grid" class="grid-table col-hover" v-if="grid.length">
+            <tr>
+              <th></th>
+              <td>
+                <button
+                  id="grid-toggle-all-btn"
+                  v-show="isSignedIn"
+                  class="ll-facet-option btn btn-sm select-all grid-item btn-outline-secondary"
+                  @click.prevent="isSignedIn && toggleGrid()"
+                  @mouseenter="onMouseEnter('grid-item')"
+                  @mouseleave="onMouseLeave('grid-item')">
+                  All
+                </button>
+              </td>
+              <td v-show="isSignedIn" v-for="(assessment, colIndex) in gridAssessments"
+                  :key="assessment.id"
+              >
+                <button class="ll-facet-option btn btn-sm select-col grid-item btn-outline-secondary"
+                        @click.prevent="toggleColumn(assessment.id)"
+                        @mouseenter="onMouseEnter('grid-button-col-'+colIndex)"
+                        @mouseleave="onMouseLeave('grid-button-col-'+colIndex)">
+                  <font-awesome-icon icon="arrow-down"/>
+                </button>
+              </td>
+            </tr>
 
-        <table ref="grid" class="grid-table col-hover" v-if="!isLoading && grid.length">
-          <tr>
-            <th></th>
-            <td>
-              <button
-                id="grid-toggle-all-btn"
-                v-show="isSignedIn"
-                class="ll-facet-option btn btn-sm select-all grid-item btn-outline-secondary"
-                @click.prevent="isSignedIn && toggleGrid()"
-                @mouseenter="onMouseEnter('grid-item')"
-                @mouseleave="onMouseLeave('grid-item')">
-                All
-              </button>
-            </td>
-            <td v-show="isSignedIn" v-for="(assessment, colIndex) in gridAssessments"
-                :key="assessment.id"
-            >
-              <button class="ll-facet-option btn btn-sm select-col grid-item btn-outline-secondary"
-                      @click.prevent="toggleColumn(assessment.id)"
-                      @mouseenter="onMouseEnter('grid-button-col-'+colIndex)"
-                      @mouseleave="onMouseLeave('grid-button-col-'+colIndex)">
-                <font-awesome-icon icon="arrow-down"/>
-              </button>
-            </td>
-          </tr>
-
-          <tr
-            v-for="(row, rowIndex) in grid"
-            :class="'grid-row-'+rowIndex"
-            class="row-hover"
-            :key="rowIndex">
-            <th>
-              <grid-titel-info :info="gridVariables[rowIndex]" />
-            </th>
-            <td v-show="isSignedIn">
-              <button class="ll-facet-option btn btn-sm select-row grid-item btn-outline-secondary"
-                      @click.prevent="toggleRow(gridVariables[rowIndex].id)"
-                      @mouseenter="onMouseEnter('grid-button-row-'+rowIndex)"
-                      @mouseleave="onMouseLeave('grid-button-row-'+rowIndex)">
-                <font-awesome-icon icon="arrow-right"/>
-              </button>
-            </td>
-            <td :key="colIndex"
-                v-for="(count,colIndex) in row"
-            >
-              <button
-                @click.prevent="isSignedIn && toggleCell(rowIndex, colIndex)"
-                :class="getGridCellClass(rowIndex, colIndex)"
-                class="ll-facet-option btn btn-sm select-item grid-item">
-                {{count | formatCount}}
-              </button>
-            </td>
-          </tr>
-        </table>
+            <tr
+              v-for="(row, rowIndex) in grid"
+              :class="'grid-row-'+rowIndex"
+              class="row-hover"
+              :key="rowIndex">
+              <th>
+                <grid-titel-info :info="gridVariables[rowIndex]" />
+              </th>
+              <td v-show="isSignedIn">
+                <button class="ll-facet-option btn btn-sm select-row grid-item btn-outline-secondary"
+                        @click.prevent="toggleRow(gridVariables[rowIndex].id)"
+                        @mouseenter="onMouseEnter('grid-button-row-'+rowIndex)"
+                        @mouseleave="onMouseLeave('grid-button-row-'+rowIndex)">
+                  <font-awesome-icon icon="arrow-right"/>
+                </button>
+              </td>
+              <td :key="colIndex"
+                  v-for="(count,colIndex) in row"
+              >
+                <button
+                  @click.prevent="isSignedIn && toggleCell(rowIndex, colIndex)"
+                  :class="getGridCellClass(rowIndex, colIndex)"
+                  class="ll-facet-option btn btn-sm select-item grid-item">
+                  {{ isNaN(count) ? '-' : count | formatCount }}
+                </button>
+              </td>
+            </tr>
+          </table>
+        </div>
       </div>
     </div>
   </div>
@@ -211,6 +212,15 @@ export default Vue.extend({
     white-space: nowrap;
     vertical-align: middle;
     font-weight: normal;
+  }
+  .vld-overlay.is-active{
+    margin: -1rem;
+  }
+  .table-holder{
+    display: inline-block;
+    position: relative;
+    min-height: 300px;
+    min-width: 500px;
   }
   .sticky {
     pointer-events: none;
