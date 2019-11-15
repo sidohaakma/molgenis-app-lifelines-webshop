@@ -366,7 +366,7 @@ describe('actions', () => {
       expect(commit).toHaveBeenCalledWith('updateGridVariables', [])
       state.treeSelected = 6
       await action
-      expect(commit).toHaveBeenCalledTimes(1)
+      expect(commit).toHaveBeenCalledTimes(3)
       done()
     })
 
@@ -378,7 +378,7 @@ describe('actions', () => {
       expect(commit).toHaveBeenCalledWith('updateGridVariables', [])
       getters.searchTermQuery = '*=q=test'
       await action
-      expect(commit).toHaveBeenCalledTimes(1)
+      expect(commit).toHaveBeenCalledTimes(3)
       done()
     })
   })
@@ -458,7 +458,7 @@ describe('actions', () => {
       expect(commit).toHaveBeenCalledWith('updateVariantCounts', [])
       getters.rsql = ''
       await action
-      expect(commit).toHaveBeenCalledTimes(1)
+      expect(commit).toHaveBeenCalledTimes(3)
       done()
     })
   })

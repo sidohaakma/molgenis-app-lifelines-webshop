@@ -181,7 +181,7 @@ describe('getters', () => {
       }
       expect(getters.grid(state, gettersParam)).toEqual([[10, 100], [10, 0]])
     })
-    it('returns zero if counts are missing', () => {
+    it('returns NaN if counts are missing', () => {
       const state: ApplicationState = {
         ...emptyState,
         gridVariables: [variable11, variable12]
@@ -191,7 +191,7 @@ describe('getters', () => {
         gridAssessments: [ assessment1A, assessment2A ],
         variants: [variant1, variant2, variant3]
       }
-      expect(getters.grid(state, gettersParam)).toEqual([[0, 0], [0, 0]])
+      expect(getters.grid(state, gettersParam)).toEqual([[NaN, NaN], [NaN, NaN]])
     })
   })
 
