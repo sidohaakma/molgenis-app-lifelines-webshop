@@ -1,3 +1,16 @@
+# [0.11.0](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v0.10.7...v0.11.0) (2019-11-18)
+
+
+### Bug Fixes
+
+* vscode eslint validation & autofix ([54279b1](https://github.com/molgenis/molgenis-app-lifelines-webshop/commit/54279b1))
+
+
+### Features
+
+* add ConfirmationModal component for order delete ([ec2a6f3](https://github.com/molgenis/molgenis-app-lifelines-webshop/commit/ec2a6f3))
+* ConfirmationModal unit & integration test ([a90354c](https://github.com/molgenis/molgenis-app-lifelines-webshop/commit/a90354c))
+
 ## [0.10.7](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v0.10.6...v0.10.7) (2019-11-14)
 
 
