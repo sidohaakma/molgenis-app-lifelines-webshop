@@ -19,6 +19,7 @@
                 <li class="nav-item">
                     <a class="nav-link" :class="{active: (activeTab === 'selection')}" href="#" @click="activeTab = 'selection'">
                       <font-awesome-icon icon="shopping-cart"></font-awesome-icon> Cart
+                      <span class="badge badge-secondary">{{selectedVariableIds}}</span>
                     </a>
                 </li>
             </ul>
@@ -60,7 +61,10 @@ export default Vue.extend({
     }
   },
   computed: {
-    ...mapState(['toast', 'isSignedIn'])
+    ...mapState(['toast', 'isSignedIn']),
+    selectedVariableIds () {
+      return Object.keys(this.$store.state.gridSelection).length
+    }
   },
   methods: {
     ...mapMutations(['clearToast', 'setToast']),
