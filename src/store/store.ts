@@ -8,7 +8,10 @@ import context from '@molgenis/molgenis-ui-context/src/store'
 
 import ApplicationState from '@/types/ApplicationState'
 
+const packageJson = require('../../package.json')
 Vue.use(Vuex)
+
+context.state.appVersion = packageJson.version
 
 export default new Vuex.Store<ApplicationState>({
   state,
