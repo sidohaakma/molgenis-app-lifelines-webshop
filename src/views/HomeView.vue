@@ -7,7 +7,7 @@
 
 <script>
 import Vue from 'vue'
-import router from '@/router'
+import { router } from '@/router'
 import { mapGetters } from 'vuex'
 import SpinnerAnimation from '@/components/animations/SpinnerAnimation.vue'
 
