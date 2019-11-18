@@ -1,8 +1,6 @@
-import ApplicationState from '@/types/ApplicationState'
-import context from '@molgenis/molgenis-ui-context/src/store/state'
+import { AppState } from '@/types/ApplicationState'
 
-const state: ApplicationState = {
-  context,
+const state: AppState = {
   toast: null,
   order: {
     orderNumber: null,

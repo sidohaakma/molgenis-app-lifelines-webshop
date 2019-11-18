@@ -15,8 +15,7 @@ export type Toast = {
   message: string
 }
 
-export default interface ApplicationState {
-  context: ContextState
+export interface AppState {
   order: Order,
   orderFormFields: FormField[]
   variables: { [key:number]: Variable },
@@ -42,4 +41,8 @@ export default interface ApplicationState {
   filteredSections: number[] | null
   isGridLoading: boolean,
   orders: Order[] | null
+}
+
+export default interface ApplicationState extends AppState {
+  context?: ContextState
 }
