@@ -10,20 +10,21 @@ import 'bootstrap'
 
 Vue.config.productionTip = false
 
-store.dispatch('fetchContext').then(() => {
-  Vue.use(i18n, {
-    lng: 'en',
-    fallbackLng: 'en',
-    namespace: ['lifelines-webshop', 'ui-form'],
-    callback () {
-      new Vue({
-        store,
-        router,
-        render: h => h(App)
-      }).$mount('#app')
-    }
-  })
-}).catch(() => {
+const contextPromise = store.dispatch('fetchContext').catch(() => {
   // session key has timed out
   window.location.href = '/login'
+})
+
+Vue.use(i18n, {
+  lng: 'en',
+  fallbackLng: 'en',
+  namespace: ['lifelines-webshop', 'ui-form'],
+  async callback () {
+    await contextPromise
+    new Vue({
+      store,
+      router,
+      render: h => h(App)
+    }).$mount('#app')
+  }
 })
