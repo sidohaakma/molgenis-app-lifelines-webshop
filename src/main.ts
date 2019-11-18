@@ -3,13 +3,15 @@ import App from './App.vue'
 import store from './store/store'
 // @ts-ignore
 import i18n from '@molgenis/molgenis-i18n-js'
-import router from './router'
+import { router } from './router'
 // Import stylesheet
 import 'vue-loading-overlay/dist/vue-loading.css'
 import 'bootstrap'
 import fetchPonyfill from 'fetch-ponyfill'
 
 Vue.config.productionTip = false
+
+const app:Vue = new Vue({ store, router, render: h => h(App) })
 
 // Work around for session key time out
 fetchPonyfill().fetch('/api/v2/i18n/lifelines-webshop/en').then((resp) => {
@@ -23,10 +25,8 @@ Vue.use(i18n, {
   fallbackLng: 'en',
   namespace: ['lifelines-webshop', 'ui-form'],
   callback () {
-    new Vue({
-      store,
-      router,
-      render: h => h(App)
-    }).$mount('#app')
+    app.$mount('#app')
   }
 })
+
+export default app
