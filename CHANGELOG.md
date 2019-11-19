@@ -1,3 +1,16 @@
+# [0.13.0](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v0.12.0...v0.13.0) (2019-11-19)
+
+
+### Bug Fixes
+
+* **main:** don't chain the calls ([d3898d9](https://github.com/molgenis/molgenis-app-lifelines-webshop/commit/d3898d9))
+* import umd instead of sources ([07efd35](https://github.com/molgenis/molgenis-app-lifelines-webshop/commit/07efd35))
+
+
+### Features
+
+* show version in footer ([8a936fd](https://github.com/molgenis/molgenis-app-lifelines-webshop/commit/8a936fd))
+
 # [0.12.0](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v0.11.0...v0.12.0) (2019-11-19)
 
 
