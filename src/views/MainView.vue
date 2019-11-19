@@ -62,7 +62,7 @@ export default Vue.extend({
   },
   computed: {
     ...mapState(['toast']),
-    ...mapGetters(['isSignedIn'])
+    ...mapGetters(['isSignedIn']),
     selectedVariableIds () {
       return Object.keys(this.$store.state.gridSelection).length
     }
