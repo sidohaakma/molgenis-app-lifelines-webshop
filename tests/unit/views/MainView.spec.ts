@@ -1,5 +1,6 @@
 import { shallowMount, createLocalVue } from '@vue/test-utils'
 import MainView from '@/views/MainView.vue'
+import state from '@/store/state'
 import Vuex from 'vuex'
 
 describe('MainView.vue', () => {
@@ -7,17 +8,18 @@ describe('MainView.vue', () => {
   localVue.use(Vuex)
   let store: any
   let actions: any
-  let state: any
+
   let mutations: any
   const mocks: any = { '$route': { params: {} } }
   const isSearchResultEmpty = jest.fn()
   let setToastMock = jest.fn()
 
   beforeEach(() => {
-    state = {
+    Object.assign(state, {
       state: { treeSelection: 3 },
       toast: { type: 'danger', message: 'i am not a message' }
-    }
+    })
+
     actions = {
       loadVariables: jest.fn(),
       loadAssessments: jest.fn(),
