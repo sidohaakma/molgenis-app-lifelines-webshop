@@ -7,24 +7,22 @@ import { router } from './router'
 // Import stylesheet
 import 'vue-loading-overlay/dist/vue-loading.css'
 import 'bootstrap'
-import fetchPonyfill from 'fetch-ponyfill'
 
 Vue.config.productionTip = false
 
-const app:Vue = new Vue({ store, router, render: h => h(App) })
-
-// Work around for session key time out
-fetchPonyfill().fetch('/api/v2/i18n/lifelines-webshop/en').then((resp) => {
-  if (resp.status === 401) {
-    window.location.href = '/login'
-  }
+const contextPromise = store.dispatch('fetchContext').catch(() => {
+  // session key has timed out
+  window.location.href = '/login'
 })
+
+const app:Vue = new Vue({ store, router, render: h => h(App) })
 
 Vue.use(i18n, {
   lng: 'en',
   fallbackLng: 'en',
   namespace: ['lifelines-webshop', 'ui-form'],
-  callback () {
+  async callback () {
+    await contextPromise
     app.$mount('#app')
   }
 })

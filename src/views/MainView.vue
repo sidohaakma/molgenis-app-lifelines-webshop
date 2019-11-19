@@ -43,7 +43,7 @@ import ContentView from './ContentView.vue'
 import SidebarView from './SidebarView.vue'
 import CartView from './CartView.vue'
 import ToastComponent from '../components/ToastComponent.vue'
-import { mapState, mapMutations, mapActions } from 'vuex'
+import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
 
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faStore, faShoppingCart } from '@fortawesome/free-solid-svg-icons'
@@ -61,7 +61,8 @@ export default Vue.extend({
     }
   },
   computed: {
-    ...mapState(['toast', 'isSignedIn']),
+    ...mapState(['toast']),
+    ...mapGetters(['isSignedIn']),
     selectedVariableIds () {
       return Object.keys(this.$store.state.gridSelection).length
     }

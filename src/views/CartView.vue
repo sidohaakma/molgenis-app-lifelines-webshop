@@ -45,7 +45,7 @@
 <script>
 import Vue from 'vue'
 import SpinnerAnimation from '../components/animations/SpinnerAnimation.vue'
-import { mapActions, mapState } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 
 export default Vue.extend({
   name: 'CartView',
@@ -54,7 +54,7 @@ export default Vue.extend({
     ...mapActions(['save'])
   },
   computed: {
-    ...mapState(['isSignedIn']),
+    ...mapGetters(['isSignedIn']),
     gridSelection () {
       return this.$store.state.gridSelection
     },

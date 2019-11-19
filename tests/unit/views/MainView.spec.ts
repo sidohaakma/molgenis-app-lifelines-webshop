@@ -12,6 +12,7 @@ describe('MainView.vue', () => {
   let mutations: any
   const mocks: any = { '$route': { params: {} } }
   const isSearchResultEmpty = jest.fn()
+  const isSignedIn = jest.fn()
   let setToastMock = jest.fn()
 
   beforeEach(() => {
@@ -33,7 +34,8 @@ describe('MainView.vue', () => {
       state,
       actions,
       getters: {
-        isSearchResultEmpty
+        isSearchResultEmpty,
+        isSignedIn
       },
       mutations
     })
@@ -56,7 +58,6 @@ describe('MainView.vue', () => {
 
   it('should show a toast telling the user to signin to select/order if the user is not signed in an no other toest is shown', () => {
     state.toast = null
-    state.isSignedIn = false
 
     shallowMount(MainView, { store, localVue, mocks })
 
