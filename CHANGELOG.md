@@ -1,3 +1,10 @@
+# [0.12.0](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v0.11.0...v0.12.0) (2019-11-19)
+
+
+### Features
+
+* add selected variables badge to Cart tab ([0e47789](https://github.com/molgenis/molgenis-app-lifelines-webshop/commit/0e47789)), closes [#150](https://github.com/molgenis/molgenis-app-lifelines-webshop/issues/150)
+
 # [0.11.0](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v0.10.7...v0.11.0) (2019-11-18)
 
 
