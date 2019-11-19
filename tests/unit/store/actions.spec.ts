@@ -53,6 +53,12 @@ const mockResponses: {[key:string]: Object} = {
       { id: 2, name: 'sub_section2' }
     ]
   },
+  '/api/v2/lifelines_tree?num=10000': {
+    items: [
+      { id: 1, section_id: { id: 1 }, subsection_id: { id: 1 } },
+      { id: 2, section_id: { id: 1 }, subsection_id: { id: 2 } }
+    ]
+  },
   '/api/v2/lifelines_assessment': {
     items: [
       { id: 1, name: '1A' },
@@ -306,6 +312,21 @@ describe('actions', () => {
     it('not fetch the sub sections if already in state', async (done) => {
       const commit = jest.fn()
       await actions.loadSubSections({ state: { subSectionList: ['sub_section1'] }, commit })
+      expect(commit).toHaveBeenCalledTimes(0)
+      done()
+    })
+  })
+
+  describe('loadSectionTree', () => {
+    it('fetches the sections in tree form', async (done) => {
+      const commit = jest.fn()
+      await actions.loadSectionTree({ state: { treeStructure: [] }, commit })
+      expect(commit).toHaveBeenCalledWith('updateSectionTree', [{ 'key': '1', 'list': [1, 2] }])
+      done()
+    })
+    it('wont fetch if data is loaded already', async (done) => {
+      const commit = jest.fn()
+      await actions.loadSectionTree({ state: { treeStructure: [0, 1] }, commit })
       expect(commit).toHaveBeenCalledTimes(0)
       done()
     })
