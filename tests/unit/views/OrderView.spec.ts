@@ -1,5 +1,4 @@
-import { shallowMount, createLocalVue } from '@vue/test-utils'
-import VueRouter from 'vue-router'
+import { shallowMount, createLocalVue, RouterLinkStub } from '@vue/test-utils'
 import OrderView from '@/views/OrderView.vue'
 import Vuex from 'vuex'
 
@@ -28,7 +27,7 @@ describe('OrderView', () => {
   beforeEach(() => {
     localVue = createLocalVue()
     localVue.use(Vuex)
-    localVue.use(VueRouter)
+
     saveMock = jest.fn()
     submitMock = jest.fn()
     state = {
@@ -54,12 +53,31 @@ describe('OrderView', () => {
       actions,
       mutations
     })
-    wrapper = shallowMount(OrderView, { store, localVue })
+
+    const stubs = {
+      RouterLink: RouterLinkStub
+    }
+
+    wrapper = shallowMount(OrderView, { stubs, store, localVue })
   })
 
   it('should render the component', () => {
     expect(wrapper).toBeDefined()
     expect(wrapper.find('#order-form')).toBeDefined()
+  })
+
+  describe('when the order application form is a fileReference', () => {
+    beforeEach(() => {
+      wrapper.setData({ order: {
+        applicationForm: {
+          filename: 'my file'
+        }
+      } })
+    })
+
+    it('should use the filename as applicationForm value', () => {
+      expect(wrapper.vm.orderFormData).toEqual({ applicationForm: 'my file' })
+    })
   })
 
   describe('on form value changed', () => {

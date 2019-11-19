@@ -6,7 +6,7 @@ import Assessment from '@/types/Assessment'
 import { Section } from '@/types/Section.ts'
 import { Cart } from '@/types/Cart'
 import ApplicationState from '@/types/ApplicationState'
-import router from '@/router'
+import { router } from '@/router'
 import Getters from '@/types/Getters'
 import { buildFormData, generateOrderNumber } from '@/services/orderService.ts'
 import FormField from '@/types/FormField'
@@ -55,6 +55,9 @@ const createOrder = async (formData: any, formFields:FormField[]) => {
 }
 
 const updateOrder = async (formData: any, formFields:FormField[]) => {
+  if (formData.applicationForm && (typeof formData.applicationForm.filename === 'string')) {
+    formData.applicationForm = formData.applicationForm.filename
+  }
   const options = buildPostOptions(formData, formFields)
 
   return api.post(`/api/v1/lifelines_order/${formData.orderNumber}?_method=PUT`, options, true).then(() => {
@@ -71,6 +74,7 @@ export default {
   deleteOrder: tryAction(async ({ dispatch, commit }: any, orderId: string) => {
     commit('setOrders', null)
     await api.delete_(`/api/v2/lifelines_order/${orderId}`)
+    commit('setToast', { type: 'success', message: `Deleted order with order number ${orderId}` })
     dispatch('loadOrders')
   }),
   loadSections: tryAction(async ({ commit, state } : any) => {
