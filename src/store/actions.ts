@@ -215,6 +215,7 @@ export default {
     if (state.order.orderNumber) {
       await updateOrder(formData, formFields)
       commit('setToast', { type: 'success', message: 'Saved order with order number ' + state.order.orderNumber })
+      return state.order.orderNumber
     } else {
       const creationDateField = { id: 'creationDate', type: 'date' }
       const orderNumber = await createOrder(formData, [ ...formFields, creationDateField ]).catch(() => {
@@ -223,6 +224,7 @@ export default {
       const newOrderResponse = await api.get(`/api/v2/lifelines_order/${orderNumber}`)
       commit('restoreOrderState', newOrderResponse)
       commit('setToast', { type: 'success', message: 'Saved order with order number ' + orderNumber })
+      return orderNumber
     }
   }),
   submit: tryAction(async ({ state, commit }: {state: ApplicationState, commit: any}) => {

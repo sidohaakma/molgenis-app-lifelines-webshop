@@ -4,15 +4,15 @@ import Router from 'vue-router'
 import MainView from './views/MainView.vue'
 import OrdersView from './views/OrdersView.vue'
 import OrderView from './views/OrderView.vue'
-import HomeView from './views/HomeView.vue'
+
+import store from '@/store/store'
 
 Vue.use(Router)
-
 const routes = [
   {
     path: '/',
     name: 'home',
-    component: HomeView
+    redirect: () => ({ name: store.getters.isSignedIn ? 'orders' : 'shop' })
   },
   {
     path: '/orders/:orderNumber?',
