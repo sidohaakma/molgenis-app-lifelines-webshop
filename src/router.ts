@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import Router from 'vue-router'
+import Router, { NavigationGuard } from 'vue-router'
 
 import MainView from './views/MainView.vue'
 import OrdersView from './views/OrdersView.vue'
@@ -8,7 +8,7 @@ import OrderView from './views/OrderView.vue'
 import store from '@/store/store'
 
 Vue.use(Router)
-const routes = [
+export const routes = [
   {
     path: '/',
     name: 'home',
@@ -44,9 +44,16 @@ const routes = [
 
 const packageJson = require('../package.json')
 
-const router = new Router({
+export const router = new Router({
   base: process.env.NODE_ENV === 'production' ? packageJson.name + '/dist/index.html' : process.env.BASE_URL,
   routes
 })
 
-export { router, routes }
+export const anonymousNavigationGuard: NavigationGuard = (to, _from, next) => {
+  if (to.name !== 'shop' && !store.getters.isSignedIn) {
+    router.push({ name: 'shop' })
+  } else {
+    next()
+  }
+}
+router.beforeResolve(anonymousNavigationGuard)
