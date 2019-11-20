@@ -1,3 +1,10 @@
+## [0.15.1](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v0.15.0...v0.15.1) (2019-11-20)
+
+
+### Bug Fixes
+
+* **router:** add anonymous navigation guard ([491ae05](https://github.com/molgenis/molgenis-app-lifelines-webshop/commit/491ae05)), closes [#129](https://github.com/molgenis/molgenis-app-lifelines-webshop/issues/129)
+
 # [0.15.0](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v0.14.0...v0.15.0) (2019-11-20)
 
 
