@@ -70,7 +70,7 @@
                   @click.prevent="isSignedIn && toggleCell(rowIndex, colIndex)"
                   :class="getGridCellClass(rowIndex, colIndex)"
                   class="ll-facet-option btn btn-sm select-item grid-item">
-                  {{ isNaN(count) ? '-' : count | formatCount }}
+                  {{ count | formatCount }}
                 </button>
               </td>
             </tr>
@@ -133,6 +133,8 @@ export default Vue.extend({
     formatCount: function (value) {
       if (value === -1) {
         return '1-15'
+      } else if (isNaN(value)) {
+        return '-'
       } else if (value > 0) {
         return formatSI(value)
       }
