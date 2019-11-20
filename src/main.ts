@@ -17,6 +17,11 @@ const contextPromise = store.dispatch('fetchContext').catch(() => {
 
 const app:Vue = new Vue({ store, router, render: h => h(App) })
 
+// Expose window.app in development mode.
+if (process.env.NODE_ENV !== 'production') {
+  global.app = app
+}
+
 Vue.use(i18n, {
   lng: 'en',
   fallbackLng: 'en',
