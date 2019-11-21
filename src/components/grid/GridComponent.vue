@@ -263,14 +263,15 @@ export default Vue.extend({
     }
   }
 
-  .vld-overlay.is-active{
+  .vld-overlay.is-active {
     margin: -1rem;
   }
-  .table-holder{
+
+  .table-holder {
     display: inline-block;
-    position: relative;
     min-height: 300px;
     min-width: 500px;
+    position: relative;
   }
 
   .sticky {
