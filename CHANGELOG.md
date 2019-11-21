@@ -1,3 +1,10 @@
+# [0.16.0](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v0.15.2...v0.16.0) (2019-11-21)
+
+
+### Features
+
+* give admin write perm on submit order ([41313d2](https://github.com/molgenis/molgenis-app-lifelines-webshop/commit/41313d2))
+
 ## [0.15.2](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v0.15.1...v0.15.2) (2019-11-21)
 
 
