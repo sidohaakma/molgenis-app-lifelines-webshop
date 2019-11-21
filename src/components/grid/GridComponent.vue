@@ -17,7 +17,7 @@
             </th>
           </tr>
         </table>
-        <div :class="{'space-holder':stickyTableHeader || !grid.length}"></div>
+        <div :class="{'space-holder':stickyTableHeader || !grid}"></div>
         <div class="table-holder">
           <loading
             :active="isLoading"
@@ -27,7 +27,7 @@
             background-color="var(--light)"
           ></loading>
           <table
-            v-if="grid.length"
+            v-if="grid"
             ref="grid"
             class="grid-table"
             @click.stop="clickGridDelegate"
@@ -116,6 +116,7 @@ export default Vue.extend({
      */
     selected: function () {
       const selected = { all: true, row: [], col: [] }
+      if (this.grid === null) return selected
       selected.col = this.grid[0].map((i) => true)
 
       this.grid.forEach((row, i) => {
@@ -134,7 +135,7 @@ export default Vue.extend({
   props: {
     grid: {
       type: Array,
-      required: true
+      required: false
     },
     gridAssessments: {
       type: Array,
@@ -142,11 +143,11 @@ export default Vue.extend({
     },
     gridVariables: {
       type: Array,
-      required: true
+      required: false
     },
     gridSelections: {
       type: Array,
-      required: true
+      required: false
     },
     isLoading: {
       type: Boolean,
@@ -276,7 +277,6 @@ export default Vue.extend({
 
   .sticky {
     background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.9) 75%, rgba(255, 255, 255, 0) 100%);
-    background-color: #fff;
     pointer-events: none;
     position: fixed;
     top: 60px;

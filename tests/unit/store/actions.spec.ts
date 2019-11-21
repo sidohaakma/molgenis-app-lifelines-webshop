@@ -347,7 +347,7 @@ describe('actions', () => {
         getters: { searchTermQuery: null },
         commit
       })
-      expect(commit).toHaveBeenCalledWith('updateGridVariables', [])
+      expect(commit).toHaveBeenCalledWith('updateGridVariables', null)
       await action
       const variant = { 'assessmentId': 1, 'assessment_id': 1, 'id': 197 }
       expect(commit).toHaveBeenCalledWith('updateGridVariables', [
@@ -365,7 +365,7 @@ describe('actions', () => {
         getters: { searchTermQuery: '*=q=cream' },
         commit
       })
-      expect(commit).toHaveBeenCalledWith('updateGridVariables', [])
+      expect(commit).toHaveBeenCalledWith('updateGridVariables', null)
       await action
       const variant = { 'assessmentId': 1, 'assessment_id': 1, 'id': 197 }
       expect(commit).toHaveBeenCalledWith('updateGridVariables', [
@@ -379,10 +379,10 @@ describe('actions', () => {
       const state = { treeSelected: 4 }
       const getters = { searchTermQuery: null }
       const action = actions.loadGridVariables({ state, commit, getters })
-      expect(commit).toHaveBeenCalledWith('updateGridVariables', [])
+      expect(commit).toHaveBeenCalledWith('updateGridVariables', null)
       state.treeSelected = 6
       await action
-      expect(commit).toHaveBeenCalledTimes(3)
+      expect(commit).toHaveBeenCalledTimes(1)
       done()
     })
 
@@ -391,10 +391,10 @@ describe('actions', () => {
       const state = { treeSelected: 4 }
       const getters: any = { searchTermQuery: null }
       const action = actions.loadGridVariables({ state, commit, getters })
-      expect(commit).toHaveBeenCalledWith('updateGridVariables', [])
+      expect(commit).toHaveBeenCalledWith('updateGridVariables', null)
       getters.searchTermQuery = '*=q=test'
       await action
-      expect(commit).toHaveBeenCalledTimes(3)
+      expect(commit).toHaveBeenCalledTimes(1)
       done()
     })
   })
@@ -447,7 +447,7 @@ describe('actions', () => {
     it('loads new variant counts if rsql is empty', async (done) => {
       const commit = jest.fn()
       const response = actions.loadGridData({ commit, getters: { rsql: '' } })
-      expect(commit).toHaveBeenCalledWith('updateVariantCounts', [])
+      expect(commit).toHaveBeenCalledWith('updateVariantCounts', null)
       await response
       expect(commit).toHaveBeenCalledWith('updateVariantCounts', [
         { 'count': 12340, 'variantId': 1 },
@@ -459,7 +459,7 @@ describe('actions', () => {
     it('loads new variant counts if rsql is nonempty', async (done) => {
       const commit = jest.fn()
       await actions.loadGridData({ commit, getters: { rsql: 'll_nr.yob=le=1970' } })
-      expect(commit).toHaveBeenCalledWith('updateVariantCounts', [])
+      expect(commit).toHaveBeenCalledWith('updateVariantCounts', null)
       expect(commit).toHaveBeenCalledWith('updateVariantCounts', [
         { 'count': 1234, 'variantId': 1 },
         { 'count': 5678, 'variantId': 10 }
@@ -471,10 +471,10 @@ describe('actions', () => {
       const commit = jest.fn()
       const getters = { rsql: 'll_nr.yob=le=1970' }
       const action = actions.loadGridData({ commit, getters })
-      expect(commit).toHaveBeenCalledWith('updateVariantCounts', [])
+      expect(commit).toHaveBeenCalledWith('updateVariantCounts', null)
       getters.rsql = ''
       await action
-      expect(commit).toHaveBeenCalledTimes(3)
+      expect(commit).toHaveBeenCalledTimes(1)
       done()
     })
   })

@@ -298,7 +298,31 @@ describe('getters', () => {
         expect(getters.searchTermQuery({ ...emptyState, searchTerm: 'a==b' })).toBe('*=q=\'a==b\'')
       })
     })
-
+    describe('isFilterdSubsectionLoading', () => {
+      it('is initially false', () => {
+        expect(getters.isFilterdSubsectionLoading(emptyState)).toBe(false)
+      })
+      it('is true while loading', () => {
+        expect(getters.isFilterdSubsectionLoading({ ...emptyState, searchTerm: 'hello world' })).toBe(true)
+      })
+      it('is false when loaded', () => {
+        expect(getters.isFilterdSubsectionLoading({ ...emptyState, searchTerm: 'hello world', filteredSections: [] })).toBe(false)
+      })
+    })
+    describe('isGridLoading', () => {
+      it('is initially false', () => {
+        expect(getters.isGridLoading(emptyState)).toBe(false)
+      })
+      it('is true while loading variantCounts', () => {
+        expect(getters.isGridLoading({ ...emptyState, gridVariables: [], treeSelected: 1 })).toBe(true)
+      })
+      it('is true while loading gridVariables', () => {
+        expect(getters.isGridLoading({ ...emptyState, variantCounts: [], treeSelected: 1 })).toBe(true)
+      })
+      it('is false when loaded', () => {
+        expect(getters.isGridLoading({ ...emptyState, gridVariables: [], variantCounts: [], treeSelected: 1 })).toBe(false)
+      })
+    })
     describe('filteredTreeStructure', () => {
       const education: TreeNode = {
         id: 1,
