@@ -225,7 +225,7 @@ export default {
       return orderNumber
     }
   }),
-  submit: tryAction(async ({ state, commit }: {state: ApplicationState, commit: any}) => {
+  submit: tryAction(async ({ state, commit, dispatch }: {state: ApplicationState, commit: any, dispatch: any}) => {
     const formFields = [...state.orderFormFields, { id: 'contents', type: 'text' }]
     const now = moment().toISOString()
     const formData = {
@@ -246,6 +246,7 @@ export default {
         return Promise.reject(new Error('Failed to submit order'))
       })
     }
+    dispatch('givePermissionToOrder')
     const newOrderResponse = await api.get(`/api/v2/lifelines_order/${orderNumber}`)
     commit('restoreOrderState', newOrderResponse)
     commit('setToast', { type: 'success', message: 'Submitted order with order number ' + orderNumber })
@@ -258,5 +259,23 @@ export default {
     commit('updateFacetFilter', facetFilter)
     commit('updateGridSelection', gridSelection)
     commit('setToast', { type: 'success', message: 'Loaded order with orderNumber ' + orderNumber })
+  }),
+  givePermissionToOrder: tryAction(async ({ state, commit }: {state: ApplicationState, commit: any}, orderNumber: string) => {
+    const data = {
+      objects: [{
+        objectId: state.order.orderNumber,
+        permissions: [
+          {
+            role: 'LIFELINES_MANAGER',
+            permission: 'WRITE'
+          }
+        ]
+      }]
+    }
+    const options = {
+      body: JSON.stringify(data)
+    }
+
+    return api.post('/api/permissions/entity-lifelines_order', options)
   })
 }
