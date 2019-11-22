@@ -1,3 +1,10 @@
+## [0.16.1](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v0.16.0...v0.16.1) (2019-11-22)
+
+
+### Bug Fixes
+
+* Closes [#158](https://github.com/molgenis/molgenis-app-lifelines-webshop/issues/158) Set orderNumber to state before using it ([ef02076](https://github.com/molgenis/molgenis-app-lifelines-webshop/commit/ef02076))
+
 # [0.16.0](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v0.15.2...v0.16.0) (2019-11-21)
 
 
