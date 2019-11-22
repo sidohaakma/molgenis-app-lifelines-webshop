@@ -209,7 +209,7 @@ export default Vue.extend({
       transform-origin: 100% 100%;
       transition: height 0.3s;
       white-space: nowrap;
-      z-index: 1050;
+      z-index: 1000; // zindex-dropdown
     }
 
     &.hide-bar {

@@ -218,7 +218,7 @@ export default Vue.extend({
       const table = this.getTableTop()
       const header = this.getHeaderHeight()
       if (table && header) {
-        this.stickyTableHeader = table - header < 60
+        this.stickyTableHeader = table - header < 112 // 7rem @ 16px basesize
       }
     },
     getTableTop () {
@@ -279,7 +279,7 @@ export default Vue.extend({
     background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.9) 75%, rgba(255, 255, 255, 0) 100%);
     pointer-events: none;
     position: fixed;
-    top: 60px;
+    top: 7rem;
     z-index: 1020;
 
     .assessments-title {
