@@ -1,3 +1,10 @@
+## [0.16.2](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v0.16.1...v0.16.2) (2019-11-22)
+
+
+### Bug Fixes
+
+* add polyfills for closest and findindex to IE11 ([#164](https://github.com/molgenis/molgenis-app-lifelines-webshop/issues/164)) ([f43e46a](https://github.com/molgenis/molgenis-app-lifelines-webshop/commit/f43e46a))
+
 ## [0.16.1](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v0.16.0...v0.16.1) (2019-11-22)
 
 
