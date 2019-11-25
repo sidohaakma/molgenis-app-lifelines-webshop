@@ -5,6 +5,7 @@ import orders from '../fixtures/orders'
 
 // @ts-ignore
 import { post } from '@molgenis/molgenis-api-client'
+import axios from 'axios'
 import ApplicationState from '@/types/ApplicationState'
 import { OrderState } from '@/types/Order'
 import * as orderService from '@/services/orderService'
@@ -630,6 +631,7 @@ describe('actions', () => {
         await actions.submit({ state, commit, dispatch })
         expect(commit).toHaveBeenCalledWith('setToast', { type: 'success', message: 'Submitted order with order number 12345' })
         expect(dispatch).toHaveBeenCalledWith('givePermissionToOrder')
+        expect(dispatch).toHaveBeenCalledWith('sendSubmissionTrigger')
         done()
       })
     })
@@ -654,6 +656,7 @@ describe('actions', () => {
         await actions.submit({ state, commit, dispatch })
         expect(commit).toHaveBeenCalledWith('setToast', { type: 'success', message: 'Submitted order with order number 12345' })
         expect(dispatch).toHaveBeenCalledWith('givePermissionToOrder')
+        expect(dispatch).toHaveBeenCalledWith('sendSubmissionTrigger')
         done()
       })
     })
@@ -684,10 +687,11 @@ describe('actions', () => {
         done()
       })
 
-      it('should resturn undefined', () => {
+      it('should return undefined', () => {
         expect(result).toBeUndefined()
         expect(commit).not.toHaveBeenCalledWith('setToast', { type: 'success', message: 'Submitted order with order number 12345' })
         expect(dispatch).not.toHaveBeenCalledWith('givePermissionToOrder')
+        expect(dispatch).not.toHaveBeenCalledWith('sendSubmissionTrigger')
       })
     })
   })
@@ -705,6 +709,35 @@ describe('actions', () => {
     })
     it('should resturn undefined', () => {
       expect(post).toHaveBeenCalledWith('/api/v1/lifelines_order', expect.anything(), true)
+    })
+  })
+
+  describe('sendSubmissionTrigger', () => {
+    let mockPost = jest.fn()
+    beforeEach(async (done) => {
+      mockPost.mockResolvedValue('yep yep')
+      axios.post = mockPost
+      await actions.sendSubmissionTrigger()
+      done()
+    })
+    it('should send a trigger of type submit', () => {
+      expect(mockPost).toHaveBeenCalledWith('/edge-server/trigger?type=submit')
+    })
+  })
+
+  describe('sendSubmissionTrigger error handling', () => {
+    let mockPost = jest.fn()
+    beforeEach(async (done) => {
+      // @ts-ignore
+      global.console = { log: jest.fn() }
+      mockPost.mockRejectedValue('my err')
+      axios.post = mockPost
+      await actions.sendSubmissionTrigger()
+      done()
+    })
+    it('should send a trigger of type submit', () => {
+      expect(console.log).toBeCalledWith('Send submit trigger failed')
+      expect(console.log).toBeCalledWith('my err')
     })
   })
 })
