@@ -12,6 +12,7 @@ import FormField from '@/types/FormField'
 import { OrderState } from '@/types/Order'
 import moment from 'moment'
 import { TreeParent } from '@/types/Tree'
+import axios from 'axios'
 
 const buildPostOptions = (formData: any, formFields: FormField[]) => {
   return {
@@ -249,6 +250,7 @@ export default {
     const newOrderResponse = await api.get(`/api/v2/lifelines_order/${orderNumber}`)
     commit('restoreOrderState', newOrderResponse)
     dispatch('givePermissionToOrder')
+    dispatch('sendSubmissionTrigger')
     commit('setToast', { type: 'success', message: 'Submitted order with order number ' + orderNumber })
   }),
   load: tryAction(async ({ state, commit }: {state: ApplicationState, commit: any}, orderNumber: string) => {
@@ -277,5 +279,11 @@ export default {
     }
 
     return api.post('/api/permissions/entity-lifelines_order', options)
-  })
+  }),
+  sendSubmissionTrigger: async () => {
+    return axios.post('/edge-server/trigger?type=submit').catch((err: any) => {
+      console.log('Send submit trigger failed')
+      console.log(err)
+    })
+  }
 }
