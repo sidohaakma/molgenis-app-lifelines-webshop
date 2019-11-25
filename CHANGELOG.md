@@ -1,3 +1,10 @@
+# [0.17.0](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v0.16.2...v0.17.0) (2019-11-25)
+
+
+### Features
+
+* call edge server for trigger on submit ([e6b8cc3](https://github.com/molgenis/molgenis-app-lifelines-webshop/commit/e6b8cc3))
+
 ## [0.16.2](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v0.16.1...v0.16.2) (2019-11-22)
 
 
