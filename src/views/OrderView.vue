@@ -6,6 +6,7 @@
           v-if="toast"
           :type="toast.type"
           :message="toast.message"
+          :autoHideOnType="['succes']"
           @toastCloseBtnClicked="clearToast">
         </toast-component>
         <div class="row">
@@ -80,8 +81,7 @@
 import Vue from 'vue'
 import { FormComponent } from '@molgenis/molgenis-ui-form'
 import { mapActions, mapMutations, mapState } from 'vuex'
-import ToastComponent from '../components/ToastComponent.vue'
-
+import ToastComponent from '@molgenis-ui/components'
 export default Vue.extend({
   name: 'OrderView',
   components: {

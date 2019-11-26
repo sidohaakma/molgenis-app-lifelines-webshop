@@ -33,7 +33,7 @@ import Vue from 'vue'
 import ContentView from './ContentView.vue'
 import SidebarView from './SidebarView.vue'
 import CartView from './CartView.vue'
-import ToastComponent from '../components/ToastComponent.vue'
+import ToastComponent from '@molgenis-ui/components'
 import NavigationBar from '../components/NavigationBar.vue'
 
 import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
