@@ -16,6 +16,7 @@
               :formFields="orderFormFields"
               :initialFormData="orderFormData"
               :formState="formState"
+              :autoHideOnType="['succes']"
               @valueChange="onValueChanged">
             </form-component>
             <div>

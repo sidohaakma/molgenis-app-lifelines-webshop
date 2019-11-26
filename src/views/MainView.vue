@@ -10,6 +10,7 @@
               v-if="toast"
               :type="toast.type"
               :message="toast.message"
+              :autoHideOnType="['succes']"
               @toastCloseBtnClicked="clearToast">
             </toast-component>
 
