@@ -10,6 +10,13 @@ import { TreeParent } from '@/types/Tree'
 import { Order } from '@/types/Order'
 
 export default {
+  setLoading (state: ApplicationState, toggle: boolean) {
+    if (toggle) {
+      state.loading += 1
+    } else if (state.loading > 0) {
+      state.loading -= 1
+    }
+  },
   setToast (state: ApplicationState, toast: Toast) {
     state.toast = toast
   },

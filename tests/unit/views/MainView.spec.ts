@@ -14,6 +14,7 @@ describe('MainView.vue', () => {
   const isSearchResultEmpty = jest.fn()
   const isSignedIn = jest.fn()
   let setToastMock = jest.fn()
+  const setLoading = jest.fn()
 
   beforeEach(() => {
     Object.assign(state, {
@@ -28,6 +29,7 @@ describe('MainView.vue', () => {
       save: jest.fn()
     }
     mutations = {
+      setLoading: setLoading,
       setToast: setToastMock
     }
     store = new Vuex.Store({

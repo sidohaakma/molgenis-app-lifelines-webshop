@@ -16,6 +16,7 @@ export type Toast = {
 }
 
 export interface AppState {
+  loading: number,
   order: Order,
   orderFormFields: FormField[]
   variables: { [key:number]: Variable },
