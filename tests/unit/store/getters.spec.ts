@@ -1,5 +1,5 @@
 import getters from '@/store/getters'
-import emptyState from '@/store/state'
+import emptyState from '../fixtures/state'
 import Getters from '@/types/Getters'
 import ApplicationState from '@/types/ApplicationState'
 import Variant from '@/types/Variant'
@@ -53,9 +53,6 @@ describe('getters', () => {
   }
 
   describe('isSignedIn', () => {
-    it('is false when context is not loaded', () => {
-      expect(getters.isSignedIn({ ...emptyState, context: { context: null } })).toBe(false)
-    })
     it('is false when context is not authenticated', () => {
       expect(getters.isSignedIn({ ...emptyState, context: { context: { authenticated: false } } as any })).toBe(false)
     })

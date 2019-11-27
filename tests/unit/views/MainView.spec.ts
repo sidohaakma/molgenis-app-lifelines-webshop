@@ -1,6 +1,6 @@
 import { shallowMount, createLocalVue } from '@vue/test-utils'
 import MainView from '@/views/MainView.vue'
-import state from '@/store/state'
+import state from '../fixtures/state'
 import Vuex from 'vuex'
 
 describe('MainView.vue', () => {

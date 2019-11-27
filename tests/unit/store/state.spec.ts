@@ -1,4 +1,4 @@
-import state from '@/store/state'
+import state from '../fixtures/state'
 
 describe('state', () => {
   it('should contain the ordrFormFields', () => {

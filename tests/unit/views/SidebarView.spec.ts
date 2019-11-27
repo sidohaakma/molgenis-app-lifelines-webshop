@@ -1,6 +1,6 @@
 import { shallowMount, createLocalVue, Wrapper } from '@vue/test-utils'
 import SidebarView from '@/views/SidebarView.vue'
-import emptyState from '@/store/state'
+import emptyState from '../fixtures/state'
 import Vue from 'vue'
 import Vuex from 'vuex'
 import ApplicationState from '@/types/ApplicationState'

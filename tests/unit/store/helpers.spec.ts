@@ -1,6 +1,6 @@
 import { getErrorMessage, tryAction, toCart, fromCart } from '@/store/helpers'
 import Vue from 'vue'
-import emptyState from '@/store/state'
+import emptyState from '../fixtures/state'
 import { CartFilter, Cart } from '@/types/Cart'
 import Filter from '@/types/Filter'
 
