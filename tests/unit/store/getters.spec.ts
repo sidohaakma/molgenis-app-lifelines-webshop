@@ -4,8 +4,7 @@ import Getters from '@/types/Getters'
 import ApplicationState from '@/types/ApplicationState'
 import Variant from '@/types/Variant'
 import Assessment from '@/types/Assessment'
-import { Variable, VariableWithVariants } from '@/types/Variable'
-import { Section } from '@/types/Section'
+import { VariableWithVariants } from '@/types/Variable'
 import { TreeNode } from '@/types/TreeNode'
 
 describe('getters', () => {
