@@ -1,3 +1,10 @@
+# [0.18.0](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v0.17.0...v0.18.0) (2019-11-28)
+
+
+### Features
+
+* add email and username to order ([9f09c57](https://github.com/molgenis/molgenis-app-lifelines-webshop/commit/9f09c57)), closes [#168](https://github.com/molgenis/molgenis-app-lifelines-webshop/issues/168)
+
 # [0.17.0](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v0.16.2...v0.17.0) (2019-11-25)
 
 
