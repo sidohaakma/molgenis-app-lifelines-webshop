@@ -1,3 +1,10 @@
+# [0.19.0](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v0.18.0...v0.19.0) (2019-11-28)
+
+
+### Features
+
+* add global loader ([08037bf](https://github.com/molgenis/molgenis-app-lifelines-webshop/commit/08037bf)), closes [#173](https://github.com/molgenis/molgenis-app-lifelines-webshop/issues/173)
+
 # [0.18.0](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v0.17.0...v0.18.0) (2019-11-28)
 
 
