@@ -1,3 +1,10 @@
+## [0.19.1](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v0.19.0...v0.19.1) (2019-11-28)
+
+
+### Bug Fixes
+
+* use lookup map to load grid selection ([12391cf](https://github.com/molgenis/molgenis-app-lifelines-webshop/commit/12391cf))
+
 # [0.19.0](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v0.18.0...v0.19.0) (2019-11-28)
 
 
