@@ -1,7 +1,7 @@
 import { shallowMount, createLocalVue } from '@vue/test-utils'
 import CountView from '@/views/CountView.vue'
 import Vuex, { Store } from 'vuex'
-import state from '@/store/state'
+import state from '../fixtures/state'
 import getters from '@/store/getters'
 import mutations from '@/store/mutations'
 

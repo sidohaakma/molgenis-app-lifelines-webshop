@@ -1,5 +1,5 @@
 import mutations from '@/store/mutations'
-import state from '@/store/state'
+import state from '../fixtures/state'
 import orders from '../fixtures/orders'
 import { OrderState } from '@/types/Order'
 
