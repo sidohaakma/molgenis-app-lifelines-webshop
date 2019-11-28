@@ -6,6 +6,8 @@ const state: ApplicationState = {
   ...initialState,
   context: {
     context: {
+      email: 'user@example.org',
+      username: 'anonymous',
       logoTopMaxHeight: 150,
       navBarLogo: '/img/Logo_Blue_Small.png',
       menu: {
