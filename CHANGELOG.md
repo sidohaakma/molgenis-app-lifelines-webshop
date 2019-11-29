@@ -1,3 +1,10 @@
+# [0.20.0](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v0.19.1...v0.20.0) (2019-11-29)
+
+
+### Features
+
+* use custom validation on projectnumber ([#171](https://github.com/molgenis/molgenis-app-lifelines-webshop/issues/171)) ([fa04910](https://github.com/molgenis/molgenis-app-lifelines-webshop/commit/fa04910))
+
 ## [0.19.1](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v0.19.0...v0.19.1) (2019-11-28)
 
 
