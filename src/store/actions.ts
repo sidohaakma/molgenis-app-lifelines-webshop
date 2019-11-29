@@ -13,6 +13,7 @@ import { OrderState } from '@/types/Order'
 import moment from 'moment'
 import { TreeParent } from '@/types/Tree'
 import axios from 'axios'
+import { setPermission } from '@/services/permissionService'
 
 const buildPostOptions = (formData: any, formFields: FormField[]) => {
   return {
@@ -262,23 +263,15 @@ export default {
     commit('updateGridSelection', gridSelection)
     commit('setToast', { type: 'success', message: 'Loaded order with orderNumber ' + orderNumber })
   }),
-  givePermissionToOrder: tryAction(async ({ state, commit }: {state: ApplicationState, commit: any}, orderNumber: string) => {
-    const data = {
-      objects: [{
-        objectId: state.order.orderNumber,
-        permissions: [
-          {
-            role: 'LIFELINES_MANAGER',
-            permission: 'WRITE'
-          }
-        ]
-      }]
+  givePermissionToOrder: tryAction(async ({ state, commit }: {state: ApplicationState, commit: any}) => {
+    if (state.order.orderNumber === null) {
+      throw new Error('Can not set permission if orderNumber is not set')
     }
-    const options = {
-      body: JSON.stringify(data)
-    }
+    setPermission(state.order.orderNumber, 'lifelines_order', 'LIFELINES_MANAGER', 'WRITE')
 
-    return api.post('/api/permissions/entity-lifelines_order', options)
+    if (state.order.applicationForm && state.order.applicationForm.id) {
+      setPermission(state.order.applicationForm.id, 'sys_FileMeta', 'LIFELINES_MANAGER', 'WRITE')
+    }
   }),
   sendSubmissionTrigger: async () => {
     return axios.post('/edge-server/trigger?type=submit').catch((err: any) => {
