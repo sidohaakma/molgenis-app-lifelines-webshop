@@ -1,3 +1,10 @@
+## [0.21.1](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v0.21.0...v0.21.1) (2019-12-02)
+
+
+### Bug Fixes
+
+* check grid array length instead of null value ([469826b](https://github.com/molgenis/molgenis-app-lifelines-webshop/commit/469826b)), closes [#170](https://github.com/molgenis/molgenis-app-lifelines-webshop/issues/170)
+
 # [0.21.0](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v0.20.0...v0.21.0) (2019-12-02)
 
 
