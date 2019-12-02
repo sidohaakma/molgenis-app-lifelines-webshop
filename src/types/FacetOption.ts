@@ -1,4 +1,4 @@
 export default interface FacetOption {
-    value: string,
+    value: string
     text: string
 }

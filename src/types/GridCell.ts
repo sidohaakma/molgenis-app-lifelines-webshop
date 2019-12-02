@@ -1,4 +1,4 @@
 export default interface GridCell {
-  count: number;
-  selected: boolean;
+  count: number
+  selected: boolean
 }
