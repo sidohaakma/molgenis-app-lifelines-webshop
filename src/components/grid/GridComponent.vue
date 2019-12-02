@@ -116,7 +116,7 @@ export default Vue.extend({
      */
     selected: function () {
       const selected = { all: true, row: [], col: [] }
-      if (this.grid === null) return selected
+      if (!this.grid.length) return selected
       selected.col = this.grid[0].map((i) => true)
 
       this.grid.forEach((row, i) => {
