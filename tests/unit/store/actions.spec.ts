@@ -712,6 +712,44 @@ describe('actions', () => {
     })
   })
 
+  describe('givePermissionToOrder with missing orderNumber', () => {
+    let state: any
+    beforeEach(async (done) => {
+      post.mockReset()
+      state = {
+        order: {
+          orderNumber: null
+        }
+      }
+      await actions.givePermissionToOrder({ state, commit: jest.fn() })
+      done()
+    })
+    it('should resturn undefined', () => {
+      expect(post).not.toHaveBeenCalled()
+    })
+  })
+
+  describe('givePermissionToOrder with file attached', () => {
+    let state: any
+    beforeEach(async (done) => {
+      post.mockReset()
+      state = {
+        order: {
+          orderNumber: '12345',
+          applicationForm: {
+            id: 'app-form'
+          }
+        }
+      }
+      await actions.givePermissionToOrder({ state, commit: jest.fn() })
+      done()
+    })
+    it('should call permission service', () => {
+      expect(post).nthCalledWith(1, '/api/permissions/entity-lifelines_order', expect.anything())
+      expect(post).nthCalledWith(2, '/api/permissions/entity-sys_FileMeta', expect.anything())
+    })
+  })
+
   describe('sendSubmissionTrigger', () => {
     let mockPost = jest.fn()
     beforeEach(async (done) => {
