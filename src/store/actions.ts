@@ -206,10 +206,15 @@ export default {
   }),
   save: tryAction(async ({ state, commit }: {state: ApplicationState, commit: any}) => {
     const formFields = [...state.orderFormFields, { id: 'contents', type: 'text' }]
+
+    const { context: { email, username } } = state.context
+
     const formData = {
       ...state.order,
-      ...{ contents: JSON.stringify(toCart(state)) },
-      ...{ updateDate: moment().toISOString() }
+      contents: JSON.stringify(toCart(state)),
+      updateDate: moment().toISOString(),
+      email,
+      user: username
     }
 
     if (state.order.orderNumber) {
@@ -229,12 +234,17 @@ export default {
   }),
   submit: tryAction(async ({ state, commit, dispatch }: {state: ApplicationState, commit: any, dispatch: any}) => {
     const formFields = [...state.orderFormFields, { id: 'contents', type: 'text' }]
+
+    const { context: { email, username } } = state.context
+
     const now = moment().toISOString()
     const formData = {
       ...state.order,
-      ...{ contents: JSON.stringify(toCart(state)) },
-      ...{ updateDate: now },
-      ...{ submissionDate: now }
+      contents: JSON.stringify(toCart(state)),
+      updateDate: now,
+      submissionDate: now,
+      email,
+      user: username
     }
     // ts enums are numbers, the backends expects strings
     // @ts-ignore

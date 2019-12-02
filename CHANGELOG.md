@@ -1,3 +1,31 @@
+# [0.20.0](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v0.19.1...v0.20.0) (2019-11-29)
+
+
+### Features
+
+* use custom validation on projectnumber ([#171](https://github.com/molgenis/molgenis-app-lifelines-webshop/issues/171)) ([fa04910](https://github.com/molgenis/molgenis-app-lifelines-webshop/commit/fa04910))
+
+## [0.19.1](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v0.19.0...v0.19.1) (2019-11-28)
+
+
+### Bug Fixes
+
+* use lookup map to load grid selection ([12391cf](https://github.com/molgenis/molgenis-app-lifelines-webshop/commit/12391cf))
+
+# [0.19.0](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v0.18.0...v0.19.0) (2019-11-28)
+
+
+### Features
+
+* add global loader ([08037bf](https://github.com/molgenis/molgenis-app-lifelines-webshop/commit/08037bf)), closes [#173](https://github.com/molgenis/molgenis-app-lifelines-webshop/issues/173)
+
+# [0.18.0](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v0.17.0...v0.18.0) (2019-11-28)
+
+
+### Features
+
+* add email and username to order ([9f09c57](https://github.com/molgenis/molgenis-app-lifelines-webshop/commit/9f09c57)), closes [#168](https://github.com/molgenis/molgenis-app-lifelines-webshop/issues/168)
+
 # [0.17.0](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v0.16.2...v0.17.0) (2019-11-25)
 
 

@@ -1,6 +1,6 @@
 import actions from '@/store/actions'
 import { Cart } from '@/types/Cart'
-import emptyState from '@/store/state'
+import emptyState from '../fixtures/state'
 import orders from '../fixtures/orders'
 
 // @ts-ignore

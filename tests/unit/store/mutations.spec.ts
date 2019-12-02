@@ -1,5 +1,5 @@
 import mutations from '@/store/mutations'
-import state from '@/store/state'
+import state from '../fixtures/state'
 import orders from '../fixtures/orders'
 import { OrderState } from '@/types/Order'
 
@@ -9,6 +9,15 @@ describe('mutations', () => {
       const baseAppState = { ...state }
       mutations.setOrders(baseAppState, orders)
       expect(baseAppState.orders).toEqual(orders)
+    })
+  })
+
+  describe('setProjectNumberRequiredFunction', () => {
+    it('sets projectNumber required function', () => {
+      const baseAppState = { ...state }
+      const requiredFunction = () => true
+      mutations.setProjectNumberRequiredFunction(baseAppState, requiredFunction)
+      expect(baseAppState.orderFormFields[0].required).toBe(requiredFunction)
     })
   })
 

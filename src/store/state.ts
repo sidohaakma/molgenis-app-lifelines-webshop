@@ -1,6 +1,7 @@
 import { AppState } from '@/types/ApplicationState'
 
 const state: AppState = {
+  loading: 0,
   toast: null,
   order: {
     orderNumber: null,
@@ -18,7 +19,7 @@ const state: AppState = {
       id: 'projectNumber',
       label: 'Project number',
       description: 'The OV number.',
-      required: () => true,
+      required: () => false,
       disabled: false,
       readOnly: false,
       visible: () => true,
@@ -27,8 +28,8 @@ const state: AppState = {
     {
       type: 'text',
       id: 'name',
-      label: 'Name',
-      description: 'Optional name',
+      label: 'Label',
+      description: 'Optional label for ease of identification',
       required: () => false,
       disabled: false,
       readOnly: false,

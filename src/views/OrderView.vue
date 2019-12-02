@@ -1,15 +1,15 @@
 <template>
-    <div class="container">
-        <h1>Order variables</h1>
-        <toast-component
-          class="toast-component mt-2"
-          v-if="toast"
-          :type="toast.type"
-          :message="toast.message"
-          @toastCloseBtnClicked="clearToast">
-        </toast-component>
+    <div class="container mb-5">
         <div class="row">
           <div class="col-md-6">
+            <toast-component
+              class="toast-component mt-2"
+              v-if="toast"
+              :type="toast.type"
+              :message="toast.message"
+              @toastCloseBtnClicked="clearToast">
+            </toast-component>
+            <h1>Order variables</h1>
             <form-component
               id="order-form"
               :options="options"
@@ -18,6 +18,9 @@
               :formState="formState"
               @valueChange="onValueChanged">
             </form-component>
+            <div v-if="!isSaving && formState.$invalid && formState.$touched" class="alert text-danger px-0">
+              Please enter a project number before submitting a order.
+            </div>
             <div>
               <router-link
                 class="btn btn-secondary btn-outline"
@@ -52,7 +55,7 @@
                 class="btn btn-warning ml-3"
                 type="submit"
                 @click.prevent="onSubmit"
-                :disabled="(formState.$invalid && formState.$touched) || formState.$pending || isSaving">
+                :disabled="formInvalid || formState.$pending || isSaving">
                 Submit
               </button>
 
@@ -64,10 +67,6 @@
                 disabled="disabled">
                 Submitting
               </button>
-
-              <span v-if="!isSaving && formState.$invalid && formState.$touched" class="alert text-danger">
-                Please make sure all required flieds are filled out correctly.
-              </span>
 
             </div>
           </div>
@@ -88,13 +87,16 @@ export default Vue.extend({
   },
   data () {
     return {
+      isSubmittingState: false,
       isSaving: false,
       isSubmitting: false,
+      formInvalid: false,
       options: {
         showEyeButton: false,
         allowAddingOptions: false
       },
-      formState: {}
+      formState: {},
+      formData: {}
     }
   },
   computed: {
@@ -110,24 +112,30 @@ export default Vue.extend({
       }
     }
   },
+  mounted () {
+    this.setProjectNumberRequiredFunction(() => this.isSubmittingState)
+  },
   methods: {
     ...mapActions(['save', 'submit']),
-    ...mapMutations(['setToast', 'clearToast', 'setOrderDetails']),
+    ...mapMutations(['setToast', 'clearToast', 'setOrderDetails', 'setProjectNumberRequiredFunction']),
     onValueChanged (updatedFormData) {
+      if (updatedFormData.projectNumber !== null && updatedFormData.projectNumber !== '') {
+        this.formInvalid = false
+      }
       this.formData = updatedFormData
       this.setOrderDetails(updatedFormData)
     },
     async onSave () {
+      this.isSubmittingState = false
       this.isSaving = true
       const orderNumber = await this.save()
       this.isSaving = false
       this.$router.push({ name: 'load', params: { orderNumber } })
     },
     async onSubmit () {
-      const formState = this.formState
-      // trigger field to show validation result to user
-      this.orderFormFields.forEach((field) => (formState[field.id].$touched = true))
-      if (this.formState.$valid) {
+      this.isSubmittingState = true
+      this.orderFormFields.forEach((field) => (this.formState[field.id].$touched = true))
+      if (!(this.formData.projectNumber === null || this.formData.projectNumber === '')) {
         this.isSubmitting = true
         await this.submit()
         this.isSubmitting = false
