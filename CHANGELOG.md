@@ -1,3 +1,11 @@
+# [0.21.0](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v0.20.0...v0.21.0) (2019-12-02)
+
+
+### Features
+
+* give file perm on submit ([ed31af1](https://github.com/molgenis/molgenis-app-lifelines-webshop/commit/ed31af1))
+* share file perm with DM  on submit ([894fbf6](https://github.com/molgenis/molgenis-app-lifelines-webshop/commit/894fbf6))
+
 # [0.20.0](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v0.19.1...v0.20.0) (2019-11-29)
 
 
