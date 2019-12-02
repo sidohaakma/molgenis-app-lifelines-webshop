@@ -278,10 +278,10 @@ export default {
       throw new Error('Can not set permission if orderNumber is not set')
     }
 
-    await setPermission(state.order.orderNumber, 'lifelines_order', 'LIFELINES_MANAGER', 'WRITE')
+    setPermission(state.order.orderNumber, 'lifelines_order', 'LIFELINES_MANAGER', 'WRITE')
 
     if (state.order.applicationForm && state.order.applicationForm.id) {
-      await setPermission(state.order.applicationForm.id, 'sys_FileMeta', 'LIFELINES_MANAGER', 'WRITE')
+      setPermission(state.order.applicationForm.id, 'sys_FileMeta', 'LIFELINES_MANAGER', 'WRITE')
     }
   }),
   sendSubmissionTrigger: async () => {
