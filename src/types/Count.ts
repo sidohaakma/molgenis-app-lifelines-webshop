@@ -1,4 +1,4 @@
 export default interface Count {
-  variantId: number;
-  count: number;
+  variantId: number
+  count: number
 }

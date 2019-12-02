@@ -123,7 +123,7 @@ export default {
     { gridSelection, gridVariables }: {gridSelection: GridSelection, gridVariables: Variable[] | null},
     { assessmentId } : {assessmentId: number}
   ) {
-    if (gridVariables === null) return
+    if (gridVariables === null) { return }
     // Check if all variables(rows) for this column are already selected.
     const columnSelected = gridVariables.every((variable) => {
       return gridSelection.hasOwnProperty(variable.id) && gridSelection[variable.id].includes(assessmentId)
@@ -161,7 +161,7 @@ export default {
     }
   },
   toggleAll ({ gridSelection, gridVariables, treeSelected, treeStructure }: {gridSelection: GridSelection, gridVariables: VariableWithVariants[] | null, treeSelected: number, treeStructure: object[]}, { gridAssessments }: {gridAssessments: Assessment[] }) {
-    if (gridVariables === null) return
+    if (gridVariables === null) { return }
     // For each variable all assessments are selected
     const allSelected = gridVariables.every((variable) => {
       return gridSelection.hasOwnProperty(variable.id) && (gridSelection[variable.id].length === gridAssessments.length)
