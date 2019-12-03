@@ -1,0 +1,49 @@
+<template>
+  <span>
+    <font-awesome-icon
+      class="ml-1"
+      :icon="faInfoCircle"
+      aria-label="info"
+      :id="id"/>
+    <b-popover
+        :target="id"
+        triggers="hover click"
+        placement="right"
+        :title="title">
+        <slot></slot>
+        <div v-if="href"><a :href="href" target="_blank" rel="noopener noreferrer">{{linkTitle || href}}</a></div>
+      </b-popover>
+  </span>
+</template>
+
+<script>
+import { faInfoCircle } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+
+export default {
+  components: { FontAwesomeIcon },
+  props: {
+    id: {
+      type: String,
+      required: true
+    },
+    title: {
+      type: String,
+      required: false
+    },
+    href: {
+      type: String,
+      required: false
+    },
+    linkTitle: {
+      type: String,
+      required: false
+    }
+  },
+  data: function () {
+    return {
+      faInfoCircle
+    }
+  }
+}
+</script>

@@ -13,6 +13,11 @@
               :collapsable="true"
               :collapsed="activeAgeFacetId !== 'age'"
               @facetToggle="handleAgeToggle">
+                <template v-slot:label-slot>
+                  <info-icon id="age-info-icon">
+                    Please make a selection if you want to limit your study population to specific age groups. <b-badge pill>optional</b-badge>
+                    </info-icon>
+                </template>
                 <age-facet
                 facetId="age"
                 :ageGroupOptions="ageGroupOptions"
@@ -68,11 +73,12 @@ import ClickOutside from 'v-click-outside'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faAngleDoubleLeft, faAngleDoubleDown } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import InfoIcon from '../components/InfoIcon'
 library.add(faAngleDoubleLeft, faAngleDoubleDown)
 
 export default Vue.extend({
   name: 'SidebarView',
-  components: { FacetContainer, ToggleFacet, AgeFacet, RangeFacet, CountView, FontAwesomeIcon },
+  components: { FacetContainer, ToggleFacet, AgeFacet, RangeFacet, CountView, FontAwesomeIcon, InfoIcon },
   props: {
     value: {
       type: Boolean,
