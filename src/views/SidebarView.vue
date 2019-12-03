@@ -48,6 +48,11 @@
           </li>
           <li>
             <facet-container facetId="cohort" label="Subcohorts">
+              <template v-slot:label-slot>
+                <info-icon id="cohort-info-icon">
+                  Please make a selection if you want to limit your study population to specific subcohorts. <b-badge pill>optional</b-badge>
+                </info-icon>
+              </template>
               <toggle-facet
               facetId="cohort"
               :options="subcohortOptions"
