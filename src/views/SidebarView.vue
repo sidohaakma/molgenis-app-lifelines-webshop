@@ -3,7 +3,7 @@
     <div class="label" @click="toggleVisibility">{{$t('lifelines-webshop-sidebar-header')}}<font-awesome-icon icon="angle-double-down" class="ml-2"></font-awesome-icon></div>
     <div class="overflow-hidden">
       <div class="sidebar-width">
-        <h3 class="px-4">{{$t('lifelines-webshop-sidebar-header')}}</h3>
+        <h3 class="px-4 mg-header">{{$t('lifelines-webshop-sidebar-header')}}</h3>
         <ul class="list-unstyled sidebar-content p-4">
           <li class="hide-sidebar" @click="hide"><font-awesome-icon icon="angle-double-left" size="lg"></font-awesome-icon></li>
           <li>
