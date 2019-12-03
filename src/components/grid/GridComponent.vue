@@ -64,7 +64,7 @@
               v-for="(row, rowIndex) in grid"
               :key="rowIndex">
               <th>
-                <grid-titel-info :info="gridVariables[rowIndex]" />
+                <grid-titel-info v-bind="gridVariables[rowIndex]" />
               </th>
               <th class="row-toggle grid-toggle">
                 <button
@@ -116,7 +116,7 @@ export default Vue.extend({
      */
     selected: function () {
       const selected = { all: true, row: [], col: [] }
-      if (!this.grid.length) return selected
+      if (!this.grid.length) { return selected }
       selected.col = this.grid[0].map((i) => true)
 
       this.grid.forEach((row, i) => {
@@ -200,7 +200,7 @@ export default Vue.extend({
     },
     clickGridDelegate: function (e) {
       const button = e.target.closest('button')
-      if (!button) return
+      if (!button) { return }
 
       const data = button.dataset
 

@@ -1,11 +1,21 @@
 <template>
-  <div class="detail-info-hover" >
-    <div class="detail-info">
-      {{variableName(info)}}
-    </div>
-    <span class="variable-title">
-      {{variableName(info)}}
+  <div class="grid-titel">
+    <span class="variable-title" :id="`variable-${name}`">
+      {{variableName}}
     </span>
+    <b-popover
+      :target="`variable-${name}`"
+      triggers="hover click"
+      :title="name">
+      <dl>
+        <dt>Question (in English)</dt>
+        <dd>N/A</dd>
+        <dt>Question (in Dutch)</dt>
+        <dd>N/A</dd>
+        <dt>Datatype</dt>
+        <dd>N/A</dd>
+      </dl>
+    </b-popover>
   </div>
 </template>
 
@@ -15,50 +25,19 @@ import Vue from 'vue'
 export default Vue.extend({
   name: 'GridTitelInfo',
   props: {
-    info: {
-      type: Object,
+    name: {
+      type: String,
       required: true
+    },
+    label: {
+      type: String,
+      required: false
     }
   },
   computed: {
     variableName () {
-      return variable => variable.label ? variable.label : variable.name
+      return this.label ? this.label : this.name
     }
   }
 })
 </script>
-
-<style lang="scss" scoped>
-  @import "../../scss/variables";
-
-  .detail-info-hover {
-    position: relative;
-
-    .detail-info {
-      background-color: $light;
-      display: block;
-      opacity: 0;
-      padding-left: 1rem;
-      padding-right: 1rem;
-      pointer-events: none;
-      position: absolute;
-      z-index: 1;
-
-      path {
-        fill: $secondary;
-      }
-    }
-
-    .variable-title {
-      display: block;
-      overflow: hidden;
-      padding-left: 1rem;
-      padding-right: 1rem;
-      text-overflow: ellipsis;
-    }
-
-    &:hover .detail-info {
-      opacity: 1;
-    }
-  }
-</style>
