@@ -27,7 +27,7 @@
                 type="button"
                 to="/"
                 tag="button">
-                Cancel
+                {{$t('lifelines-webshop-cancel-btn-label')}}
               </router-link>
 
               <button
@@ -37,7 +37,7 @@
                 type="submit"
                 @click.prevent="onSave"
                 :disabled="formState.$pending || isSubmitting">
-                Save
+                {{$t('lifelines-webshop-save-btn-label')}}
               </button>
 
               <button
@@ -46,7 +46,7 @@
                 class="btn btn-primary ml-1"
                 type="button"
                 disabled="disabled">
-                Saving
+                {{$t('lifelines-webshop-saving-btn-label')}}
               </button>
 
               <button
@@ -56,7 +56,7 @@
                 type="submit"
                 @click.prevent="onSubmit"
                 :disabled="formInvalid || formState.$pending || isSaving">
-                Submit
+                {{$t('lifelines-webshop-submit-btn-label')}}
               </button>
 
               <button
@@ -65,7 +65,7 @@
                 class="btn btn-warning ml-3"
                 type="button"
                 disabled="disabled">
-                Submitting
+                {{$t('lifelines-webshop-submitting-btn-label')}}
               </button>
 
             </div>
