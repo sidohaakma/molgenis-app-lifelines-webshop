@@ -9,7 +9,7 @@
           <li>
             <facet-container
               facetId="age"
-              label="Age"
+              :label="$t('lifelines-webshop-age-facet-label')"
               :collapsable="true"
               :collapsed="activeAgeFacetId !== 'age'"
               @facetToggle="handleAgeToggle">
@@ -23,7 +23,7 @@
           <li>
             <facet-container
               facetId="yob"
-              label="Year of birth"
+              :label="$t('lifelines-webshop-yob-facet-label')"
               :collapsable="true"
               :collapsed="activeAgeFacetId !== 'yob'"
               @facetToggle="handleAgeToggle">
@@ -34,7 +34,7 @@
             </facet-container>
           </li>
           <li>
-            <facet-container facetId="gender" label="Gender">
+            <facet-container facetId="gender" :label="$t('lifelines-webshop-gender-facet-label')">
               <toggle-facet
               facetId="gender"
               :options="genderOptions"
@@ -42,7 +42,7 @@
             </facet-container>
           </li>
           <li>
-            <facet-container facetId="cohort" label="Subcohorts">
+            <facet-container facetId="cohort" :label="$t('lifelines-webshop-subcohort-facet-label')">
               <toggle-facet
               facetId="cohort"
               :options="subcohortOptions"
@@ -62,7 +62,6 @@ import FacetContainer from '../components/facets/FacetContainer.vue'
 import ToggleFacet from '../components/facets/ToggleFacet.vue'
 import AgeFacet from '../components/facets/AgeFacet.vue'
 import RangeFacet from '../components/facets/RangeFacet.vue'
-import { mapMutations } from 'vuex'
 import CountView from '@/views/CountView'
 import ClickOutside from 'v-click-outside'
 import { library } from '@fortawesome/fontawesome-svg-core'

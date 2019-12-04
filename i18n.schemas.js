@@ -8,6 +8,10 @@ const en = {
   'lifelines-webshop-modal-button-delete': 'Delete',
   'lifelines-webshop-modal-delete-header': 'Delete order {{order}}',
   'lifelines-webshop-modal-delete-body': 'You are about to delete order {{order}}. Are you sure?',
+  'lifelines-webshop-age-facet-label': 'Age at',
+  'lifelines-webshop-yob-facet-label': 'Year of birth',
+  'lifelines-webshop-gender-facet-label': 'Gender',
+  'lifelines-webshop-subcohort-facet-label': 'Subcohorts',
   'ui-form:form_file_change': 'Change',
   'ui-form:form_file_browse': 'Browse'
 }
