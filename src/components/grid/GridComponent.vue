@@ -116,7 +116,9 @@ export default Vue.extend({
      */
     selected: function () {
       const selected = { all: true, row: [], col: [] }
-      if (!this.grid.length) return selected
+      if (!this.grid.length) {
+        return selected
+      }
       selected.col = this.grid[0].map((i) => true)
 
       this.grid.forEach((row, i) => {
@@ -200,8 +202,9 @@ export default Vue.extend({
     },
     clickGridDelegate: function (e) {
       const button = e.target.closest('button')
-      if (!button) return
-
+      if (!button) {
+        return
+      }
       const data = button.dataset
 
       if (data.col || data.row) {
