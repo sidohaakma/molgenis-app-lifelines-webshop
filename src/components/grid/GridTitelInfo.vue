@@ -46,12 +46,18 @@ export default Vue.extend({
 })
 </script>
 
-<style lang="css" scoped>
+<style lang="scss" scoped>
+  @import "node_modules/bootstrap/scss/functions";
+  @import "node_modules/bootstrap/scss/variables";
+
   .variable-title {
     display: block;
     overflow: hidden;
     padding-left: 1rem;
     padding-right: 1rem;
     text-overflow: ellipsis;
+  }
+  .popover {
+    z-index: $zindex-dropdown;
   }
 </style>

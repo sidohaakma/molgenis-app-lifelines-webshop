@@ -49,3 +49,11 @@ export default {
   }
 }
 </script>
+<style lang="scss" scoped>
+  @import "node_modules/bootstrap/scss/functions";
+  @import "node_modules/bootstrap/scss/variables";
+
+  .popover {
+    z-index: $zindex-sticky;
+  }
+</style>
