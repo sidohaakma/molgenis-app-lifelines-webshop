@@ -4,10 +4,12 @@
       class="ml-1"
       :icon="faInfoCircle"
       aria-label="info"
+      focusable="true"
+      tabindex="0"
       :id="id"/>
     <b-popover
         :target="id"
-        triggers="hover click"
+        triggers="hover click focus blur"
         placement="right"
         :title="title">
         <slot></slot>

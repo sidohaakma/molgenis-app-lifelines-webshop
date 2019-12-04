@@ -1,11 +1,11 @@
 <template>
   <div class="grid-titel">
-    <span class="variable-title" :id="`variable-${name}`">
+    <span class="variable-title" :id="`variable-${name}`" tabindex="0">
       {{variableName}}
     </span>
     <b-popover
       :target="`variable-${name}`"
-      triggers="hover click"
+      triggers="click focus blur"
       :title="name">
       <dl>
         <dt>Question (in English)</dt>
