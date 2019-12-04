@@ -45,3 +45,13 @@ export default Vue.extend({
   }
 })
 </script>
+
+<style lang="css" scoped>
+  .variable-title {
+    display: block;
+    overflow: hidden;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    text-overflow: ellipsis;
+  }
+</style>
