@@ -12,6 +12,11 @@ const en = {
   'lifelines-webshop-yob-facet-label': 'Year of birth',
   'lifelines-webshop-gender-facet-label': 'Gender',
   'lifelines-webshop-subcohort-facet-label': 'Subcohorts',
+  'lifelines-webshop-save-btn-label': 'Save',
+  'lifelines-webshop-order-btn-label': 'Order',
+  'lifelines-webshop-cart-info-msg': 'Use the shop tab to select variables to order',
+  'lifelines-webshop-cart-not-signedin-msg': 'Sign in to select and order variables',
+  'lifelines-webshop-cart-selected-list-header': 'Selected variables',
   'ui-form:form_file_change': 'Change',
   'ui-form:form_file_browse': 'Browse'
 }
