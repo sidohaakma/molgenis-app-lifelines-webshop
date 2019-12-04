@@ -1,3 +1,10 @@
+## [0.21.2](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v0.21.1...v0.21.2) (2019-12-04)
+
+
+### Bug Fixes
+
+* fix code style ([c360be7](https://github.com/molgenis/molgenis-app-lifelines-webshop/commit/c360be7))
+
 ## [0.21.1](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v0.21.0...v0.21.1) (2019-12-02)
 
 
