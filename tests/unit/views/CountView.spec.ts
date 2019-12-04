@@ -27,7 +27,7 @@ describe('CountView.vue', () => {
 
   it('dispatches loadParticipantCount action if rsql changes', () => {
     store.commit('updateParticipantCount', null)
-    const wrapper = shallowMount(CountView, { store, localVue })
+    shallowMount(CountView, { store, localVue })
     store.commit('updateGenderFilter', ['1'])
     expect(loadParticipantCount).toHaveBeenCalled()
   })
@@ -35,6 +35,6 @@ describe('CountView.vue', () => {
   it('renders participantCount', () => {
     store.commit('updateParticipantCount', 123456)
     const wrapper = shallowMount(CountView, { store, localVue })
-    expect(wrapper.find('.participant-count').text()).toEqual('123k participants')
+    expect(wrapper.find('.participant-count').text()).toEqual('123k lifelines-webshop-participant-count-suffix')
   })
 })

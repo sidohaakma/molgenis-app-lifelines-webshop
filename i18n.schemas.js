@@ -17,6 +17,18 @@ const en = {
   'lifelines-webshop-cart-info-msg': 'Use the shop tab to select variables to order',
   'lifelines-webshop-cart-not-signedin-msg': 'Sign in to select and order variables',
   'lifelines-webshop-cart-selected-list-header': 'Selected variables',
+  'lifelines-webshop-participant-count-suffix': 'Participants',
+  'lifelines-webshop-empty-search-msg': 'No items were found matching the search term.',
+  'lifelines-webshop-orders-col-header-title': 'Title',
+  'lifelines-webshop-orders-col-header-sub-date': 'Submitted',
+  'lifelines-webshop-orders-col-header-project': 'Project',
+  'lifelines-webshop-orders-col-header-order': 'Order',
+  'lifelines-webshop-orders-col-header-app-form': 'Application form',
+  'lifelines-webshop-orders-col-header-state': 'State',
+  'lifelines-webshop-cancel-btn-label': 'Cancel',
+  'lifelines-webshop-saving-btn-label': 'Saving',
+  'lifelines-webshop-submit-btn-label': 'Submit',
+  'lifelines-webshop-submitting-btn-label': 'Submitting',
   'ui-form:form_file_change': 'Change',
   'ui-form:form_file_browse': 'Browse'
 }
