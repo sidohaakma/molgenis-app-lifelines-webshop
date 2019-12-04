@@ -1,5 +1,5 @@
 <template>
-  <span>
+  <span class="mg-info-icon">
     <font-awesome-icon
       class="ml-1"
       :icon="faInfoCircle"
@@ -52,6 +52,10 @@ export default {
 <style lang="scss" scoped>
   @import "node_modules/bootstrap/scss/functions";
   @import "node_modules/bootstrap/scss/variables";
+
+  .mg-info-icon {
+    cursor: pointer;
+  }
 
   .popover {
     z-index: $zindex-sticky;
