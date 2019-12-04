@@ -8,6 +8,10 @@
       triggers="click focus blur"
       :title="name">
       <dl>
+        <template v-if="label">
+          <dt>Label</dt>
+          <dd>{{label}}</dd>
+        </template>
         <dt>Question (in English)</dt>
         <dd>N/A</dd>
         <dt>Question (in Dutch)</dt>
