@@ -1,3 +1,10 @@
+# [0.22.0](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v0.21.2...v0.22.0) (2019-12-05)
+
+
+### Features
+
+* add i18n to order form ([#185](https://github.com/molgenis/molgenis-app-lifelines-webshop/issues/185)) ([f87aaf7](https://github.com/molgenis/molgenis-app-lifelines-webshop/commit/f87aaf7))
+
 ## [0.21.2](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v0.21.1...v0.21.2) (2019-12-04)
 
 
