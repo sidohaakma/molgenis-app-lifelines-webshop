@@ -15,7 +15,7 @@
               @facetToggle="handleAgeToggle">
                 <template v-slot:label-slot>
                   <info-icon id="age-info-icon">
-                    Please make a selection if you want to limit your study population to specific age groups. <b-badge pill>optional</b-badge>
+                    {{$t('lifelines-webshop-sidebar-age-info')}}<b-badge pill>{{$t('lifelines-webshop-sidebar-optional')}}</b-badge>
                     </info-icon>
                 </template>
                 <age-facet
@@ -50,7 +50,7 @@
             <facet-container facetId="cohort" :label="$t('lifelines-webshop-subcohort-facet-label')">
               <template v-slot:label-slot>
                 <info-icon id="cohort-info-icon">
-                  Please make a selection if you want to limit your study population to specific subcohorts. <b-badge pill>optional</b-badge>
+                  {{$t('lifelines-webshop-sidebar-cohort-info')}}<b-badge pill>{{$t('lifelines-webshop-sidebar-optional')}}</b-badge>
                 </info-icon>
               </template>
               <toggle-facet

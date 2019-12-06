@@ -91,7 +91,7 @@ export default Vue.extend({
 </script>
 
 <style lang="scss" scoped>
-  [role="button"] {
+  .list-group-item[role="button"] {
     cursor: pointer;
   }
 
