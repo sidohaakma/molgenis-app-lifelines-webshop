@@ -9,7 +9,7 @@
           :message="toast.message"
           @toastCloseBtnClicked="clearToast">
         </toast-component>
-        <h1>Order variables</h1>
+        <h1>{{$t('lifelines-webshop-order-header')}}</h1>
         <form-component
           id="order-form"
           :options="options"
@@ -19,7 +19,7 @@
           @valueChange="onValueChanged">
         </form-component>
         <div v-if="!isSaving && formState.$invalid && formState.$touched" class="alert text-danger px-0">
-          Please enter a project number before submitting a order.
+          {{$t('lifelines-webshop-order-submit-error-project-nummber')}}
         </div>
         <div>
           <router-link
@@ -29,7 +29,6 @@
             tag="button">
             {{$t('lifelines-webshop-cancel-btn-label')}}
           </router-link>
-
           <button
             v-if="!isSaving"
             id="save-btn"
