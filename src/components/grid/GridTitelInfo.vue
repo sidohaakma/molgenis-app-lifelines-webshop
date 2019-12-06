@@ -3,23 +3,6 @@
     <span class="variable-title" :title="variableName" :id="`variable-${name}`" tabindex="0">
       {{variableName}}
     </span>
-    <b-popover
-      :target="`variable-${name}`"
-      triggers="click focus blur"
-      :title="name">
-      <dl>
-        <template v-if="label">
-          <dt>Label</dt>
-          <dd>{{label}}</dd>
-        </template>
-        <dt>Question (in English)</dt>
-        <dd>N/A</dd>
-        <dt>Question (in Dutch)</dt>
-        <dd>N/A</dd>
-        <dt>Datatype</dt>
-        <dd>N/A</dd>
-      </dl>
-    </b-popover>
   </div>
 </template>
 
@@ -47,24 +30,13 @@ export default Vue.extend({
 </script>
 
 <style lang="scss" scoped>
-
   .variable-title {
-    cursor: pointer;
     display: block;
     margin-right: 1rem;
     overflow: hidden;
     padding-left: 1rem;
     padding-right: 1rem;
     text-overflow: ellipsis;
-
-    &:focus,
-    &:active {
-      color: $primary;
-      outline: none;
-    }
-  }
-
-  .popover {
-    z-index: $zindex-dropdown;
+    outline: none;
   }
 </style>
