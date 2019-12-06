@@ -9,7 +9,7 @@
           <li>
             <facet-container
               facetId="age"
-              label="Age"
+              :label="$t('lifelines-webshop-age-facet-label')"
               :collapsable="true"
               :collapsed="activeAgeFacetId !== 'age'"
               @facetToggle="handleAgeToggle">
@@ -28,7 +28,7 @@
           <li>
             <facet-container
               facetId="yob"
-              label="Year of birth"
+              :label="$t('lifelines-webshop-yob-facet-label')"
               :collapsable="true"
               :collapsed="activeAgeFacetId !== 'yob'"
               @facetToggle="handleAgeToggle">
@@ -39,7 +39,7 @@
             </facet-container>
           </li>
           <li>
-            <facet-container facetId="gender" label="Gender">
+            <facet-container facetId="gender" :label="$t('lifelines-webshop-gender-facet-label')">
               <toggle-facet
               facetId="gender"
               :options="genderOptions"
@@ -47,7 +47,7 @@
             </facet-container>
           </li>
           <li>
-            <facet-container facetId="cohort" label="Subcohorts">
+            <facet-container facetId="cohort" :label="$t('lifelines-webshop-subcohort-facet-label')">
               <template v-slot:label-slot>
                 <info-icon id="cohort-info-icon">
                   Please make a selection if you want to limit your study population to specific subcohorts. <b-badge pill>optional</b-badge>
