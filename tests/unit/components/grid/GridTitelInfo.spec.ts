@@ -17,8 +17,4 @@ describe('GridTitelInfo', () => {
     wrapper.setProps({ name: 'name', label: 'label' })
     expect(wrapper.find('.variable-title').text()).toBe('label')
   })
-
-  it('should render a popover', () => {
-    expect(wrapper.contains('b-popover-stub')).toBe(true)
-  })
 })
