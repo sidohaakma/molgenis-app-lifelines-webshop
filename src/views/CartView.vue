@@ -4,7 +4,7 @@
       <h3>{{$t('lifelines-webshop-cart-header')}}</h3>
       <template v-if="selectedVariableIds.length">
         <div class="mb-3" v-if="selectedVariableIds.length > 0">
-          <button type="button" class="btn btn-primary save" @click="onSave">{{$t('lifelines-webshop-save-btn-label')}}</button>
+          <button type="button" class="btn btn-primary save" @click="onSave">Save</button>
           <router-link
                 class="btn btn-warning ml-2"
                 type="button"
@@ -13,7 +13,7 @@
             Order
           </router-link>
         </div>
-        <h5>{{$t('lifelines-webshop-cart-selected-list-header')}}</h5>
+        <h5>Selected variables</h5>
         <spinner-animation v-show="loading" />
         <ul v-if="!loading">
           <li v-for="variableId in selectedVariableIds" :key="variableId">
@@ -23,20 +23,20 @@
           </li>
         </ul>
         <div class="mb-3" v-if="selectedVariableIds.length > 10">
-          <button type="button" class="btn btn-primary save" @click="onSave">{{$t('lifelines-webshop-save-btn-label')}}</button>
+          <button type="button" class="btn btn-primary save" @click="onSave">Save</button>
           <router-link
                 class="btn btn-warning ml-2"
                 type="button"
                 to="/order"
                 tag="button">
-            {{$t('lifelines-webshop-order-btn-label')}}
+            Order
           </router-link>
         </div>
       </template>
       <template v-else>
         <h5>No variables selected</h5>
-        <p v-if="isSignedIn">{{$t('lifelines-webshop-cart-info-msg')}}</p>
-        <p v-else>{{$t('lifelines-webshop-cart-not-signedin-msg')}}</p>
+        <p v-if="isSignedIn">Use the shop tab to select variables to order</p>
+        <p v-else>Sign in to select and order variables</p>
       </template>
     </div>
   </div>

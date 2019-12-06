@@ -241,8 +241,6 @@ export default Vue.extend({
 </script>
 
 <style lang="scss" scoped>
-  @import "../../scss/variables";
-
   table {
     overflow: hidden;
     position: relative;

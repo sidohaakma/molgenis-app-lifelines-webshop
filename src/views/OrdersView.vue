@@ -24,12 +24,12 @@
           <tr>
             <th scope="col"></th>
             <th scope="col"></th>
-            <th scope="col">{{$t('lifelines-webshop-orders-col-header-title')}}</th>
-            <th scope="col">{{$t('lifelines-webshop-orders-col-header-sub-date')}}</th>
-            <th scope="col">{{$t('lifelines-webshop-orders-col-header-project')}}</th>
-            <th scope="col">{{$t('lifelines-webshop-orders-col-header-order')}}</th>
-            <th scope="col">{{$t('lifelines-webshop-orders-col-header-app-form')}}</th>
-            <th scope="col">{{$t('lifelines-webshop-orders-col-header-state')}}</th>
+            <th scope="col">Title</th>
+            <th scope="col">Submitted</th>
+            <th scope="col">Project</th>
+            <th scope="col">Order</th>
+            <th scope="col">Application form</th>
+            <th scope="col">State</th>
           </tr>
         </thead>
         <tbody >

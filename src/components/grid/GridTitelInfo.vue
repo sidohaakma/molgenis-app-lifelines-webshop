@@ -1,6 +1,6 @@
 <template>
   <div class="grid-titel">
-    <span class="variable-title" :id="`variable-${name}`" tabindex="0">
+    <span class="variable-title" :title="variableName" :id="`variable-${name}`" tabindex="0">
       {{variableName}}
     </span>
     <b-popover
@@ -47,16 +47,21 @@ export default Vue.extend({
 </script>
 
 <style lang="scss" scoped>
-  @import "node_modules/bootstrap/scss/functions";
-  @import "node_modules/bootstrap/scss/variables";
 
   .variable-title {
     cursor: pointer;
     display: block;
+    margin-right: 1rem;
     overflow: hidden;
     padding-left: 1rem;
     padding-right: 1rem;
     text-overflow: ellipsis;
+
+    &:focus,
+    &:active {
+      color: $primary;
+      outline: none;
+    }
   }
 
   .popover {

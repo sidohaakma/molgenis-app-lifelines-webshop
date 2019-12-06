@@ -27,7 +27,7 @@
                 type="button"
                 to="/"
                 tag="button">
-                {{$t('lifelines-webshop-cancel-btn-label')}}
+                Cancel
               </router-link>
 
               <button
@@ -37,7 +37,7 @@
                 type="submit"
                 @click.prevent="onSave"
                 :disabled="formState.$pending || isSubmitting">
-                {{$t('lifelines-webshop-save-btn-label')}}
+                Save
               </button>
 
               <button
@@ -46,7 +46,7 @@
                 class="btn btn-primary ml-1"
                 type="button"
                 disabled="disabled">
-                {{$t('lifelines-webshop-saving-btn-label')}}
+                Saving
               </button>
 
               <button
@@ -56,7 +56,7 @@
                 type="submit"
                 @click.prevent="onSubmit"
                 :disabled="formInvalid || formState.$pending || isSaving">
-                {{$t('lifelines-webshop-submit-btn-label')}}
+                Submit
               </button>
 
               <button
@@ -65,7 +65,7 @@
                 class="btn btn-warning ml-3"
                 type="button"
                 disabled="disabled">
-                {{$t('lifelines-webshop-submitting-btn-label')}}
+                Submitting
               </button>
 
             </div>
@@ -114,22 +114,10 @@ export default Vue.extend({
   },
   mounted () {
     this.setProjectNumberRequiredFunction(() => this.isSubmittingState)
-
-    // i18n localization of form fields
-    const projectNumber = this.orderFormFields.find((item) => item.id === 'projectNumber')
-    projectNumber.label = this.$t('lifelines-webshop-order-projectnumber-label')
-    projectNumber.description = this.$t('lifelines-webshop-order-projectnumber-description')
-    const name = this.orderFormFields.find((item) => item.id === 'name')
-    name.label = this.$t('lifelines-webshop-order-name-label')
-    name.description = this.$t('lifelines-webshop-order-name-description')
-    const applicationForm = this.orderFormFields.find((item) => item.id === 'applicationForm')
-    applicationForm.label = this.$t('lifelines-webshop-order-applicationform-label')
-    applicationForm.description = this.$t('lifelines-webshop-order-applicationform-description')
-    this.setOrderFormFields(this.orderFormFields)
   },
   methods: {
     ...mapActions(['save', 'submit']),
-    ...mapMutations(['setToast', 'clearToast', 'setOrderDetails', 'setProjectNumberRequiredFunction', 'setOrderFormFields']),
+    ...mapMutations(['setToast', 'clearToast', 'setOrderDetails', 'setProjectNumberRequiredFunction']),
     onValueChanged (updatedFormData) {
       if (updatedFormData.projectNumber !== null && updatedFormData.projectNumber !== '') {
         this.formInvalid = false

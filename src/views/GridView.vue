@@ -1,7 +1,7 @@
 <template>
   <div id="grid-view">
     <div class="col pt-5 mt-5" v-if="isEmptySearchResult">
-      <h5 class="pt-2">{{$t('lifelines-webshop-empty-search-msg')}}</h5>
+      <h5 class="pt-2">No items were found matching the search term.</h5>
     </div>
     <div v-else>
       <grid-component

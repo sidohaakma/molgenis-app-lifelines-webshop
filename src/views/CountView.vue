@@ -9,7 +9,7 @@
     </loading>
     <p v-else
       class="lead participant-count"
-      >{{participantCount | formatSI}} {{$t('lifelines-webshop-participant-count-suffix')}}</p>
+      >{{participantCount | formatSI}} participants</p>
   </div>
 </template>
 

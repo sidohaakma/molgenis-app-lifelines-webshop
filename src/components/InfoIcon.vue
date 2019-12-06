@@ -2,14 +2,14 @@
   <span class="mg-info-icon">
     <font-awesome-icon
       class="ml-1"
-      :icon="faInfoCircle"
+      icon="info-circle"
       aria-label="info"
       focusable="true"
       tabindex="0"
       :id="id"/>
     <b-popover
         :target="id"
-        triggers="hover click focus blur"
+        triggers="hover blur focus click"
         placement="right"
         :title="title">
         <slot></slot>
@@ -19,8 +19,10 @@
 </template>
 
 <script>
+import { library } from '@fortawesome/fontawesome-svg-core'
 import { faInfoCircle } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+library.add(faInfoCircle)
 
 export default {
   components: { FontAwesomeIcon },
@@ -41,20 +43,24 @@ export default {
       type: String,
       required: false
     }
-  },
-  data: function () {
-    return {
-      faInfoCircle
-    }
   }
 }
 </script>
 <style lang="scss" scoped>
-  @import "node_modules/bootstrap/scss/functions";
-  @import "node_modules/bootstrap/scss/variables";
-
   .mg-info-icon {
     cursor: pointer;
+
+    svg {
+      &:focus,
+      &:active {
+        outline: none;
+
+        path {
+          fill: $primary;
+          transition: fill 0.2s;
+        }
+      }
+    }
   }
 
   .popover {
