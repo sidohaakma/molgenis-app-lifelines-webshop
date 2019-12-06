@@ -33,10 +33,10 @@ export default Vue.extend({
   .variable-title {
     display: block;
     margin-right: 1rem;
+    outline: none;
     overflow: hidden;
     padding-left: 1rem;
     padding-right: 1rem;
     text-overflow: ellipsis;
-    outline: none;
   }
 </style>
