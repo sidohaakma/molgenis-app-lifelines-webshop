@@ -9,7 +9,7 @@
   "scripts": {
     "build": "vue-cli-service build",
     "fix:js": "eslint --fix src/**/*.{js,ts,vue}",
-    "lint": "yarn run lint:js;yarn run lint:scss",
+    "lint": "vue-cli-service lint;yarn run lint:scss",
     "lint:js": "eslint src/**/*.{js,ts,vue}",
     "lint:scss": "stylelint 'src/**/*.{vue,scss}'",
     "serve": "vue-cli-service serve",
