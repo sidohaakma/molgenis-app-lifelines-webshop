@@ -1,3 +1,10 @@
+## [0.23.1](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v0.23.0...v0.23.1) (2019-12-09)
+
+
+### Bug Fixes
+
+* rollback to using vue-cli lint command, closes [#186](https://github.com/molgenis/molgenis-app-lifelines-webshop/issues/186) ([7ae4fab](https://github.com/molgenis/molgenis-app-lifelines-webshop/commit/7ae4fab))
+
 # [0.23.0](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v0.22.0...v0.23.0) (2019-12-06)
 
 
