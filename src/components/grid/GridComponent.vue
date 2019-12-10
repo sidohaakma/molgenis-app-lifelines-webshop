@@ -1,5 +1,6 @@
 <template>
   <div id="grid">
+    <grid-info-dialog v-if="showInfoDialog" @close="showInfoDialog=false"></grid-info-dialog>
     <div class="row">
       <div class="col vld-parent">
         <table ref="gridheader" class="grid-header-table" :class="{'sticky':stickyTableHeader}">
@@ -58,7 +59,7 @@
             </tr>
 
             <tr v-for="(row, rowIndex) in grid" :key="rowIndex">
-              <th>
+              <th @click="openInfoDialog(rowIndex)">
                 <grid-titel-info v-bind="gridVariables[rowIndex]" />
               </th>
               <th class="row-toggle grid-toggle">
@@ -92,6 +93,7 @@
 import Vue from 'vue'
 import Loading from 'vue-loading-overlay'
 import GridTitelInfo from './GridTitelInfo.vue'
+import GridInfoDialog from './GridInfoDialog.vue'
 
 import { library } from '@fortawesome/fontawesome-svg-core'
 import {
@@ -107,7 +109,7 @@ library.add(faArrowDown, faArrowRight, faArrowsAlt)
 
 export default Vue.extend({
   name: 'GridComponent',
-  components: { FontAwesomeIcon, Loading, GridTitelInfo },
+  components: { FontAwesomeIcon, Loading, GridTitelInfo, GridInfoDialog },
   computed: {
     /**
      * Provides visual feedback for grid selection helpers,
@@ -162,7 +164,8 @@ export default Vue.extend({
   data: function () {
     return {
       hoverAllCells: false,
-      stickyTableHeader: false
+      stickyTableHeader: false,
+      showInfoDialog: false
     }
   },
   filters: {
@@ -178,6 +181,9 @@ export default Vue.extend({
     }
   },
   methods: {
+    openInfoDialog () {
+      this.showInfoDialog = true
+    },
     classes (target, context) {
       const classes = {}
 
@@ -244,6 +250,23 @@ export default Vue.extend({
 </script>
 
 <style lang="scss" scoped>
+.info-dialog{
+  .info-dialog-content{
+    position: fixed;
+    border: 1px solid green;
+    overflow-y:scroll;
+    max-height: calc(100vh - 15rem);
+  }
+  z-index: 1025;
+  background-color: #fff;
+  border:1px solid red;
+  position: absolute;
+  left:15rem;
+  top:0;
+  bottom:0;
+  right:0;
+}
+
 table {
   overflow: hidden;
   position: relative;

@@ -32,10 +32,18 @@ nav.navbar {
   z-index: $zindex-modal-backdrop;
 }
 
+@mixin box-shadow{
+  box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.box-shadow{
+  @include box-shadow;
+}
+
 .popover[role="tooltip"] {
+  @include box-shadow;
   box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.2);
   outline: none;
-
   .popover-header,
   .popover-body {
     padding: 0.5rem 1rem;
