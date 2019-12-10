@@ -280,12 +280,10 @@ table {
 }
 
 .sticky {
-  background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 1) 0%,
-    rgba(255, 255, 255, 0.9) 75%,
-    rgba(255, 255, 255, 0) 100%
-  );
+  background: linear-gradient(180deg,
+  rgba(255, 255, 255, 1) 0%,
+  rgba(255, 255, 255, 0.9) 75%,
+  rgba(255, 255, 255, 0) 100%);
   pointer-events: none;
   position: fixed;
   top: 7rem;
@@ -326,7 +324,7 @@ th {
   td:hover::after,
   th:not(:nth-child(1)):not(:nth-child(2)):hover::after {
     background-color: $light;
-    content: '';
+    content: "";
     display: inline-block;
     height: 10000px;
     left: 0;

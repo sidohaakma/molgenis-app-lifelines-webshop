@@ -67,6 +67,7 @@ export default {
 .popover {
   z-index: $zindex-sticky;
 }
+
 .popover-content {
   // this is styling for html inside database
   /deep/ span > a {
@@ -74,9 +75,9 @@ export default {
     float: right;
 
     &::after {
-      display: block;
-      content: '';
       clear: both;
+      content: "";
+      display: block;
       height: 0.3rem;
     }
   }

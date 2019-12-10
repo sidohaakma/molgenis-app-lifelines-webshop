@@ -57,11 +57,12 @@ export default Vue.extend({
   //   }
   // }
 }
+
 .grid-variable-info {
   color: $primary;
+  margin-right: 0.25rem;
   opacity: 0;
   padding-bottom: 2px;
-  margin-right: 0.25rem;
   transition: opacity 0.2s;
 }
 </style>
