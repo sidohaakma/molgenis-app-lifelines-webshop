@@ -1,6 +1,4 @@
 "id","msgid","namespace","description","en","nl","de","es","it","pt","fr","xx"
-"lifelines-webshop-sidebar-optional","lifelines-webshop-sidebar-optional","lifelines-webshop",,,,,,,,,
-"lifelines-webshop-sidebar-age-info","lifelines-webshop-sidebar-age-info","lifelines-webshop",,,,,,,,,
 "lifelines-webshop-participant-count-suffix","lifelines-webshop-participant-count-suffix","lifelines-webshop",,"Participants",,,,,,,
 "lifelines-webshop-order-btn-label","lifelines-webshop-order-btn-label","lifelines-webshop",,"Order",,,,,,,
 "lifelines-webshop-gender-facet-label","lifelines-webshop-gender-facet-label","lifelines-webshop",,"Gender",,,,,,,
@@ -35,11 +33,10 @@
 "lifelines-webshop-order-applicationform-description","lifelines-webshop-order-applicationform-description","lifelines-webshop",,"Word or text file to describe the request.",,,,,,,
 "lifelines-webshop-order-projectnumber-label","lifelines-webshop-order-projectnumber-label","lifelines-webshop",,"Max en de maxi monsters","Project nummer",,,,,,
 "lifelines-webshop-empty-search-msg","lifelines-webshop-empty-search-msg","lifelines-webshop",,"No items were found matching the search term.",,,,,,,
-"aaaac3xkquulabudfj5hzbyaae","lifelines-webshop-sidebar-optional","lifelines-webshop",,"optional",,,,,,,
 "lifelines-webshop-cart-not-signedin-msg","lifelines-webshop-cart-not-signedin-msg","lifelines-webshop",,"Sign in to select and order variables",,,,,,,
 "lifelines-webshop-cart-info-msg","lifelines-webshop-cart-info-msg","lifelines-webshop",,"Use the shop tab to select variables to order",,,,,,,
 "lifelines-webshop-modal-delete-body","lifelines-webshop-modal-delete-body","lifelines-webshop",,"You are about to delete order {{order}}. Are you sure?","Je staat op het punt om aanvraag {{order}} te verwijderen. Weet je het zeker?",,,,,,
-"aaaac3xkqxlv6budfj5hzbyaai","lifelines-webshop-sidebar-cohort-info","lifelines-webshop",,"Please make a selection if you want to limit your study population to specific subcohorts.",,,,,,,
-"aaaac3xkqzwygbudfj5hzbyaai","lifelines-webshop-sidebar-age-info","lifelines-webshop",,"Please make a selection if you want to limit your study population to specific age groups.<br />
+"lifelines-webshop-sidebar-cohort-info","lifelines-webshop-sidebar-cohort-info","lifelines-webshop",,"Please make a selection if you want to limit your study population to specific subcohorts.",,,,,,,
+"lifelines-webshop-sidebar-age-info","lifelines-webshop-sidebar-age-info","lifelines-webshop",,"Please make a selection if you want to limit your study population to specific age groups.<br />
 <a href="#" target="_blank">More info &rarr;</a>
 ",,,,,,,
