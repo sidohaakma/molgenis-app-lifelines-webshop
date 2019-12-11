@@ -25,6 +25,7 @@ exports[`OrdersView.vue checks content of order tables 1`] = `
         <router-link-stub to="[object Object]" tag="a" event="click" class="btn btn-danger btn-sm t-btn-order-delete">
           <font-awesome-icon-stub icon="trash" aria-label="delete"></font-awesome-icon-stub>
         </router-link-stub>
+        <!---->
       </td>
       <td></td>
       <td></td>
@@ -40,6 +41,7 @@ exports[`OrdersView.vue checks content of order tables 1`] = `
         <!---->
       </td>
       <td>
+        <!---->
         <!---->
       </td>
       <td>My draft order</td>

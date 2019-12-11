@@ -49,6 +49,7 @@
                 class="btn btn-danger btn-sm t-btn-order-delete">
               <font-awesome-icon icon="trash" aria-label="delete"/>
               </router-link>
+              <button v-if="order.state === 'Submitted' && hasManagerRole" class="btn btn-success">Approve</button>
             </td>
             <td>{{ order.name }}</td>
             <td>{{ order.submissionDate | dataString }}</td>
@@ -70,7 +71,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import SpinnerAnimation from '../components/animations/SpinnerAnimation.vue'
 import ToastComponent from '../components/ToastComponent.vue'
 import ConfirmationModal from '../components/ConfirmationModal.vue'
-import { mapActions, mapState, mapMutations } from 'vuex'
+import { mapActions, mapState, mapMutations, mapGetters } from 'vuex'
 import moment from 'moment'
 
 library.add(faEdit, faDownload, faTrash)
@@ -99,7 +100,8 @@ export default Vue.extend({
     ...mapMutations(['clearToast'])
   },
   computed: {
-    ...mapState(['orders', 'toast'])
+    ...mapState(['orders', 'toast']),
+    ...mapGetters(['hasManagerRole'])
   },
   filters: {
     dataString: (dateValue) => dateValue ? moment(dateValue).format('LLLL') : ''
