@@ -1,9 +1,9 @@
 <template>
   <div>
     <div class="info-overlay"></div>
-    <div class="info-dialog">
+    <div class="info-dialog" v-click-outside="onClickOutside">
       <div class="info-dialog-container rounded-sm overflow-hidden box-shadow">
-        <div class="info-dialog-header d-flex align-items-center"> <h4>Smoking habits <span>SMKDRVHABIT</span></h4> <span class="close ml-auto"><font-awesome-icon color="white" size="md" icon="times" @click="$emit('close')" /></span></div>
+        <div class="info-dialog-header d-flex align-items-center"> <h4>Smoking habits <span>SMKDRVHABIT</span></h4> <span class="close btn btn-outline-light btn-sm ml-auto"><font-awesome-icon color="white" size="sm" icon="times" @click="$emit('close')" /></span></div>
         <div class="info-dialog-content">
           <slot></slot>
           <p><strong>Found in set:</strong><br />Smoking/tobacco use, Exposure to smoking</p>
@@ -21,35 +21,55 @@ import Vue from 'vue'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faTimes } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import ClickOutside from 'v-click-outside'
 
 library.add(faTimes)
 
 export default Vue.extend({
   name: 'GridInfoDialog',
-  components: { FontAwesomeIcon }
+  components: { FontAwesomeIcon },
+  directives: { clickOutside: ClickOutside.directive },
+  created () {
+    document.getElementsByTagName('html')[0].classList.add('overflow-hidden')
+  },
+  destroyed () {
+    document.getElementsByTagName('html')[0].classList.remove('overflow-hidden')
+  },
+  methods: {
+    onClickOutside () {
+      this.$emit('close')
+    }
+  }
 })
 </script>
 
 <style lang="scss" scoped>
-  svg{
-    cursor: pointer;
-    &:hover path{
-      fill: rgba(255,255,255,0.6);
+  .close{
+    line-height: 0;
+    opacity: 1;
+    &:hover svg path{
+      fill: $primary;
     }
   }
-  .info-overlay{
-    position: fixed;
-    left:0;
-    right:0;
-    top:0;
-    bottom:0;
-    z-index: 1031;
-    background-color: rgba(0,0,0,0.3);
+svg{
+  cursor: pointer;
+  &:hover path{
+    fill: rgba(255,255,255,0.6);
   }
+}
+.info-overlay{
+  position: fixed;
+  left:0;
+  right:0;
+  top:0;
+  bottom:0;
+  z-index: $zindex-modal-backdrop;
+  background-color: rgba(0,0,0,0.3);
+}
 .info-dialog{
   .info-dialog-container{
     position: fixed;
-    z-index: 1032;
+    z-index: $zindex-modal;
     background-color: white;
     margin-right: 2rem;
     .info-dialog-header{
@@ -63,7 +83,7 @@ export default Vue.extend({
       }
       background-color: $primary;
       margin-bottom: 0.5rem;
-      padding: 0.5rem 1rem;
+      padding: 0.5rem 0.5rem 0.5rem 1rem;
     }
     .info-dialog-content{
       padding: 1rem;
@@ -73,7 +93,7 @@ export default Vue.extend({
     }
   }
   position: absolute;
-  left:15rem;
+  left:19rem;
   top:0;
   bottom:0;
 }

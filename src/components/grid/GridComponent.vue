@@ -1,6 +1,6 @@
 <template>
   <div id="grid">
-    <grid-info-dialog v-if="showInfoDialog" @close="showInfoDialog=false"></grid-info-dialog>
+    <grid-info-dialog v-if="showInfoDialog" @close="closeInfoDialog"></grid-info-dialog>
     <div class="row">
       <div class="col vld-parent">
         <table ref="gridheader" class="grid-header-table" :class="{'sticky':stickyTableHeader}">
@@ -59,7 +59,9 @@
             </tr>
 
             <tr v-for="(row, rowIndex) in grid" :key="rowIndex">
-              <th @click="openInfoDialog(rowIndex)">
+              <th @click="openInfoDialog(rowIndex)"
+                  :class="{'selected-variable': rowIndex === selectedRowIndex }"
+              >
                 <grid-titel-info v-bind="gridVariables[rowIndex]" />
               </th>
               <th class="row-toggle grid-toggle">
@@ -165,7 +167,8 @@ export default Vue.extend({
     return {
       hoverAllCells: false,
       stickyTableHeader: false,
-      showInfoDialog: false
+      showInfoDialog: false,
+      selectedRowIndex: ''
     }
   },
   filters: {
@@ -181,7 +184,12 @@ export default Vue.extend({
     }
   },
   methods: {
-    openInfoDialog () {
+    closeInfoDialog () {
+      this.showInfoDialog = false
+      this.selectedRowIndex = ''
+    },
+    openInfoDialog (row) {
+      this.selectedRowIndex = row
       this.showInfoDialog = true
     },
     classes (target, context) {
@@ -250,21 +258,23 @@ export default Vue.extend({
 </script>
 
 <style lang="scss" scoped>
-.info-dialog{
-  .info-dialog-content{
-    position: fixed;
-    border: 1px solid green;
-    overflow-y:scroll;
-    max-height: calc(100vh - 15rem);
+.selected-variable div{
+  position: relative;
+  z-index: $zindex-modal;
+  pointer-events: none;
+  &:before{
+    left:1rem;
+    border-radius: 3px;
+    right: 0.7rem;
+    top: -0.4rem;
+    bottom: -0.4rem;
+    border: 1px solid lightgray;
+    background-color: #fff;
+    @include box-shadow;
+    position: absolute;
+    z-index: -1; // move behind parent, because of absolute position (creating a new stacking context)
+    content: '';
   }
-  z-index: 1025;
-  background-color: #fff;
-  border:1px solid red;
-  position: absolute;
-  left:15rem;
-  top:0;
-  bottom:0;
-  right:0;
 }
 
 table {
@@ -311,7 +321,7 @@ table {
   pointer-events: none;
   position: fixed;
   top: 7rem;
-  z-index: 1020;
+  z-index: $zindex-sticky;
 
   .assessments-title {
     height: 8rem;
