@@ -8,12 +8,10 @@
       tabindex="0"
       :id="id"
     />
-    <b-popover :target="id" triggers="hover blur focus click" placement="right" :title="title">
+    <b-popover :target="id" triggers="hover blur" placement="right" :title="title">
       <div class="popover-content">
         <slot></slot>
-      </div>
-      <div v-if="href">
-        <a :href="href" target="_blank" rel="noopener noreferrer">{{linkTitle || href}}</a>
+        <span class="trailing-link" v-if="href"><a :href="href" target="_blank" rel="noopener noreferrer">More info <font-awesome-icon icon="caret-right" /></a></span>
       </div>
     </b-popover>
   </span>
@@ -21,9 +19,9 @@
 
 <script>
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faInfoCircle } from '@fortawesome/free-solid-svg-icons'
+import { faInfoCircle, faCaretRight } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-library.add(faInfoCircle)
+library.add(faInfoCircle, faCaretRight)
 
 export default {
   components: { FontAwesomeIcon },
@@ -50,36 +48,9 @@ export default {
 <style lang="scss" scoped>
 .mg-info-icon {
   cursor: pointer;
-
-  svg {
-    &:focus,
-    &:active {
-      outline: none;
-
-      path {
-        fill: $primary;
-        transition: fill 0.2s;
-      }
-    }
-  }
 }
 
 .popover {
   z-index: $zindex-sticky;
-}
-
-.popover-content {
-  // this is styling for html inside database
-  /deep/ span > a {
-    display: block;
-    float: right;
-
-    &::after {
-      clear: both;
-      content: "";
-      display: block;
-      height: 0.3rem;
-    }
-  }
 }
 </style>
