@@ -1,3 +1,10 @@
+# [0.24.0](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v0.23.2...v0.24.0) (2019-12-12)
+
+
+### Features
+
+* added more side info icons ([#197](https://github.com/molgenis/molgenis-app-lifelines-webshop/issues/197)) ([3f32a34](https://github.com/molgenis/molgenis-app-lifelines-webshop/commit/3f32a34))
+
 ## [0.23.2](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v0.23.1...v0.23.2) (2019-12-10)
 
 
