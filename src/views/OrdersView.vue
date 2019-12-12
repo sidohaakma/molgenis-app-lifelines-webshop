@@ -49,6 +49,15 @@
                 class="btn btn-danger btn-sm t-btn-order-delete">
               <font-awesome-icon icon="trash" aria-label="delete"/>
               </router-link>
+              <button
+              v-if="order.state === 'Submitted' && hasManagerRole"
+              @click="handleApproveOrder(order.orderNumber)"
+              class="btn btn-success">
+                <span v-if="approveState == 'idle'">
+                  Approve
+                </span>
+                <span v-else>Approving</span>
+              </button>
             </td>
             <td>{{ order.name }}</td>
             <td>{{ order.submissionDate | dataString }}</td>
@@ -70,7 +79,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import SpinnerAnimation from '../components/animations/SpinnerAnimation.vue'
 import ToastComponent from '../components/ToastComponent.vue'
 import ConfirmationModal from '../components/ConfirmationModal.vue'
-import { mapActions, mapState, mapMutations } from 'vuex'
+import { mapActions, mapState, mapMutations, mapGetters } from 'vuex'
 import moment from 'moment'
 
 library.add(faEdit, faDownload, faTrash)
@@ -87,7 +96,8 @@ export default Vue.extend({
         'Submitted': 'badge-primary',
         'Approved': 'badge-success',
         'Rejected': 'badge-danger'
-      }
+      },
+      approveState: 'idle'
     }
   },
   methods: {
@@ -95,11 +105,19 @@ export default Vue.extend({
       this.deleteOrder(orderNumber)
       this.$router.push({ name: 'orders' })
     },
-    ...mapActions(['loadOrders', 'deleteOrder']),
-    ...mapMutations(['clearToast'])
+    async handleApproveOrder (orderNumber) {
+      this.approveState = 'busy'
+      await this.sendApproveTrigger(orderNumber)
+      await this.loadOrders()
+      this.approveState = 'idle'
+      this.setToast({ type: 'success', message: `Order ${orderNumber} approved` })
+    },
+    ...mapActions(['loadOrders', 'deleteOrder', 'sendApproveTrigger']),
+    ...mapMutations(['clearToast', 'setToast'])
   },
   computed: {
-    ...mapState(['orders', 'toast'])
+    ...mapState(['orders', 'toast']),
+    ...mapGetters(['hasManagerRole'])
   },
   filters: {
     dataString: (dateValue) => dateValue ? moment(dateValue).format('LLLL') : ''

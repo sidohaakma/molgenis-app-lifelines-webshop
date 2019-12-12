@@ -14,6 +14,7 @@ import moment from 'moment'
 import { TreeParent } from '@/types/Tree'
 import axios from 'axios'
 import { setPermission } from '@/services/permissionService'
+import orders from 'tests/unit/fixtures/orders'
 
 const buildPostOptions = (formData: any, formFields: FormField[]) => {
   return {
@@ -287,6 +288,12 @@ export default {
   sendSubmissionTrigger: async () => {
     return axios.post('/edge-server/trigger?type=submit').catch((err: any) => {
       console.log('Send submit trigger failed')
+      console.log(err)
+    })
+  },
+  sendApproveTrigger: async (orderNumber: string) => {
+    return axios.post(`/edge-server/trigger?type=approve&ordernumber=${orderNumber}`).catch((err: any) => {
+      console.log(`Send accept trigger failed (ordernumber = ${orderNumber})`)
       console.log(err)
     })
   }
