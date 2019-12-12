@@ -7,14 +7,22 @@ import Vuex from 'vuex'
 import orders from '../fixtures/orders'
 import Spinner from '@/components/animations/SpinnerAnimation.vue'
 import mutations from '@/store/mutations'
+import { OrderState } from '@/types/Order'
 
 describe('OrdersView.vue', () => {
-  let localVue:any
-  let store:any
+  let localVue: any
+  let store: any
+
+  const hasManagerRole = jest.fn()
 
   let actions = {
     deleteOrder: jest.fn(),
-    loadOrders: jest.fn()
+    loadOrders: jest.fn(),
+    sendApproveTrigger: jest.fn()
+  }
+
+  let getters = {
+    hasManagerRole
   }
 
   beforeEach(() => {
@@ -23,13 +31,14 @@ describe('OrdersView.vue', () => {
     localVue.filter('i18n', (value: string) => `#${value}#`)
     localVue.use(Vuex)
 
-    let state:any = {
+    let state: any = {
       orders: null
     }
 
     store = new Vuex.Store({
       state,
       actions,
+      getters,
       mutations
     })
   })
@@ -83,5 +92,26 @@ describe('OrdersView.vue', () => {
     expect(wrapper.find('.modal-dialog').exists()).toBe(true)
     wrapper.find('.t-btn-confirm').trigger('click')
     expect(actions.deleteOrder).toHaveBeenCalled()
+  })
+  it('approve order', () => {
+    localVue.use(Router)
+
+    hasManagerRole.mockReturnValue(true)
+
+    const wrapper = mount(OrdersView, {
+      localVue,
+      store,
+      router: new Router({ routes })
+    })
+
+    const order = {
+      orderNumber: 'edcba',
+      state: 'Submitted'
+    }
+
+    store.commit('setOrders', [ order ])
+
+    console.log(wrapper.html())
+    
   })
 })
