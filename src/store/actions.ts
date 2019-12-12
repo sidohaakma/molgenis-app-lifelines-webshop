@@ -291,7 +291,7 @@ export default {
       console.log(err)
     })
   },
-  sendApproveTrigger: async (orderNumber: string) => {
+  sendApproveTrigger: async (orderNumber: any) => {
     return axios.post(`/edge-server/trigger?type=approve&ordernumber=${orderNumber}`).catch((err: any) => {
       console.log(`Send accept trigger failed (ordernumber = ${orderNumber})`)
       console.log(err)
