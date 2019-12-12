@@ -49,7 +49,10 @@
                 class="btn btn-danger btn-sm t-btn-order-delete">
               <font-awesome-icon icon="trash" aria-label="delete"/>
               </router-link>
-              <button v-if="order.state === 'Submitted' && hasManagerRole" class="btn btn-success">Approve</button>
+              <button
+              v-if="order.state === 'Submitted' && hasManagerRole"
+              @click="handleApproveOrder(order.orderNumber)"
+              class="btn btn-success">Approve</button>
             </td>
             <td>{{ order.name }}</td>
             <td>{{ order.submissionDate | dataString }}</td>
@@ -96,8 +99,13 @@ export default Vue.extend({
       this.deleteOrder(orderNumber)
       this.$router.push({ name: 'orders' })
     },
-    ...mapActions(['loadOrders', 'deleteOrder']),
-    ...mapMutations(['clearToast'])
+    handleApproveOrder: async (orderNumber) => {
+      await this.approve(orderNumber)
+      await dispatch('loadOrders')
+      this.setToast({ type: 'success', message: `Order ${orderNumber} approved` })
+    },
+    ...mapActions(['loadOrders', 'deleteOrder', 'approve']),
+    ...mapMutations(['clearToast', 'setToast'])
   },
   computed: {
     ...mapState(['orders', 'toast']),
