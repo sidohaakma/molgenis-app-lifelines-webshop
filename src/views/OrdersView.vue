@@ -52,7 +52,12 @@
               <button
               v-if="order.state === 'Submitted' && hasManagerRole"
               @click="handleApproveOrder(order.orderNumber)"
-              class="btn btn-success">Approve</button>
+              class="btn btn-success">
+                <span v-if="approveState == 'idle'">
+                  Approve
+                </span>
+                <span v-else>Approving</span>
+              </button>
             </td>
             <td>{{ order.name }}</td>
             <td>{{ order.submissionDate | dataString }}</td>
@@ -91,7 +96,8 @@ export default Vue.extend({
         'Submitted': 'badge-primary',
         'Approved': 'badge-success',
         'Rejected': 'badge-danger'
-      }
+      },
+      approveState: 'idle'
     }
   },
   methods: {
@@ -99,12 +105,14 @@ export default Vue.extend({
       this.deleteOrder(orderNumber)
       this.$router.push({ name: 'orders' })
     },
-    handleApproveOrder: async (orderNumber) => {
-      await this.approve(orderNumber)
-      await dispatch('loadOrders')
+    async handleApproveOrder (orderNumber) {
+      this.approveState = 'busy'
+      await this.sendApproveTrigger(orderNumber)
+      await this.loadOrders()
+      this.approveState = 'idle'
       this.setToast({ type: 'success', message: `Order ${orderNumber} approved` })
     },
-    ...mapActions(['loadOrders', 'deleteOrder', 'approve']),
+    ...mapActions(['loadOrders', 'deleteOrder', 'sendApproveTrigger']),
     ...mapMutations(['clearToast', 'setToast'])
   },
   computed: {
