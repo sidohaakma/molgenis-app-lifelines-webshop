@@ -11,7 +11,7 @@
     "fix:js": "eslint --fix src/**/*.{js,ts,vue}",
     "lint": "vue-cli-service lint;yarn run lint:scss",
     "lint:js": "eslint src/**/*.{js,ts,vue}",
-    "lint:scss": "stylelint src/**/*.{vue,scss}",
+    "lint:scss": "stylelint 'src/**/*.{vue,scss}'",
     "serve": "vue-cli-service serve",
     "test:e2e": "vue-cli-service test:e2e",
     "test:unit": "vue-cli-service test:unit",

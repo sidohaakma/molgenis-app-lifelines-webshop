@@ -1,5 +1,6 @@
 <template>
   <div id="grid">
+    <grid-info-dialog v-if="showInfoDialog" @close="closeInfoDialog"></grid-info-dialog>
     <div class="row">
       <div class="col vld-parent">
         <table ref="gridheader" class="grid-header-table" :class="{'sticky':stickyTableHeader}">
@@ -58,7 +59,9 @@
             </tr>
 
             <tr v-for="(row, rowIndex) in grid" :key="rowIndex">
-              <th>
+              <th @click="openInfoDialog(rowIndex)"
+                  :class="{'selected-variable': rowIndex === selectedRowIndex }"
+              >
                 <grid-titel-info v-bind="gridVariables[rowIndex]" />
               </th>
               <th class="row-toggle grid-toggle">
@@ -92,6 +95,7 @@
 import Vue from 'vue'
 import Loading from 'vue-loading-overlay'
 import GridTitelInfo from './GridTitelInfo.vue'
+import GridInfoDialog from './GridInfoDialog.vue'
 
 import { library } from '@fortawesome/fontawesome-svg-core'
 import {
@@ -107,7 +111,7 @@ library.add(faArrowDown, faArrowRight, faArrowsAlt)
 
 export default Vue.extend({
   name: 'GridComponent',
-  components: { FontAwesomeIcon, Loading, GridTitelInfo },
+  components: { FontAwesomeIcon, Loading, GridTitelInfo, GridInfoDialog },
   computed: {
     /**
      * Provides visual feedback for grid selection helpers,
@@ -162,7 +166,9 @@ export default Vue.extend({
   data: function () {
     return {
       hoverAllCells: false,
-      stickyTableHeader: false
+      stickyTableHeader: false,
+      showInfoDialog: false,
+      selectedRowIndex: ''
     }
   },
   filters: {
@@ -178,6 +184,14 @@ export default Vue.extend({
     }
   },
   methods: {
+    closeInfoDialog () {
+      this.showInfoDialog = false
+      this.selectedRowIndex = ''
+    },
+    openInfoDialog (row) {
+      this.selectedRowIndex = row
+      this.showInfoDialog = true
+    },
     classes (target, context) {
       const classes = {}
 
@@ -244,11 +258,31 @@ export default Vue.extend({
 </script>
 
 <style lang="scss" scoped>
+.selected-variable div {
+  pointer-events: none;
+  position: relative;
+  z-index: $zindex-modal;
+
+  &::before {
+    @include box-shadow;
+    background-color: #fff;
+    border-radius: 3px;
+    bottom: -0.4rem;
+    content: "";
+    left: 1rem;
+    position: absolute;
+    right: 0.7rem;
+    top: -0.4rem;
+    z-index: -1; // move behind parent, because of absolute position (creating a new stacking context)
+  }
+}
+
 table {
   overflow: hidden;
   position: relative;
 
   th:first-child {
+    cursor: pointer;
     max-width: 15rem;
     min-width: 15rem;
     width: 15rem;
@@ -287,7 +321,7 @@ table {
   pointer-events: none;
   position: fixed;
   top: 7rem;
-  z-index: 1020;
+  z-index: $zindex-sticky;
 
   .assessments-title {
     height: 8rem;

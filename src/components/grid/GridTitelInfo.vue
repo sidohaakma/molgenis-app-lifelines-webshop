@@ -50,12 +50,13 @@ export default Vue.extend({
   padding-right: 1rem;
   text-overflow: ellipsis;
 
-  // &:hover {
-  //   cursor: pointer;
-  //   & .grid-variable-info {
-  //     opacity: 0.7;
-  //   }
-  // }
+  &:hover {
+    cursor: pointer;
+
+    .grid-variable-info {
+      opacity: 0.7;
+    }
+  }
 }
 
 .grid-variable-info {
