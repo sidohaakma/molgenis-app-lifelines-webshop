@@ -1,3 +1,17 @@
+# [0.25.0](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v0.24.0...v0.25.0) (2019-12-13)
+
+
+### Bug Fixes
+
+* add info dialog ([b3eb81c](https://github.com/molgenis/molgenis-app-lifelines-webshop/commit/b3eb81c))
+* scss linting ([5698214](https://github.com/molgenis/molgenis-app-lifelines-webshop/commit/5698214))
+* turned on hover info icon ([cbd234b](https://github.com/molgenis/molgenis-app-lifelines-webshop/commit/cbd234b))
+
+
+### Features
+
+* add dummy info ([544c694](https://github.com/molgenis/molgenis-app-lifelines-webshop/commit/544c694))
+
 # [0.24.0](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v0.23.2...v0.24.0) (2019-12-12)
 
 
