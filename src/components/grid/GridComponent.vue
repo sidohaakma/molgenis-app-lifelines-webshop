@@ -258,22 +258,22 @@ export default Vue.extend({
 </script>
 
 <style lang="scss" scoped>
-.selected-variable div{
+.selected-variable div {
+  pointer-events: none;
   position: relative;
   z-index: $zindex-modal;
-  pointer-events: none;
-  &:before{
-    left:1rem;
+
+  &::before {
+    @include box-shadow;
+    background-color: #fff;
     border-radius: 3px;
+    bottom: -0.4rem;
+    content: "";
+    left: 1rem;
+    position: absolute;
     right: 0.7rem;
     top: -0.4rem;
-    bottom: -0.4rem;
-    border: 1px solid lightgray;
-    background-color: #fff;
-    @include box-shadow;
-    position: absolute;
     z-index: -1; // move behind parent, because of absolute position (creating a new stacking context)
-    content: '';
   }
 }
 
@@ -282,10 +282,10 @@ table {
   position: relative;
 
   th:first-child {
+    cursor: pointer;
     max-width: 15rem;
     min-width: 15rem;
     width: 15rem;
-    cursor: pointer;
   }
 
   td,

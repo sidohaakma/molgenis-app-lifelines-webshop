@@ -44,57 +44,67 @@ export default Vue.extend({
 </script>
 
 <style lang="scss" scoped>
-  .close{
-    line-height: 0;
-    opacity: 1;
-    &:hover svg path{
-      fill: $primary;
-    }
+.close {
+  line-height: 0;
+  opacity: 1;
+
+  &:hover svg path {
+    fill: $primary;
   }
-svg{
+}
+
+svg {
   cursor: pointer;
-  &:hover path{
-    fill: rgba(255,255,255,0.6);
+
+  &:hover path {
+    fill: rgba(255, 255, 255, 0.6);
   }
 }
-.info-overlay{
+
+.info-overlay {
+  background-color: rgba(0, 0, 0, 0.3);
+  bottom: 0;
+  left: 0;
   position: fixed;
-  left:0;
-  right:0;
-  top:0;
-  bottom:0;
+  right: 0;
+  top: 0;
   z-index: $zindex-modal-backdrop;
-  background-color: rgba(0,0,0,0.3);
 }
-.info-dialog{
-  .info-dialog-container{
+
+.info-dialog {
+  bottom: 0;
+  left: 19rem;
+  position: absolute;
+  top: 0;
+
+  .info-dialog-container {
+    background-color: #fff;
+    margin-right: 2rem;
     position: fixed;
     z-index: $zindex-modal;
-    background-color: white;
-    margin-right: 2rem;
-    .info-dialog-header{
-      h4{
-        color:white;
+
+    .info-dialog-header {
+      background-color: $primary;
+      margin-bottom: 0.5rem;
+      padding: 0.5rem 0.5rem 0.5rem 1rem;
+
+      h4 {
+        color: #fff;
         margin: 0;
-        span{
+
+        span {
           font-size: 0.8rem;
           font-style: italic;
         }
       }
-      background-color: $primary;
-      margin-bottom: 0.5rem;
-      padding: 0.5rem 0.5rem 0.5rem 1rem;
     }
-    .info-dialog-content{
+
+    .info-dialog-content {
+      max-height: calc(100vh - 18rem);
+      overflow-y: auto;
       padding: 1rem;
       padding-top: 0.5rem;
-      overflow-y: auto;
-      max-height: calc(100vh - 18rem);
     }
   }
-  position: absolute;
-  left:19rem;
-  top:0;
-  bottom:0;
 }
 </style>

@@ -52,7 +52,8 @@ export default Vue.extend({
 
   &:hover {
     cursor: pointer;
-    & .grid-variable-info {
+
+    .grid-variable-info {
       opacity: 0.7;
     }
   }
