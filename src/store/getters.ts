@@ -164,5 +164,6 @@ export default {
   searchTermQuery: (state: ApplicationState) => state.searchTerm && transformToRSQL({ selector: '*', comparison: '=q=', arguments: state.searchTerm }),
   isSearchResultEmpty: (state: ApplicationState, { filteredTreeStructure }: Getters): boolean => {
     return !!(state.searchTerm && filteredTreeStructure.length === 0)
-  }
+  },
+  hasManagerRole: (state: ApplicationState) => state.context.context.roles.includes('ROLE_LIFELINES_MANAGER')
 }

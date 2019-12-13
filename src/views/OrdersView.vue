@@ -24,6 +24,7 @@
           <tr>
             <th scope="col"></th>
             <th scope="col"></th>
+            <th v-if="hasManagerRole" scope="col">{{$t('lifelines-webshop-orders-col-header-email')}}</th>
             <th scope="col">{{$t('lifelines-webshop-orders-col-header-title')}}</th>
             <th scope="col">{{$t('lifelines-webshop-orders-col-header-sub-date')}}</th>
             <th scope="col">{{$t('lifelines-webshop-orders-col-header-project')}}</th>
@@ -50,6 +51,7 @@
               <font-awesome-icon icon="trash" aria-label="delete"/>
               </router-link>
             </td>
+            <td v-if="hasManagerRole">{{ order.email }}</td>
             <td>{{ order.name }}</td>
             <td>{{ order.submissionDate | dataString }}</td>
             <td>{{ order.projectNumber }}</td>
@@ -70,7 +72,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import SpinnerAnimation from '../components/animations/SpinnerAnimation.vue'
 import ToastComponent from '../components/ToastComponent.vue'
 import ConfirmationModal from '../components/ConfirmationModal.vue'
-import { mapActions, mapState, mapMutations } from 'vuex'
+import { mapActions, mapState, mapMutations, mapGetters } from 'vuex'
 import moment from 'moment'
 
 library.add(faEdit, faDownload, faTrash)
@@ -99,7 +101,8 @@ export default Vue.extend({
     ...mapMutations(['clearToast'])
   },
   computed: {
-    ...mapState(['orders', 'toast'])
+    ...mapState(['orders', 'toast']),
+    ...mapGetters(['hasManagerRole'])
   },
   filters: {
     dataString: (dateValue) => dateValue ? moment(dateValue).format('LLLL') : ''
