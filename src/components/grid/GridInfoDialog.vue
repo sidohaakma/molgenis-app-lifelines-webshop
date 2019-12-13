@@ -77,7 +77,7 @@ svg {
   position: absolute;
   top: 0;
 
-  .info-dialog-container {
+  .info-dialog-container{
     background-color: #fff;
     margin-right: 2rem;
     position: fixed;
