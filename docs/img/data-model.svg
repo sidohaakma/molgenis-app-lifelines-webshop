@@ -1,0 +1,167 @@
+<svg version="1.1" baseProfile="full" width="1397.75" height="754" viewbox="0 0 1397.75 754" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ev="http://www.w3.org/2001/xml-events" style="font-weight:bold; font-size:12pt; font-family:'Calibri', Helvetica, sans-serif;;stroke-width:3;stroke-linejoin:round;stroke-linecap:round">
+  <title >nomnoml</title>
+  <desc >[age_group|id: int;name: string]
+
+[assessment|id: int;name: string]
+
+[catalog_users|username: string;signupDate: datetime]
+
+[gender_group|id: int;name: string]
+
+[order|orderNumber: string;contents: text;submissionDate: datetime;creationDate: datetime;updateDate: datetime;projectNumber: string;name: string;applicationForm: file;state: enum;email: string;user: string]
+
+[section|id: int;name: string]
+
+[sub_section|id: int;name: string]
+
+[subsection_variable|id: int;subsection_agg: string]
+[subsection_variable]-&gt;subsection_id[sub_section]
+[subsection_variable]-&gt;variable_id[variable]
+[tree|id: int]
+[tree]-&gt;section_id[section]
+[tree]-&gt;subsection_id[sub_section]
+[variable|id: int;name: string;label: text;definition-en: string;definition-nl: string]
+[variable]-&gt;variants*[variant]
+[variable]-&gt;subvariable_of[variable]
+[variable]--&gt;subvariables*[variable]
+[variable]--&gt;options*[variable_enum]
+[variable_enum|id: string;code: int;label-en: string;label-nl: string]
+[variable_enum]-&gt;variable[variable]
+[variant|id: int;name: string;assessment_id: int]
+
+[who|ll_nr: int;gender_group: int;age_group_at_1a: int;age_group_at_2a: int;age_group_at_3a: int;year_of_birth: int;subcohortgwas_group: bool;subcohortugli_group: bool;subcohortdeep_group: bool;subcohortdag3_group: bool]
+
+[who_when|id: int]
+[who_when]-&gt;ll_nr[who]
+[who_when]-&gt;variant_id[variant]
+
+[variant]--&gt;[assessment]
+[who]--&gt;[age_group]
+[who]--&gt;[gender_group]</desc>
+  <text x="519.6" y="280" style="fill: #33322E;font-weight:normal;">subsection_id</text>
+  <path d="M729.5 158 L617 245.5 L651.1 288 L651.1 288 " style="stroke:#33322E;fill:none;stroke-dasharray:none;"></path>
+  <path d="M638.6 280.9 L646.9 282.8 L646.9 274.3 L651.1 288 Z" style="stroke:#33322E;fill:#33322E;stroke-dasharray:none;"></path>
+  <text x="903" y="257.5" style="fill: #33322E;font-weight:normal;">variable_id</text>
+  <path d="M814.4 158 L895 245.5 L895 265.5 L895 265.5 " style="stroke:#33322E;fill:none;stroke-dasharray:none;"></path>
+  <path d="M889.7 252.2 L895 258.8 L900.3 252.2 L895 265.5 Z" style="stroke:#33322E;fill:#33322E;stroke-dasharray:none;"></path>
+  <text x="397" y="280" style="fill: #33322E;font-weight:normal;">section_id</text>
+  <path d="M564.1 150.5 L500 245.5 L500 288 L500 288 " style="stroke:#33322E;fill:none;stroke-dasharray:none;"></path>
+  <path d="M494.7 274.7 L500 281.3 L505.3 274.7 L500 288 Z" style="stroke:#33322E;fill:#33322E;stroke-dasharray:none;"></path>
+  <text x="731.1" y="280" style="fill: #33322E;font-weight:normal;">subsection_id</text>
+  <path d="M626.5 148 L768.5 245.5 L723.1 288 L723.1 288 " style="stroke:#33322E;fill:none;stroke-dasharray:none;"></path>
+  <path d="M729.2 275 L728 283.4 L736.5 282.8 L723.1 288 Z" style="stroke:#33322E;fill:#33322E;stroke-dasharray:none;"></path>
+  <text x="935.2" y="472" style="fill: #33322E;font-weight:normal;">variants*</text>
+  <path d="M910.1 387.5 L915 407.5 L927.2 480 L927.2 480 " style="stroke:#33322E;fill:none;stroke-dasharray:none;"></path>
+  <path d="M919.8 467.7 L926.1 473.4 L930.3 466 L927.2 480 Z" style="stroke:#33322E;fill:#33322E;stroke-dasharray:none;"></path>
+  <text x="862" y="392.4" style="fill: #33322E;font-weight:normal;">subvariable_of</text>
+  <path d="M1003 280.6 L1038.5 265.5 L1047.4 265.5 L1047.4 265.5 L1056.3 326.5 L1056.3 326.5 L1047.4 387.5 L1047.4 387.5 L1038.5 387.5 L1038.5 387.5 L1003 372.4 L1003 372.4 " style="stroke:#33322E;fill:none;stroke-dasharray:none;"></path>
+  <path d="M1017.4 372.7 L1009.1 375 L1013.2 382.5 L1003 372.4 Z" style="stroke:#33322E;fill:#33322E;stroke-dasharray:none;"></path>
+  <text x="634" y="464.5" style="fill: #33322E;font-weight:normal;">ptions*</text>
+  <path d="M787 370.8 L697.5 407.5 L708.5 472.5 L708.5 472.5 " style="stroke:#33322E;fill:none;stroke-dasharray:6 6;"></path>
+  <text x="836.2" y="407.5" style="fill: #33322E;font-weight:normal;">variable</text>
+  <path d="M757.6 472.5 L806.3 407.5 L828.2 387.5 L828.2 387.5 " style="stroke:#33322E;fill:none;stroke-dasharray:none;"></path>
+  <path d="M821.9 400.4 L823.2 392 L814.7 392.5 L828.2 387.5 Z" style="stroke:#33322E;fill:#33322E;stroke-dasharray:none;"></path>
+  <text x="1243.3" y="419.5" style="fill: #33322E;font-weight:normal;">ll_nr</text>
+  <path d="M1222.9 357.5 L1235.3 407.5 L1235.3 427.5 L1235.3 427.5 " style="stroke:#33322E;fill:none;stroke-dasharray:none;"></path>
+  <path d="M1229.9 414.2 L1235.3 420.8 L1240.6 414.2 L1235.3 427.5 Z" style="stroke:#33322E;fill:#33322E;stroke-dasharray:none;"></path>
+  <text x="874.8" y="472" style="fill: #33322E;font-weight:normal;">variant_id</text>
+  <path d="M1169.3 348.4 L1045.3 407.5 L977.8 480 L977.8 480 " style="stroke:#33322E;fill:none;stroke-dasharray:none;"></path>
+  <path d="M983 466.6 L982.3 475.1 L990.8 473.9 L977.8 480 Z" style="stroke:#33322E;fill:#33322E;stroke-dasharray:none;"></path>
+  <path d="M935 572 L935 644.5 L935 664.5 L935 664.5 " style="stroke:#33322E;fill:none;stroke-dasharray:6 6;"></path>
+  <path d="M929.7 651.2 L935 657.8 L940.3 651.2 L935 664.5 Z" style="stroke:#33322E;fill:#33322E;stroke-dasharray:none;"></path>
+  <path d="M1164.6 624.5 L1150.3 644.5 L1150.3 664.5 L1150.3 664.5 " style="stroke:#33322E;fill:none;stroke-dasharray:6 6;"></path>
+  <path d="M1144.9 651.2 L1150.3 657.8 L1155.6 651.2 L1150.3 664.5 Z" style="stroke:#33322E;fill:#33322E;stroke-dasharray:none;"></path>
+  <path d="M1305.9 624.5 L1320.3 644.5 L1320.3 664.5 L1320.3 664.5 " style="stroke:#33322E;fill:none;stroke-dasharray:6 6;"></path>
+  <path d="M1314.9 651.2 L1320.3 657.8 L1325.6 651.2 L1320.3 664.5 Z" style="stroke:#33322E;fill:#33322E;stroke-dasharray:none;"></path>
+  <rect x="1085.5" y="664.5" height="77" width="130" style="stroke:#33322E;fill:#eee8d5;stroke-dasharray:none;"></rect>
+  <text x="1150.5" y="686" style="fill: #33322E;text-anchor: middle;">age_group</text>
+  <path d="M1085.5 695.5 L1215.5 695.5" style="stroke:#33322E;fill:none;stroke-dasharray:none;"></path>
+  <text x="1093.5" y="717" style="fill: #33322E;font-weight:normal;">id: int</text>
+  <text x="1093.5" y="732" style="fill: #33322E;font-weight:normal;">name: string</text>
+  <rect x="870.5" y="664.5" height="77" width="130" style="stroke:#33322E;fill:#eee8d5;stroke-dasharray:none;"></rect>
+  <text x="935.5" y="686" style="fill: #33322E;text-anchor: middle;">assessment</text>
+  <path d="M870.5 695.5 L1000.5 695.5" style="stroke:#33322E;fill:none;stroke-dasharray:none;"></path>
+  <text x="878.5" y="717" style="fill: #33322E;font-weight:normal;">id: int</text>
+  <text x="878.5" y="732" style="fill: #33322E;font-weight:normal;">name: string</text>
+  <rect x="13.5" y="81.5" height="77" width="206" style="stroke:#33322E;fill:#eee8d5;stroke-dasharray:none;"></rect>
+  <text x="116.5" y="103" style="fill: #33322E;text-anchor: middle;">catalog_users</text>
+  <path d="M13.5 112.5 L219.5 112.5" style="stroke:#33322E;fill:none;stroke-dasharray:none;"></path>
+  <text x="21.5" y="134" style="fill: #33322E;font-weight:normal;">username: string</text>
+  <text x="21.5" y="149" style="fill: #33322E;font-weight:normal;">signupDate: datetime</text>
+  <rect x="1255.5" y="664.5" height="77" width="130" style="stroke:#33322E;fill:#eee8d5;stroke-dasharray:none;"></rect>
+  <text x="1320.5" y="686" style="fill: #33322E;text-anchor: middle;">gender_group</text>
+  <path d="M1255.5 695.5 L1385.5 695.5" style="stroke:#33322E;fill:none;stroke-dasharray:none;"></path>
+  <text x="1263.5" y="717" style="fill: #33322E;font-weight:normal;">id: int</text>
+  <text x="1263.5" y="732" style="fill: #33322E;font-weight:normal;">name: string</text>
+  <rect x="259.5" y="13.5" height="212" width="244" style="stroke:#33322E;fill:#eee8d5;stroke-dasharray:none;"></rect>
+  <text x="381.5" y="35" style="fill: #33322E;text-anchor: middle;">order</text>
+  <path d="M259.5 44.5 L503.5 44.5" style="stroke:#33322E;fill:none;stroke-dasharray:none;"></path>
+  <text x="267.5" y="66" style="fill: #33322E;font-weight:normal;">orderNumber: string</text>
+  <text x="267.5" y="81" style="fill: #33322E;font-weight:normal;">contents: text</text>
+  <text x="267.5" y="96" style="fill: #33322E;font-weight:normal;">submissionDate: datetime</text>
+  <text x="267.5" y="111" style="fill: #33322E;font-weight:normal;">creationDate: datetime</text>
+  <text x="267.5" y="126" style="fill: #33322E;font-weight:normal;">updateDate: datetime</text>
+  <text x="267.5" y="141" style="fill: #33322E;font-weight:normal;">projectNumber: string</text>
+  <text x="267.5" y="156" style="fill: #33322E;font-weight:normal;">name: string</text>
+  <text x="267.5" y="171" style="fill: #33322E;font-weight:normal;">applicationForm: file</text>
+  <text x="267.5" y="186" style="fill: #33322E;font-weight:normal;">state: enum</text>
+  <text x="267.5" y="201" style="fill: #33322E;font-weight:normal;">email: string</text>
+  <text x="267.5" y="216" style="fill: #33322E;font-weight:normal;">user: string</text>
+  <rect x="435.5" y="288.5" height="77" width="130" style="stroke:#33322E;fill:#eee8d5;stroke-dasharray:none;"></rect>
+  <text x="500.5" y="310" style="fill: #33322E;text-anchor: middle;">section</text>
+  <path d="M435.5 319.5 L565.5 319.5" style="stroke:#33322E;fill:none;stroke-dasharray:none;"></path>
+  <text x="443.5" y="341" style="fill: #33322E;font-weight:normal;">id: int</text>
+  <text x="443.5" y="356" style="fill: #33322E;font-weight:normal;">name: string</text>
+  <rect x="617.5" y="288.5" height="77" width="130" style="stroke:#33322E;fill:#eee8d5;stroke-dasharray:none;"></rect>
+  <text x="682.5" y="310" style="fill: #33322E;text-anchor: middle;">sub_section</text>
+  <path d="M617.5 319.5 L747.5 319.5" style="stroke:#33322E;fill:none;stroke-dasharray:none;"></path>
+  <text x="625.5" y="341" style="fill: #33322E;font-weight:normal;">id: int</text>
+  <text x="625.5" y="356" style="fill: #33322E;font-weight:normal;">name: string</text>
+  <rect x="666.5" y="81.5" height="77" width="225" style="stroke:#33322E;fill:#eee8d5;stroke-dasharray:none;"></rect>
+  <text x="779" y="103" style="fill: #33322E;text-anchor: middle;">subsection_variable</text>
+  <path d="M666.5 112.5 L891.5 112.5" style="stroke:#33322E;fill:none;stroke-dasharray:none;"></path>
+  <text x="674.5" y="134" style="fill: #33322E;font-weight:normal;">id: int</text>
+  <text x="674.5" y="149" style="fill: #33322E;font-weight:normal;">subsection_agg: string</text>
+  <rect x="543.5" y="88.5" height="62" width="83" style="stroke:#33322E;fill:#eee8d5;stroke-dasharray:none;"></rect>
+  <text x="585" y="110" style="fill: #33322E;text-anchor: middle;">tree</text>
+  <path d="M543.5 119.5 L626.5 119.5" style="stroke:#33322E;fill:none;stroke-dasharray:none;"></path>
+  <text x="551.5" y="141" style="fill: #33322E;font-weight:normal;">id: int</text>
+  <rect x="787.5" y="265.5" height="122" width="216" style="stroke:#33322E;fill:#eee8d5;stroke-dasharray:none;"></rect>
+  <text x="895.5" y="287" style="fill: #33322E;text-anchor: middle;">variable</text>
+  <path d="M787.5 296.5 L1003.5 296.5" style="stroke:#33322E;fill:none;stroke-dasharray:none;"></path>
+  <text x="795.5" y="318" style="fill: #33322E;font-weight:normal;">id: int</text>
+  <text x="795.5" y="333" style="fill: #33322E;font-weight:normal;">name: string</text>
+  <text x="795.5" y="348" style="fill: #33322E;font-weight:normal;">label: text</text>
+  <text x="795.5" y="363" style="fill: #33322E;font-weight:normal;">definition-en: string</text>
+  <text x="795.5" y="378" style="fill: #33322E;font-weight:normal;">definition-nl: string</text>
+  <rect x="633.5" y="472.5" height="107" width="168" style="stroke:#33322E;fill:#eee8d5;stroke-dasharray:none;"></rect>
+  <text x="717.5" y="494" style="fill: #33322E;text-anchor: middle;">variable_enum</text>
+  <path d="M633.5 503.5 L801.5 503.5" style="stroke:#33322E;fill:none;stroke-dasharray:none;"></path>
+  <text x="641.5" y="525" style="fill: #33322E;font-weight:normal;">id: string</text>
+  <text x="641.5" y="540" style="fill: #33322E;font-weight:normal;">code: int</text>
+  <text x="641.5" y="555" style="fill: #33322E;font-weight:normal;">label-en: string</text>
+  <text x="641.5" y="570" style="fill: #33322E;font-weight:normal;">label-nl: string</text>
+  <rect x="841.5" y="480.5" height="92" width="187" style="stroke:#33322E;fill:#eee8d5;stroke-dasharray:none;"></rect>
+  <text x="935" y="502" style="fill: #33322E;text-anchor: middle;">variant</text>
+  <path d="M841.5 511.5 L1028.5 511.5" style="stroke:#33322E;fill:none;stroke-dasharray:none;"></path>
+  <text x="849.5" y="533" style="fill: #33322E;font-weight:normal;">id: int</text>
+  <text x="849.5" y="548" style="fill: #33322E;font-weight:normal;">name: string</text>
+  <text x="849.5" y="563" style="fill: #33322E;font-weight:normal;">assessment_id: int</text>
+  <rect x="1108.5" y="427.5" height="197" width="254" style="stroke:#33322E;fill:#eee8d5;stroke-dasharray:none;"></rect>
+  <text x="1235.5" y="449" style="fill: #33322E;text-anchor: middle;">who</text>
+  <path d="M1108.5 458.5 L1362.5 458.5" style="stroke:#33322E;fill:none;stroke-dasharray:none;"></path>
+  <text x="1116.5" y="480" style="fill: #33322E;font-weight:normal;">ll_nr: int</text>
+  <text x="1116.5" y="495" style="fill: #33322E;font-weight:normal;">gender_group: int</text>
+  <text x="1116.5" y="510" style="fill: #33322E;font-weight:normal;">age_group_at_1a: int</text>
+  <text x="1116.5" y="525" style="fill: #33322E;font-weight:normal;">age_group_at_2a: int</text>
+  <text x="1116.5" y="540" style="fill: #33322E;font-weight:normal;">age_group_at_3a: int</text>
+  <text x="1116.5" y="555" style="fill: #33322E;font-weight:normal;">year_of_birth: int</text>
+  <text x="1116.5" y="570" style="fill: #33322E;font-weight:normal;">subcohortgwas_group: bool</text>
+  <text x="1116.5" y="585" style="fill: #33322E;font-weight:normal;">subcohortugli_group: bool</text>
+  <text x="1116.5" y="600" style="fill: #33322E;font-weight:normal;">subcohortdeep_group: bool</text>
+  <text x="1116.5" y="615" style="fill: #33322E;font-weight:normal;">subcohortdag3_group: bool</text>
+  <rect x="1169.5" y="295.5" height="62" width="92" style="stroke:#33322E;fill:#eee8d5;stroke-dasharray:none;"></rect>
+  <text x="1215.5" y="317" style="fill: #33322E;text-anchor: middle;">who_when</text>
+  <path d="M1169.5 326.5 L1261.5 326.5" style="stroke:#33322E;fill:none;stroke-dasharray:none;"></path>
+  <text x="1177.5" y="348" style="fill: #33322E;font-weight:normal;">id: int</text>
+</svg>
