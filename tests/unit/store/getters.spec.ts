@@ -73,7 +73,38 @@ describe('getters', () => {
           { key: 1, list: [1, 3] },
           { key: 2, list: [2] }
         ],
-        gridSelection: { 11: [1, 2], 12: [1] }
+        gridSelection: { 11: [1, 2], 13: [1] }
+      }
+      const expected: CartSection[] = [{
+        id: 1,
+        name: 'Section 1',
+        subsections: [{
+          name: 'subsection 1',
+          variables: [{
+            ...variable11,
+            subsection: 1
+          }]
+        }, {
+          name: 'subsection 3',
+          variables: [{
+            ...variable13,
+            subsection: 3
+          }]
+        }]
+      }]
+      expect(getters.cartTree(state)).toEqual(expected)
+    })
+    it('should duplicate variables that occur in multiple subsections', () => {
+      const state: ApplicationState = {
+        ...emptyState,
+        variables: { 11: variable11, 12: variable12, 13: variable13 },
+        sections: { 1: section1, 2: section2 },
+        subSectionList: ['subsection 0', 'subsection 1', 'subsection 2', 'subsection 3'],
+        treeStructure: [
+          { key: 1, list: [1, 3] },
+          { key: 2, list: [2] }
+        ],
+        gridSelection: { 12: [1] }
       }
       const expected: CartSection[] = [
         {
@@ -82,9 +113,6 @@ describe('getters', () => {
           subsections: [{
             name: 'subsection 1',
             variables: [{
-              ...variable11,
-              subsection: 1
-            }, {
               ...variable12,
               subsection: 1
             }]
