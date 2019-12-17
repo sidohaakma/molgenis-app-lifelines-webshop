@@ -143,6 +143,27 @@ export default {
     }
     return []
   },
+  cartTree: (state: ApplicationState): any => {
+    const variableIds = Object.keys(state.gridSelection)
+    // @ts-ignore
+    const variables: Variable[] = variableIds.map((id: number) => state.variables[id])
+    const flatVariables = variables.flatMap((variable: Variable) =>
+      variable.subsections.map((subsection) => ({ ...variable, subsection })))
+    const subsections:any = flatVariables.reduce((soFar: any, variable: any) => {
+      const subsection = variable.subsection
+      soFar[subsection] = soFar[subsection] || []
+      soFar[subsection].push(variable)
+      return soFar
+    }, {})
+    const cartTree = state.treeStructure.map((section: TreeParent): any =>
+      ({
+        ...state.sections[section.key],
+        subsections: section.list.filter((subsectionId) => subsections.hasOwnProperty(subsectionId))
+          .map((subsectionId) => ({ name: state.subSectionList[subsectionId], variables: subsections[subsectionId] }))
+      })
+    ).filter((section) => section.subsections.length > 0)
+    return cartTree
+  },
   isFilterdSubsectionLoading: (state: ApplicationState): boolean => (state.searchTerm !== null && state.filteredSections === null),
   isGridLoading: (state: ApplicationState): boolean => (state.gridVariables === null || state.variantCounts === null) && state.treeSelected !== -1,
   filteredTreeStructure: ({ filteredSections, filteredSubsections }: ApplicationState, { treeStructure }: Getters) => {

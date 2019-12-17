@@ -14,14 +14,18 @@
           </router-link>
         </div>
         <h5>{{$t('lifelines-webshop-cart-selected-list-header')}}</h5>
-        <spinner-animation v-show="loading" />
-        <ul v-if="!loading">
-          <li v-for="variableId in selectedVariableIds" :key="variableId">
-            <template v-if="variablesMap[variableId].label">{{variablesMap[variableId].label}}</template>
-            <template v-else>{{variablesMap[variableId].name}}</template>
-            <span>{{ variableAssesments[variableId] }}</span>
-          </li>
-        </ul>
+        <spinner-animation v-if="loading" />
+        <div v-else v-for="section in cartTree" :key="section.id">
+          <h2>{{section.name}}</h2>
+          <div v-for="subsection in section.subsections" :key="subsection.id">
+              <h3>{{subsection.name}}</h3>
+            <ul>
+              <li v-for="variable in subsection.variables" :key="variable.id">
+                <span>{{variable.label||variable.name}} {{ variableAssesments[variable.id] }}</span></li>
+            </ul>
+          </div>
+        </div>
+
         <div class="mb-3" v-if="selectedVariableIds.length > 10">
           <button type="button" class="btn btn-primary save" @click="onSave">{{$t('lifelines-webshop-save-btn-label')}}</button>
           <router-link
@@ -58,7 +62,7 @@ export default Vue.extend({
     }
   },
   computed: {
-    ...mapGetters(['isSignedIn']),
+    ...mapGetters(['cartTree', 'isSignedIn']),
     gridSelection () {
       return this.$store.state.gridSelection
     },
