@@ -1,3 +1,10 @@
+# [0.26.0](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v0.25.0...v0.26.0) (2019-12-17)
+
+
+### Features
+
+* section/subsection structured cart view ([615ef9d](https://github.com/molgenis/molgenis-app-lifelines-webshop/commit/615ef9d))
+
 # [0.25.0](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v0.24.0...v0.25.0) (2019-12-13)
 
 
