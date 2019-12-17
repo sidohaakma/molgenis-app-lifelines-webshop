@@ -6,6 +6,8 @@ import Variant from '@/types/Variant'
 import Assessment from '@/types/Assessment'
 import { VariableWithVariants } from '@/types/Variable'
 import { TreeNode } from '@/types/TreeNode'
+import { Section } from '@/types/Section'
+import CartSection from '@/types/CartSection'
 
 describe('getters', () => {
   const emptyGetters: Getters = {
@@ -32,24 +34,75 @@ describe('getters', () => {
   const assessment3A: Assessment = { id: 3, name: '3A' }
   const assessment1B: Assessment = { id: 4, name: '1B' }
 
+  const section1: Section = { id: 1, name: 'Section 1' }
+  const section2: Section = { id: 2, name: 'Section 2' }
+
   const variable11: VariableWithVariants = {
     id: 11,
     label: 'variable 11',
     name: 'VAR11',
-    variants: [variant2, variant1]
+    variants: [variant2, variant1],
+    subsections: [1]
   }
   const variable12: VariableWithVariants = {
     id: 12,
     label: 'variable 12',
     name: 'VAR12',
-    variants: [variant1]
+    variants: [variant1],
+    subsections: [1, 2]
   }
   const variable13: VariableWithVariants = {
     id: 13,
     label: 'variable 13',
     name: 'VAR13',
-    variants: [variant3]
+    variants: [variant3],
+    subsections: [3]
   }
+
+  describe('cartTree', () => {
+    it('should be empty if variables have not yet been loaded', () => {
+      expect(getters.cartTree({ ...emptyState })).toEqual([])
+    })
+    it('should group selection by sections and subsections', () => {
+      const state: ApplicationState = {
+        ...emptyState,
+        variables: { 11: variable11, 12: variable12, 13: variable13 },
+        sections: { 1: section1, 2: section2 },
+        subSectionList: ['subsection 0', 'subsection 1', 'subsection 2', 'subsection 3'],
+        treeStructure: [
+          { key: 1, list: [1, 3] },
+          { key: 2, list: [2] }
+        ],
+        gridSelection: { 11: [1, 2], 12: [1] }
+      }
+      const expected: CartSection[] = [
+        {
+          id: 1,
+          name: 'Section 1',
+          subsections: [{
+            name: 'subsection 1',
+            variables: [{
+              ...variable11,
+              subsection: 1
+            }, {
+              ...variable12,
+              subsection: 1
+            }]
+          }]
+        }, {
+          id: 2,
+          name: 'Section 2',
+          subsections: [{
+            name: 'subsection 2',
+            variables: [{
+              ...variable12,
+              subsection: 2
+            }]
+          }]
+        }]
+      expect(getters.cartTree(state)).toEqual(expected)
+    })
+  })
 
   describe('isSignedIn', () => {
     it('is false when context is not authenticated', () => {

@@ -7,7 +7,10 @@ import { Variable, VariableWithVariants } from '@/types/Variable'
 import { TreeParent } from '@/types/Tree'
 import Assessment from '@/types/Assessment'
 import { TreeNode } from '@/types/TreeNode'
-import { Section } from '@/types/Section'
+import CartSection from '@/types/CartSection'
+import groupBy from 'lodash.groupby'
+import property from 'lodash.property'
+import 'core-js/fn/array/flat-map'
 
 export default {
   isSignedIn: (state: ApplicationState): boolean => state.context.context && state.context.context.authenticated,
@@ -143,26 +146,23 @@ export default {
     }
     return []
   },
-  cartTree: (state: ApplicationState): any => {
-    const variableIds = Object.keys(state.gridSelection)
-    // @ts-ignore
-    const variables: Variable[] = variableIds.map((id: number) => state.variables[id])
-    const flatVariables = variables.flatMap((variable: Variable) =>
-      variable.subsections.map((subsection) => ({ ...variable, subsection })))
-    const subsections:any = flatVariables.reduce((soFar: any, variable: any) => {
-      const subsection = variable.subsection
-      soFar[subsection] = soFar[subsection] || []
-      soFar[subsection].push(variable)
-      return soFar
-    }, {})
-    const cartTree = state.treeStructure.map((section: TreeParent): any =>
+  cartTree: (state: ApplicationState): CartSection[] => {
+    const selectedVariableIds: number[] = Object.keys(state.gridSelection) as unknown as number[]
+    const selectedVariables: Variable[] = selectedVariableIds
+      .filter((id: number) => state.variables.hasOwnProperty(id))
+      .map((id: number) => state.variables[id])
+    // if variables occur in more than one subsection, duplicate them, adding one variable for each subsection
+    const flatVariables = selectedVariables
+      .flatMap((variable) => variable.subsections
+        .map((subsection) => ({ ...variable, subsection })))
+    const variablesPerSubsection = groupBy(flatVariables, property('subsection'))
+    return state.treeStructure.map((section: TreeParent) =>
       ({
         ...state.sections[section.key],
-        subsections: section.list.filter((subsectionId) => subsections.hasOwnProperty(subsectionId))
-          .map((subsectionId) => ({ name: state.subSectionList[subsectionId], variables: subsections[subsectionId] }))
+        subsections: section.list.filter((subsectionId) => variablesPerSubsection.hasOwnProperty(subsectionId))
+          .map((subsectionId) => ({ name: state.subSectionList[subsectionId], variables: variablesPerSubsection[subsectionId] }))
       })
     ).filter((section) => section.subsections.length > 0)
-    return cartTree
   },
   isFilterdSubsectionLoading: (state: ApplicationState): boolean => (state.searchTerm !== null && state.filteredSections === null),
   isGridLoading: (state: ApplicationState): boolean => (state.gridVariables === null || state.variantCounts === null) && state.treeSelected !== -1,
