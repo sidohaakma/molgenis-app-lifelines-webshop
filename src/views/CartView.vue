@@ -49,7 +49,7 @@
 <script>
 import Vue from 'vue'
 import SpinnerAnimation from '../components/animations/SpinnerAnimation.vue'
-import { mapActions, mapGetters } from 'vuex'
+import { mapActions, mapGetters, mapState } from 'vuex'
 
 export default Vue.extend({
   name: 'CartView',
@@ -63,17 +63,9 @@ export default Vue.extend({
   },
   computed: {
     ...mapGetters(['cartTree', 'isSignedIn']),
-    gridSelection () {
-      return this.$store.state.gridSelection
-    },
+    ...mapState(['gridSelection', 'variables', 'assessments']),
     selectedVariableIds () {
       return Object.keys(this.gridSelection)
-    },
-    variablesMap () {
-      return this.$store.state.variables
-    },
-    assessmentsMap () {
-      return this.$store.state.assessments
     },
     variableAssesments () {
       let variableAssesmentsStings = {}
@@ -81,7 +73,7 @@ export default Vue.extend({
         this.gridSelection
       )) {
         const assessmentNames = assessmentIds.map(
-          assessmentId => this.assessmentsMap[assessmentId].name
+          assessmentId => this.assessments[assessmentId].name
         )
         variableAssesmentsStings[variableId] =
           '( ' + assessmentNames.join(', ') + ' )'
@@ -90,10 +82,7 @@ export default Vue.extend({
       return variableAssesmentsStings
     },
     loading () {
-      return !(
-        Object.keys(this.assessmentsMap).length &&
-        Object.keys(this.variablesMap).length
-      )
+      return !(Object.keys(this.assessments).length && Object.keys(this.variables).length)
     }
   }
 })
