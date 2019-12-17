@@ -14,14 +14,18 @@
           </router-link>
         </div>
         <h5>{{$t('lifelines-webshop-cart-selected-list-header')}}</h5>
-        <spinner-animation v-show="loading" />
-        <ul v-if="!loading">
-          <li v-for="variableId in selectedVariableIds" :key="variableId">
-            <template v-if="variablesMap[variableId].label">{{variablesMap[variableId].label}}</template>
-            <template v-else>{{variablesMap[variableId].name}}</template>
-            <span>{{ variableAssesments[variableId] }}</span>
-          </li>
-        </ul>
+        <spinner-animation v-if="loading" />
+        <div v-else v-for="section in cartTree" :key="section.id">
+          <h2>{{section.name}}</h2>
+          <div v-for="subsection in section.subsections" :key="subsection.id">
+              <h3>{{subsection.name}}</h3>
+            <ul>
+              <li v-for="variable in subsection.variables" :key="variable.id">
+                <span>{{variable.label||variable.name}} {{ variableAssesments[variable.id] }}</span></li>
+            </ul>
+          </div>
+        </div>
+
         <div class="mb-3" v-if="selectedVariableIds.length > 10">
           <button type="button" class="btn btn-primary save" @click="onSave">{{$t('lifelines-webshop-save-btn-label')}}</button>
           <router-link
@@ -45,7 +49,7 @@
 <script>
 import Vue from 'vue'
 import SpinnerAnimation from '../components/animations/SpinnerAnimation.vue'
-import { mapActions, mapGetters } from 'vuex'
+import { mapActions, mapGetters, mapState } from 'vuex'
 
 export default Vue.extend({
   name: 'CartView',
@@ -58,18 +62,10 @@ export default Vue.extend({
     }
   },
   computed: {
-    ...mapGetters(['isSignedIn']),
-    gridSelection () {
-      return this.$store.state.gridSelection
-    },
+    ...mapGetters(['cartTree', 'isSignedIn']),
+    ...mapState(['gridSelection', 'variables', 'assessments']),
     selectedVariableIds () {
       return Object.keys(this.gridSelection)
-    },
-    variablesMap () {
-      return this.$store.state.variables
-    },
-    assessmentsMap () {
-      return this.$store.state.assessments
     },
     variableAssesments () {
       let variableAssesmentsStings = {}
@@ -77,7 +73,7 @@ export default Vue.extend({
         this.gridSelection
       )) {
         const assessmentNames = assessmentIds.map(
-          assessmentId => this.assessmentsMap[assessmentId].name
+          assessmentId => this.assessments[assessmentId].name
         )
         variableAssesmentsStings[variableId] =
           '( ' + assessmentNames.join(', ') + ' )'
@@ -86,10 +82,7 @@ export default Vue.extend({
       return variableAssesmentsStings
     },
     loading () {
-      return !(
-        Object.keys(this.assessmentsMap).length &&
-        Object.keys(this.variablesMap).length
-      )
+      return !(Object.keys(this.assessments).length && Object.keys(this.variables).length)
     }
   }
 })

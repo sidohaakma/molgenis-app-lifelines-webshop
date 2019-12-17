@@ -143,15 +143,23 @@ export default {
   }),
   loadVariables: tryAction(async ({ state, commit } : any) => {
     const [response0, response1] = await Promise.all([
-      api.get('/api/v2/lifelines_variable?attrs=id,name,label&num=10000&sort=id'),
-      api.get('/api/v2/lifelines_variable?attrs=id,name,label&num=10000&start=10000&sort=id')
+      api.get('/api/v2/lifelines_variable?attrs=id,name,label,subsections&num=10000&sort=id'),
+      api.get('/api/v2/lifelines_variable?attrs=id,name,label,subsections&num=10000&start=10000&sort=id')
     ])
-    const variables: Variable[] = [...response0.items, ...response1.items]
+    const variables = [...response0.items, ...response1.items]
+
     const variableMap: {[key:number]: Variable} =
-      variables.reduce((soFar: {[key:number]: Variable}, variable: Variable) => {
+      variables.reduce((soFar: {[key:number]: Variable}, variable) => {
+        if (!variable.subsections) {
+          variable.subsections = []
+        } else {
+          variable.subsections = variable.subsections.split(',').map((i:string) => parseInt(i, 10))
+        }
+
         soFar[variable.id] = variable
         return soFar
       }, {})
+
     commit('updateVariables', variableMap)
   }),
   loadGridVariables: tryAction(async ({ state, commit, getters } : { state: ApplicationState, commit: any, getters: Getters}) => {
