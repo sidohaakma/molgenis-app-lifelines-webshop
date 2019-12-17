@@ -11,6 +11,7 @@ import mutations from '@/store/mutations'
 describe('OrdersView.vue', () => {
   let localVue:any
   let store:any
+  let getters: any
 
   let actions = {
     deleteOrder: jest.fn(),
@@ -27,10 +28,15 @@ describe('OrdersView.vue', () => {
       orders: null
     }
 
+    getters = {
+      hasManagerRole: jest.fn()
+    }
+
     store = new Vuex.Store({
       state,
       actions,
-      mutations
+      mutations,
+      getters
     })
   })
 
