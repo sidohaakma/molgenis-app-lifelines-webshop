@@ -1,3 +1,10 @@
+## [0.27.2](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v0.27.1...v0.27.2) (2019-12-18)
+
+
+### Bug Fixes
+
+* use underscores for label and definition ([1616c5e](https://github.com/molgenis/molgenis-app-lifelines-webshop/commit/1616c5e))
+
 ## [0.27.1](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v0.27.0...v0.27.1) (2019-12-18)
 
 
