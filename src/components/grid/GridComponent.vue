@@ -1,19 +1,16 @@
 <template>
   <div id="grid">
+    <grid-info-dialog v-if="showInfoDialog" @close="closeInfoDialog"></grid-info-dialog>
     <div class="row">
       <div class="col vld-parent">
-        <table
-          ref="gridheader"
-          class="grid-header-table"
-          :class="{'sticky':stickyTableHeader}">
+        <table ref="gridheader" class="grid-header-table" :class="{'sticky':stickyTableHeader}">
           <tr>
             <th></th>
             <th></th>
-            <th
-              v-for="assessment in gridAssessments"
-              :key="assessment.id"
-              class="text-center">
-              <div class="assessments-title"><span>{{assessment.name}}</span></div>
+            <th v-for="assessment in gridAssessments" :key="assessment.id" class="text-center">
+              <div class="assessments-title">
+                <span>{{assessment.name}}</span>
+              </div>
             </th>
           </tr>
         </table>
@@ -31,7 +28,8 @@
             ref="grid"
             class="grid-table"
             @click.stop="clickGridDelegate"
-            :class="{'hover-all-cells': hoverAllCells}">
+            :class="{'hover-all-cells': hoverAllCells}"
+          >
             <tr>
               <th></th>
               <th class="all-toggle grid-toggle">
@@ -41,9 +39,8 @@
                   :class="classes('allSelect')"
                   @click="$emit('gridAllToggle')"
                   @mouseenter="hoverAllCells = true"
-                  @mouseleave="hoverAllCells = false">
-                  All
-                </button>
+                  @mouseleave="hoverAllCells = false"
+                >All</button>
               </th>
               <th
                 v-for="(assessment, colIndex) in gridAssessments"
@@ -54,25 +51,27 @@
                   :disabled="!isSignedIn"
                   class="btn btn-sm btn-outline-secondary t-btn-column-toggle"
                   :data-col="colIndex"
-                  :class="classes('columnSelect', {colIndex})">
-                  <font-awesome-icon icon="arrow-down"/>
+                  :class="classes('columnSelect', {colIndex})"
+                >
+                  <font-awesome-icon icon="arrow-down" />
                 </button>
               </th>
             </tr>
 
-            <tr
-              v-for="(row, rowIndex) in grid"
-              :key="rowIndex">
-              <th>
-                <grid-titel-info :info="gridVariables[rowIndex]" />
+            <tr v-for="(row, rowIndex) in grid" :key="rowIndex">
+              <th @click="openInfoDialog(rowIndex)"
+                  :class="{'selected-variable': rowIndex === selectedRowIndex }"
+              >
+                <grid-titel-info v-bind="gridVariables[rowIndex]" />
               </th>
               <th class="row-toggle grid-toggle">
                 <button
                   :disabled="!isSignedIn"
                   class="btn btn-sm select-row btn-outline-secondary t-btn-row-toggle"
                   :data-row="rowIndex"
-                  :class="classes('rowSelect', {rowIndex})">
-                  <font-awesome-icon icon="arrow-right"/>
+                  :class="classes('rowSelect', {rowIndex})"
+                >
+                  <font-awesome-icon icon="arrow-right" />
                 </button>
               </th>
               <td class="cell" :key="colIndex" v-for="(count,colIndex) in row">
@@ -81,9 +80,8 @@
                   :data-col="colIndex"
                   :data-row="rowIndex"
                   :class="classes('cell', {rowIndex, colIndex})"
-                  class="btn btn-sm t-btn-cell-toggle">
-                  {{count | formatCount}}
-                </button>
+                  class="btn btn-sm t-btn-cell-toggle"
+                >{{count | formatCount}}</button>
               </td>
             </tr>
           </table>
@@ -97,9 +95,14 @@
 import Vue from 'vue'
 import Loading from 'vue-loading-overlay'
 import GridTitelInfo from './GridTitelInfo.vue'
+import GridInfoDialog from './GridInfoDialog.vue'
 
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faArrowDown, faArrowRight, faArrowsAlt } from '@fortawesome/free-solid-svg-icons'
+import {
+  faArrowDown,
+  faArrowRight,
+  faArrowsAlt
+} from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 // @ts-ignore
 import { formatSI } from 'format-si-prefix'
@@ -108,7 +111,7 @@ library.add(faArrowDown, faArrowRight, faArrowsAlt)
 
 export default Vue.extend({
   name: 'GridComponent',
-  components: { FontAwesomeIcon, Loading, GridTitelInfo },
+  components: { FontAwesomeIcon, Loading, GridTitelInfo, GridInfoDialog },
   computed: {
     /**
      * Provides visual feedback for grid selection helpers,
@@ -116,8 +119,10 @@ export default Vue.extend({
      */
     selected: function () {
       const selected = { all: true, row: [], col: [] }
-      if (this.grid === null) return selected
-      selected.col = this.grid[0].map((i) => true)
+      if (!this.grid.length) {
+        return selected
+      }
+      selected.col = this.grid[0].map(i => true)
 
       this.grid.forEach((row, i) => {
         selected.row[i] = true
@@ -161,7 +166,9 @@ export default Vue.extend({
   data: function () {
     return {
       hoverAllCells: false,
-      stickyTableHeader: false
+      stickyTableHeader: false,
+      showInfoDialog: false,
+      selectedRowIndex: ''
     }
   },
   filters: {
@@ -177,6 +184,14 @@ export default Vue.extend({
     }
   },
   methods: {
+    closeInfoDialog () {
+      this.showInfoDialog = false
+      this.selectedRowIndex = ''
+    },
+    openInfoDialog (row) {
+      this.selectedRowIndex = row
+      this.showInfoDialog = true
+    },
     classes (target, context) {
       const classes = {}
 
@@ -200,8 +215,9 @@ export default Vue.extend({
     },
     clickGridDelegate: function (e) {
       const button = e.target.closest('button')
-      if (!button) return
-
+      if (!button) {
+        return
+      }
       const data = button.dataset
 
       if (data.col || data.row) {
@@ -222,10 +238,14 @@ export default Vue.extend({
       }
     },
     getTableTop () {
-      return this.$refs.grid ? this.$refs.grid.getBoundingClientRect().top : null
+      return this.$refs.grid
+        ? this.$refs.grid.getBoundingClientRect().top
+        : null
     },
     getHeaderHeight () {
-      return this.$refs.gridheader ? this.$refs.gridheader.getBoundingClientRect().height : null
+      return this.$refs.gridheader
+        ? this.$refs.gridheader.getBoundingClientRect().height
+        : null
     }
   },
   created: function () {
@@ -238,149 +258,169 @@ export default Vue.extend({
 </script>
 
 <style lang="scss" scoped>
-  @import "../../scss/variables";
+.selected-variable div {
+  pointer-events: none;
+  position: relative;
+  z-index: $zindex-modal;
 
-  table {
-    overflow: hidden;
-    position: relative;
+  &::before {
+    @include box-shadow;
+    background-color: #fff;
+    border-radius: 3px;
+    bottom: -0.4rem;
+    content: "";
+    left: 1rem;
+    position: absolute;
+    right: 0.7rem;
+    top: -0.4rem;
+    z-index: -1; // move behind parent, because of absolute position (creating a new stacking context)
+  }
+}
 
-    th:first-child {
-      max-width: 15rem;
-      min-width: 15rem;
-      width: 15rem;
-    }
+table {
+  overflow: hidden;
+  position: relative;
 
-    td,
-    th:not(:first-child) {
-      max-width: 4rem;
-      min-width: 4rem;
-      width: 4rem;
-    }
-
-    th {
-      font-weight: normal;
-      vertical-align: middle;
-      white-space: nowrap;
-    }
+  th:first-child {
+    cursor: pointer;
+    max-width: 15rem;
+    min-width: 15rem;
+    width: 15rem;
   }
 
-  .vld-overlay.is-active {
-    margin: -1rem;
+  td,
+  th:not(:first-child) {
+    max-width: 4rem;
+    min-width: 4rem;
+    width: 4rem;
   }
 
-  .table-holder {
-    display: inline-block;
-    min-height: 300px;
-    min-width: 500px;
-    position: relative;
-  }
-
-  .sticky {
-    background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.9) 75%, rgba(255, 255, 255, 0) 100%);
-    pointer-events: none;
-    position: fixed;
-    top: 7rem;
-    z-index: 1020;
-
-    .assessments-title {
-      height: 8rem;
-    }
-
-    .assessments-title span {
-      bottom: 1rem;
-    }
-  }
-
-  .space-holder {
-    height: 6em;
-  }
-
-  table td,
   th {
-    padding: 0 1px;
-    position: relative;
+    font-weight: normal;
+    vertical-align: middle;
+    white-space: nowrap;
   }
+}
 
-  .grid-table {
-    tr {
-      &:not(:first-child):hover {
-        background-color: $light;
-      }
-    }
+.vld-overlay.is-active {
+  margin: -1rem;
+}
 
-    &.hover-all-cells {
-      td {
-        background-color: $light;
-      }
-    }
+.table-holder {
+  display: inline-block;
+  min-height: 300px;
+  min-width: 500px;
+  position: relative;
+}
 
-    td:hover::after,
-    th:not(:nth-child(1)):not(:nth-child(2)):hover::after {
-      background-color: $light;
-      content: "";
-      display: inline-block;
-      height: 10000px;
-      left: 0;
-      position: absolute;
-      right: 0;
-      top: -5000px;
-      z-index: -1;
-    }
-
-    button {
-      display: block;
-      height: 100%;
-      margin: 1px;
-      width: 100%;
-    }
-  }
+.sticky {
+  background: linear-gradient(180deg,
+  rgba(255, 255, 255, 1) 0%,
+  rgba(255, 255, 255, 0.9) 75%,
+  rgba(255, 255, 255, 0) 100%);
+  pointer-events: none;
+  position: fixed;
+  top: 7rem;
+  z-index: $zindex-sticky;
 
   .assessments-title {
-    height: 6em;
-    position: relative;
-    width: auto;
+    height: 8rem;
+  }
 
-    span {
-      bottom: -1rem;
-      display: inline-block;
-      left: 1.3rem;
-      max-width: 7rem;
-      overflow: hidden;
-      padding-left: 0.7rem;
-      position: absolute;
-      text-align: right;
-      text-overflow: ellipsis;
-      transform: rotate(-60deg);
-      transform-origin: 0% 50%;
-      white-space: nowrap;
+  .assessments-title span {
+    bottom: 1rem;
+  }
+}
+
+.space-holder {
+  height: 6em;
+}
+
+table td,
+th {
+  padding: 0 1px;
+  position: relative;
+}
+
+.grid-table {
+  tr {
+    &:not(:first-child):hover {
+      background-color: $light;
     }
   }
 
-  .w-0 {
-    width: 0;
-  }
-
-  .cell {
-    button {
-      border-radius: 0;
+  &.hover-all-cells {
+    td {
+      background-color: $light;
     }
   }
 
-  .grid-toggle {
-    button {
-      border-bottom-right-radius: 0;
-      border-top-right-radius: 0;
-
-      &[disabled] {
-        display: none;
-      }
-    }
+  td:hover::after,
+  th:not(:nth-child(1)):not(:nth-child(2)):hover::after {
+    background-color: $light;
+    content: "";
+    display: inline-block;
+    height: 10000px;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: -5000px;
+    z-index: -1;
   }
 
-  .all-toggle {
-    button {
-      border-bottom-left-radius: 0;
+  button {
+    display: block;
+    height: 100%;
+    margin: 1px;
+    width: 100%;
+  }
+}
+
+.assessments-title {
+  height: 6em;
+  position: relative;
+  width: auto;
+
+  span {
+    bottom: -1rem;
+    display: inline-block;
+    left: 1.3rem;
+    max-width: 7rem;
+    overflow: hidden;
+    padding-left: 0.7rem;
+    position: absolute;
+    text-align: right;
+    text-overflow: ellipsis;
+    transform: rotate(-60deg);
+    transform-origin: 0% 50%;
+    white-space: nowrap;
+  }
+}
+
+.w-0 {
+  width: 0;
+}
+
+.cell {
+  button {
+    border-radius: 0;
+  }
+}
+
+.grid-toggle {
+  button {
+    border-bottom-right-radius: 0;
+    border-top-right-radius: 0;
+
+    &[disabled] {
+      display: none;
     }
   }
+}
 
+.all-toggle {
+  button {
+    border-bottom-left-radius: 0;
+  }
+}
 </style>

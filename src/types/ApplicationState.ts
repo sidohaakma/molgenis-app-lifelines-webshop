@@ -8,26 +8,27 @@ import { Section } from '@/types/Section.ts'
 import { TreeParent } from '@/types/Tree'
 import FormField from './FormField'
 import { Order } from './Order'
-import { ContextState } from '@molgenis/molgenis-ui-context/src/types'
+import { Context, ContextState } from '@molgenis/molgenis-ui-context/src/types'
 
 export type Toast = {
-  type: 'danger' | 'success',
+  type: 'danger' | 'success'
   message: string
 }
 
 export interface AppState {
-  order: Order,
+  loading: number
+  order: Order
   orderFormFields: FormField[]
-  variables: { [key:number]: Variable },
-  assessments: { [key:number]: Assessment },
-  sections: { [key:number]: Section },
-  subSectionList: string[],
-  toast: Toast | null,
-  genderOptions: FacetOption[],
-  subcohortOptions: FacetOption[],
-  ageGroupOptions: FacetOption[],
-  ageAtOptions: FacetOption[],
-  facetFilter: Filter,
+  variables: { [key:number]: Variable }
+  assessments: { [key:number]: Assessment }
+  sections: { [key:number]: Section }
+  subSectionList: string[]
+  toast: Toast | null
+  genderOptions: FacetOption[]
+  subcohortOptions: FacetOption[]
+  ageGroupOptions: FacetOption[]
+  ageAtOptions: FacetOption[]
+  facetFilter: Filter
   treeStructure: TreeParent[]
   gridVariables: VariableWithVariants[] | null
   variantCounts: Count[] | null
@@ -42,6 +43,11 @@ export interface AppState {
   orders: Order[] | null
 }
 
+// we start using the store only after the context is loaded
+interface LoadedContextState extends ContextState {
+    context: Context
+}
+
 export default interface ApplicationState extends AppState {
-  context?: ContextState
+  context: LoadedContextState
 }

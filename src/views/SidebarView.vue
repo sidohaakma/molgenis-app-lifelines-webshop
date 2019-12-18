@@ -1,52 +1,77 @@
 <template>
   <div id="sidebar-view" v-click-outside="hide" :class="{'hide-bar':!value}">
-    <div class="label" @click="toggleVisibility">{{$t('lifelines-webshop-sidebar-header')}}<font-awesome-icon icon="angle-double-down" class="ml-2"></font-awesome-icon></div>
+    <div class="label" @click="toggleVisibility">
+      {{$t('lifelines-webshop-sidebar-header')}}
+      <font-awesome-icon icon="angle-double-down" class="ml-2"></font-awesome-icon>
+    </div>
     <div class="overflow-hidden">
       <div class="sidebar-width">
-        <h3 class="px-4">{{$t('lifelines-webshop-sidebar-header')}}</h3>
+        <h3 class="px-4 mg-header">{{$t('lifelines-webshop-sidebar-header')}}</h3>
         <ul class="list-unstyled sidebar-content p-4">
-          <li class="hide-sidebar" @click="hide"><font-awesome-icon icon="angle-double-left" size="lg"></font-awesome-icon></li>
+          <li class="hide-sidebar" @click="hide">
+            <font-awesome-icon icon="angle-double-left" size="lg"></font-awesome-icon>
+          </li>
           <li>
             <facet-container
               facetId="age"
-              label="Age"
+              :label="$t('lifelines-webshop-age-facet-label')"
               :collapsable="true"
               :collapsed="activeAgeFacetId !== 'age'"
-              @facetToggle="handleAgeToggle">
-                <age-facet
+              @facetToggle="handleAgeToggle"
+            >
+              <template v-slot:label-slot>
+                <info-icon id="age-info-icon" :title="$t('lifelines-webshop-age-facet-label')" href="http://wiki-lifelines.web.rug.nl/doku.php?id=cohort#age_groups">
+                  <span v-html="$t('lifelines-webshop-sidebar-age-info')"></span>
+                </info-icon>
+              </template>
+              <age-facet
                 facetId="age"
                 :ageGroupOptions="ageGroupOptions"
                 :ageAtOptions="ageAtOptions"
-                v-model="selectedAgeAt" />
+                v-model="selectedAgeAt"
+              />
             </facet-container>
           </li>
           <li>
             <facet-container
               facetId="yob"
-              label="Year of birth"
+              :label="$t('lifelines-webshop-yob-facet-label')"
               :collapsable="true"
               :collapsed="activeAgeFacetId !== 'yob'"
-              @facetToggle="handleAgeToggle">
-                <range-facet
-                facetId="yob"
-                :min="1900" :max="2050"
-                v-model="selectedAgeRange"/>
+              @facetToggle="handleAgeToggle"
+            >
+              <range-facet facetId="yob" :min="1900" :max="2050" v-model="selectedAgeRange" />
             </facet-container>
           </li>
           <li>
-            <facet-container facetId="gender" label="Gender">
+            <facet-container facetId="gender" :label="$t('lifelines-webshop-gender-facet-label')">
               <toggle-facet
-              facetId="gender"
-              :options="genderOptions"
-              v-model="selectedGenderOptions" />
+                facetId="gender"
+                :options="genderOptions"
+                v-model="selectedGenderOptions"
+              />
+              <template v-slot:label-slot>
+                <info-icon id="gender-info-icon" :title="$t('lifelines-webshop-gender-facet-label')" href="http://wiki-lifelines.web.rug.nl/doku.php?id=cohort#gender">
+                  <span v-html="$t('lifelines-webshop-sidebar-gender-info')"></span>
+                </info-icon>
+              </template>
             </facet-container>
           </li>
           <li>
-            <facet-container facetId="cohort" label="Subcohorts">
-              <toggle-facet
+            <facet-container
               facetId="cohort"
-              :options="subcohortOptions"
-              v-model="selectedSubcohortOptions" />
+              :label="$t('lifelines-webshop-subcohort-facet-label')"
+            >
+              <template v-slot:label-slot>
+                <info-icon id="cohort-info-icon" :title="$t('lifelines-webshop-subcohort-facet-label')"  href="http://wiki-lifelines.web.rug.nl/doku.php?id=cohort#subcohorts">
+                  <span v-html="$t('lifelines-webshop-sidebar-cohort-info')"></span>
+                </info-icon>
+              </template>
+              <toggle-facet
+                facetId="cohort"
+                :options="subcohortOptions"
+                v-model="selectedSubcohortOptions"
+              />
             </facet-container>
           </li>
         </ul>
@@ -66,13 +91,25 @@ import { mapMutations } from 'vuex'
 import CountView from '@/views/CountView'
 import ClickOutside from 'v-click-outside'
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faAngleDoubleLeft, faAngleDoubleDown } from '@fortawesome/free-solid-svg-icons'
+import {
+  faAngleDoubleLeft,
+  faAngleDoubleDown
+} from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import InfoIcon from '../components/InfoIcon'
 library.add(faAngleDoubleLeft, faAngleDoubleDown)
 
 export default Vue.extend({
   name: 'SidebarView',
-  components: { FacetContainer, ToggleFacet, AgeFacet, RangeFacet, CountView, FontAwesomeIcon },
+  components: {
+    FacetContainer,
+    ToggleFacet,
+    AgeFacet,
+    RangeFacet,
+    CountView,
+    FontAwesomeIcon,
+    InfoIcon
+  },
   props: {
     value: {
       type: Boolean,
@@ -178,65 +215,63 @@ export default Vue.extend({
 </script>
 
 <style scoped lang="scss">
-  @import "../scss/variables";
+#sidebar-view {
+  padding: 0;
+  position: relative;
+  transition: max-width 0.3s, padding 0.3s;
 
-  #sidebar-view {
-    padding: 0;
+  .sidebar-content {
+    background-color: $light;
     position: relative;
-    transition: max-width 0.3s, padding 0.3s;
+  }
 
-    .sidebar-content {
-      background-color: $light;
-      position: relative;
-    }
+  .sidebar-width {
+    min-width: 19rem;
+  }
 
-    .sidebar-width {
-      min-width: 19rem;
-    }
+  .label {
+    background-color: $light;
+    cursor: pointer;
+    display: inline-block;
+    height: 0;
+    line-height: 2rem;
+    overflow: hidden;
+    padding: 0 1rem;
+    position: absolute;
+    right: 0;
+    top: 4rem;
+    transform: rotate(-90deg) translate(0, 1rem);
+    transform-origin: 100% 100%;
+    transition: height 0.3s;
+    white-space: nowrap;
+    z-index: 1000; // zindex-dropdown
+  }
+
+  &.hide-bar {
+    max-width: 1rem;
+    padding: 0;
 
     .label {
-      background-color: $light;
-      cursor: pointer;
-      display: inline-block;
-      height: 0;
-      line-height: 2rem;
-      overflow: hidden;
-      padding: 0 1rem;
-      position: absolute;
-      right: 0;
-      top: 4rem;
-      transform: rotate(-90deg) translate(0, 1rem);
-      transform-origin: 100% 100%;
-      transition: height 0.3s;
-      white-space: nowrap;
-      z-index: 1000; // zindex-dropdown
-    }
-
-    &.hide-bar {
-      max-width: 1rem;
-      padding: 0;
-
-      .label {
-        height: 2rem;
-      }
-    }
-
-    .hide-sidebar {
-      cursor: pointer;
-      display: inline-block;
-      padding: 1.25rem;
-      position: absolute;
-      right: 0;
-      top: 0;
-
-      path {
-        fill: $secondary;
-        transition: fill 0.1s;
-      }
-
-      &:hover path {
-        fill: $warning;
-      }
+      height: 2rem;
     }
   }
+
+  .hide-sidebar {
+    cursor: pointer;
+    display: inline-block;
+    padding: 1.25rem;
+    position: absolute;
+    right: 0;
+    top: 0;
+
+    path {
+      fill: $secondary;
+      transition: fill 0.1s;
+    }
+
+    &:hover path {
+      fill: $warning;
+    }
+  }
+}
 </style>

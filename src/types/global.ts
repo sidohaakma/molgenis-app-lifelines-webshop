@@ -1,11 +1,11 @@
 declare module NodeJS {
   interface Global {
-    app: any,
+    app: any
     IS_TEST: boolean
   }
 }
 
 interface Window {
-  app: any,
+  app: any
   IS_TEST: boolean
 }

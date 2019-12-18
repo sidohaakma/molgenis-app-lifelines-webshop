@@ -77,26 +77,37 @@ export const toCart = (state: ApplicationState) : Cart => {
   return { selection: toCartSelection(state), filters: toCartFilters(state) }
 }
 
-const gridSelectionFromCart = (selection: Selection[], { variables, assessments }: ApplicationState) : GridSelection => {
+const gridSelectionFromCart = (cartSelection: Selection[], { variables, assessments }: ApplicationState) : GridSelection => {
   const gridSelection: GridSelection = {}
-  selection.forEach((selection: Selection) => {
-    const assessment: Assessment | undefined = Object.values(assessments).find(it => it.name === selection.assessment)
+  const lookupMap:any = { assessments: {}, variables: {} }
+
+  for (const assessment of Object.values(assessments)) {
+    lookupMap.assessments[assessment.name] = assessment
+  }
+
+  for (const variable of Object.values(variables)) {
+    lookupMap.variables[variable.name] = variable
+  }
+
+  for (const selection of cartSelection) {
+    const assessment = lookupMap.assessments[selection.assessment]
     if (assessment === undefined) {
       throw new Error(`Cannot find assessment with name ${selection.assessment}.`)
     }
-    const assessmentId = assessment.id
+
     selection.variables.forEach(variableName => {
-      const variable: Variable | undefined = Object.values(variables).find(it => it.name === variableName)
+      const variable = lookupMap.variables[variableName]
       if (variable === undefined) {
         throw new Error(`Cannot find variable with name ${variableName}.`)
       }
-      const variableId: number = variable.id
-      if (!gridSelection.hasOwnProperty(variableId)) {
-        gridSelection[variableId] = []
+
+      if (!gridSelection.hasOwnProperty(variable.id)) {
+        gridSelection[variable.id] = []
       }
-      gridSelection[variableId].push(assessmentId)
+      gridSelection[variable.id].push(assessment.id)
     })
-  })
+  }
+
   return gridSelection
 }
 

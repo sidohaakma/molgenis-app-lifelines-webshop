@@ -8,10 +8,27 @@ import Filter from '@/types/Filter'
 import { Section } from '@/types/Section.ts'
 import { TreeParent } from '@/types/Tree'
 import { Order } from '@/types/Order'
+import FormField from '@/types/FormField'
 
 export default {
+  setOrderFormFields (state: ApplicationState, formFields: FormField[]) {
+    state.orderFormFields = formFields
+  },
+  setLoading (state: ApplicationState, toggle: boolean) {
+    if (toggle) {
+      state.loading += 1
+    } else if (state.loading > 0) {
+      state.loading -= 1
+    }
+  },
   setToast (state: ApplicationState, toast: Toast) {
     state.toast = toast
+  },
+  setProjectNumberRequiredFunction (state: ApplicationState, required: () => boolean) {
+    const projectNumber = state.orderFormFields.find((item) => item.id === 'projectNumber')
+    if (projectNumber) {
+      projectNumber.required = required
+    }
   },
   clearToast (state: ApplicationState) {
     state.toast = null
@@ -110,7 +127,7 @@ export default {
     { gridSelection, gridVariables }: {gridSelection: GridSelection, gridVariables: Variable[] | null},
     { assessmentId } : {assessmentId: number}
   ) {
-    if (gridVariables === null) return
+    if (gridVariables === null) { return }
     // Check if all variables(rows) for this column are already selected.
     const columnSelected = gridVariables.every((variable) => {
       return gridSelection.hasOwnProperty(variable.id) && gridSelection[variable.id].includes(assessmentId)
@@ -148,7 +165,7 @@ export default {
     }
   },
   toggleAll ({ gridSelection, gridVariables, treeSelected, treeStructure }: {gridSelection: GridSelection, gridVariables: VariableWithVariants[] | null, treeSelected: number, treeStructure: object[]}, { gridAssessments }: {gridAssessments: Assessment[] }) {
-    if (gridVariables === null) return
+    if (gridVariables === null) { return }
     // For each variable all assessments are selected
     const allSelected = gridVariables.every((variable) => {
       return gridSelection.hasOwnProperty(variable.id) && (gridSelection[variable.id].length === gridAssessments.length)
@@ -163,8 +180,7 @@ export default {
       })
     }
   },
-  toggleGridSelection ({ gridSelection }: { gridSelection: GridSelection },
-    { variableId, assessmentId }: { variableId: number, assessmentId: number }) {
+  toggleGridSelection ({ gridSelection }: { gridSelection: GridSelection }, { variableId, assessmentId }: { variableId: number, assessmentId: number }) {
     if (!gridSelection.hasOwnProperty(variableId)) {
       Vue.set(gridSelection, variableId, [assessmentId])
     } else {

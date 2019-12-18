@@ -1,6 +1,6 @@
 import { getErrorMessage, tryAction, toCart, fromCart } from '@/store/helpers'
 import Vue from 'vue'
-import emptyState from '@/store/state'
+import emptyState from '../fixtures/state'
 import { CartFilter, Cart } from '@/types/Cart'
 import Filter from '@/types/Filter'
 
@@ -108,8 +108,8 @@ describe('store', () => {
         expect(toCart({
           ...emptyState,
           variables: {
-            1: { id: 1, name: 'VAR1', label: 'variable 1' },
-            2: { id: 2, name: 'VAR2', label: 'variable 2' }
+            1: { id: 1, name: 'VAR1', label: 'variable 1', subsections: [1] },
+            2: { id: 2, name: 'VAR2', label: 'variable 2', subsections: [1] }
           },
           assessments: {
             1: { id: 1, name: '1A' },
@@ -153,8 +153,8 @@ describe('store', () => {
         }, {
           ...emptyState,
           variables: {
-            1: { id: 1, name: 'VAR1', label: 'variable 1' },
-            2: { id: 2, name: 'VAR2', label: 'variable 2' }
+            1: { id: 1, name: 'VAR1', label: 'variable 1', subsections: [1] },
+            2: { id: 2, name: 'VAR2', label: 'variable 2', subsections: [1] }
           },
           assessments: {
             1: { id: 1, name: '1A' },

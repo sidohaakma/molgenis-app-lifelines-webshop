@@ -27,7 +27,6 @@ describe('OrderView', () => {
   beforeEach(() => {
     localVue = createLocalVue()
     localVue.use(Vuex)
-
     state = {
       toast: null,
       order: {},
@@ -44,7 +43,9 @@ describe('OrderView', () => {
     mutations = {
       setToast: jest.fn(),
       clearToast: jest.fn(),
-      setOrderDetails: jest.fn()
+      setOrderDetails: jest.fn(),
+      setProjectNumberRequiredFunction: jest.fn(),
+      setOrderFormFields: jest.fn()
     }
     store = new Vuex.Store({
       state,
@@ -160,8 +161,7 @@ describe('OrderView', () => {
     describe('when the form is invalid', () => {
       beforeEach((done) => {
         actions.submit.mockReset()
-        formState.$valid = false
-        wrapper.setData({ formState: formState })
+        wrapper.setData({ formState: formState, formData: { projectNumber: '' } })
         wrapper.vm.onSubmit()
         done()
       })

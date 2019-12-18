@@ -1,6 +1,7 @@
 import { AppState } from '@/types/ApplicationState'
 
 const state: AppState = {
+  loading: 0,
   toast: null,
   order: {
     orderNumber: null,
@@ -18,7 +19,7 @@ const state: AppState = {
       id: 'projectNumber',
       label: 'Project number',
       description: 'The OV number.',
-      required: () => true,
+      required: () => false,
       disabled: false,
       readOnly: false,
       visible: () => true,
@@ -27,8 +28,8 @@ const state: AppState = {
     {
       type: 'text',
       id: 'name',
-      label: 'Name',
-      description: 'Optional name',
+      label: 'Label',
+      description: 'Optional label for ease of identification',
       required: () => false,
       disabled: false,
       readOnly: false,
@@ -54,15 +55,15 @@ const state: AppState = {
     { value: '2', text: 'Female' }
   ],
   subcohortOptions: [
-    { value: 'gwas', text: 'GWAS' },
-    { value: 'ugli', text: 'UGLI' },
-    { value: 'deep', text: 'DEEP' },
-    { value: 'dag3', text: 'DAG3' }
+    { value: 'gwas', text: 'GWAS', info: 'lifelines-webshop-sidebar-gwas-info', href: 'lifelines-webshop-sidebar-gwas-link' },
+    { value: 'ugli', text: 'UGLI', info: 'lifelines-webshop-sidebar-ugli-info', href: 'lifelines-webshop-sidebar-ugli-link' },
+    { value: 'deep', text: 'DEEP', info: 'lifelines-webshop-sidebar-deep-info', href: 'lifelines-webshop-sidebar-deep-link' },
+    { value: 'dag3', text: 'DAG3', info: 'lifelines-webshop-sidebar-dag3-info', href: 'lifelines-webshop-sidebar-dag3-link' }
   ],
   ageGroupOptions: [
-    { value: '1', text: '0-17' },
-    { value: '2', text: '18-65' },
-    { value: '3', text: '65+' }
+    { value: '1', text: '0-17', info: 'lifelines-webshop-sidebar-child-info', href: 'lifelines-webshop-sidebar-child-link' },
+    { value: '2', text: '18-65', info: 'lifelines-webshop-sidebar-adult-info', href: 'lifelines-webshop-sidebar-adult-link' },
+    { value: '3', text: '65+', info: 'lifelines-webshop-sidebar-elderly-info', href: 'lifelines-webshop-sidebar-elderly-link' }
   ],
   ageAtOptions: [
     { value: 'ageGroupAt1A', text: 'baseline' },
