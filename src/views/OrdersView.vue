@@ -25,12 +25,13 @@
           <tr>
             <th scope="col"></th>
             <th scope="col"></th>
-            <th scope="col">Title</th>
-            <th scope="col">Submitted</th>
-            <th scope="col">Project</th>
-            <th scope="col">Order</th>
-            <th scope="col">Application form</th>
-            <th scope="col">State</th>
+            <th v-if="hasManagerRole" scope="col">{{$t('lifelines-webshop-orders-col-header-email')}}</th>
+            <th scope="col">{{$t('lifelines-webshop-orders-col-header-title')}}</th>
+            <th scope="col">{{$t('lifelines-webshop-orders-col-header-sub-date')}}</th>
+            <th scope="col">{{$t('lifelines-webshop-orders-col-header-project')}}</th>
+            <th scope="col">{{$t('lifelines-webshop-orders-col-header-order')}}</th>
+            <th scope="col">{{$t('lifelines-webshop-orders-col-header-app-form')}}</th>
+            <th scope="col">{{$t('lifelines-webshop-orders-col-header-state')}}</th>
           </tr>
         </thead>
         <tbody >
@@ -51,6 +52,7 @@
               <font-awesome-icon icon="trash" aria-label="delete"/>
               </router-link>
             </td>
+            <td v-if="hasManagerRole">{{ order.email }}</td>
             <td>{{ order.name }}</td>
             <td>{{ order.submissionDate | dataString }}</td>
             <td>{{ order.projectNumber }}</td>
@@ -71,7 +73,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import SpinnerAnimation from '../components/animations/SpinnerAnimation.vue'
 import ToastComponent from '@molgenis-ui/components'
 import ConfirmationModal from '../components/ConfirmationModal.vue'
-import { mapActions, mapState, mapMutations } from 'vuex'
+import { mapActions, mapState, mapMutations, mapGetters } from 'vuex'
 import moment from 'moment'
 
 library.add(faEdit, faDownload, faTrash)
@@ -100,7 +102,8 @@ export default Vue.extend({
     ...mapMutations(['clearToast'])
   },
   computed: {
-    ...mapState(['orders', 'toast'])
+    ...mapState(['orders', 'toast']),
+    ...mapGetters(['hasManagerRole'])
   },
   filters: {
     dataString: (dateValue) => dateValue ? moment(dateValue).format('LLLL') : ''

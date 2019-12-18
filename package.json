@@ -1,20 +1,22 @@
 {
   "name": "@molgenis-experimental/molgenis-app-lifelines-webshop",
-  "version": "0.17.0",
+  "version": "0.26.0",
   "license": "LGPL-3.0",
   "publishConfig": {
     "access": "public"
   },
   "main": "dist/index.html",
   "scripts": {
-    "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint",
+    "fix:js": "eslint --fix src/**/*.{js,ts,vue}",
+    "lint": "vue-cli-service lint;yarn run lint:scss",
+    "lint:js": "eslint src/**/*.{js,ts,vue}",
     "lint:scss": "stylelint 'src/**/*.{vue,scss}'",
+    "serve": "vue-cli-service serve",
     "test:e2e": "vue-cli-service test:e2e",
     "test:unit": "vue-cli-service test:unit",
-    "test:watch": "jest --watchAll",
-    "test:update-snapshot": "jest --updateSnapshot"
+    "test:update-snapshot": "jest --updateSnapshot",
+    "test:watch": "jest --watchAll"
   },
   "files": [
     "dist",
@@ -28,11 +30,14 @@
     "@molgenis-ui/components": "^0.4.0",
     "@molgenis/molgenis-api-client": "^3.1.0",
     "@molgenis/molgenis-i18n-js": "^0.1.1",
-    "@molgenis/molgenis-ui-context": "^1.5.0",
+    "@molgenis/molgenis-ui-context": "^1.6.1",
     "@molgenis/molgenis-ui-form": "^4.0.3",
     "@molgenis/rsql": "^0.1.4",
+    "@types/lodash.groupby": "^4.6.6",
+    "@types/lodash.property": "^4.4.6",
     "axios": "^0.19.0",
     "bootstrap": "^4.3.1",
+    "bootstrap-vue": "^2.1.0",
     "core-js": "2.6.8",
     "fetch-ponyfill": "^6.1.0",
     "format-si-prefix": "^0.3.2",
@@ -40,6 +45,8 @@
     "install": "^0.13.0",
     "jquery": "3.3",
     "lodash.debounce": "^4.0.8",
+    "lodash.groupby": "^4.6.0",
+    "lodash.property": "^4.4.2",
     "moment": "^2.24.0",
     "popper.js": "1.14",
     "v-click-outside": "^2.1.4",

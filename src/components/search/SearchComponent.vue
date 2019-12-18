@@ -35,12 +35,21 @@ export default Vue.extend({
   },
   data: function () {
     return {
-      searchValue: this.searchTerm
+      searchValue: this.searchTerm,
+      lastSearched: ''
     }
   },
   methods: {
     handleSearchValueChange: debounce(function () {
-      this.$emit('searchChanged', this.searchValue)
+      if (!this.searchValue || this.searchValue.length >= 3) {
+        this.$emit('searchChanged', this.searchValue)
+        this.lastSearched = this.searchTerm
+      } else {
+        if (this.lastSearched.length >= 3) {
+          this.$emit('searchChanged', '')
+          this.lastSearched = ''
+        }
+      }
     }, 300)
   }
 })

@@ -1,5 +1,6 @@
 import { shallowMount, createLocalVue, RouterLinkStub } from '@vue/test-utils'
 
+import CartSection from '@/types/CartSection'
 import CartView from '@/views/CartView.vue'
 import Vuex from 'vuex'
 import Vue from 'vue'
@@ -23,6 +24,12 @@ describe('CartView.vue', () => {
 
   let store: any
   let actions: any
+
+  let cartTree: CartSection[]
+
+  const getters = {
+    cartTree: () => cartTree
+  }
 
   beforeEach(() => {
     let state: any
@@ -63,9 +70,38 @@ describe('CartView.vue', () => {
       }
     }
 
+    cartTree = [{
+      id: 1,
+      name: 'Section 1',
+      subsections: [{
+        name: 'Subsection 1',
+        variables: [{
+          id: 123,
+          name: 'var123',
+          label: 'var 123',
+          subsections: [1],
+          subsection: 1
+        }]
+      }]
+    }, {
+      id: 2,
+      name: 'Section 2',
+      subsections: [{
+        name: 'Subsection 2',
+        variables: [{
+          id: 456,
+          name: 'var456',
+          label: 'var 456',
+          subsections: [2],
+          subsection: 2
+        }]
+      }]
+    }]
+
     store = new Vuex.Store({
       state,
-      actions
+      actions,
+      getters
     })
   })
 

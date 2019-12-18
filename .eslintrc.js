@@ -9,8 +9,19 @@ module.exports = {
     '@vue/typescript'
   ],
   rules: {
+    'curly': ['error', 'all'],
     'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
-    'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off'
+    'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
+    '@typescript-eslint/member-delimiter-style': ['error', {
+      multiline: {
+        delimiter: 'none',
+        requireLast: false
+      },
+      singleline: {
+        delimiter: 'comma',
+        requireLast: false
+      }
+    }]
   },
   parserOptions: {
     parser: '@typescript-eslint/parser',

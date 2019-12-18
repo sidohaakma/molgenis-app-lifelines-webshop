@@ -7,10 +7,13 @@ import { Variable, VariableWithVariants } from '@/types/Variable'
 import { TreeParent } from '@/types/Tree'
 import Assessment from '@/types/Assessment'
 import { TreeNode } from '@/types/TreeNode'
-import { Section } from '@/types/Section'
+import CartSection from '@/types/CartSection'
+import groupBy from 'lodash.groupby'
+import property from 'lodash.property'
+import 'core-js/fn/array/flat-map'
 
 export default {
-  isSignedIn: (state: ApplicationState): boolean => !!state.context && !!state.context.context && state.context.context.authenticated,
+  isSignedIn: (state: ApplicationState): boolean => state.context.context && state.context.context.authenticated,
   variants: (state: ApplicationState): Variant[] =>
     state.gridVariables === null ? [] : state.gridVariables.reduce((result: Variant[], variable: VariableWithVariants): Variant[] =>
       variable.variants.reduce((accumulator: Variant[], variant: Variant) =>
@@ -99,7 +102,7 @@ export default {
   grid: (state: ApplicationState, getters: Getters): number[][] | null =>
     state.gridVariables === null ? null : state.gridVariables.map((variable: VariableWithVariants) =>
       getters.gridAssessments.map((assessment: Assessment) => {
-        if (state.variantCounts === null) return NaN
+        if (state.variantCounts === null) { return NaN }
         const variants: Variant[] = variable.variants.filter((variant: Variant) => variant.assessmentId === assessment.id)
         const count: number = variants.reduce((sum: number, variant: Variant) => {
           // @ts-ignore
@@ -143,6 +146,24 @@ export default {
     }
     return []
   },
+  cartTree: (state: ApplicationState): CartSection[] => {
+    const selectedVariableIds: number[] = Object.keys(state.gridSelection) as unknown as number[]
+    const selectedVariables: Variable[] = selectedVariableIds
+      .filter((id: number) => state.variables.hasOwnProperty(id))
+      .map((id: number) => state.variables[id])
+    // if variables occur in more than one subsection, duplicate them, adding one variable for each subsection
+    const flatVariables = selectedVariables
+      .flatMap((variable) => variable.subsections
+        .map((subsection) => ({ ...variable, subsection })))
+    const variablesPerSubsection = groupBy(flatVariables, property('subsection'))
+    return state.treeStructure.map((section: TreeParent) =>
+      ({
+        ...state.sections[section.key],
+        subsections: section.list.filter((subsectionId) => variablesPerSubsection.hasOwnProperty(subsectionId))
+          .map((subsectionId) => ({ name: state.subSectionList[subsectionId], variables: variablesPerSubsection[subsectionId] }))
+      })
+    ).filter((section) => section.subsections.length > 0)
+  },
   isFilterdSubsectionLoading: (state: ApplicationState): boolean => (state.searchTerm !== null && state.filteredSections === null),
   isGridLoading: (state: ApplicationState): boolean => (state.gridVariables === null || state.variantCounts === null) && state.treeSelected !== -1,
   filteredTreeStructure: ({ filteredSections, filteredSubsections }: ApplicationState, { treeStructure }: Getters) => {
@@ -164,5 +185,6 @@ export default {
   searchTermQuery: (state: ApplicationState) => state.searchTerm && transformToRSQL({ selector: '*', comparison: '=q=', arguments: state.searchTerm }),
   isSearchResultEmpty: (state: ApplicationState, { filteredTreeStructure }: Getters): boolean => {
     return !!(state.searchTerm && filteredTreeStructure.length === 0)
-  }
+  },
+  hasManagerRole: (state: ApplicationState) => state.context.context.roles.includes('ROLE_LIFELINES_MANAGER')
 }

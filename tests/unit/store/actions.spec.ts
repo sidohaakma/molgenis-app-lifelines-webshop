@@ -1,6 +1,6 @@
 import actions from '@/store/actions'
 import { Cart } from '@/types/Cart'
-import emptyState from '@/store/state'
+import emptyState from '../fixtures/state'
 import orders from '../fixtures/orders'
 
 // @ts-ignore
@@ -65,26 +65,30 @@ const mockResponses: {[key:string]: Object} = {
       { id: 2, name: '1B' }
     ]
   },
-  '/api/v2/lifelines_variable?attrs=id,name,label&num=10000&sort=id': {
+  '/api/v2/lifelines_variable?attrs=id,name,label,subsections&num=10000&sort=id': {
     items: [{
       id: 2,
       name: 'ARZON',
-      label: 'Suncream used'
+      label: 'Suncream used',
+      subsections: '1'
     }, {
       id: 3,
       name: 'SAF',
-      label: 'SAF'
+      label: 'SAF',
+      subsections: '1,2'
     }]
   },
-  '/api/v2/lifelines_variable?attrs=id,name,label&num=10000&start=10000&sort=id': {
+  '/api/v2/lifelines_variable?attrs=id,name,label,subsections&num=10000&start=10000&sort=id': {
     items: [{
       id: 4,
       name: 'UVREFLECT',
-      label: 'Reflection'
+      label: 'Reflection',
+      subsections: '1'
     }, {
       id: 5,
       name: 'ARCREME',
-      label: 'Skin cream used'
+      label: 'Skin cream used',
+      subsections: null
     }]
   },
   '/api/v2/lifelines_subsection_variable?q=subsection_id%3D%3D4&attrs=~id,id,subsection_id,variable_id(id,name,label,variants(id,assessment_id))&num=10000&sort=variable_id': {
@@ -406,10 +410,10 @@ describe('actions', () => {
       const action = actions.loadVariables({ commit })
       await action
       expect(commit).toHaveBeenCalledWith('updateVariables', {
-        2: { 'id': 2, 'label': 'Suncream used', 'name': 'ARZON' },
-        3: { 'id': 3, 'label': 'SAF', 'name': 'SAF' },
-        4: { 'id': 4, 'label': 'Reflection', 'name': 'UVREFLECT' },
-        5: { 'id': 5, 'label': 'Skin cream used', 'name': 'ARCREME' }
+        2: { 'id': 2, 'label': 'Suncream used', 'name': 'ARZON', subsections: [1] },
+        3: { 'id': 3, 'label': 'SAF', 'name': 'SAF', subsections: [1, 2] },
+        4: { 'id': 4, 'label': 'Reflection', 'name': 'UVREFLECT', subsections: [1] },
+        5: { 'id': 5, 'label': 'Skin cream used', 'name': 'ARCREME', subsections: [] }
       })
       done()
     })
@@ -486,7 +490,9 @@ describe('actions', () => {
       const state: ApplicationState = {
         ...emptyState,
         assessments: { 1: { id: 1, name: '1A' } },
-        variables: { 1: { id: 1, name: 'VAR1', label: 'Variable 1' }, 2: { id: 2, name: 'VAR2', label: 'Variable 2' } }
+        variables: {
+          1: { id: 1, name: 'VAR1', label: 'Variable 1', subsections: [1, 2] },
+          2: { id: 2, name: 'VAR2', label: 'Variable 2', subsections: [2] } }
       }
       await actions.load({ commit, state }, 'fghij')
       expect(commit).toHaveBeenCalledWith('updateGridSelection', { 1: [1], 2: [1] })
@@ -709,6 +715,44 @@ describe('actions', () => {
     })
     it('should resturn undefined', () => {
       expect(post).toHaveBeenCalledWith('/api/v1/lifelines_order', expect.anything(), true)
+    })
+  })
+
+  describe('givePermissionToOrder with missing orderNumber', () => {
+    let state: any
+    beforeEach(async (done) => {
+      post.mockReset()
+      state = {
+        order: {
+          orderNumber: null
+        }
+      }
+      await actions.givePermissionToOrder({ state, commit: jest.fn() })
+      done()
+    })
+    it('should resturn undefined', () => {
+      expect(post).not.toHaveBeenCalled()
+    })
+  })
+
+  describe('givePermissionToOrder with file attached', () => {
+    let state: any
+    beforeEach(async (done) => {
+      post.mockReset()
+      state = {
+        order: {
+          orderNumber: '12345',
+          applicationForm: {
+            id: 'app-form'
+          }
+        }
+      }
+      await actions.givePermissionToOrder({ state, commit: jest.fn() })
+      done()
+    })
+    it('should call permission service', () => {
+      expect(post).nthCalledWith(1, '/api/permissions/entity-lifelines_order', expect.anything())
+      expect(post).nthCalledWith(2, '/api/permissions/entity-sys_FileMeta', expect.anything())
     })
   })
 

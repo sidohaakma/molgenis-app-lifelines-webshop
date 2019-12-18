@@ -13,6 +13,7 @@ import { OrderState } from '@/types/Order'
 import moment from 'moment'
 import { TreeParent } from '@/types/Tree'
 import axios from 'axios'
+import { setPermission } from '@/services/permissionService'
 
 const buildPostOptions = (formData: any, formFields: FormField[]) => {
   return {
@@ -142,15 +143,23 @@ export default {
   }),
   loadVariables: tryAction(async ({ state, commit } : any) => {
     const [response0, response1] = await Promise.all([
-      api.get('/api/v2/lifelines_variable?attrs=id,name,label&num=10000&sort=id'),
-      api.get('/api/v2/lifelines_variable?attrs=id,name,label&num=10000&start=10000&sort=id')
+      api.get('/api/v2/lifelines_variable?attrs=id,name,label,subsections&num=10000&sort=id'),
+      api.get('/api/v2/lifelines_variable?attrs=id,name,label,subsections&num=10000&start=10000&sort=id')
     ])
-    const variables: Variable[] = [...response0.items, ...response1.items]
+    const variables = [...response0.items, ...response1.items]
+
     const variableMap: {[key:number]: Variable} =
-      variables.reduce((soFar: {[key:number]: Variable}, variable: Variable) => {
+      variables.reduce((soFar: {[key:number]: Variable}, variable) => {
+        if (!variable.subsections) {
+          variable.subsections = []
+        } else {
+          variable.subsections = variable.subsections.split(',').map((i:string) => parseInt(i, 10))
+        }
+
         soFar[variable.id] = variable
         return soFar
       }, {})
+
     commit('updateVariables', variableMap)
   }),
   loadGridVariables: tryAction(async ({ state, commit, getters } : { state: ApplicationState, commit: any, getters: Getters}) => {
@@ -205,10 +214,15 @@ export default {
   }),
   save: tryAction(async ({ state, commit }: {state: ApplicationState, commit: any}) => {
     const formFields = [...state.orderFormFields, { id: 'contents', type: 'text' }]
+
+    const { context: { email, username } } = state.context
+
     const formData = {
       ...state.order,
-      ...{ contents: JSON.stringify(toCart(state)) },
-      ...{ updateDate: moment().toISOString() }
+      contents: JSON.stringify(toCart(state)),
+      updateDate: moment().toISOString(),
+      email,
+      user: username
     }
 
     if (state.order.orderNumber) {
@@ -228,12 +242,17 @@ export default {
   }),
   submit: tryAction(async ({ state, commit, dispatch }: {state: ApplicationState, commit: any, dispatch: any}) => {
     const formFields = [...state.orderFormFields, { id: 'contents', type: 'text' }]
+
+    const { context: { email, username } } = state.context
+
     const now = moment().toISOString()
     const formData = {
       ...state.order,
-      ...{ contents: JSON.stringify(toCart(state)) },
-      ...{ updateDate: now },
-      ...{ submissionDate: now }
+      contents: JSON.stringify(toCart(state)),
+      updateDate: now,
+      submissionDate: now,
+      email,
+      user: username
     }
     // ts enums are numbers, the backends expects strings
     // @ts-ignore
@@ -262,23 +281,16 @@ export default {
     commit('updateGridSelection', gridSelection)
     commit('setToast', { type: 'success', message: 'Loaded order with orderNumber ' + orderNumber })
   }),
-  givePermissionToOrder: tryAction(async ({ state, commit }: {state: ApplicationState, commit: any}, orderNumber: string) => {
-    const data = {
-      objects: [{
-        objectId: state.order.orderNumber,
-        permissions: [
-          {
-            role: 'LIFELINES_MANAGER',
-            permission: 'WRITE'
-          }
-        ]
-      }]
-    }
-    const options = {
-      body: JSON.stringify(data)
+  givePermissionToOrder: tryAction(async ({ state, commit }: {state: ApplicationState, commit: any}) => {
+    if (state.order.orderNumber === null) {
+      throw new Error('Can not set permission if orderNumber is not set')
     }
 
-    return api.post('/api/permissions/entity-lifelines_order', options)
+    setPermission(state.order.orderNumber, 'lifelines_order', 'LIFELINES_MANAGER', 'WRITE')
+
+    if (state.order.applicationForm && state.order.applicationForm.id) {
+      setPermission(state.order.applicationForm.id, 'sys_FileMeta', 'LIFELINES_MANAGER', 'WRITE')
+    }
   }),
   sendSubmissionTrigger: async () => {
     return axios.post('/edge-server/trigger?type=submit').catch((err: any) => {

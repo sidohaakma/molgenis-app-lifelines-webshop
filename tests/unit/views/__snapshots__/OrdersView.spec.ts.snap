@@ -6,12 +6,13 @@ exports[`OrdersView.vue checks content of order tables 1`] = `
     <tr>
       <th scope="col"></th>
       <th scope="col"></th>
-      <th scope="col">Title</th>
-      <th scope="col">Submitted</th>
-      <th scope="col">Project</th>
-      <th scope="col">Order</th>
-      <th scope="col">Application form</th>
-      <th scope="col">State</th>
+      <!---->
+      <th scope="col">lifelines-webshop-orders-col-header-title</th>
+      <th scope="col">lifelines-webshop-orders-col-header-sub-date</th>
+      <th scope="col">lifelines-webshop-orders-col-header-project</th>
+      <th scope="col">lifelines-webshop-orders-col-header-order</th>
+      <th scope="col">lifelines-webshop-orders-col-header-app-form</th>
+      <th scope="col">lifelines-webshop-orders-col-header-state</th>
     </tr>
   </thead>
   <tbody>
@@ -26,6 +27,7 @@ exports[`OrdersView.vue checks content of order tables 1`] = `
           <font-awesome-icon-stub icon="trash" aria-label="delete"></font-awesome-icon-stub>
         </router-link-stub>
       </td>
+      <!---->
       <td></td>
       <td></td>
       <td></td>
@@ -42,6 +44,7 @@ exports[`OrdersView.vue checks content of order tables 1`] = `
       <td>
         <!---->
       </td>
+      <!---->
       <td>My draft order</td>
       <td></td>
       <td></td>
