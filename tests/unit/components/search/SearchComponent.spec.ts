@@ -67,7 +67,6 @@ describe('Search Component', () => {
 
       it('should emit a empty search invent, clearing the search', (done) => {
         setTimeout(() => {
-          console.log(wrapper.emitted())
           expect(wrapper.emitted()).toEqual({})
           done()
         }, 300)

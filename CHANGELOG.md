@@ -1,3 +1,38 @@
+## [0.27.1](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v0.27.0...v0.27.1) (2019-12-18)
+
+
+### Bug Fixes
+
+* add live data ([917f40a](https://github.com/molgenis/molgenis-app-lifelines-webshop/commit/917f40a))
+
+# [0.27.0](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v0.26.0...v0.27.0) (2019-12-18)
+
+
+### Features
+
+* add cart accordion ([72605a5](https://github.com/molgenis/molgenis-app-lifelines-webshop/commit/72605a5))
+
+# [0.26.0](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v0.25.0...v0.26.0) (2019-12-17)
+
+
+### Features
+
+* section/subsection structured cart view ([615ef9d](https://github.com/molgenis/molgenis-app-lifelines-webshop/commit/615ef9d))
+
+# [0.25.0](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v0.24.0...v0.25.0) (2019-12-13)
+
+
+### Bug Fixes
+
+* add info dialog ([b3eb81c](https://github.com/molgenis/molgenis-app-lifelines-webshop/commit/b3eb81c))
+* scss linting ([5698214](https://github.com/molgenis/molgenis-app-lifelines-webshop/commit/5698214))
+* turned on hover info icon ([cbd234b](https://github.com/molgenis/molgenis-app-lifelines-webshop/commit/cbd234b))
+
+
+### Features
+
+* add dummy info ([544c694](https://github.com/molgenis/molgenis-app-lifelines-webshop/commit/544c694))
+
 # [0.24.0](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v0.23.2...v0.24.0) (2019-12-12)
 
 

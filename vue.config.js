@@ -34,6 +34,7 @@ module.exports = {
       sass: {
         data: `
         @import "src/scss/variables.scss";
+        @import "src/scss/mixins.scss";
         `
       }
     }

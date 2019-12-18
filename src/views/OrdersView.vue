@@ -24,6 +24,7 @@
           <tr>
             <th scope="col"></th>
             <th scope="col"></th>
+            <th v-if="hasManagerRole" scope="col">{{$t('lifelines-webshop-orders-col-header-email')}}</th>
             <th scope="col">{{$t('lifelines-webshop-orders-col-header-title')}}</th>
             <th scope="col">{{$t('lifelines-webshop-orders-col-header-sub-date')}}</th>
             <th scope="col">{{$t('lifelines-webshop-orders-col-header-project')}}</th>
@@ -59,6 +60,7 @@
                 <span v-else>Approve</span>
               </button>
             </td>
+            <td v-if="hasManagerRole">{{ order.email }}</td>
             <td>{{ order.name }}</td>
             <td>{{ order.submissionDate | dataString }}</td>
             <td>{{ order.projectNumber }}</td>

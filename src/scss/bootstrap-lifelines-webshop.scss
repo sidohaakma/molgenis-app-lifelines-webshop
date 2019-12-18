@@ -1,4 +1,5 @@
 @import "variables";
+@import "mixins";
 
 main {
   padding-top: 3.6rem;
@@ -32,7 +33,12 @@ nav.navbar {
   z-index: $zindex-modal-backdrop;
 }
 
+.box-shadow {
+  @include box-shadow;
+}
+
 .popover[role="tooltip"] {
+  @include box-shadow;
   box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.2);
   outline: none;
 

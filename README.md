@@ -94,6 +94,7 @@ yarn run test:unit
 ```
 
 ## Data
+![https://yuml.me/edit/f34c5421](./docs/img/data-model.svg)
 To transform the raw data to a format that can be used by this app, use the 
 [molgenis-py-lifelines-transform](https://github.com/molgenis/molgenis-py-lifelines-transform) tool.
 

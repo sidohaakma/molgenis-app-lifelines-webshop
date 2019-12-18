@@ -55,7 +55,8 @@ const en = {
   'lifelines-webshop-sidebar-adult-info': 'Learn more about the Lifelines adult cohort',
   'lifelines-webshop-sidebar-adult-link': 'http://wiki-lifelines.web.rug.nl/doku.php?id=adult',
   'lifelines-webshop-sidebar-elderly-info': 'Learn more about the Lifelines elderly cohort',
-  'lifelines-webshop-sidebar-elderly-link': 'http://wiki-lifelines.web.rug.nl/doku.php?id=elderly'
+  'lifelines-webshop-sidebar-elderly-link': 'http://wiki-lifelines.web.rug.nl/doku.php?id=elderly',
+  'lifelines-webshop-orders-col-header-email': 'Email'
 }
 
 module.exports = {

@@ -10,11 +10,14 @@ import mutations from '@/store/mutations'
 import { OrderState } from '@/types/Order'
 
 describe('OrdersView.vue', () => {
+
   let localVue: any
   let store: any
 
   const hasManagerRole = jest.fn()
   const sendApproveTrigger = jest.fn()
+
+  let getters: any
 
   let actions = {
     deleteOrder: jest.fn(),
@@ -34,6 +37,10 @@ describe('OrdersView.vue', () => {
 
     let state: any = {
       orders: null
+    }
+
+    getters = {
+      hasManagerRole: jest.fn()
     }
 
     store = new Vuex.Store({

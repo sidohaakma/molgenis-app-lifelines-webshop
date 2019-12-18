@@ -3,6 +3,38 @@ import state from '../fixtures/state'
 import orders from '../fixtures/orders'
 import { OrderState } from '@/types/Order'
 
+const gridVariables = [
+  { id: 1,
+    label: 'A',
+    name: 'A1',
+    variants: [
+      { assessmentId: 1, assessment_id: 1, id: 11 },
+      { assessmentId: 2, assessment_id: 2, id: 22 },
+      { assessmentId: 3, assessment_id: 3, id: 33 }],
+    subsections: [1]
+  },
+  { id: 2,
+    label: 'B',
+    name: 'B2',
+    variants: [
+      { assessmentId: 4, assessment_id: 4, id: 44 },
+      { assessmentId: 5, assessment_id: 5, id: 55 },
+      { assessmentId: 6, assessment_id: 6, id: 66 }],
+    subsections: [1]
+  },
+  { id: 3,
+    label: 'C',
+    name: 'C3',
+    variants: [
+      { assessmentId: 1, assessment_id: 1, id: 11 },
+      { assessmentId: 2, assessment_id: 2, id: 22 },
+      { assessmentId: 3, assessment_id: 3, id: 33 },
+      { assessmentId: 4, assessment_id: 4, id: 44 },
+      { assessmentId: 5, assessment_id: 5, id: 55 },
+      { assessmentId: 6, assessment_id: 6, id: 66 }],
+    subsections: [1]
+  }]
+
 describe('mutations', () => {
   describe('setOrderFormFields', () => {
     it('sets the orderFormFields', () => {
@@ -337,31 +369,7 @@ describe('mutations', () => {
       const state = {
         gridSelection: {},
         treeSelected: -1,
-        gridVariables: [
-          { id: 1,
-            label: 'A',
-            name: 'A1',
-            variants: [
-              { assessmentId: 1, assessment_id: 1, id: 11 },
-              { assessmentId: 2, assessment_id: 2, id: 22 },
-              { assessmentId: 3, assessment_id: 3, id: 33 } ] },
-          { id: 2,
-            label: 'B',
-            name: 'B2',
-            variants: [
-              { assessmentId: 4, assessment_id: 4, id: 44 },
-              { assessmentId: 5, assessment_id: 5, id: 55 },
-              { assessmentId: 6, assessment_id: 6, id: 66 }] },
-          { id: 3,
-            label: 'C',
-            name: 'C3',
-            variants: [
-              { assessmentId: 1, assessment_id: 1, id: 11 },
-              { assessmentId: 2, assessment_id: 2, id: 22 },
-              { assessmentId: 3, assessment_id: 3, id: 33 },
-              { assessmentId: 4, assessment_id: 4, id: 44 },
-              { assessmentId: 5, assessment_id: 5, id: 55 },
-              { assessmentId: 6, assessment_id: 6, id: 66 }] } ]
+        gridVariables
       }
       mutations.toggleGridColumn(state, { assessmentId: 2 })
       expect(state.gridSelection).toEqual({ 1: [2], 2: [2], 3: [2] })
@@ -370,31 +378,7 @@ describe('mutations', () => {
     it('removes if all already selected', () => {
       const state = {
         gridSelection: { 1: [2, 3], 2: [2], 3: [2] },
-        gridVariables: [
-          { id: 1,
-            label: 'A',
-            name: 'A1',
-            variants: [
-              { assessmentId: 1, assessment_id: 1, id: 11 },
-              { assessmentId: 2, assessment_id: 2, id: 22 },
-              { assessmentId: 3, assessment_id: 3, id: 33 } ] },
-          { id: 2,
-            label: 'B',
-            name: 'B2',
-            variants: [
-              { assessmentId: 4, assessment_id: 4, id: 44 },
-              { assessmentId: 5, assessment_id: 5, id: 55 },
-              { assessmentId: 6, assessment_id: 6, id: 66 }] },
-          { id: 3,
-            label: 'C',
-            name: 'C3',
-            variants: [
-              { assessmentId: 1, assessment_id: 1, id: 11 },
-              { assessmentId: 2, assessment_id: 2, id: 22 },
-              { assessmentId: 3, assessment_id: 3, id: 33 },
-              { assessmentId: 4, assessment_id: 4, id: 44 },
-              { assessmentId: 5, assessment_id: 5, id: 55 },
-              { assessmentId: 6, assessment_id: 6, id: 66 }] } ]
+        gridVariables
       }
       mutations.toggleGridColumn(state, { assessmentId: 2 })
       expect(state.gridSelection).toEqual({ 1: [3] })
@@ -403,31 +387,7 @@ describe('mutations', () => {
     it('selects all if one already selected', () => {
       const state = {
         gridSelection: { 1: [2], 3: [3] },
-        gridVariables: [
-          { id: 1,
-            label: 'A',
-            name: 'A1',
-            variants: [
-              { assessmentId: 1, assessment_id: 1, id: 11 },
-              { assessmentId: 2, assessment_id: 2, id: 22 },
-              { assessmentId: 3, assessment_id: 3, id: 33 } ] },
-          { id: 2,
-            label: 'B',
-            name: 'B2',
-            variants: [
-              { assessmentId: 4, assessment_id: 4, id: 44 },
-              { assessmentId: 5, assessment_id: 5, id: 55 },
-              { assessmentId: 6, assessment_id: 6, id: 66 }] },
-          { id: 3,
-            label: 'C',
-            name: 'C3',
-            variants: [
-              { assessmentId: 1, assessment_id: 1, id: 11 },
-              { assessmentId: 2, assessment_id: 2, id: 22 },
-              { assessmentId: 3, assessment_id: 3, id: 33 },
-              { assessmentId: 4, assessment_id: 4, id: 44 },
-              { assessmentId: 5, assessment_id: 5, id: 55 },
-              { assessmentId: 6, assessment_id: 6, id: 66 }] } ]
+        gridVariables
       }
       mutations.toggleGridColumn(state, { assessmentId: 3 })
       expect(state.gridSelection).toEqual({ 1: [2, 3], 2: [3], 3: [3] })
@@ -440,28 +400,7 @@ describe('mutations', () => {
         gridSelection: {},
         treeSelected: -1,
         treeStructure: [],
-        gridVariables: [
-          { id: 1,
-            label: 'A',
-            name: 'A1',
-            variants: [
-              { assessmentId: 1, assessment_id: 1, id: 11 },
-              { assessmentId: 1, assessment_id: 1, id: 22 },
-              { assessmentId: 3, assessment_id: 3, id: 33 } ] },
-          { id: 2,
-            label: 'B',
-            name: 'B2',
-            variants: [
-              { assessmentId: 1, assessment_id: 1, id: 11 },
-              { assessmentId: 1, assessment_id: 1, id: 55 },
-              { assessmentId: 3, assessment_id: 3, id: 66 }] },
-          { id: 3,
-            label: 'C',
-            name: 'C3',
-            variants: [
-              { assessmentId: 1, assessment_id: 1, id: 11 },
-              { assessmentId: 2, assessment_id: 2, id: 22 },
-              { assessmentId: 3, assessment_id: 3, id: 33 }] } ]
+        gridVariables
       }
       mutations.toggleAll(state, { gridAssessments: [{ id: 1, name: 'a1' }, { id: 2, name: 'a2' }, { id: 3, name: 'a3' }] })
       expect(state.gridSelection).toEqual({ 1: [1, 2, 3], 2: [1, 2, 3], 3: [1, 2, 3] })
@@ -472,28 +411,7 @@ describe('mutations', () => {
         gridSelection: { 1: [1, 2, 3], 2: [1, 2, 3], 3: [1, 2, 3] },
         treeSelected: -1,
         treeStructure: [],
-        gridVariables: [
-          { id: 1,
-            label: 'A',
-            name: 'A1',
-            variants: [
-              { assessmentId: 1, assessment_id: 1, id: 11 },
-              { assessmentId: 1, assessment_id: 1, id: 22 },
-              { assessmentId: 3, assessment_id: 3, id: 33 } ] },
-          { id: 2,
-            label: 'B',
-            name: 'B2',
-            variants: [
-              { assessmentId: 1, assessment_id: 1, id: 11 },
-              { assessmentId: 1, assessment_id: 1, id: 55 },
-              { assessmentId: 3, assessment_id: 3, id: 66 }] },
-          { id: 3,
-            label: 'C',
-            name: 'C3',
-            variants: [
-              { assessmentId: 1, assessment_id: 1, id: 11 },
-              { assessmentId: 2, assessment_id: 2, id: 22 },
-              { assessmentId: 3, assessment_id: 3, id: 33 }] } ]
+        gridVariables
       }
       mutations.toggleAll(state, { gridAssessments: [{ id: 1, name: 'a1' }, { id: 2, name: 'a2' }, { id: 3, name: 'a3' }] })
       expect(state.gridSelection).toEqual({})
@@ -504,28 +422,7 @@ describe('mutations', () => {
         gridSelection: { 1: [2] },
         treeSelected: -1,
         treeStructure: [],
-        gridVariables: [
-          { id: 1,
-            label: 'A',
-            name: 'A1',
-            variants: [
-              { assessmentId: 1, assessment_id: 1, id: 11 },
-              { assessmentId: 1, assessment_id: 1, id: 22 },
-              { assessmentId: 3, assessment_id: 3, id: 33 } ] },
-          { id: 2,
-            label: 'B',
-            name: 'B2',
-            variants: [
-              { assessmentId: 1, assessment_id: 1, id: 11 },
-              { assessmentId: 1, assessment_id: 1, id: 55 },
-              { assessmentId: 3, assessment_id: 3, id: 66 }] },
-          { id: 3,
-            label: 'C',
-            name: 'C3',
-            variants: [
-              { assessmentId: 1, assessment_id: 1, id: 11 },
-              { assessmentId: 2, assessment_id: 2, id: 22 },
-              { assessmentId: 3, assessment_id: 3, id: 33 }] } ]
+        gridVariables
       }
       mutations.toggleAll(state, { gridAssessments: [{ id: 1, name: 'a1' }, { id: 2, name: 'a2' }, { id: 3, name: 'a3' }] })
       expect(state.gridSelection).toEqual({ 1: [1, 2, 3], 2: [1, 2, 3], 3: [1, 2, 3] })
