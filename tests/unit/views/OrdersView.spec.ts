@@ -14,11 +14,12 @@ describe('OrdersView.vue', () => {
   let store: any
 
   const hasManagerRole = jest.fn()
+  const sendApproveTrigger = jest.fn()
 
   let actions = {
     deleteOrder: jest.fn(),
     loadOrders: jest.fn(),
-    sendApproveTrigger: jest.fn()
+    sendApproveTrigger
   }
 
   let getters = {
@@ -93,25 +94,43 @@ describe('OrdersView.vue', () => {
     wrapper.find('.t-btn-confirm').trigger('click')
     expect(actions.deleteOrder).toHaveBeenCalled()
   })
-  it('approve order', () => {
-    localVue.use(Router)
 
-    hasManagerRole.mockReturnValue(true)
+  describe('Approve order', () => {
+    let wrapper:any
+    beforeEach(() => {
+      localVue.use(Router)
+      hasManagerRole.mockReturnValue(true)
 
-    const wrapper = mount(OrdersView, {
-      localVue,
-      store,
-      router: new Router({ routes })
+      wrapper = mount(OrdersView, {
+        localVue,
+        store,
+        router: new Router({ routes })
+      })
+
+      store.commit('setOrders', orders)
     })
 
-    const order = {
-      orderNumber: 'edcba',
-      state: 'Submitted'
-    }
+    it('approve order success', () => {
+      sendApproveTrigger.mockResolvedValue('200')
 
-    store.commit('setOrders', [ order ])
+      const approveBtn = wrapper.find('.btn.btn-success')
+      expect(approveBtn.find('span').text()).toEqual('Approve')
 
-    console.log(wrapper.html())
-    
+      approveBtn.trigger('click')
+
+      expect(actions.sendApproveTrigger).toHaveBeenCalled()
+    })
+
+    it('approve order fail', () => {
+      sendApproveTrigger.mockRejectedValue('500')
+
+      const approveBtn = wrapper.find('.btn.btn-success')
+      expect(approveBtn.find('span').text()).toEqual('Approve')
+
+      approveBtn.trigger('click')
+
+      expect(actions.sendApproveTrigger).toHaveBeenCalled()
+      console.log(wrapper.html())
+    })
   })
 })

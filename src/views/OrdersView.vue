@@ -107,16 +107,16 @@ export default Vue.extend({
     },
     async handleApproveOrder (orderNumber) {
       this.approveState = orderNumber
-      const resp = await this.sendApproveTrigger(orderNumber).catch(() => {
-        this.setToast({ type: 'danger', message: `Order ${orderNumber} approval failed` })
-      })
-      if (!resp) {
-        this.approveState = ''
-        return
-      }
-      await this.loadOrders()
-      this.approveState = ''
-      this.setToast({ type: 'success', message: `Order ${orderNumber} approved` })
+      this.sendApproveTrigger(orderNumber).then(
+        async () => {
+          await this.loadOrders()
+          this.approveState = ''
+          this.setToast({ type: 'success', message: `Order ${orderNumber} approved` })
+        },
+        () => {
+          this.approveState = ''
+          this.setToast({ type: 'danger', message: `Order ${orderNumber} approval failed` })
+        })
     },
     ...mapActions(['loadOrders', 'deleteOrder', 'sendApproveTrigger']),
     ...mapMutations(['clearToast', 'setToast'])
