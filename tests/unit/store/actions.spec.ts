@@ -91,7 +91,7 @@ const mockResponses: { [key: string]: Object } = {
       subsections: null
     }]
   },
-  '/api/v2/lifelines_subsection_variable?q=subsection_id%3D%3D4&attrs=~id,id,subsection_id,variable_id(id,name,label,variants(id,assessment_id),definition_en,definition_nl,options(label-en))&num=10000&sort=variable_id': {
+  '/api/v2/lifelines_subsection_variable?q=subsection_id%3D%3D4&attrs=~id,id,subsection_id,variable_id(id,name,label,variants(id,assessment_id),definition_en,definition_nl,options(label_en))&num=10000&sort=variable_id': {
     items: [{
       variable_id: {
         id: 2,
@@ -138,7 +138,7 @@ const mockResponses: { [key: string]: Object } = {
       }
     }]
   },
-  '/api/v2/lifelines_subsection_variable?q=subsection_id%3D%3D4%3B*%3Dq%3Dcream&attrs=~id,id,subsection_id,variable_id(id,name,label,variants(id,assessment_id),definition_en,definition_nl,options(label-en))&num=10000&sort=variable_id': {
+  '/api/v2/lifelines_subsection_variable?q=subsection_id%3D%3D4%3B*%3Dq%3Dcream&attrs=~id,id,subsection_id,variable_id(id,name,label,variants(id,assessment_id),definition_en,definition_nl,options(label_en))&num=10000&sort=variable_id': {
     items: [{
       variable_id: {
         id: 2,
