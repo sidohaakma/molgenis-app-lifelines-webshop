@@ -8,7 +8,7 @@
           :type="toast.type"
           :message="toast.message"
           :autoHideOnType="['success']"
-          autoHideTime="5000"
+          :autoHideTime="5000"
           @toastCloseBtnClicked="clearToast">
         </toast-component>
         <h1>{{$t('lifelines-webshop-order-header')}}</h1>

@@ -12,7 +12,7 @@
               :type="toast.type"
               :message="toast.message"
               :autoHideOnType="['success']"
-              autoHideTime="5000"
+              :autoHideTime="5000"
               @toastCloseBtnClicked="clearToast">
             </toast-component>
 
