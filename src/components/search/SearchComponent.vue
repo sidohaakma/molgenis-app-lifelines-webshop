@@ -6,7 +6,7 @@
         <font-awesome-icon v-else icon="search" />
       </span>
     </div>
-    <input class="form-control" type="search" placeholder="Search..." v-model="searchValue" @input="handleSearchValueChange"/>
+    <input class="form-control" type="search" placeholder="Search variables..." v-model="searchValue" @input="handleSearchValueChange"/>
   </div>
 </template>
 
