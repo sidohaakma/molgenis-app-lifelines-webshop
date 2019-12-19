@@ -164,27 +164,10 @@ export default {
       })
     ).filter((section) => section.subsections.length > 0)
   },
-  isFilterdSubsectionLoading: (state: ApplicationState): boolean => (state.searchTerm !== null && state.filteredSections === null),
   isGridLoading: (state: ApplicationState): boolean => (state.gridVariables === null || state.variantCounts === null) && state.treeSelected !== -1,
-  filteredTreeStructure: ({ filteredSections, filteredSubsections }: ApplicationState, { treeStructure }: Getters) => {
-    if (filteredSections === null || filteredSubsections === null) {
-      return treeStructure
-    }
-    return treeStructure.reduce((result: TreeNode[], section: TreeNode) => {
-      if (filteredSections.includes(section.id)) {
-        result.push(section)
-      } else {
-        const filteredChildren = section.children.filter(({ id }) => filteredSubsections.includes(id))
-        if (filteredChildren.length > 0) {
-          result.push({ ...section, children: filteredChildren })
-        }
-      }
-      return result
-    }, [])
-  },
   searchTermQuery: (state: ApplicationState) => state.searchTerm && transformToRSQL({ selector: '*', comparison: '=q=', arguments: state.searchTerm }),
-  isSearchResultEmpty: (state: ApplicationState, { filteredTreeStructure }: Getters): boolean => {
-    return !!(state.searchTerm && filteredTreeStructure.length === 0)
+  isSearchResultEmpty: (state: ApplicationState): boolean => {
+    return !!(state.searchTerm && state.treeSelected >= 0 && state.gridVariables && state.gridVariables.length === 0)
   },
   hasManagerRole: (state: ApplicationState) => state.context.context.roles.includes('ROLE_LIFELINES_MANAGER')
 }

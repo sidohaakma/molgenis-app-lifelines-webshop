@@ -45,7 +45,7 @@ export default Vue.extend({
         this.$emit('searchChanged', this.searchValue)
         this.lastSearched = this.searchTerm
       } else {
-        if (this.lastSearched.length >= 3) {
+        if (this.lastSearched && this.lastSearched.length >= 3) {
           this.$emit('searchChanged', '')
           this.lastSearched = ''
         }

@@ -112,7 +112,6 @@ describe('OrdersView.vue', () => {
 
     it('approve order success', () => {
       sendApproveTrigger.mockResolvedValue('200')
-      console.log(wrapper.html())
 
       const approveBtn = wrapper.find('.btn.btn-success')
       expect(approveBtn.find('span').text()).toEqual('Approve')
@@ -131,7 +130,6 @@ describe('OrdersView.vue', () => {
       approveBtn.trigger('click')
 
       expect(actions.sendApproveTrigger).toHaveBeenCalled()
-      console.log(wrapper.html())
     })
   })
 })

@@ -12,7 +12,6 @@ export default interface Getters {
   grid: number[][]
   gridSelections: boolean[][]
   treeStructure: TreeNode[]
-  filteredTreeStructure: TreeNode[]
   searchTermQuery: string | null
   isSearchResultEmpty: boolean
   numberOfSelectedItems: Number

@@ -251,58 +251,6 @@ describe('actions', () => {
     })
   })
 
-  describe('filterSections', () => {
-    it('loads sections matching search term', async (done) => {
-      const commit = jest.fn()
-      const getters = {
-        searchTermQuery: '*=q=hello'
-      }
-      const action = actions.filterSections({ commit, getters })
-      expect(commit).toHaveBeenCalledWith('updateFilteredSections', null)
-      await action
-      expect(commit).toHaveBeenCalledWith('updateFilteredSections', [1])
-      done()
-    })
-
-    it('does not commit if search term has changed while loading', async (done) => {
-      const commit = jest.fn()
-      const getters = {
-        searchTermQuery: '*=q=hello'
-      }
-      const action = actions.filterSections({ commit, getters })
-      expect(commit).toHaveBeenCalledWith('updateFilteredSections', null)
-      getters.searchTermQuery = '*=q=helloes'
-      await action
-      expect(commit).toHaveBeenCalledTimes(1)
-      done()
-    })
-  })
-
-  describe('filterSubsections', () => {
-    it('loads subsections matching search term', async (done) => {
-      const commit = jest.fn()
-      const getters = {
-        searchTermQuery: '*=q=hello'
-      }
-      const action = actions.filterSubsections({ commit, getters })
-      expect(commit).toHaveBeenCalledWith('updateFilteredSubsections', null)
-      await action
-      expect(commit).toHaveBeenCalledWith('updateFilteredSubsections', [1, 3])
-      done()
-    })
-
-    it('clears filtered subsections if search term is null', async (done) => {
-      const commit = jest.fn()
-      const getters = {
-        searchTermQuery: null
-      }
-      await actions.filterSubsections({ commit, getters })
-      expect(commit).toHaveBeenCalledWith('updateFilteredSubsections', null)
-      expect(commit).toHaveBeenCalledTimes(1)
-      done()
-    })
-  })
-
   describe('loadSubSections', () => {
     it('fetch the sub sections and commits them as a string list', async (done) => {
       const commit = jest.fn()

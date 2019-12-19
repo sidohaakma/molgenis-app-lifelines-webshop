@@ -115,26 +115,6 @@ export default {
       commit('updateSectionTree', treeStructure)
     }
   }),
-  filterSections: tryAction(async ({ getters, commit }: { getters: Getters, commit: any }) => {
-    const q = getters.searchTermQuery
-    commit('updateFilteredSections', null)
-    if (q !== null) {
-      const response = await api.get(`/api/v2/lifelines_section?num=10000&q=${encodeURIComponent(q)}`)
-      if (q === getters.searchTermQuery) {
-        commit('updateFilteredSections', response.items.map((it: any) => it.id))
-      }
-    }
-  }),
-  filterSubsections: tryAction(async ({ getters, commit }: { getters: Getters, commit: any }) => {
-    const q = getters.searchTermQuery
-    commit('updateFilteredSubsections', null)
-    if (q !== null) {
-      const response = await api.get(`/api/v2/lifelines_subsection_variable?aggs=x==subsection_agg&q=${encodeURIComponent(q)}`)
-      if (q === getters.searchTermQuery) {
-        commit('updateFilteredSubsections', response.aggs.xLabels.map((label: string) => parseInt(label, 10)))
-      }
-    }
-  }),
   loadAssessments: tryAction(async ({ commit }: any) => {
     const response = await api.get('/api/v2/lifelines_assessment')
     commit('updateAssessments', response.items.reduce((accum: { [key: number]: Assessment }, assessment: Assessment) => {

@@ -29,11 +29,9 @@ export default Vue.extend({
   },
   methods: {
     ...mapMutations(['updateSearchTerm']),
-    ...mapActions(['filterSections', 'filterSubsections', 'loadGridVariables']),
+    ...mapActions(['loadGridVariables']),
     onSearchChange (value) {
       this.updateSearchTerm(value || null)
-      this.filterSections()
-      this.filterSubsections()
       if (this.treeSelection !== -1) {
         this.loadGridVariables()
       }
