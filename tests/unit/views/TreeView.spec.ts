@@ -16,16 +16,12 @@ describe('TreeView.vue', () => {
   let treeOpenUpdate = jest.fn()
 
   const updateSearchTerm = jest.fn()
-  const filterSections = jest.fn()
-  const filterSubsections = jest.fn()
   const loadGridVariables = jest.fn()
 
   let actions = {
     loadSections: jest.fn(),
     loadSubSections: jest.fn(),
     loadSectionTree: jest.fn(),
-    filterSections,
-    filterSubsections,
     loadGridVariables
   }
 
@@ -33,8 +29,7 @@ describe('TreeView.vue', () => {
     store = new Vuex.Store({
       getters: {
         isGridLoading: () => false,
-        isFilterdSubsectionLoading: () => false,
-        filteredTreeStructure: () => [{
+        treeStructure: () => [{
           name: 'parent',
           id: 5,
           open: true,
@@ -86,8 +81,6 @@ describe('TreeView.vue', () => {
     wrapper.find(SearchComponent).vm.$emit('searchChanged', 'mini')
 
     expect(updateSearchTerm).toHaveBeenCalled()
-    expect(filterSections).toHaveBeenCalled()
-    expect(filterSubsections).toHaveBeenCalled()
     expect(loadGridVariables).toHaveBeenCalled()
   })
 })

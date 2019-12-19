@@ -26,6 +26,7 @@ Vue.use(i18n, {
   async callback () {
     await contextPromise
     const app:Vue = new Vue({ store, router, render: h => h(App) })
+    global.app = app
     app.$mount('#app')
   }
 })

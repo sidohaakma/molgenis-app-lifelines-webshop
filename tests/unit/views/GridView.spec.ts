@@ -42,7 +42,8 @@ describe('GridView', () => {
       gridSelections: () => [],
       numberOfSelectedItems: () => 0,
       isSignedIn: () => true,
-      isGridLoading: () => false
+      isGridLoading: () => false,
+      isSearchResultEmpty: () => false
     }
 
     toggleGridRowMock = jest.fn()

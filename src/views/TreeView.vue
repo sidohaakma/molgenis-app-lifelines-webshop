@@ -2,14 +2,14 @@
   <div id="tree-view">
     <search-component
       :searchTerm="searchTerm"
-      :searching="isGridLoading || isFilterdSubsectionLoading"
+      :searching="isGridLoading"
       @searchChanged="onSearchChange"
       class="mb-2"
     ></search-component>
 
     <collapsible-tree
       :selection="treeSelected"
-      :structure="filteredTreeStructure"
+      :structure="treeStructure"
       :opensection="treeOpenSection"
       @updateselection="updateSelection"
       @updateopensection="updateOpenSection" />
@@ -25,19 +25,17 @@ import SearchComponent from '../components/search/SearchComponent.vue'
 export default Vue.extend({
   name: 'TreeView',
   computed: {
-    ...mapGetters(['filteredTreeStructure', 'isGridLoading', 'isFilterdSubsectionLoading']),
+    ...mapGetters(['treeStructure', 'isGridLoading']),
     ...mapState(['searchTerm', 'treeSelected', 'treeOpenSection'])
   },
   methods: {
     ...mapMutations(['updateSearchTerm']),
-    ...mapActions(['filterSections', 'filterSubsections', 'loadGridVariables']),
+    ...mapActions(['loadGridVariables']),
     updateSelection (value) {
       this.$store.commit('updateTreeSelection', value)
     },
     onSearchChange (value) {
       this.updateSearchTerm(value || null)
-      this.filterSections()
-      this.filterSubsections()
       if (this.treeSelection !== -1) {
         this.loadGridVariables()
       }

@@ -1,6 +1,6 @@
 <template>
   <div id="grid-view">
-    <div class="col pt-5 mt-5" v-if="isEmptySearchResult">
+    <div class="col pt-5 mt-5" v-if="isSearchResultEmpty">
       <h5 class="pt-2">{{$t('lifelines-webshop-empty-search-msg')}}</h5>
     </div>
     <div v-else>
@@ -31,10 +31,7 @@ export default Vue.extend({
   components: { GridComponent },
   computed: {
     ...mapState(['treeSelected', 'gridVariables']),
-    ...mapGetters(['rsql', 'gridAssessments', 'grid', 'gridSelections', 'numberOfSelectedItems', 'isSignedIn', 'isGridLoading']),
-    isEmptySearchResult () {
-      return this.$store.getters.isSearchResultEmpty
-    }
+    ...mapGetters(['rsql', 'gridAssessments', 'grid', 'gridSelections', 'numberOfSelectedItems', 'isSignedIn', 'isGridLoading', 'isSearchResultEmpty'])
   },
   methods: {
     ...mapMutations(['toggleGridSelection', 'toggleGridRow', 'toggleGridColumn', 'toggleAll']),
