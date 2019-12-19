@@ -1,3 +1,19 @@
+# [0.30.0](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v0.29.0...v0.30.0) (2019-12-19)
+
+
+### Bug Fixes
+
+* remove autohide from wrong field ([2009b6c](https://github.com/molgenis/molgenis-app-lifelines-webshop/commit/2009b6c))
+* removed console errors, fixed tests ([55c437f](https://github.com/molgenis/molgenis-app-lifelines-webshop/commit/55c437f))
+* toast component is now used from external repo ([e63477a](https://github.com/molgenis/molgenis-app-lifelines-webshop/commit/e63477a))
+
+
+### Features
+
+* add global variables ([d7ba105](https://github.com/molgenis/molgenis-app-lifelines-webshop/commit/d7ba105))
+* toast set autohide time and type ([a990e1d](https://github.com/molgenis/molgenis-app-lifelines-webshop/commit/a990e1d))
+* Use toast from components module ([e155cdc](https://github.com/molgenis/molgenis-app-lifelines-webshop/commit/e155cdc))
+
 # [0.29.0](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v0.28.0...v0.29.0) (2019-12-19)
 
 
