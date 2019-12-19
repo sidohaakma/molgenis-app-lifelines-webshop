@@ -1,3 +1,10 @@
+# [0.29.0](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v0.28.0...v0.29.0) (2019-12-19)
+
+
+### Features
+
+* variable search without filtering sections ([2f80dde](https://github.com/molgenis/molgenis-app-lifelines-webshop/commit/2f80dde))
+
 # [0.28.0](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v0.27.2...v0.28.0) (2019-12-19)
 
 
