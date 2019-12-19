@@ -1,5 +1,5 @@
 import Vue from 'vue'
 
-Vue.prototype.$globals = {
+Vue.prototype.$global = {
   toastTimeoutTime: 5000
 }

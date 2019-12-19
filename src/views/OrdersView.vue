@@ -6,7 +6,7 @@
       :type="toast.type"
       :message="toast.message"
       :autoHideOnType="['success']"
-      :autoHideTime="5000"
+      :autoHideTime="$global.toastTimeoutTime"
       @toastCloseBtnClicked="clearToast">
     </toast-component>
 

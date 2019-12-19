@@ -67,7 +67,7 @@ import Vue from 'vue'
 
 import SpinnerAnimation from '../components/animations/SpinnerAnimation.vue'
 import { mapActions, mapGetters, mapState } from 'vuex'
-import ToastComponent from '../components/ToastComponent.vue'
+import { ToastComponent } from '@molgenis-ui/components/src/components'
 
 export default Vue.extend({
   name: 'CartView',

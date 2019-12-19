@@ -2,6 +2,7 @@ import { shallowMount, createLocalVue } from '@vue/test-utils'
 import MainView from '@/views/MainView.vue'
 import state from '../fixtures/state'
 import Vuex from 'vuex'
+import '@/globals/variables'
 
 describe('MainView.vue', () => {
   const localVue = createLocalVue()

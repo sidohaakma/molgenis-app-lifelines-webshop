@@ -1,4 +1,4 @@
-import { mount, createLocalVue, RouterLinkStub } from '@vue/test-utils'
+import { shallowMount, mount, createLocalVue, RouterLinkStub } from '@vue/test-utils'
 
 import CartSection from '@/types/CartSection'
 import CartView from '@/views/CartView.vue'
@@ -15,7 +15,8 @@ describe('CartView.vue', () => {
   localVue.use(BootstrapVue)
 
   let stubs = {
-    RouterLink: RouterLinkStub
+    RouterLink: RouterLinkStub,
+    'toast-component': true
   }
 
   let mocks = {
