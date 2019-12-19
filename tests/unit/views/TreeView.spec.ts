@@ -2,7 +2,6 @@ import { mount, createLocalVue, Wrapper, shallowMount } from '@vue/test-utils'
 import TreeView from '@/views/TreeView.vue'
 import Vue from 'vue'
 import Vuex from 'vuex'
-import SearchComponent from '@/components/search/SearchComponent.vue'
 
 const localVue = createLocalVue()
 localVue.use(Vuex)
@@ -15,7 +14,6 @@ describe('TreeView.vue', () => {
   let treeUpdate = jest.fn()
   let treeOpenUpdate = jest.fn()
 
-  const updateSearchTerm = jest.fn()
   const loadGridVariables = jest.fn()
 
   let actions = {
@@ -28,7 +26,6 @@ describe('TreeView.vue', () => {
   beforeEach(() => {
     store = new Vuex.Store({
       getters: {
-        isGridLoading: () => false,
         treeStructure: () => [{
           name: 'parent',
           id: 5,
@@ -48,8 +45,7 @@ describe('TreeView.vue', () => {
       actions,
       mutations: {
         updateTreeSelection: treeUpdate,
-        updateTreeOpenSection: treeOpenUpdate,
-        updateSearchTerm
+        updateTreeOpenSection: treeOpenUpdate
       }
     })
 
@@ -74,13 +70,5 @@ describe('TreeView.vue', () => {
     expect(treeOpenUpdate.mock.calls).toEqual([[{ 'treeOpenSection': -1, 'treeSelected': -1 }, 5]])
     wrapper.find('[title="child"]').trigger('click')
     expect(treeUpdate.mock.calls).toEqual([[{ 'treeOpenSection': -1, 'treeSelected': -1 }, 10]])
-  })
-  it('updates search term and dispatches filter actions when the search term changes', () => {
-    const wrapper = shallowMount(TreeView, { store, localVue })
-
-    wrapper.find(SearchComponent).vm.$emit('searchChanged', 'mini')
-
-    expect(updateSearchTerm).toHaveBeenCalled()
-    expect(loadGridVariables).toHaveBeenCalled()
   })
 })
