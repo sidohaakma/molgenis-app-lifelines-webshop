@@ -110,6 +110,8 @@ describe('CartView.vue', () => {
   })
 
   it('renders cart view', () => {
+    // CartView types do not match, but they should
+    // @ts-ignore
     const wrapper = mount(CartView, { stubs, store, localVue })
     expect(wrapper.findAll('li').at(0).text()).toEqual('var 123 ( assessment1, assessment3 )')
     expect(wrapper.findAll('li').at(1).text()).toEqual('var 456 ( assessment3 )')
@@ -118,6 +120,8 @@ describe('CartView.vue', () => {
 
   it('renders a save button that saves the current state', async () => {
     actions.save.mockResolvedValue('12345')
+    // CartView types do not match, but they should
+    // @ts-ignore
     const wrapper = mount(CartView, { stubs, store, localVue, mocks })
     wrapper.find('.save').trigger('click')
     await flushPromises()
