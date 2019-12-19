@@ -91,6 +91,45 @@ const mockResponses: { [key: string]: Object } = {
       subsections: null
     }]
   },
+  '/api/v2/lifelines_variable?q=name=q=cream,label=q=cream&attrs=id,name,label,variants(id,assessment_id),definition_en,definition_nl,options(label_en)&num=10000&sort=id': {
+    items: [{
+      id: 2,
+      name: 'ARZON',
+      label: 'Suncream used',
+      variants: [{
+        id: 197,
+        assessment_id: 1
+      }],
+      options: []
+    }, {
+      id: 3,
+      name: 'SAF',
+      label: 'SAF',
+      variants: [{
+        id: 197,
+        assessment_id: 1
+      }],
+      options: []
+    }, {
+      id: 4,
+      name: 'UVREFLECT',
+      label: 'Reflection',
+      variants: [{
+        id: 197,
+        assessment_id: 1
+      }],
+      options: []
+    }, {
+      id: 4,
+      name: 'ARCREME',
+      label: 'Skin cream used',
+      variants: [{
+        id: 197,
+        assessment_id: 1
+      }],
+      options: []
+    }]
+  },
   '/api/v2/lifelines_subsection_variable?q=subsection_id==3&attrs=~id,id,subsection_id,variable_id(id,name,label,variants(id,assessment_id),definition_en,definition_nl,options(label_en))&num=10000&sort=variable_id': {
     items: [{
       variable_id: {
@@ -257,10 +296,11 @@ describe('actions', () => {
   })
 
   describe('loadGridVariables', () => {
-    it('searches for search term query it is provided', async (done) => {
+    it('searches for variables in subsection', async (done) => {
       const commit = jest.fn()
       const action = actions.loadGridVariables({
         getters: { searchTermQuery: 'subsection_id==3' },
+        state: { treeSelected: 3 },
         commit
       })
       expect(commit).toHaveBeenCalledWith('updateGridVariables', null)
@@ -272,12 +312,29 @@ describe('actions', () => {
       ])
       done()
     })
-    it('clears grid if search term query is null', async (done) => {
+    it('searches for variables across subsections', async (done) => {
       const commit = jest.fn()
       const action = actions.loadGridVariables({
-        getters: { searchTermQuery: null },
+        getters: { searchTermQuery: 'name=q=cream,label=q=cream' },
+        state: { treeSelected: -1 },
         commit
       })
+      expect(commit).toHaveBeenCalledWith('updateGridVariables', null)
+      await action
+      const variant = { 'assessmentId': 1, 'assessment_id': 1, 'id': 197 }
+      expect(commit).toHaveBeenCalledWith('updateGridVariables', [
+        { 'id': 2, 'label': 'Suncream used', 'name': 'ARZON', 'variants': [variant], options: [] },
+        { 'id': 3, 'label': 'SAF', 'name': 'SAF', 'variants': [variant], options: [] },
+        { 'id': 4, 'label': 'Reflection', 'name': 'UVREFLECT', 'variants': [variant], options: [] },
+        { 'id': 4, 'label': 'Skin cream used', 'name': 'ARCREME', 'variants': [variant], options: [] }
+      ])
+      done()
+    })
+    it('clears grid if search term query is null', async (done) => {
+      const commit = jest.fn()
+      const getters = { searchTermQuery: null }
+      const state = { treeSelected: -1 }
+      const action = actions.loadGridVariables({ commit, getters, state })
       expect(commit).toHaveBeenCalledWith('updateGridVariables', null)
       await action
       expect(commit).toHaveBeenCalledTimes(1)
@@ -285,8 +342,9 @@ describe('actions', () => {
     })
     it('does not commit the grid variables if the search term query changes during the call', async (done) => {
       const commit = jest.fn()
-      const getters = { searchTermQuery: 'subsection_id==3' }
-      const action = actions.loadGridVariables({ commit, getters })
+      const getters = { searchTermQuery: 'name=q=cream,label=q=cream' }
+      const state = { treeSelected: -1 }
+      const action = actions.loadGridVariables({ commit, getters, state })
       expect(commit).toHaveBeenCalledWith('updateGridVariables', null)
       getters.searchTermQuery = 'subsection_id==5;variable.name=q=cream'
       await action

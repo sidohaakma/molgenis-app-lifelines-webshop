@@ -143,26 +143,35 @@ export default {
 
     commit('updateVariables', variableMap)
   }),
-  loadGridVariables: tryAction(async ({ commit, getters }: { commit: any, getters: Getters }) => {
+  loadGridVariables: tryAction(async ({ state, commit, getters }: { state: ApplicationState, commit: any, getters: Getters }) => {
     commit('updateGridVariables', null)
     const searchTermQuery = getters.searchTermQuery
 
     if (searchTermQuery !== null) {
-      const attrs = '~id,id,subsection_id,variable_id(id,name,label,variants(id,assessment_id),definition_en,definition_nl,options(label_en))'
-      const response = await api.get(`/api/v2/lifelines_subsection_variable?q=${encodeRsqlValue(searchTermQuery)}&attrs=${attrs}&num=10000&sort=variable_id`)
+      let variables = null
+      if (state.treeSelected >= 0) {
+        // we need to have specific subsection: query in subsection table
+        const attrs = '~id,id,subsection_id,variable_id(id,name,label,variants(id,assessment_id),definition_en,definition_nl,options(label_en))'
+        const response = await api.get(`/api/v2/lifelines_subsection_variable?q=${encodeRsqlValue(searchTermQuery)}&attrs=${attrs}&num=10000&sort=variable_id`)
+        variables = response.items.map((sv: any) => sv.variable_id)
+      } else {
+        // query variable table
+        const attrs = 'id,name,label,variants(id,assessment_id),definition_en,definition_nl,options(label_en)'
+        const response = await api.get(`/api/v2/lifelines_variable?q=${encodeRsqlValue(searchTermQuery)}&attrs=${attrs}&num=10000&sort=id`)
+        variables = response.items
+      }
       // Map assessment_id to assessmentId somewhere deep in the structure
-      const gridVariables = response.items.map((sv: any) => ({
-        ...sv.variable_id,
-        variants: sv.variable_id.variants
+      const gridVariables = variables.map((variable: any) => ({
+        ...variable,
+        variants: variable.variants
           .map((variant: any) => ({
             ...variant,
             assessmentId: variant.assessment_id
           })),
-        options: sv.variable_id.options.map((option: any) => ({
+        options: variable.options.map((option: any) => ({
           label_en: option['label_en']
         }))
       }))
-
       if (searchTermQuery === getters.searchTermQuery) {
         commit('updateGridVariables', gridVariables)
       }

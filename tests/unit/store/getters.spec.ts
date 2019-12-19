@@ -369,11 +369,11 @@ describe('getters', () => {
     })
 
     it('should give rsql that searches variable name and label for the search term', () => {
-      expect(getters.searchTermQuery({ ...emptyState, searchTerm: 'hello' })).toBe('variable_id.name=q=hello,variable_id.label=q=hello')
+      expect(getters.searchTermQuery({ ...emptyState, searchTerm: 'hello' })).toBe('name=q=hello,label=q=hello')
     })
 
     it('should escape rsql characters', () => {
-      expect(getters.searchTermQuery({ ...emptyState, searchTerm: 'a==b' })).toBe('variable_id.name=q=\'a==b\',variable_id.label=q=\'a==b\'')
+      expect(getters.searchTermQuery({ ...emptyState, searchTerm: 'a==b' })).toBe('name=q=\'a==b\',label=q=\'a==b\'')
     })
 
     it('should give rsql that filters subsection', () => {

@@ -172,11 +172,12 @@ export default {
       operands.push({ selector: 'subsection_id', comparison: '==', arguments: state.treeSelected })
     }
     if (state.searchTerm) {
+      const prefix = state.treeSelected >= 0 ? 'variable_id.' : ''
       operands.push({
         operator: 'OR',
         operands: [
-          { selector: 'variable_id.name', comparison: '=q=', arguments: state.searchTerm },
-          { selector: 'variable_id.label', comparison: '=q=', arguments: state.searchTerm }
+          { selector: `${prefix}name`, comparison: '=q=', arguments: state.searchTerm },
+          { selector: `${prefix}label`, comparison: '=q=', arguments: state.searchTerm }
         ]
       })
     }
