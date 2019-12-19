@@ -1,3 +1,15 @@
+# [0.28.0](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v0.27.2...v0.28.0) (2019-12-19)
+
+
+### Bug Fixes
+
+* corrected broken color ([c1ed86d](https://github.com/molgenis/molgenis-app-lifelines-webshop/commit/c1ed86d))
+
+
+### Features
+
+* add empty vars warning in cart ([3989078](https://github.com/molgenis/molgenis-app-lifelines-webshop/commit/3989078))
+
 ## [0.27.2](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v0.27.1...v0.27.2) (2019-12-18)
 
 
