@@ -1,6 +1,12 @@
 <template>
   <div id="cart-view">
 
+    <toast-component
+      class="toast-component mt-2"
+      type="warning"
+      :message="$t('lifelines-webshop-cart-empty-variables-warning')">
+    </toast-component>
+
     <h3 class="h4">{{$t('lifelines-webshop-cart-header')}}</h3>
 
     <spinner-animation v-if="loading" />
@@ -14,7 +20,7 @@
     <div v-else class="mt-3 mb-3" role="tablist">
       <button type="button" class="btn btn-primary save" @click="onSave">{{$t('lifelines-webshop-save-btn-label')}}</button>
       <router-link
-            class="btn btn-warning ml-2"
+            class="btn btn-success ml-2"
             type="button"
             to="/order"
             tag="button">
@@ -46,7 +52,7 @@
     <div class="mb-3" v-if="selectedVariableIds.length > 10">
       <button type="button" class="btn btn-primary save" @click="onSave">{{$t('lifelines-webshop-save-btn-label')}}</button>
       <router-link
-            class="btn btn-warning ml-2"
+            class="btn btn-success ml-2"
             type="button"
             to="/order"
             tag="button">
@@ -61,10 +67,11 @@ import Vue from 'vue'
 
 import SpinnerAnimation from '../components/animations/SpinnerAnimation.vue'
 import { mapActions, mapGetters, mapState } from 'vuex'
+import ToastComponent from '../components/ToastComponent.vue'
 
 export default Vue.extend({
   name: 'CartView',
-  components: { SpinnerAnimation },
+  components: { SpinnerAnimation, ToastComponent },
   methods: {
     ...mapActions(['save']),
     async onSave () {
