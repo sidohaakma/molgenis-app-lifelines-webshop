@@ -270,7 +270,7 @@ export default Vue.extend({
     }
 
     &:hover path {
-      fill: $warning;
+      opacity: 0.7;
     }
   }
 }

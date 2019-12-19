@@ -52,6 +52,15 @@
                 class="btn btn-danger btn-sm t-btn-order-delete">
               <font-awesome-icon icon="trash" aria-label="delete"/>
               </router-link>
+              <button
+              v-if="order.state === 'Submitted' && hasManagerRole"
+              @click="handleApproveOrder(order.orderNumber)"
+              class="btn btn-success">
+                <span v-if="approvingOrder == order.orderNumber">
+                  Approving
+                </span>
+                <span v-else>Approve</span>
+              </button>
             </td>
             <td v-if="hasManagerRole">{{ order.email }}</td>
             <td>{{ order.name }}</td>
@@ -91,7 +100,8 @@ export default Vue.extend({
         'Submitted': 'badge-primary',
         'Approved': 'badge-success',
         'Rejected': 'badge-danger'
-      }
+      },
+      approvingOrder: ''
     }
   },
   methods: {
@@ -99,8 +109,21 @@ export default Vue.extend({
       this.deleteOrder(orderNumber)
       this.$router.push({ name: 'orders' })
     },
-    ...mapActions(['loadOrders', 'deleteOrder']),
-    ...mapMutations(['clearToast'])
+    async handleApproveOrder (orderNumber) {
+      this.approveState = orderNumber
+      this.sendApproveTrigger(orderNumber).then(
+        async () => {
+          await this.loadOrders()
+          this.approveState = ''
+          this.setToast({ type: 'success', message: `Order ${orderNumber} approved` })
+        },
+        () => {
+          this.approveState = ''
+          this.setToast({ type: 'danger', message: `Order ${orderNumber} approval failed` })
+        })
+    },
+    ...mapActions(['loadOrders', 'deleteOrder', 'sendApproveTrigger']),
+    ...mapMutations(['clearToast', 'setToast'])
   },
   computed: {
     ...mapState(['orders', 'toast']),

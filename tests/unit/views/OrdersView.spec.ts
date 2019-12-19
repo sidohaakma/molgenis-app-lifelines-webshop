@@ -7,15 +7,23 @@ import Vuex from 'vuex'
 import orders from '../fixtures/orders'
 import Spinner from '@/components/animations/SpinnerAnimation.vue'
 import mutations from '@/store/mutations'
+import { OrderState } from '@/types/Order'
 
 describe('OrdersView.vue', () => {
-  let localVue:any
-  let store:any
-  let getters: any
+  let localVue: any
+  let store: any
+
+  const hasManagerRole = jest.fn()
+  const sendApproveTrigger = jest.fn()
 
   let actions = {
     deleteOrder: jest.fn(),
-    loadOrders: jest.fn()
+    loadOrders: jest.fn(),
+    sendApproveTrigger
+  }
+
+  let getters = {
+    hasManagerRole
   }
 
   beforeEach(() => {
@@ -24,19 +32,15 @@ describe('OrdersView.vue', () => {
     localVue.filter('i18n', (value: string) => `#${value}#`)
     localVue.use(Vuex)
 
-    let state:any = {
+    let state: any = {
       orders: null
-    }
-
-    getters = {
-      hasManagerRole: jest.fn()
     }
 
     store = new Vuex.Store({
       state,
       actions,
-      mutations,
-      getters
+      getters,
+      mutations
     })
   })
 
@@ -89,5 +93,45 @@ describe('OrdersView.vue', () => {
     expect(wrapper.find('.modal-dialog').exists()).toBe(true)
     wrapper.find('.t-btn-confirm').trigger('click')
     expect(actions.deleteOrder).toHaveBeenCalled()
+  })
+
+  describe('Approve order', () => {
+    let wrapper:any
+    beforeEach(() => {
+      localVue.use(Router)
+      hasManagerRole.mockReturnValue(true)
+
+      wrapper = mount(OrdersView, {
+        localVue,
+        store,
+        router: new Router({ routes })
+      })
+
+      store.commit('setOrders', orders)
+    })
+
+    it('approve order success', () => {
+      sendApproveTrigger.mockResolvedValue('200')
+      console.log(wrapper.html())
+
+      const approveBtn = wrapper.find('.btn.btn-success')
+      expect(approveBtn.find('span').text()).toEqual('Approve')
+
+      approveBtn.trigger('click')
+
+      expect(actions.sendApproveTrigger).toHaveBeenCalled()
+    })
+
+    it('approve order fail', () => {
+      sendApproveTrigger.mockRejectedValue('500')
+
+      const approveBtn = wrapper.find('.btn.btn-success')
+      expect(approveBtn.find('span').text()).toEqual('Approve')
+
+      approveBtn.trigger('click')
+
+      expect(actions.sendApproveTrigger).toHaveBeenCalled()
+      console.log(wrapper.html())
+    })
   })
 })
