@@ -5,6 +5,8 @@
       v-if="toast"
       :type="toast.type"
       :message="toast.message"
+      :autoHideOnType="['success']"
+      :autoHideTime="$global.toastTimeoutTime"
       @toastCloseBtnClicked="clearToast">
     </toast-component>
 
@@ -79,7 +81,7 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { faEdit, faDownload, faTrash } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import SpinnerAnimation from '../components/animations/SpinnerAnimation.vue'
-import ToastComponent from '../components/ToastComponent.vue'
+import { ToastComponent } from '@molgenis-ui/components/src/components'
 import ConfirmationModal from '../components/ConfirmationModal.vue'
 import { mapActions, mapState, mapMutations, mapGetters } from 'vuex'
 import moment from 'moment'

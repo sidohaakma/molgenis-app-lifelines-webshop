@@ -7,6 +7,8 @@
           v-if="toast"
           :type="toast.type"
           :message="toast.message"
+          :autoHideOnType="['success']"
+          :autoHideTime="$global.toastTimeoutTime"
           @toastCloseBtnClicked="clearToast">
         </toast-component>
         <h1>{{$t('lifelines-webshop-order-header')}}</h1>
@@ -77,7 +79,7 @@
 import Vue from 'vue'
 import { FormComponent } from '@molgenis/molgenis-ui-form'
 import { mapActions, mapMutations, mapState } from 'vuex'
-import ToastComponent from '../components/ToastComponent.vue'
+import { ToastComponent } from '@molgenis-ui/components/src/components'
 
 export default Vue.extend({
   name: 'OrderView',

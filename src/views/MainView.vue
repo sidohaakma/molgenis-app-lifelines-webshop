@@ -6,13 +6,15 @@
         <div class="col-12" v-if="!loading">
           <navigation-bar v-model="activeTab" :selectedVariables="selectedVariableIds"></navigation-bar>
 
-          <toast-component
-            class="toast-component mt-2"
-            v-if="toast"
-            :type="toast.type"
-            :message="toast.message"
-            @toastCloseBtnClicked="clearToast">
-          </toast-component>
+            <toast-component
+              class="toast-component mt-2"
+              v-if="toast"
+              :type="toast.type"
+              :message="toast.message"
+              :autoHideOnType="['success']"
+              :autoHideTime="$global.toastTimeoutTime"
+              @toastCloseBtnClicked="clearToast">
+            </toast-component>
 
           <div v-if="activeTab === 'variables'" class="row mt-3 flex-nowrap">
             <sidebar-view class="col-sm-auto info-bar" v-model="showSidebar"></sidebar-view>
@@ -33,7 +35,7 @@ import Vue from 'vue'
 import ContentView from './ContentView.vue'
 import SidebarView from './SidebarView.vue'
 import CartView from './CartView.vue'
-import ToastComponent from '../components/ToastComponent.vue'
+import { ToastComponent } from '@molgenis-ui/components/src/components'
 import NavigationBar from '../components/NavigationBar.vue'
 
 import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'

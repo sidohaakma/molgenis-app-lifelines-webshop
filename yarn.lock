@@ -862,6 +862,14 @@
     cssnano-preset-default "^4.0.0"
     postcss "^7.0.0"
 
+"@molgenis-ui/components@^1.1.1":
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/@molgenis-ui/components/-/components-1.1.1.tgz#3e9e3dc3c4f7c1502b66362e388f40599bb59e29"
+  integrity sha512-cLRb+yyciesFsPkXDJNFBX7Q+mjSgaQk/t7wt/o3j8YFbQNm6BdYStb/RDggPZLEqk6zGJmdGbTn6lAL3nSIOw==
+  dependencies:
+    core-js "^3.4.3"
+    vue "^2.6.10"
+
 "@molgenis/molgenis-api-client@^2.1.2":
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/@molgenis/molgenis-api-client/-/molgenis-api-client-2.3.0.tgz#7bb085006508ad908d8dcc755d7a01703721b2df"
@@ -3785,6 +3793,11 @@ core-js@^2.4.0, core-js@^2.5.0, core-js@^2.6.5:
   version "2.6.9"
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-2.6.9.tgz#6b4b214620c834152e179323727fc19741b084f2"
   integrity sha512-HOpZf6eXmnl7la+cUdMnLvUxKNqLUzJvgIziQ0DiF3JwSImNphIqdGqzj6hIKyX04MmV0poclQ7+wjWvxQyR2A==
+
+core-js@^3.4.3:
+  version "3.5.0"
+  resolved "https://registry.yarnpkg.com/core-js/-/core-js-3.5.0.tgz#66df8e49be4bd775e6f952a9d083b756ad41c1ed"
+  integrity sha512-Ifh3kj78gzQ7NAoJXeTu+XwzDld0QRIwjBLRqAMhuLhP3d2Av5wmgE9ycfnvK6NAEjTkQ1sDPeoEZAWO3Hx1Uw==
 
 core-util-is@1.0.2, core-util-is@~1.0.0:
   version "1.0.2"

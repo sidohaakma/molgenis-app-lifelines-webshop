@@ -2,6 +2,7 @@ import { shallowMount, createLocalVue } from '@vue/test-utils'
 import MainView from '@/views/MainView.vue'
 import state from '../fixtures/state'
 import Vuex from 'vuex'
+import '@/globals/variables'
 
 describe('MainView.vue', () => {
   const localVue = createLocalVue()
@@ -11,6 +12,7 @@ describe('MainView.vue', () => {
 
   let mutations: any
   const mocks: any = { '$route': { params: {} } }
+  const stubs: any = { 'toast-component': true }
   const isSearchResultEmpty = jest.fn()
   const isSignedIn = jest.fn()
   let setToastMock = jest.fn()
@@ -44,24 +46,22 @@ describe('MainView.vue', () => {
   })
 
   it('renders sidebar and content', () => {
-    const wrapper = shallowMount(MainView, { store, localVue, mocks })
-
+    const wrapper = shallowMount(MainView, { store, localVue, mocks, stubs })
     expect(wrapper.exists()).toBeTruthy()
     expect(wrapper.find('#main-view').exists()).toBeTruthy()
   })
 
   it('has a toast component that gets passed a type and message', () => {
-    const wrapper = shallowMount(MainView, { store, localVue, mocks })
-
+    const wrapper = shallowMount(MainView, { store, localVue, mocks, stubs })
     expect(wrapper.find('toast-component-stub').exists()).toBeTruthy()
     expect(wrapper.find('toast-component-stub').attributes('type')).toEqual('danger')
     expect(wrapper.find('toast-component-stub').attributes('message')).toEqual('i am not a message')
   })
 
-  it('should show a toast telling the user to signin to select/order if the user is not signed in an no other toest is shown', () => {
+  it('should show a toast telling the user to signin to select/order if the user is not signed in an no other toast is shown', () => {
     state.toast = null
 
-    shallowMount(MainView, { store, localVue, mocks })
+    shallowMount(MainView, { store, localVue, mocks, stubs })
 
     expect(setToastMock).toHaveBeenCalledWith(expect.anything(), { 'message': 'Please sign in to select and order variables', 'type': 'info' })
   })
@@ -71,7 +71,7 @@ describe('MainView.vue', () => {
     actions.loadAssessments.mockReturnValueOnce(Promise.resolve())
 
     mocks.$route.params.orderNumber = 'abcde'
-    shallowMount(MainView, { store, localVue, mocks })
+    shallowMount(MainView, { store, localVue, mocks, stubs })
 
     setTimeout(() => {
       expect(actions.load).toHaveBeenCalledWith(expect.anything(), 'abcde', undefined)
