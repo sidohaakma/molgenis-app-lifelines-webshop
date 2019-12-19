@@ -361,74 +361,71 @@ describe('getters', () => {
         expect(getters.treeStructure(state, gettersParam)).toEqual([{ 'children': [{ 'id': 0, 'name': 'sub-section1' }], 'id': 1, 'name': 'section' }])
       })
     })
+  })
 
-    describe('searchTermQuery', () => {
-      it('should be null if the search term is null', () => {
-        expect(getters.searchTermQuery(emptyState)).toBeNull()
-      })
-
-      it('should give rsql for the search term', () => {
-        expect(getters.searchTermQuery({ ...emptyState, searchTerm: 'hello' })).toBe('*=q=hello')
-      })
-
-      it('should escape rsql characters', () => {
-        expect(getters.searchTermQuery({ ...emptyState, searchTerm: 'a==b' })).toBe('*=q=\'a==b\'')
-      })
-    })
-    describe('isGridLoading', () => {
-      it('is initially false', () => {
-        expect(getters.isGridLoading(emptyState)).toBe(false)
-      })
-      it('is true while loading variantCounts', () => {
-        expect(getters.isGridLoading({ ...emptyState, gridVariables: [], treeSelected: 1 })).toBe(true)
-      })
-      it('is true while loading gridVariables', () => {
-        expect(getters.isGridLoading({ ...emptyState, variantCounts: [], treeSelected: 1 })).toBe(true)
-      })
-      it('is false when loaded', () => {
-        expect(getters.isGridLoading({ ...emptyState, gridVariables: [], variantCounts: [], treeSelected: 1 })).toBe(false)
-      })
+  describe('searchTermQuery', () => {
+    it('should be null if the search term is null', () => {
+      expect(getters.searchTermQuery(emptyState)).toBeNull()
     })
 
-    describe('isSearchResultEmpty', () => {
-      it('should be false is no search term is given', () => {
-        expect(getters.isSearchResultEmpty(emptyState)).toBeFalsy()
-      })
-
-      it('should be false if search term is given but search result in non empty', () => {
-        let searchTermState = { ...emptyState }
-        searchTermState.treeSelected = 0
-        searchTermState.searchTerm = 'test'
-        searchTermState.gridVariables = [variable11, variable12]
-        expect(getters.isSearchResultEmpty(searchTermState)).toBeFalsy()
-      })
-
-      it('should be true if search term is given and search results are loading', () => {
-        let searchTermState = { ...emptyState }
-        searchTermState.treeSelected = 0
-        searchTermState.searchTerm = 'test'
-        searchTermState.gridVariables = null
-        expect(getters.isSearchResultEmpty(searchTermState)).toBe(false)
-      })
-
-      it('should be true if search term is given but search result are empty', () => {
-        let searchTermState = { ...emptyState }
-        searchTermState.treeSelected = 0
-        searchTermState.searchTerm = 'test'
-        searchTermState.gridVariables = []
-        expect(getters.isSearchResultEmpty(searchTermState)).toBe(true)
-      })
+    it('should give rsql that searches variable name and label for the search term', () => {
+      expect(getters.searchTermQuery({ ...emptyState, searchTerm: 'hello' })).toBe('variable_id.name=q=hello,variable_id.label=q=hello')
     })
 
-    describe('hasManagerRole', () => {
-      it('is false when user is not a manager', () => {
-        const testState = { ...emptyState, context: { context: { roles: ['some_role'] } } as any }
-        expect(getters.hasManagerRole(testState)).toBe(false)
-      })
-      it('is true when user is a manager', () => {
-        const testState = { ...emptyState, context: { context: { roles: ['ROLE_LIFELINES_MANAGER'] } } as any }
-        expect(getters.hasManagerRole(testState)).toBe(true)
-      })
+    it('should escape rsql characters', () => {
+      expect(getters.searchTermQuery({ ...emptyState, searchTerm: 'a==b' })).toBe('variable_id.name=q=\'a==b\',variable_id.label=q=\'a==b\'')
+    })
+
+    it('should give rsql that filters subsection', () => {
+      expect(getters.searchTermQuery({ ...emptyState, treeSelected: 3 })).toBe('subsection_id==3')
+    })
+
+    it('should give rsql that searches within subsection', () => {
+      expect(getters.searchTermQuery({ ...emptyState, treeSelected: 3, searchTerm: 'hello' })).toBe('subsection_id==3;(variable_id.name=q=hello,variable_id.label=q=hello)')
+    })
+  })
+  describe('isGridLoading', () => {
+    it('is initially false', () => {
+      expect(getters.isGridLoading(emptyState)).toBe(false)
+    })
+    it('is true while loading variantCounts', () => {
+      expect(getters.isGridLoading({ ...emptyState, gridVariables: [], treeSelected: 1 })).toBe(true)
+    })
+    it('is true while loading gridVariables', () => {
+      expect(getters.isGridLoading({ ...emptyState, variantCounts: [], treeSelected: 1 })).toBe(true)
+    })
+    it('is false when loaded', () => {
+      expect(getters.isGridLoading({ ...emptyState, gridVariables: [], variantCounts: [], treeSelected: 1 })).toBe(false)
+    })
+  })
+
+  describe('isSearchResultEmpty', () => {
+    it('should be false is no search term is given', () => {
+      expect(getters.isSearchResultEmpty(emptyState)).toBeFalsy()
+    })
+
+    it('should be false if search term is given but search result in non empty', () => {
+      let searchTermState = { ...emptyState }
+      searchTermState.treeSelected = 0
+      searchTermState.searchTerm = 'test'
+      searchTermState.gridVariables = [variable11, variable12]
+      expect(getters.isSearchResultEmpty(searchTermState)).toBeFalsy()
+    })
+
+    it('should be true if search term is given and search results are loading', () => {
+      let searchTermState = { ...emptyState }
+      searchTermState.treeSelected = 0
+      searchTermState.searchTerm = 'test'
+      searchTermState.gridVariables = null
+      expect(getters.isSearchResultEmpty(searchTermState)).toBe(false)
+    })
+
+    it('should be true if search term is given but search result are empty', () => {
+      let searchTermState = { ...emptyState }
+      searchTermState.treeSelected = 0
+      searchTermState.searchTerm = 'test'
+      searchTermState.gridVariables = []
+      expect(getters.isSearchResultEmpty(searchTermState)).toBe(true)
     })
   })
 
