@@ -143,7 +143,7 @@ export default {
 
     commit('updateVariables', variableMap)
   }),
-  loadGridVariables: tryAction(async ({ state, commit, getters }: { state: ApplicationState, commit: any, getters: Getters }) => {
+  loadGridVariables: tryAction(async ({ commit, getters }: { commit: any, getters: Getters }) => {
     commit('updateGridVariables', null)
     const searchTermQuery = getters.searchTermQuery
 
