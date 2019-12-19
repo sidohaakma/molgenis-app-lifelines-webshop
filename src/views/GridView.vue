@@ -58,7 +58,7 @@ export default Vue.extend({
     }
   },
   watch: {
-    searchTermQuery: function (value) {
+    searchTermQuery: function () {
       this.loadGridVariables()
     },
     rsql: function () {

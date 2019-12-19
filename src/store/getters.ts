@@ -1,12 +1,11 @@
 import ApplicationState from '@/types/ApplicationState'
 // @ts-ignore
-import { transformToRSQL, AND } from '@molgenis/rsql'
+import { transformToRSQL } from '@molgenis/rsql'
 import Getters from '@/types/Getters'
 import Variant from '@/types/Variant'
 import { Variable, VariableWithVariants } from '@/types/Variable'
 import { TreeParent } from '@/types/Tree'
 import Assessment from '@/types/Assessment'
-import { TreeNode } from '@/types/TreeNode'
 import CartSection from '@/types/CartSection'
 import groupBy from 'lodash.groupby'
 import property from 'lodash.property'
