@@ -21,7 +21,7 @@
         <div v-if="!isSaving && formState.$invalid && formState.$touched" class="alert text-danger px-0">
           {{$t('lifelines-webshop-order-submit-error-project-nummber')}}
         </div>
-        <div>
+        <div class="d-flex">
           <router-link
             class="btn btn-secondary btn-outline"
             type="button"
@@ -51,7 +51,7 @@
           <button
             v-if="!isSubmitting"
             id="submit-btn"
-            class="btn btn-warning ml-3"
+            class="btn btn-success ml-auto"
             type="submit"
             @click.prevent="onSubmit"
             :disabled="formInvalid || formState.$pending || isSaving">
@@ -61,7 +61,7 @@
           <button
             v-else
             id="submit-btn-submitting"
-            class="btn btn-warning ml-3"
+            class="btn btn-success ml-auto"
             type="button"
             disabled="disabled">
             {{$t('lifelines-webshop-submitting-btn-label')}}
