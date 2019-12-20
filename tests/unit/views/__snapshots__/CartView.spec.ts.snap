@@ -3,51 +3,67 @@
 exports[`CartView.vue renders cart view 1`] = `
 <div id="cart-view">
   <toast-component-stub type="warning" message="lifelines-webshop-cart-empty-variables-warning" class="toast-component mt-2"></toast-component-stub>
-  <h3 class="h4">lifelines-webshop-cart-header</h3>
-  <!---->
-  <div role="tablist" class="mt-3 mb-3"><button type="button" class="btn btn-primary save">lifelines-webshop-save-btn-label</button> <button type="button" class="btn btn-success ml-2">
-      lifelines-webshop-order-btn-label
-    </button>
-    <h4 class="h5 mt-3">lifelines-webshop-cart-selected-list-header</h4>
-    <div class="card mb-1">
-      <!---->
-      <!---->
-      <header role="tab" class="card-header p-1"><a target="_self" href="#" class="btn btn-info btn-block" aria-controls="accordion-0" aria-expanded="false" role="button">Section 1</a></header>
-      <div id="accordion-0" class="collapse show" role="tabpanel">
-        <div class="card-body">
-          <!---->
-          <!---->
-          <div>
-            <h5 class="h6">Subsection 1</h5>
-            <ul>
-              <li><span>var 123 ( assessment1, assessment3 )</span></li>
-            </ul>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-12 col-md-12 col-lg-6">
+        <h3 class="h4">lifelines-webshop-cart-header</h3>
+        <!---->
+        <div role="tablist" class="mt-3 mb-2">
+          <div class="mb-2 d-flex justify-content-end"><button type="button" class="btn btn-sm btn-primary save">lifelines-webshop-save-btn-label</button> <button type="button" class="btn btn-sm btn-success ml-2">lifelines-webshop-order-btn-label</button></div>
+          <div class="card mb-2">
+            <!---->
+            <!---->
+            <header role="tab" class="card-header pl-1 pt-2 pr-2 pb-2 hoverable">
+              <h5 class="pl-3 m-0 text-black">
+                Section 1
+                <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="caret-up" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" class="collapse-tree-icon ml-2 svg-inline--fa fa-caret-up fa-w-10" style="transform: rotate(180deg); transition: transform 0.2s;">
+                  <path fill="currentColor" d="M288.662 352H31.338c-17.818 0-26.741-21.543-14.142-34.142l128.662-128.662c7.81-7.81 20.474-7.81 28.284 0l128.662 128.662c12.6 12.599 3.676 34.142-14.142 34.142z" class=""></path>
+                </svg></h5>
+            </header>
+            <div id="accordion-0" class="collapse show" role="tabpanel">
+              <div class="card-body">
+                <!---->
+                <!---->
+                <div>
+                  <h5 class="h6">Subsection 1</h5>
+                  <ul>
+                    <li><span>var 123 ( assessment1, assessment3 )</span></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <!---->
+            <!---->
+          </div>
+          <div class="card mb-2">
+            <!---->
+            <!---->
+            <header role="tab" class="card-header pl-1 pt-2 pr-2 pb-2 hoverable">
+              <h5 class="pl-3 m-0 text-black">
+                Section 2
+                <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="caret-up" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" class="collapse-tree-icon ml-2 svg-inline--fa fa-caret-up fa-w-10" style="transform: rotate(0deg); transition: transform 0.2s;">
+                  <path fill="currentColor" d="M288.662 352H31.338c-17.818 0-26.741-21.543-14.142-34.142l128.662-128.662c7.81-7.81 20.474-7.81 28.284 0l128.662 128.662c12.6 12.599 3.676 34.142-14.142 34.142z" class=""></path>
+                </svg></h5>
+            </header>
+            <div id="accordion-1" class="collapse" style="display: none;" role="tabpanel">
+              <div class="card-body">
+                <!---->
+                <!---->
+                <div>
+                  <h5 class="h6">Subsection 2</h5>
+                  <ul>
+                    <li><span>var 456 ( assessment3 )</span></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <!---->
+            <!---->
           </div>
         </div>
+        <!---->
       </div>
-      <!---->
-      <!---->
-    </div>
-    <div class="card mb-1">
-      <!---->
-      <!---->
-      <header role="tab" class="card-header p-1"><a target="_self" href="#" class="btn btn-info btn-block" aria-controls="accordion-1" aria-expanded="false" role="button">Section 2</a></header>
-      <div id="accordion-1" class="collapse" style="display: none;" role="tabpanel">
-        <div class="card-body">
-          <!---->
-          <!---->
-          <div>
-            <h5 class="h6">Subsection 2</h5>
-            <ul>
-              <li><span>var 456 ( assessment3 )</span></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <!---->
-      <!---->
     </div>
   </div>
-  <!---->
 </div>
 `;
