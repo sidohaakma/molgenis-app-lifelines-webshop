@@ -1,3 +1,10 @@
+## [0.30.1](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v0.30.0...v0.30.1) (2019-12-20)
+
+
+### Bug Fixes
+
+* approve action params ([#215](https://github.com/molgenis/molgenis-app-lifelines-webshop/issues/215)) ([077c863](https://github.com/molgenis/molgenis-app-lifelines-webshop/commit/077c863))
+
 # [0.30.0](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v0.29.0...v0.30.0) (2019-12-19)
 
 
