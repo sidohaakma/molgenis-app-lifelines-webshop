@@ -1,3 +1,10 @@
+# [0.32.0](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v0.31.0...v0.32.0) (2019-12-20)
+
+
+### Features
+
+* visual search result feedback ([33da739](https://github.com/molgenis/molgenis-app-lifelines-webshop/commit/33da739))
+
 # [0.31.0](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v0.30.2...v0.31.0) (2019-12-20)
 
 
