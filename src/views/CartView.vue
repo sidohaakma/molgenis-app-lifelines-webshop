@@ -23,11 +23,11 @@
             <div class="mb-2 d-flex justify-content-end">
               <button
                 type="button"
-                class="btn btn-sm btn-primary save"
+                class="btn btn-primary save"
                 @click="onSave"
               >{{$t('lifelines-webshop-save-btn-label')}}</button>
               <router-link
-                class="btn btn-sm btn-success ml-2"
+                class="btn btn-success ml-2"
                 type="button"
                 to="/order"
                 tag="button"
@@ -71,11 +71,11 @@
             <div class="d-flex justify-content-end">
               <button
                 type="button"
-                class="btn btn-sm btn-primary save"
+                class="btn btn-primary save"
                 @click="onSave"
               >{{$t('lifelines-webshop-save-btn-label')}}</button>
               <router-link
-                class="btn btn-sm btn-success ml-2"
+                class="btn btn-success ml-2"
                 type="button"
                 to="/order"
                 tag="button"

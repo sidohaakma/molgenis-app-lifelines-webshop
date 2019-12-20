@@ -137,10 +137,8 @@ describe('CartView.vue', () => {
   it('has a collapsable menu', async () => {
     // @ts-ignore
     const wrapper = mount(CartView, { stubs, store, localVue, mocks })
-
     const cartHeader = wrapper.find('.hoverable')
     cartHeader.trigger('click')
-
     expect(wrapper.find('#accordion-0').isVisible()).toBeFalsy()
   })
 })
