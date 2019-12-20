@@ -1,3 +1,13 @@
+## [0.30.2](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v0.30.1...v0.30.2) (2019-12-20)
+
+
+### Bug Fixes
+
+* bigger order button ([4ed6b6e](https://github.com/molgenis/molgenis-app-lifelines-webshop/commit/4ed6b6e))
+* cleaned up cart UI ([c95e0ba](https://github.com/molgenis/molgenis-app-lifelines-webshop/commit/c95e0ba))
+* fixed unittests ([29f8ec1](https://github.com/molgenis/molgenis-app-lifelines-webshop/commit/29f8ec1))
+* namechange in cart to reflect property, added last unit test for cart ([bd3c5c7](https://github.com/molgenis/molgenis-app-lifelines-webshop/commit/bd3c5c7))
+
 ## [0.30.1](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v0.30.0...v0.30.1) (2019-12-20)
 
 
