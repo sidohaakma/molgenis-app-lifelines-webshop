@@ -1,22 +1,20 @@
 <template>
   <div id="grid-view">
-    <div class="no-results" v-if="isSearchResultEmpty">
-      <b-alert show variant="secondary">{{$t('lifelines-webshop-empty-search-msg')}}</b-alert>
-    </div>
-    <div v-else>
-      <grid-component
-        :grid="grid"
-        :gridAssessments="gridAssessments"
-        :gridVariables="gridVariables"
-        :gridSelections="gridSelections"
-        :isLoading="isGridLoading"
-        :isSignedIn="isSignedIn"
-        @gridRowToggle="handleGridRowToggle"
-        @gridColumnToggle="handleGridColumnToggle"
-        @gridCellToggle="handleGridCellToggle"
-        @gridAllToggle="handleGridAllToggle"
-      />
-    </div>
+    <em>{{searchMessage}}</em>
+
+    <grid-component
+      v-if="!isSearchResultEmpty"
+      :grid="grid"
+      :gridAssessments="gridAssessments"
+      :gridVariables="gridVariables"
+      :gridSelections="gridSelections"
+      :isLoading="isGridLoading"
+      :isSignedIn="isSignedIn"
+      @gridRowToggle="handleGridRowToggle"
+      @gridColumnToggle="handleGridColumnToggle"
+      @gridCellToggle="handleGridCellToggle"
+      @gridAllToggle="handleGridAllToggle"
+    />
   </div>
 </template>
 
@@ -29,11 +27,30 @@ export default Vue.extend({
   name: 'GridView',
   components: { GridComponent },
   computed: {
-    ...mapState(['gridVariables']),
+    ...mapState(['gridVariables', 'searchTerm', 'subSectionList', 'treeSelected']),
     ...mapGetters([
       'searchTermQuery', 'rsql', 'gridAssessments', 'grid', 'gridSelections',
       'numberOfSelectedItems', 'isSignedIn', 'isGridLoading', 'isSearchResultEmpty'
-    ])
+    ]),
+    searchMessage: function () {
+      if (!this.gridVariables) { return '' }
+      let searchMessage = this.$t('lifelines-webshop-search-variables-found', { count: this.gridVariables.length })
+      if (this.searchTerm) {
+        searchMessage += ' ' + this.$t('lifelines-webshop-search-variables-term', { searchTerm: this.searchTerm })
+      }
+
+      if (this.selectedSubsection) {
+        searchMessage += ' ' + this.$t('lifelines-webshop-search-variables-subsection', { subSection: this.selectedSubsection })
+      }
+
+      return `${searchMessage}.`
+    },
+    selectedSubsection: function () {
+      if (this.treeSelected) {
+        return this.subSectionList[this.treeSelected]
+      }
+      return null
+    }
   },
   methods: {
     ...mapMutations(['toggleGridSelection', 'toggleGridRow', 'toggleGridColumn', 'toggleAll']),

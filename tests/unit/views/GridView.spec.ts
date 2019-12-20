@@ -26,7 +26,8 @@ describe('GridView', () => {
       searchTermQueryMock: null,
       rsqlMock: '',
       treeSelected: -1,
-      gridVariables: []
+      gridVariables: [],
+      subSectionList: ['subsection1', 'subsection2', 'subsection3']
     }
     loadGridDataMock = jest.fn()
     loadGridVariables = jest.fn()
