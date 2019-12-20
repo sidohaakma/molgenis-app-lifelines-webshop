@@ -1,3 +1,16 @@
+# [0.31.0](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v0.30.2...v0.31.0) (2019-12-20)
+
+
+### Bug Fixes
+
+* search in variables if no subsection selected ([a13402b](https://github.com/molgenis/molgenis-app-lifelines-webshop/commit/a13402b))
+
+
+### Features
+
+* deselect section and subsection ([6353847](https://github.com/molgenis/molgenis-app-lifelines-webshop/commit/6353847))
+* filter variables across subsections ([6d7280d](https://github.com/molgenis/molgenis-app-lifelines-webshop/commit/6d7280d))
+
 ## [0.30.2](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v0.30.1...v0.30.2) (2019-12-20)
 
 
