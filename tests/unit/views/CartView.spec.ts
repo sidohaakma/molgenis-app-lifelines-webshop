@@ -1,4 +1,4 @@
-import { shallowMount, mount, createLocalVue, RouterLinkStub } from '@vue/test-utils'
+import { mount, createLocalVue, RouterLinkStub } from '@vue/test-utils'
 
 import CartSection from '@/types/CartSection'
 import CartView from '@/views/CartView.vue'
@@ -126,5 +126,21 @@ describe('CartView.vue', () => {
     wrapper.find('.save').trigger('click')
     await flushPromises()
     expect(mocks.$router.push).toHaveBeenCalledWith({ name: 'load', params: { orderNumber: '12345' } })
+  })
+
+  it('has the first selection open on start', async () => {
+    // @ts-ignore
+    const wrapper = mount(CartView, { stubs, store, localVue, mocks })
+    expect(wrapper.find('#accordion-0').isVisible())
+  })
+
+  it('has a collapsable menu', async () => {
+    // @ts-ignore
+    const wrapper = mount(CartView, { stubs, store, localVue, mocks })
+
+    const cartHeader = wrapper.find('.hoverable')
+    cartHeader.trigger('click')
+
+    expect(wrapper.find('#accordion-0').isVisible() === false)
   })
 })
