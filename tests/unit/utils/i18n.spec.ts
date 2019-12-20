@@ -76,9 +76,16 @@ describe('i18n schema is up-to-date', () => {
 
   test('redundant translations in i18n schema', async () => {
     const redundant = []
-    for (const translation of Object.keys(i18nSchema.en)) {
-      if (!(translations.includes(translation))) {
-        redundant.push(translation)
+    for (let translationKey of Object.keys(i18nSchema.en)) {
+      if (translationKey.endsWith('_plural')) {
+        expect(i18nSchema.en[translationKey]).toContain('{{count}}')
+        const singularKey = translationKey.replace('_plural', '')
+        expect(i18nSchema.en[singularKey]).toContain('{{count}}')
+        translationKey = singularKey
+      }
+
+      if (!(translations.includes(translationKey))) {
+        redundant.push(translationKey)
       }
     }
 

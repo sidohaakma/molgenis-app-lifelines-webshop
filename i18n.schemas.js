@@ -17,7 +17,6 @@ const en = {
   'lifelines-webshop-cart-info-msg': 'Use the shop tab to select variables to order',
   'lifelines-webshop-cart-not-signedin-msg': 'Sign in to select and order variables',
   'lifelines-webshop-participant-count-suffix': 'Participants',
-  'lifelines-webshop-empty-search-msg': 'No items were found matching the search term.',
   'lifelines-webshop-orders-col-header-title': 'Title',
   'lifelines-webshop-orders-col-header-sub-date': 'Submitted',
   'lifelines-webshop-orders-col-header-project': 'Project',
@@ -56,7 +55,11 @@ const en = {
   'lifelines-webshop-sidebar-elderly-info': 'Learn more about the Lifelines elderly cohort',
   'lifelines-webshop-sidebar-elderly-link': 'http://wiki-lifelines.web.rug.nl/doku.php?id=elderly',
   'lifelines-webshop-orders-col-header-email': 'Email',
-  'lifelines-webshop-cart-empty-variables-warning': 'Warning: you may have empty variables in your selection.'
+  'lifelines-webshop-cart-empty-variables-warning': 'Warning: you may have empty variables in your selection.',
+  'lifelines-webshop-search-variables-found': '{{count}} variable found',
+  'lifelines-webshop-search-variables-found_plural': '{{count}} variables found',
+  'lifelines-webshop-search-variables-term': 'using search term "{{searchTerm}}"',
+  'lifelines-webshop-search-variables-subsection': 'in subsection "{{subSection}}"'
 }
 
 module.exports = {
