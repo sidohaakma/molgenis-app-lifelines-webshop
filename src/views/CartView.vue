@@ -101,7 +101,7 @@ export default Vue.extend({
   components: { SpinnerAnimation, ToastComponent, CollapseTreeIcon },
   data () {
     return {
-      collapsedItems: ['accordion-0']
+      openItems: ['accordion-0']
     }
   },
   methods: {
@@ -112,17 +112,17 @@ export default Vue.extend({
     },
     collapseStatus (index) {
       let clickedItem = `accordion-${index}`
-      let indexOfClickedItem = this.collapsedItems.indexOf(clickedItem)
+      let indexOfClickedItem = this.openItems.indexOf(clickedItem)
 
       if (indexOfClickedItem >= 0) {
-        this.collapsedItems.splice(indexOfClickedItem, 1)
+        this.openItems.splice(indexOfClickedItem, 1)
       } else {
-        this.collapsedItems.push(clickedItem)
+        this.openItems.push(clickedItem)
       }
     },
     isActive (index) {
       let clickedItem = `accordion-${index}`
-      return this.collapsedItems.indexOf(clickedItem) >= 0
+      return this.openItems.indexOf(clickedItem) >= 0
     }
   },
   computed: {

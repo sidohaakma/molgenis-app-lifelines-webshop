@@ -141,4 +141,41 @@ describe('CartView.vue', () => {
     cartHeader.trigger('click')
     expect(wrapper.find('#accordion-0').isVisible()).toBeFalsy()
   })
+
+  it('has a collapsable menu', async () => {
+    // @ts-ignore
+    const wrapper = mount(CartView, { stubs, store, localVue, mocks })
+
+    const cartHeader = wrapper.find('.hoverable')
+    cartHeader.trigger('click')
+
+    expect(wrapper.find('#accordion-0').isVisible()).toBeFalsy()
+  })
+
+  it('removes closed menu items', async () => {
+    // @ts-ignore
+    const wrapper = mount(CartView, { stubs, store, localVue, mocks })
+
+    expect(wrapper.vm.openItems).toHaveLength(1)
+
+    const cartHeader = wrapper.find('.hoverable')
+    cartHeader.trigger('click')
+
+    expect(wrapper.vm.openItems).toHaveLength(0)
+  })
+
+  it('adds open menu items', async () => {
+    // @ts-ignore
+    const wrapper = mount(CartView, { stubs, store, localVue, mocks })
+
+    const cartHeader = wrapper.find('.hoverable')
+    cartHeader.trigger('click')
+
+    // the first element closes on click.
+    expect(wrapper.vm.openItems).toHaveLength(0)
+
+    cartHeader.trigger('click')
+    // the element is openened
+    expect(wrapper.vm.openItems).toHaveLength(1)
+  })
 })
