@@ -131,7 +131,7 @@ describe('CartView.vue', () => {
   it('has the first selection open on start', async () => {
     // @ts-ignore
     const wrapper = mount(CartView, { stubs, store, localVue, mocks })
-    expect(wrapper.find('#accordion-0').isVisible())
+    expect(wrapper.find('#accordion-0').isVisible()).toBeTruthy()
   })
 
   it('has a collapsable menu', async () => {
@@ -141,6 +141,6 @@ describe('CartView.vue', () => {
     const cartHeader = wrapper.find('.hoverable')
     cartHeader.trigger('click')
 
-    expect(wrapper.find('#accordion-0').isVisible() === false)
+    expect(wrapper.find('#accordion-0').isVisible()).toBeFalsy()
   })
 })
