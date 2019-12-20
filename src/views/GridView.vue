@@ -1,21 +1,20 @@
 <template>
   <div id="grid-view">
-    <div class="col pt-5 mt-5" v-if="isSearchResultEmpty">
-      <h5 class="pt-2">{{$t('lifelines-webshop-empty-search-msg')}}</h5>
+    <div class="no-results" v-if="isSearchResultEmpty">
+      <b-alert show variant="secondary">{{$t('lifelines-webshop-empty-search-msg')}}</b-alert>
     </div>
     <div v-else>
       <grid-component
-      v-if="treeSelected != -1"
-      :grid="grid"
-      :gridAssessments="gridAssessments"
-      :gridVariables="gridVariables"
-      :gridSelections="gridSelections"
-      :isLoading="isGridLoading"
-      :isSignedIn="isSignedIn"
-      @gridRowToggle="handleGridRowToggle"
-      @gridColumnToggle="handleGridColumnToggle"
-      @gridCellToggle="handleGridCellToggle"
-      @gridAllToggle="handleGridAllToggle"
+        :grid="grid"
+        :gridAssessments="gridAssessments"
+        :gridVariables="gridVariables"
+        :gridSelections="gridSelections"
+        :isLoading="isGridLoading"
+        :isSignedIn="isSignedIn"
+        @gridRowToggle="handleGridRowToggle"
+        @gridColumnToggle="handleGridColumnToggle"
+        @gridCellToggle="handleGridCellToggle"
+        @gridAllToggle="handleGridAllToggle"
       />
     </div>
   </div>
@@ -30,8 +29,11 @@ export default Vue.extend({
   name: 'GridView',
   components: { GridComponent },
   computed: {
-    ...mapState(['treeSelected', 'gridVariables']),
-    ...mapGetters(['rsql', 'gridAssessments', 'grid', 'gridSelections', 'numberOfSelectedItems', 'isSignedIn', 'isGridLoading', 'isSearchResultEmpty'])
+    ...mapState(['gridVariables']),
+    ...mapGetters([
+      'searchTermQuery', 'rsql', 'gridAssessments', 'grid', 'gridSelections',
+      'numberOfSelectedItems', 'isSignedIn', 'isGridLoading', 'isSearchResultEmpty'
+    ])
   },
   methods: {
     ...mapMutations(['toggleGridSelection', 'toggleGridRow', 'toggleGridColumn', 'toggleAll']),
@@ -56,7 +58,7 @@ export default Vue.extend({
     }
   },
   watch: {
-    treeSelected: function () {
+    searchTermQuery: function () {
       this.loadGridVariables()
     },
     rsql: function () {

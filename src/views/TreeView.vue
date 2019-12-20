@@ -1,18 +1,12 @@
 <template>
   <div id="tree-view">
-    <search-component
-      :searchTerm="searchTerm"
-      :searching="isGridLoading"
-      @searchChanged="onSearchChange"
-      class="mb-2"
-    ></search-component>
-
     <collapsible-tree
       :selection="treeSelected"
       :structure="treeStructure"
       :opensection="treeOpenSection"
       @updateselection="updateSelection"
-      @updateopensection="updateOpenSection" />
+      @updateopensection="updateOpenSection"
+    />
   </div>
 </template>
 
@@ -20,25 +14,16 @@
 import Vue from 'vue'
 import CollapsibleTree from '../components/tree/CollapsibleTree.vue'
 import { mapGetters, mapMutations, mapActions, mapState } from 'vuex'
-import SearchComponent from '../components/search/SearchComponent.vue'
 
 export default Vue.extend({
   name: 'TreeView',
   computed: {
-    ...mapGetters(['treeStructure', 'isGridLoading']),
-    ...mapState(['searchTerm', 'treeSelected', 'treeOpenSection'])
+    ...mapGetters(['treeStructure']),
+    ...mapState(['treeSelected', 'treeOpenSection'])
   },
   methods: {
-    ...mapMutations(['updateSearchTerm']),
-    ...mapActions(['loadGridVariables']),
     updateSelection (value) {
       this.$store.commit('updateTreeSelection', value)
-    },
-    onSearchChange (value) {
-      this.updateSearchTerm(value || null)
-      if (this.treeSelection !== -1) {
-        this.loadGridVariables()
-      }
     },
     updateOpenSection (value) {
       this.$store.commit('updateTreeOpenSection', value)
@@ -49,6 +34,6 @@ export default Vue.extend({
     this.$store.dispatch('loadSubSections')
     this.$store.dispatch('loadSectionTree')
   },
-  components: { CollapsibleTree, SearchComponent }
+  components: { CollapsibleTree }
 })
 </script>

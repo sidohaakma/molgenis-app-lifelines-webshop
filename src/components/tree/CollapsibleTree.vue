@@ -32,7 +32,7 @@
               v-for="child in parent.children"
               :key="child.name"
               :title="child.name"
-              @click="selectElement(child.id)"
+              @click="toggleSubsection(child.id)"
             >
               <div class="row">
                 <div class="text-truncate col pr-2">
@@ -75,12 +75,17 @@ export default Vue.extend({
     }
   },
   methods: {
-    selectElement (id) {
-      this.$emit('updateselection', id)
+    toggleSubsection (id) {
+      if (this.selection === id) {
+        this.$emit('updateselection', -1)
+      } else {
+        this.$emit('updateselection', id)
+      }
     },
     toggleCollapse (id) {
       if (this.opensection === id) {
         this.$emit('updateopensection', -1)
+        this.$emit('updateselection', -1)
       } else {
         this.$emit('updateopensection', id)
       }

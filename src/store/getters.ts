@@ -6,7 +6,6 @@ import Variant from '@/types/Variant'
 import { Variable, VariableWithVariants } from '@/types/Variable'
 import { TreeParent } from '@/types/Tree'
 import Assessment from '@/types/Assessment'
-import { TreeNode } from '@/types/TreeNode'
 import CartSection from '@/types/CartSection'
 import groupBy from 'lodash.groupby'
 import property from 'lodash.property'
@@ -164,10 +163,32 @@ export default {
       })
     ).filter((section) => section.subsections.length > 0)
   },
-  isGridLoading: (state: ApplicationState): boolean => (state.gridVariables === null || state.variantCounts === null) && state.treeSelected !== -1,
-  searchTermQuery: (state: ApplicationState) => state.searchTerm && transformToRSQL({ selector: '*', comparison: '=q=', arguments: state.searchTerm }),
+  isGridLoading: (state: ApplicationState): boolean => {
+    return (state.gridVariables === null || state.variantCounts === null) && state.treeSelected !== -1
+  },
+  searchTermQuery: (state: ApplicationState) => {
+    const operands = []
+    if (state.treeSelected >= 0) {
+      operands.push({ selector: 'subsection_id', comparison: '==', arguments: state.treeSelected })
+    }
+    if (state.searchTerm) {
+      const prefix = state.treeSelected >= 0 ? 'variable_id.' : ''
+      operands.push({
+        operator: 'OR',
+        operands: [
+          { selector: `${prefix}name`, comparison: '=q=', arguments: state.searchTerm },
+          { selector: `${prefix}label`, comparison: '=q=', arguments: state.searchTerm }
+        ]
+      })
+    }
+    if (operands.length > 0) {
+      return transformToRSQL({ operator: 'AND', operands })
+    } else {
+      return null
+    }
+  },
   isSearchResultEmpty: (state: ApplicationState): boolean => {
-    return !!(state.searchTerm && state.treeSelected >= 0 && state.gridVariables && state.gridVariables.length === 0)
+    return !!(state.searchTerm && state.gridVariables && state.gridVariables.length === 0)
   },
   hasManagerRole: (state: ApplicationState) => state.context.context.roles.includes('ROLE_LIFELINES_MANAGER')
 }

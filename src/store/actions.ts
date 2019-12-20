@@ -14,7 +14,8 @@ import moment from 'moment'
 import { TreeParent } from '@/types/Tree'
 import axios from 'axios'
 import { setPermission } from '@/services/permissionService'
-import orders from 'tests/unit/fixtures/orders'
+// @ts-ignore
+import { encodeRsqlValue } from '@molgenis/rsql'
 
 const buildPostOptions = (formData: any, formFields: FormField[]) => {
   return {
@@ -144,27 +145,36 @@ export default {
   }),
   loadGridVariables: tryAction(async ({ state, commit, getters }: { state: ApplicationState, commit: any, getters: Getters }) => {
     commit('updateGridVariables', null)
-    const subsectionId = state.treeSelected
     const searchTermQuery = getters.searchTermQuery
-    let q = `subsection_id==${subsectionId}`
+
     if (searchTermQuery !== null) {
-      q = `${q};${searchTermQuery}`
-    }
-    const response = await api.get(`/api/v2/lifelines_subsection_variable?q=${encodeURIComponent(q)}&attrs=~id,id,subsection_id,variable_id(id,name,label,variants(id,assessment_id),definition_en,definition_nl,options(label_en))&num=10000&sort=variable_id`)
-    if ((state.treeSelected === subsectionId) && (searchTermQuery === getters.searchTermQuery)) {
-      commit('updateGridVariables', response.items
-        // map assessment_id to assessmentId somewhere deep in the structure
-        .map((sv: any) => ({
-          ...sv.variable_id,
-          variants: sv.variable_id.variants
-            .map((variant: any) => ({
-              ...variant,
-              assessmentId: variant.assessment_id
-            })),
-          options: sv.variable_id.options.map((option: any) => ({
-            label_en: option['label_en']
-          }))
-        })))
+      let variables = null
+      if (state.treeSelected >= 0) {
+        // we need to have specific subsection: query in subsection table
+        const attrs = '~id,id,subsection_id,variable_id(id,name,label,variants(id,assessment_id),definition_en,definition_nl,options(label_en))'
+        const response = await api.get(`/api/v2/lifelines_subsection_variable?q=${encodeRsqlValue(searchTermQuery)}&attrs=${attrs}&num=10000&sort=variable_id`)
+        variables = response.items.map((sv: any) => sv.variable_id)
+      } else {
+        // query variable table
+        const attrs = 'id,name,label,variants(id,assessment_id),definition_en,definition_nl,options(label_en)'
+        const response = await api.get(`/api/v2/lifelines_variable?q=${encodeRsqlValue(searchTermQuery)}&attrs=${attrs}&num=10000&sort=id`)
+        variables = response.items
+      }
+      // Map assessment_id to assessmentId somewhere deep in the structure
+      const gridVariables = variables.map((variable: any) => ({
+        ...variable,
+        variants: variable.variants
+          .map((variant: any) => ({
+            ...variant,
+            assessmentId: variant.assessment_id
+          })),
+        options: variable.options.map((option: any) => ({
+          label_en: option['label_en']
+        }))
+      }))
+      if (searchTermQuery === getters.searchTermQuery) {
+        commit('updateGridVariables', gridVariables)
+      }
     }
   }),
   loadParticipantCount: tryAction(async ({ commit, getters }: any) => {
