@@ -16,7 +16,6 @@ const en = {
   'lifelines-webshop-order-btn-label': 'Order',
   'lifelines-webshop-cart-info-msg': 'Use the shop tab to select variables to order',
   'lifelines-webshop-cart-not-signedin-msg': 'Sign in to select and order variables',
-  'lifelines-webshop-cart-selected-list-header': 'Selected variables',
   'lifelines-webshop-participant-count-suffix': 'Participants',
   'lifelines-webshop-empty-search-msg': 'No items were found matching the search term.',
   'lifelines-webshop-orders-col-header-title': 'Title',
