@@ -1,3 +1,10 @@
+## [0.32.1](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v0.32.0...v0.32.1) (2019-12-23)
+
+
+### Bug Fixes
+
+* **l10n:** fix quote escaping ([26de2ef](https://github.com/molgenis/molgenis-app-lifelines-webshop/commit/26de2ef))
+
 # [0.32.0](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v0.31.0...v0.32.0) (2019-12-20)
 
 
