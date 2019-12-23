@@ -55,5 +55,5 @@
 "lifelines-webshop-search-variables-found","lifelines-webshop-search-variables-found","lifelines-webshop",,"{{count}} variable found",,,,,,,
 "lifelines-webshop-cart-empty-variables-warning","lifelines-webshop-cart-empty-variables-warning","lifelines-webshop",,"Warning: you may have empty variables in your selection.",,,,,,,
 "lifelines-webshop-search-variables-found_plural","lifelines-webshop-search-variables-found_plural","lifelines-webshop",,"{{count}} variables found",,,,,,,
-"lifelines-webshop-search-variables-term","lifelines-webshop-search-variables-term","lifelines-webshop",,"using search term "{{searchTerm}}",,,,,,,
-"lifelines-webshop-search-variables-subsection","lifelines-webshop-search-variables-subsection","lifelines-webshop",,"in subsection "{{subSection}}",,,,,,,
+"lifelines-webshop-search-variables-term","lifelines-webshop-search-variables-term","lifelines-webshop",,"using search term ""{{searchTerm}}""",,,,,,,
+"lifelines-webshop-search-variables-subsection","lifelines-webshop-search-variables-subsection","lifelines-webshop",,"in subsection ""{{subSection}}""",,,,,,,
