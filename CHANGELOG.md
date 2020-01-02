@@ -1,3 +1,10 @@
+## [0.32.2](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v0.32.1...v0.32.2) (2020-01-02)
+
+
+### Bug Fixes
+
+* slider was broken in dev, due to dev only styling injection ([5c094b3](https://github.com/molgenis/molgenis-app-lifelines-webshop/commit/5c094b3))
+
 ## [0.32.1](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v0.32.0...v0.32.1) (2019-12-23)
 
 
