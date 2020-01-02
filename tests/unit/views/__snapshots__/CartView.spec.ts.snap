@@ -2,7 +2,7 @@
 
 exports[`CartView.vue renders cart view 1`] = `
 <div id="cart-view">
-  <toast-component-stub type="warning" message="lifelines-webshop-cart-empty-variables-warning" class="toast-component mt-2"></toast-component-stub>
+  lifelines-webshop-cart-empty-variables-warning
   <div class="container-fluid">
     <div class="row">
       <div class="col-sm-12 col-md-12 col-lg-6">

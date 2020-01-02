@@ -54,7 +54,7 @@ describe('store', () => {
         const action = () => Promise.reject(new Error('Something went wrong'))
         const commit = jest.fn()
         const context = { commit }
-        const toast = { message: 'Something went wrong', type: 'danger' }
+        const toast = { message: 'Something went wrong', textType: 'light', title: 'Error', type: 'danger' }
         tryAction(action)(context)
         Vue.nextTick(() => {
           expect(commit).toHaveBeenCalledWith('setToast', toast)

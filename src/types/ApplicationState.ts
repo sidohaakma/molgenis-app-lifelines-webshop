@@ -11,8 +11,11 @@ import { Order } from './Order'
 import { Context, ContextState } from '@molgenis/molgenis-ui-context/src/types'
 
 export type Toast = {
-  type: 'danger' | 'success'
+  type?: 'danger' | 'warning' | 'success' | 'info' | 'primary' | 'secondary'
+  textType?: 'primary' | 'secondary' | 'light' | 'dark' | 'white' | 'black'
   message: string
+  title?: string
+  timeout?: number
 }
 
 export interface AppState {
@@ -23,7 +26,7 @@ export interface AppState {
   assessments: { [key:number]: Assessment }
   sections: { [key:number]: Section }
   subSectionList: string[]
-  toast: Toast | null
+  toast: Toast[]
   genderOptions: FacetOption[]
   subcohortOptions: FacetOption[]
   ageGroupOptions: FacetOption[]

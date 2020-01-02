@@ -1,6 +1,6 @@
 // @ts-ignore
 import api from '@molgenis/molgenis-api-client'
-import { tryAction, toCart, fromCart } from './helpers'
+import { successMessage, tryAction, toCart, fromCart } from './helpers'
 import { Variable } from '@/types/Variable'
 import Assessment from '@/types/Assessment'
 import { Section } from '@/types/Section.ts'
@@ -77,7 +77,7 @@ export default {
   deleteOrder: tryAction(async ({ dispatch, commit }: any, orderId: string) => {
     commit('setOrders', null)
     await api.delete_(`/api/v2/lifelines_order/${orderId}`)
-    commit('setToast', { type: 'success', message: `Deleted order with order number ${orderId}` })
+    successMessage(`Deleted order with order number ${orderId}`, commit)
     dispatch('loadOrders')
   }),
   loadSections: tryAction(async ({ commit, state }: any) => {
@@ -220,7 +220,8 @@ export default {
 
     if (state.order.orderNumber) {
       await updateOrder(formData, formFields)
-      commit('setToast', { type: 'success', message: 'Saved order with order number ' + state.order.orderNumber })
+      successMessage(`Saved order with order number ${state.order.orderNumber}`, commit)
+
       return state.order.orderNumber
     } else {
       const creationDateField = { id: 'creationDate', type: 'date' }
@@ -229,7 +230,7 @@ export default {
       })
       const newOrderResponse = await api.get(`/api/v2/lifelines_order/${orderNumber}`)
       commit('restoreOrderState', newOrderResponse)
-      commit('setToast', { type: 'success', message: 'Saved order with order number ' + orderNumber })
+      successMessage(`Saved order with order number ${orderNumber}`, commit)
       return orderNumber
     }
   }),
@@ -263,7 +264,7 @@ export default {
     commit('restoreOrderState', newOrderResponse)
     dispatch('givePermissionToOrder')
     dispatch('sendSubmissionTrigger')
-    commit('setToast', { type: 'success', message: 'Submitted order with order number ' + orderNumber })
+    successMessage(`Submitted order with order number ${orderNumber}`, commit)
   }),
   load: tryAction(async ({ state, commit }: { state: ApplicationState, commit: any }, orderNumber: string) => {
     const response = await api.get(`/api/v2/lifelines_order/${orderNumber}`)
@@ -272,15 +273,13 @@ export default {
     commit('restoreOrderState', response)
     commit('updateFacetFilter', facetFilter)
     commit('updateGridSelection', gridSelection)
-    commit('setToast', { type: 'success', message: 'Loaded order with orderNumber ' + orderNumber })
+    successMessage(`Loaded order with orderNumber ${orderNumber}`, commit)
   }),
   givePermissionToOrder: tryAction(async ({ state, commit }: { state: ApplicationState, commit: any }) => {
     if (state.order.orderNumber === null) {
       throw new Error('Can not set permission if orderNumber is not set')
     }
-
     setPermission(state.order.orderNumber, 'lifelines_order', 'LIFELINES_MANAGER', 'WRITE')
-
     if (state.order.applicationForm && state.order.applicationForm.id) {
       setPermission(state.order.applicationForm.id, 'sys_FileMeta', 'LIFELINES_MANAGER', 'WRITE')
     }

@@ -11,7 +11,10 @@ import { router } from './router'
 import 'vue-loading-overlay/dist/vue-loading.css'
 import 'bootstrap'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
+// @ts-ignore
+import { ToastPlugin } from '@molgenis-ui/components/src/components/'
 
+Vue.use(ToastPlugin)
 Vue.use(BootstrapVue)
 Vue.config.productionTip = false
 

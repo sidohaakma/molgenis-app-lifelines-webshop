@@ -13,6 +13,7 @@
       <router-view/>
     </main>
     <footer-component :molgenis-footer="molgenisFooter" />
+    <toast-component :value="toast"></toast-component>
   </div>
 </template>
 
@@ -30,7 +31,7 @@ export default Vue.extend({
   components: { HeaderComponent, FooterComponent, CookieWall, Loading },
   computed: {
     ...mapGetters(['molgenisMenu', 'molgenisFooter']),
-    ...mapState(['context', 'loading'])
+    ...mapState(['context', 'loading', 'toast'])
   }
 })
 </script>

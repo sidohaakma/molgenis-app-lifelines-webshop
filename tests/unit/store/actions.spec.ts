@@ -1,8 +1,9 @@
+import Vue from 'vue'
+import '@/globals/variables'
 import actions from '@/store/actions'
 import { Cart } from '@/types/Cart'
 import emptyState from '../fixtures/state'
 import orders from '../fixtures/orders'
-
 // @ts-ignore
 import { post } from '@molgenis/molgenis-api-client'
 import axios from 'axios'
@@ -26,6 +27,9 @@ const mockResponses: { [key: string]: Object } = {
     items: orders
   },
   '/api/v2/lifelines_order/fghij': {
+    contents: cartContents
+  },
+  '/api/v2/lifelines_order/12345': {
     contents: cartContents
   },
   '/api/v2/lifelines_section?num=10000': {
@@ -446,7 +450,7 @@ describe('actions', () => {
       await actions.load({ commit, state }, 'fghij')
       expect(commit).toHaveBeenCalledWith('updateGridSelection', { 1: [1], 2: [1] })
       expect(commit).toHaveBeenCalledWith('updateFacetFilter', { ...emptyState.facetFilter, ageGroupAt1A: ['2', '3'] })
-      expect(commit).toHaveBeenCalledWith('setToast', { type: 'success', message: 'Loaded order with orderNumber fghij' })
+      expect(commit).toHaveBeenCalledWith('setToast', { message: 'Loaded order with orderNumber fghij', textType: 'light', timeout: Vue.prototype.$global.toastTimeoutTime, title: 'Success', type: 'success' })
       done()
     })
   })
@@ -472,7 +476,7 @@ describe('actions', () => {
         const response = await actions.save({ state, commit })
         expect(response).toBe('12345')
         expect(post).toHaveBeenCalledWith('/api/v1/lifelines_order/12345?_method=PUT', expect.anything(), true)
-        expect(commit).toHaveBeenCalledWith('setToast', { type: 'success', message: 'Saved order with order number 12345' })
+        expect(commit).toHaveBeenCalledWith('setToast', { message: 'Saved order with order number 12345', textType: 'light', timeout: Vue.prototype.$global.toastTimeoutTime, title: 'Success', type: 'success' })
         done()
       })
     })
@@ -499,7 +503,7 @@ describe('actions', () => {
         const response = await actions.save({ state, commit })
         expect(response).toBe('12345')
         expect(post).toHaveBeenCalledWith('/api/v1/lifelines_order', expect.anything(), true)
-        expect(commit).toHaveBeenCalledWith('setToast', { type: 'success', message: 'Saved order with order number 12345' })
+        expect(commit).toHaveBeenCalledWith('setToast', { message: 'Saved order with order number 12345', textType: 'light', timeout: Vue.prototype.$global.toastTimeoutTime, title: 'Success', type: 'success' })
         done()
       })
     })
@@ -528,7 +532,7 @@ describe('actions', () => {
         post.mockResolvedValue('success')
         await actions.save({ state, commit })
         expect(post).toHaveBeenCalledWith('/api/v1/lifelines_order/12345?_method=PUT', expect.anything(), true)
-        expect(commit).toHaveBeenCalledWith('setToast', { type: 'success', message: 'Saved order with order number 12345' })
+        expect(commit).toHaveBeenCalledWith('setToast', { message: 'Saved order with order number 12345', textType: 'light', timeout: Vue.prototype.$global.toastTimeoutTime, title: 'Success', type: 'success' })
         done()
       })
     })
@@ -559,7 +563,7 @@ describe('actions', () => {
 
       it('should resturn undefined', () => {
         expect(result).toBeUndefined()
-        expect(commit).not.toHaveBeenCalledWith('setToast', { type: 'success', message: 'Saved order with order number 12345' })
+        expect(commit).not.toHaveBeenCalledWith('setToast', { message: 'Loaded order with orderNumber 12345', textType: 'light', timeout: Vue.prototype.$global.toastTimeoutTime, title: 'Success', type: 'success' })
       })
     })
   })
@@ -584,7 +588,7 @@ describe('actions', () => {
         }
         post.mockResolvedValue('success')
         await actions.submit({ state, commit, dispatch })
-        expect(commit).toHaveBeenCalledWith('setToast', { type: 'success', message: 'Submitted order with order number 12345' })
+        expect(commit).toHaveBeenCalledWith('setToast', { message: 'Submitted order with order number 12345', textType: 'light', timeout: Vue.prototype.$global.toastTimeoutTime, title: 'Success', type: 'success' })
         expect(dispatch).toHaveBeenCalledWith('givePermissionToOrder')
         expect(dispatch).toHaveBeenCalledWith('sendSubmissionTrigger')
         done()
@@ -609,7 +613,7 @@ describe('actions', () => {
         }
         post.mockResolvedValue('success')
         await actions.submit({ state, commit, dispatch })
-        expect(commit).toHaveBeenCalledWith('setToast', { type: 'success', message: 'Submitted order with order number 12345' })
+        expect(commit).toHaveBeenCalledWith('setToast', { message: 'Submitted order with order number 12345', textType: 'light', timeout: Vue.prototype.$global.toastTimeoutTime, title: 'Success', type: 'success' })
         expect(dispatch).toHaveBeenCalledWith('givePermissionToOrder')
         expect(dispatch).toHaveBeenCalledWith('sendSubmissionTrigger')
         done()

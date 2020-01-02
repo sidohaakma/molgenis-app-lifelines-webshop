@@ -1,10 +1,9 @@
-import Assessment from '@/types/Assessment'
 import ApplicationState from '@/types/ApplicationState'
 import { Cart, Selection, CartFilter } from '@/types/Cart'
 import GridSelection from '@/types/GridSelection'
 import Filter from '@/types/Filter'
-import { Variable } from '@/types/Variable'
 import FacetOption from '@/types/FacetOption'
+import Vue from 'vue'
 
 export const getErrorMessage = (response: any) =>
   response.errors
@@ -22,7 +21,11 @@ export const getErrorMessage = (response: any) =>
 export const tryAction = (action: any): any =>
   (context: any, payload: any) =>
     action(context, payload).catch(
-      (error: any) => context.commit('setToast', { message: getErrorMessage(error), type: 'danger' }))
+      (error: any) => context.commit('setToast', { message: getErrorMessage(error), type: 'danger', textType: 'light', title: 'Error' }))
+
+export const successMessage = (message: string, commit: any) => {
+  commit('setToast', { message, type: 'success', textType: 'light', title: 'Success', timeout: Vue.prototype.$global.toastTimeoutTime })
+}
 
 const toCartSelection = ({ gridSelection, assessments, variables }: ApplicationState) : Selection[] => {
   const selections: Selection[] = []
