@@ -3,20 +3,20 @@
     <label v-if="label" :for="rangeFacetId">{{ label }}</label>
     <form>
       <div class="d-flex justify-content-between">
-          <input
-            type="number"
-            class="range-input form-control form-control-sm"
-            placeholder="From"
-            v-model="sliderValue[0]"
-            @change="handleFromChange"
-          >
-          <input
-            type="number"
-            class="range-input form-control form-control-sm "
-            placeholder="Until"
-            v-model="sliderValue[1]"
-            @change="handleUntilChange"
-          >
+        <input
+          type="number"
+          class="range-input form-control form-control-sm"
+          placeholder="From"
+          v-model="sliderValue[0]"
+          @change="handleFromChange"
+        />
+        <input
+          type="number"
+          class="range-input form-control form-control-sm"
+          placeholder="Until"
+          v-model="sliderValue[1]"
+          @change="handleUntilChange"
+        />
       </div>
     </form>
     <div class="slider-container">
@@ -93,12 +93,16 @@ export default Vue.extend({
 </script>
 
 <style lang="scss" scoped>
-  .slider-container {
-    padding-bottom: 0.5rem;
-    padding-top: 0.5rem;
-  }
+.vue-slider {
+  box-sizing: content-box;
+}
 
-  .range-input {
-    width: 4rem;
-  }
+.slider-container {
+  padding-bottom: 0.5rem;
+  padding-top: 0.5rem;
+}
+
+.range-input {
+  width: 4rem;
+}
 </style>
