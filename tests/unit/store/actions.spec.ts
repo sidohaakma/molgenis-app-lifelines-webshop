@@ -4,6 +4,7 @@ import actions from '@/store/actions'
 import { Cart } from '@/types/Cart'
 import emptyState from '../fixtures/state'
 import orders from '../fixtures/orders'
+
 // @ts-ignore
 import { post } from '@molgenis/molgenis-api-client'
 import axios from 'axios'
@@ -20,18 +21,22 @@ const cart: Cart = {
     ageGroupAt1A: ['18-65', '65+']
   }
 }
-const cartContents = JSON.stringify(cart)
 
 const mockResponses: { [key: string]: Object } = {
   '/api/v2/lifelines_order?num=10000': {
     items: orders
   },
   '/api/v2/lifelines_order/fghij': {
-    contents: cartContents
+    contents: {
+      id: 'xxyyzz'
+    }
   },
   '/api/v2/lifelines_order/12345': {
-    contents: cartContents
+    contents: {
+      id: 'bla'
+    }
   },
+  '/files/xxyyzz': cart,
   '/api/v2/lifelines_section?num=10000': {
     items: [
       { id: 1, name: 'section1' },
@@ -448,9 +453,9 @@ describe('actions', () => {
           2: { id: 2, name: 'VAR2', label: 'Variable 2', subsections: [2] } }
       }
       await actions.load({ commit, state }, 'fghij')
+      expect(commit).toHaveBeenCalledWith('setToast', { message: 'Loaded order with orderNumber fghij', textType: 'light', timeout: Vue.prototype.$global.toastTimeoutTime, title: 'Success', type: 'success' })
       expect(commit).toHaveBeenCalledWith('updateGridSelection', { 1: [1], 2: [1] })
       expect(commit).toHaveBeenCalledWith('updateFacetFilter', { ...emptyState.facetFilter, ageGroupAt1A: ['2', '3'] })
-      expect(commit).toHaveBeenCalledWith('setToast', { message: 'Loaded order with orderNumber fghij', textType: 'light', timeout: Vue.prototype.$global.toastTimeoutTime, title: 'Success', type: 'success' })
       done()
     })
   })
@@ -474,9 +479,9 @@ describe('actions', () => {
         }
         post.mockResolvedValue('success')
         const response = await actions.save({ state, commit })
+        expect(commit).toHaveBeenCalledWith('setToast', { message: 'Saved order with order number 12345', textType: 'light', timeout: Vue.prototype.$global.toastTimeoutTime, title: 'Success', type: 'success' })
         expect(response).toBe('12345')
         expect(post).toHaveBeenCalledWith('/api/v1/lifelines_order/12345?_method=PUT', expect.anything(), true)
-        expect(commit).toHaveBeenCalledWith('setToast', { message: 'Saved order with order number 12345', textType: 'light', timeout: Vue.prototype.$global.toastTimeoutTime, title: 'Success', type: 'success' })
         done()
       })
     })
@@ -501,9 +506,9 @@ describe('actions', () => {
         jest.spyOn(orderService, 'generateOrderNumber').mockImplementation(() => '12345')
         post.mockResolvedValue('success')
         const response = await actions.save({ state, commit })
+        expect(commit).toHaveBeenCalledWith('setToast', { message: 'Saved order with order number 12345', textType: 'light', timeout: Vue.prototype.$global.toastTimeoutTime, title: 'Success', type: 'success' })
         expect(response).toBe('12345')
         expect(post).toHaveBeenCalledWith('/api/v1/lifelines_order', expect.anything(), true)
-        expect(commit).toHaveBeenCalledWith('setToast', { message: 'Saved order with order number 12345', textType: 'light', timeout: Vue.prototype.$global.toastTimeoutTime, title: 'Success', type: 'success' })
         done()
       })
     })
@@ -531,8 +536,8 @@ describe('actions', () => {
         jest.spyOn(orderService, 'buildFormData').mockImplementation(() => new FormData())
         post.mockResolvedValue('success')
         await actions.save({ state, commit })
-        expect(post).toHaveBeenCalledWith('/api/v1/lifelines_order/12345?_method=PUT', expect.anything(), true)
         expect(commit).toHaveBeenCalledWith('setToast', { message: 'Saved order with order number 12345', textType: 'light', timeout: Vue.prototype.$global.toastTimeoutTime, title: 'Success', type: 'success' })
+        expect(post).toHaveBeenCalledWith('/api/v1/lifelines_order/12345?_method=PUT', expect.anything(), true)
         done()
       })
     })
@@ -562,8 +567,8 @@ describe('actions', () => {
       })
 
       it('should resturn undefined', () => {
-        expect(result).toBeUndefined()
         expect(commit).not.toHaveBeenCalledWith('setToast', { message: 'Loaded order with orderNumber 12345', textType: 'light', timeout: Vue.prototype.$global.toastTimeoutTime, title: 'Success', type: 'success' })
+        expect(result).toBeUndefined()
       })
     })
   })

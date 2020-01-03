@@ -1,6 +1,5 @@
 <template>
   <div id="cart-view">
-    {{ $t('lifelines-webshop-cart-empty-variables-warning') }}
     <div class="container-fluid">
       <div class="row">
         <div class="col-sm-12 col-md-12 col-lg-6">
@@ -98,10 +97,10 @@ export default Vue.extend({
     }
   },
   created () {
-    this.setToast({ type: 'info', textType: 'light', message: 'Please sign in to select and order variables' })
+    this.setToast({ type: 'warning', textType: 'dark', message: this.$t('lifelines-webshop-cart-empty-variables-warning') })
   },
   destroyed () {
-    this.removeToast({ type: 'info', textType: 'light', message: 'Please sign in to select and order variables' })
+    this.removeToast({ type: 'warning', textType: 'dark', message: this.$t('lifelines-webshop-cart-empty-variables-warning') })
   },
   methods: {
     ...mapMutations(['setToast', 'removeToast']),

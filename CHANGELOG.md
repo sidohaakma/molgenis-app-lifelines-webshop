@@ -1,3 +1,24 @@
+# [1.0.0](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v0.32.2...v1.0.0) (2020-01-03)
+
+
+### Bug Fixes
+
+* fix error on large cart ([#222](https://github.com/molgenis/molgenis-app-lifelines-webshop/issues/222)) ([46b726d](https://github.com/molgenis/molgenis-app-lifelines-webshop/commit/46b726d))
+
+
+### BREAKING CHANGES
+
+* order content column type change from text to file
+
+- send cart data as file/blob on save/submit
+- load cart data as separate request on loadOrder
+
+- update deploy ( switch order.content file type)
+
+* comment back in the test expectations
+
+* fix field type on submit
+
 ## [0.32.2](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v0.32.1...v0.32.2) (2020-01-02)
 
 
