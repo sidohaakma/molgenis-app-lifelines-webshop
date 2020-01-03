@@ -2,6 +2,7 @@ import mutations from '@/store/mutations'
 import state from '../fixtures/state'
 import orders from '../fixtures/orders'
 import { OrderState } from '@/types/Order'
+import { Toast } from '@/types/ApplicationState'
 
 const gridVariables = [
   { id: 1,
@@ -119,6 +120,19 @@ describe('mutations', () => {
       mutations.setToast(baseAppState, { type: 'danger', message: 'message' })
       mutations.clearToast(baseAppState)
       expect(baseAppState.toast).toEqual([])
+    })
+  })
+
+  describe('removeToast', () => {
+    it('removeToast a single toast from the list', () => {
+      let baseAppState = Object.assign({}, state)
+      mutations.clearToast(baseAppState)
+      let toastBase:Toast = { type: 'danger', message: 'message' }
+      let toastBody:Toast = { type: 'danger', message: 'message2' }
+      mutations.setToast(baseAppState, toastBase)
+      mutations.setToast(baseAppState, toastBody)
+      mutations.removeToast(baseAppState, toastBody)
+      expect(baseAppState.toast).toEqual([toastBase])
     })
   })
 

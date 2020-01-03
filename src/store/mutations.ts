@@ -24,6 +24,9 @@ export default {
   setToast (state: ApplicationState, toast: Toast) {
     state.toast.unshift(toast)
   },
+  clearToast (state: ApplicationState) {
+    state.toast = []
+  },
   removeToast (state: ApplicationState, toast: Toast) {
     state.toast = state.toast.filter(base => {
       return base.message !== toast.message
@@ -34,9 +37,6 @@ export default {
     if (projectNumber) {
       projectNumber.required = required
     }
-  },
-  clearToast (state: ApplicationState) {
-    state.toast = []
   },
   setOrderDetails (state: ApplicationState, order: Order) {
     state.order.name = order.name
