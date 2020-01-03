@@ -1,3 +1,15 @@
+# [1.1.0](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v1.0.0...v1.1.0) (2020-01-03)
+
+
+### Bug Fixes
+
+* fixed broken lock file ([ae593bc](https://github.com/molgenis/molgenis-app-lifelines-webshop/commit/ae593bc))
+
+
+### Features
+
+* use external toast component ([b06be61](https://github.com/molgenis/molgenis-app-lifelines-webshop/commit/b06be61))
+
 # [1.0.0](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v0.32.2...v1.0.0) (2020-01-03)
 
 
