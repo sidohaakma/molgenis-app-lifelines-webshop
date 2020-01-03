@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v1.1.0...v1.2.0) (2020-01-03)
+
+
+### Features
+
+* version bump molgenis/components ([21592a9](https://github.com/molgenis/molgenis-app-lifelines-webshop/commit/21592a9))
+
 # [1.1.0](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v1.0.0...v1.1.0) (2020-01-03)
 
 
