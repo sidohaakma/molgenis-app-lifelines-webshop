@@ -2,15 +2,6 @@
   <div class="container mb-5">
     <div class="row">
       <div class="col-md-6">
-        <toast-component
-          class="toast-component mt-2"
-          v-if="toast"
-          :type="toast.type"
-          :message="toast.message"
-          :autoHideOnType="['success']"
-          :autoHideTime="$global.toastTimeoutTime"
-          @toastCloseBtnClicked="clearToast">
-        </toast-component>
         <h1>{{$t('lifelines-webshop-order-header')}}</h1>
         <form-component
           id="order-form"
@@ -79,12 +70,11 @@
 import Vue from 'vue'
 import { FormComponent } from '@molgenis/molgenis-ui-form'
 import { mapActions, mapMutations, mapState } from 'vuex'
-import { ToastComponent } from '@molgenis-ui/components/src/components'
 
 export default Vue.extend({
   name: 'OrderView',
   components: {
-    FormComponent, ToastComponent
+    FormComponent
   },
   data () {
     return {
@@ -101,7 +91,7 @@ export default Vue.extend({
     }
   },
   computed: {
-    ...mapState(['toast', 'orderFormFields', 'order']),
+    ...mapState(['orderFormFields', 'order']),
     orderFormData () {
       if (this.order && this.order.applicationForm && typeof this.order.applicationForm.filename === 'string') {
         // Form field of type file expects just the filename in update mode
@@ -130,7 +120,7 @@ export default Vue.extend({
   },
   methods: {
     ...mapActions(['save', 'submit']),
-    ...mapMutations(['setToast', 'clearToast', 'setOrderDetails', 'setProjectNumberRequiredFunction', 'setOrderFormFields']),
+    ...mapMutations(['setOrderDetails', 'setProjectNumberRequiredFunction', 'setOrderFormFields']),
     onValueChanged (updatedFormData) {
       if (updatedFormData.projectNumber !== null && updatedFormData.projectNumber !== '') {
         this.formInvalid = false

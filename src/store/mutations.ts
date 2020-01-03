@@ -22,16 +22,21 @@ export default {
     }
   },
   setToast (state: ApplicationState, toast: Toast) {
-    state.toast = toast
+    state.toast.unshift(toast)
+  },
+  clearToast (state: ApplicationState) {
+    state.toast = []
+  },
+  removeToast (state: ApplicationState, toast: Toast) {
+    state.toast = state.toast.filter(base => {
+      return base.message !== toast.message
+    })
   },
   setProjectNumberRequiredFunction (state: ApplicationState, required: () => boolean) {
     const projectNumber = state.orderFormFields.find((item) => item.id === 'projectNumber')
     if (projectNumber) {
       projectNumber.required = required
     }
-  },
-  clearToast (state: ApplicationState) {
-    state.toast = null
   },
   setOrderDetails (state: ApplicationState, order: Order) {
     state.order.name = order.name

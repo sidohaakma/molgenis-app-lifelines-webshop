@@ -1,11 +1,5 @@
 <template>
   <div id="cart-view">
-    <toast-component
-      class="toast-component mt-2"
-      type="warning"
-      :message="$t('lifelines-webshop-cart-empty-variables-warning')"
-    ></toast-component>
-
     <div class="container-fluid">
       <div class="row">
         <div class="col-sm-12 col-md-12 col-lg-6">
@@ -90,21 +84,26 @@
 
 <script>
 import Vue from 'vue'
-
 import SpinnerAnimation from '../components/animations/SpinnerAnimation'
-import { mapActions, mapGetters, mapState } from 'vuex'
-import { ToastComponent } from '@molgenis-ui/components/src/components'
+import { mapActions, mapGetters, mapState, mapMutations } from 'vuex'
 import CollapseTreeIcon from '@/components/animations/CollapseTreeIcon'
 
 export default Vue.extend({
   name: 'CartView',
-  components: { SpinnerAnimation, ToastComponent, CollapseTreeIcon },
+  components: { SpinnerAnimation, CollapseTreeIcon },
   data () {
     return {
       openItems: ['accordion-0']
     }
   },
+  created () {
+    this.setToast({ type: 'warning', textType: 'dark', message: this.$t('lifelines-webshop-cart-empty-variables-warning') })
+  },
+  destroyed () {
+    this.removeToast({ type: 'warning', textType: 'dark', message: this.$t('lifelines-webshop-cart-empty-variables-warning') })
+  },
   methods: {
+    ...mapMutations(['setToast', 'removeToast']),
     ...mapActions(['save']),
     async onSave () {
       const orderNumber = await this.save()

@@ -2,7 +2,7 @@ import { AppState } from '@/types/ApplicationState'
 
 const state: AppState = {
   loading: 0,
-  toast: null,
+  toast: [],
   order: {
     orderNumber: null,
     name: null,

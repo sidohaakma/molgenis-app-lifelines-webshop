@@ -1,15 +1,5 @@
 <template>
   <div id="orders-view" class="container pt-1">
-    <toast-component
-      class="toast-component mt-2"
-      v-if="toast"
-      :type="toast.type"
-      :message="toast.message"
-      :autoHideOnType="['success']"
-      :autoHideTime="$global.toastTimeoutTime"
-      @toastCloseBtnClicked="clearToast">
-    </toast-component>
-
     <ConfirmationModal
       v-if="$route && $route.name === 'orderDelete'"
       :backRoute="$router.resolve({name: 'orders'}).route"
@@ -81,7 +71,6 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { faEdit, faDownload, faTrash } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import SpinnerAnimation from '../components/animations/SpinnerAnimation.vue'
-import { ToastComponent } from '@molgenis-ui/components/src/components'
 import ConfirmationModal from '../components/ConfirmationModal.vue'
 import { mapActions, mapState, mapMutations, mapGetters } from 'vuex'
 import moment from 'moment'
@@ -89,7 +78,7 @@ import moment from 'moment'
 library.add(faEdit, faDownload, faTrash)
 
 export default Vue.extend({
-  components: { ConfirmationModal, FontAwesomeIcon, SpinnerAnimation, ToastComponent },
+  components: { ConfirmationModal, FontAwesomeIcon, SpinnerAnimation },
   mounted () {
     this.loadOrders()
   },
@@ -115,18 +104,18 @@ export default Vue.extend({
         async () => {
           await this.loadOrders()
           this.approveState = ''
-          this.setToast({ type: 'success', message: `Order ${orderNumber} approved` })
+          this.setToast({ type: 'success', textType: 'light', title: 'Success', timeout: this.$global.toastTimeoutTime, message: `Order ${orderNumber} approved` })
         },
         () => {
           this.approveState = ''
-          this.setToast({ type: 'danger', message: `Order ${orderNumber} approval failed` })
+          this.setToast({ type: 'danger', textType: 'light', message: `Order ${orderNumber} approval failed` })
         })
     },
     ...mapActions(['loadOrders', 'deleteOrder', 'sendApproveTrigger']),
-    ...mapMutations(['clearToast', 'setToast'])
+    ...mapMutations(['setToast'])
   },
   computed: {
-    ...mapState(['orders', 'toast']),
+    ...mapState(['orders']),
     ...mapGetters(['hasManagerRole'])
   },
   filters: {

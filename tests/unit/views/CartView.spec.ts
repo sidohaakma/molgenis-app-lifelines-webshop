@@ -27,6 +27,7 @@ describe('CartView.vue', () => {
 
   let store: any
   let actions: any
+  let mutations: any
 
   let cartTree: CartSection[]
 
@@ -39,6 +40,10 @@ describe('CartView.vue', () => {
     let state: any
     actions = {
       save: jest.fn()
+    }
+    mutations = {
+      setToast: jest.fn(),
+      removeToast: jest.fn()
     }
 
     state = {
@@ -105,6 +110,7 @@ describe('CartView.vue', () => {
     store = new Vuex.Store({
       state,
       actions,
+      mutations,
       getters
     })
   })
@@ -177,5 +183,13 @@ describe('CartView.vue', () => {
     cartHeader.trigger('click')
     // the element is openened
     expect(wrapper.vm.openItems).toHaveLength(1)
+  })
+
+  it('removes active toast on destroy', () => {
+    // CartView types do not match, but they should
+    // @ts-ignore
+    const wrapper = mount(CartView, { stubs, store, localVue })
+    wrapper.vm.$destroy()
+    expect(mutations.removeToast).toHaveBeenCalledTimes(1)
   })
 })
