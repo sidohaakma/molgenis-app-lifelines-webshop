@@ -38,6 +38,8 @@ const ciSafariSettings = {
 const ciIE11Settings = {
   desiredCapabilities: {
     browserName: 'internet explorer',
+    platform: 'Windows 10',
+    version: '11.103'
   }
 }
 

@@ -25,10 +25,11 @@ import CookieWall from '../node_modules/@molgenis/molgenis-ui-context/src/compon
 import '../node_modules/@molgenis/molgenis-ui-context/public/sticky-footer.css'
 import Loading from 'vue-loading-overlay'
 import { mapGetters, mapState } from 'vuex'
+import ToastComponent from '@molgenis-ui/components/src/components/ToastComponent.vue'
 
 export default Vue.extend({
   name: 'app',
-  components: { HeaderComponent, FooterComponent, CookieWall, Loading },
+  components: { HeaderComponent, FooterComponent, CookieWall, Loading, ToastComponent },
   computed: {
     ...mapGetters(['molgenisMenu', 'molgenisFooter']),
     ...mapState(['context', 'loading', 'toast'])
