@@ -184,4 +184,12 @@ describe('CartView.vue', () => {
     // the element is openened
     expect(wrapper.vm.openItems).toHaveLength(1)
   })
+
+  it('removes active toast on destroy', () => {
+    // CartView types do not match, but they should
+    // @ts-ignore
+    const wrapper = mount(CartView, { stubs, store, localVue })
+    wrapper.vm.$destroy()
+    expect(mutations.removeToast).toHaveBeenCalledTimes(1)
+  })
 })
