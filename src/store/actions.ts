@@ -304,23 +304,21 @@ export default {
       contents: cartToBlob(cart)
     }
 
-    // TODO needs fix for copying file
-    // if (response.applicationForm) {
-    //   const applicationForm = await api.get(`/files/${response.applicationForm.id}`)
-    //   const applicationFormBlob = applicationForm.body
-    //   // @ts-ignore just add name
-    //   applicationFormBlob.name = response.applicationForm.filename
-    //   formData.applicationForm = applicationFormBlob
-    // }
+    if (response.applicationForm) {
+      const applicationForm = await api.get(`/files/${response.applicationForm.id}`)
+      const applicationFormBlob = await applicationForm.blob()
+      // @ts-ignore just add name
+      applicationFormBlob.name = response.applicationForm.filename
+      formData.applicationForm = applicationFormBlob
+    }
 
     const formFields = [...state.orderFormFields, { id: 'contents', type: 'file' }]
-    const orderNumber = await createOrder(formData, [...formFields, { id: 'creationDate', type: 'date' }]).catch((err) => {
-      console.log(err)
+    const orderNumber = await createOrder(formData, [...formFields, { id: 'creationDate', type: 'date' }]).catch(() => {
       return Promise.reject(new Error('Failed to copy order'))
     })
     await api.get(`/api/v2/lifelines_order/${orderNumber}`)
 
-    successMessage(`Copied order with order number ${orderNumber}`, commit)
+    successMessage(`Order copied`, commit)
     return orderNumber
   }),
   givePermissionToOrder: tryAction(async ({ state, commit }: { state: ApplicationState, commit: any }) => {
