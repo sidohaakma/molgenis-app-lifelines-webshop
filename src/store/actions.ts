@@ -285,6 +285,44 @@ export default {
     commit('updateGridSelection', gridSelection)
     successMessage(`Loaded order with orderNumber ${orderNumber}`, commit)
   }),
+  copyOrder: tryAction(async ({ state, commit }: { state: ApplicationState, commit: any }, sourceOrderNumber: string) => {
+    // Fetch source data
+    const response = await api.get(`/api/v2/lifelines_order/${sourceOrderNumber}`)
+    const cart: Cart = await api.get(`/files/${response.contents.id}`)
+
+    // Create copy
+    const formData = {
+      name: response.name ? `${response.name} (copy)` : `copied (from: ${sourceOrderNumber})`,
+      projectNumber: response.projectNumber,
+      applicationForm: response.applicationForm,
+      submissionDate: null,
+      creationDate: null,
+      updateDate: null,
+      state: OrderState.Draft,
+      email: response.email,
+      user: response.user,
+      contents: cartToBlob(cart)
+    }
+
+    // TODO needs fix for copying file
+    // if (response.applicationForm) {
+    //   const applicationForm = await api.get(`/files/${response.applicationForm.id}`)
+    //   const applicationFormBlob = applicationForm.body
+    //   // @ts-ignore just add name
+    //   applicationFormBlob.name = response.applicationForm.filename
+    //   formData.applicationForm = applicationFormBlob
+    // }
+
+    const formFields = [...state.orderFormFields, { id: 'contents', type: 'file' }]
+    const orderNumber = await createOrder(formData, [...formFields, { id: 'creationDate', type: 'date' }]).catch((err) => {
+      console.log(err)
+      return Promise.reject(new Error('Failed to copy order'))
+    })
+    await api.get(`/api/v2/lifelines_order/${orderNumber}`)
+
+    successMessage(`Copied order with order number ${orderNumber}`, commit)
+    return orderNumber
+  }),
   givePermissionToOrder: tryAction(async ({ state, commit }: { state: ApplicationState, commit: any }) => {
     if (state.order.orderNumber === null) {
       throw new Error('Can not set permission if orderNumber is not set')

@@ -16,6 +16,7 @@
           <tr>
             <th scope="col"></th>
             <th scope="col"></th>
+            <th scope="col"></th>
             <th v-if="hasManagerRole" scope="col">{{$t('lifelines-webshop-orders-col-header-email')}}</th>
             <th scope="col">{{$t('lifelines-webshop-orders-col-header-title')}}</th>
             <th scope="col">{{$t('lifelines-webshop-orders-col-header-sub-date')}}</th>
@@ -30,10 +31,15 @@
             <td>
               <router-link
                 v-if="order.state === 'Draft'"
-                class="btn btn-primary btn-sm"
+                class="btn btn-secondary btn-sm"
                 :to="`/shop/${order.orderNumber}`">
                   <font-awesome-icon icon="edit" aria-label="edit"/>
                 </router-link>
+            </td>
+            <td>
+              <button class="btn btn-secondary btn-sm" type="button" @click="handleCopyOrder(order.orderNumber)">
+                  <font-awesome-icon icon="copy" aria-label="copy"/>
+                </button>
             </td>
             <td>
               <router-link
@@ -68,14 +74,14 @@
 <script>
 import Vue from 'vue'
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faEdit, faDownload, faTrash } from '@fortawesome/free-solid-svg-icons'
+import { faEdit, faDownload, faTrash, faCopy } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import SpinnerAnimation from '../components/animations/SpinnerAnimation.vue'
 import ConfirmationModal from '../components/ConfirmationModal.vue'
 import { mapActions, mapState, mapMutations, mapGetters } from 'vuex'
 import moment from 'moment'
 
-library.add(faEdit, faDownload, faTrash)
+library.add(faEdit, faDownload, faTrash, faCopy)
 
 export default Vue.extend({
   components: { ConfirmationModal, FontAwesomeIcon, SpinnerAnimation },
@@ -111,7 +117,11 @@ export default Vue.extend({
           this.setToast({ type: 'danger', textType: 'light', message: `Order ${orderNumber} approval failed` })
         })
     },
-    ...mapActions(['loadOrders', 'deleteOrder', 'sendApproveTrigger']),
+    async handleCopyOrder (orderNumber) {
+      await this.copyOrder(orderNumber)
+      this.loadOrders()
+    },
+    ...mapActions(['loadOrders', 'deleteOrder', 'sendApproveTrigger', 'copyOrder']),
     ...mapMutations(['setToast'])
   },
   computed: {
