@@ -37,3 +37,10 @@ export default Vue.extend({
   components: { CollapsibleTree }
 })
 </script>
+
+<style lang="scss" scoped>
+  // Required for IE11
+  #tree-view {
+    min-width: 20rem;
+  }
+</style>
