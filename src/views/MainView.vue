@@ -38,21 +38,16 @@ export default Vue.extend({
   },
   computed: {
     ...mapState(['loading']),
-    ...mapGetters(['isSignedIn']),
     selectedVariableIds () {
       return Object.keys(this.$store.state.gridSelection).length
     }
   },
   methods: {
-    ...mapMutations(['setToast', 'setLoading']),
+    ...mapMutations(['setLoading']),
     ...mapActions(['load', 'loadVariables', 'loadAssessments'])
   },
   created: async function () {
     this.setLoading(true)
-
-    if (!this.isSignedIn && !this.toast) {
-      this.setToast({ type: 'info', textType: 'light', message: 'Please sign in to select and order variables' })
-    }
 
     const promises = Promise.all([this.loadVariables(), this.loadAssessments()])
     await promises

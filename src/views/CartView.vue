@@ -5,6 +5,8 @@
         <div class="col-sm-12 col-md-12 col-lg-6">
           <h3 class="h4">{{$t('lifelines-webshop-cart-header')}}</h3>
 
+          <toast-component :value="toast" :fixed="false" class="my-3"></toast-component>
+
           <spinner-animation v-if="loading" />
 
           <div v-if="selectedVariableIds.length === 0">
@@ -87,23 +89,18 @@ import Vue from 'vue'
 import SpinnerAnimation from '../components/animations/SpinnerAnimation'
 import { mapActions, mapGetters, mapState, mapMutations } from 'vuex'
 import CollapseTreeIcon from '@/components/animations/CollapseTreeIcon'
+import ToastComponent from '@molgenis-ui/components/src/components/ToastComponent.vue'
 
 export default Vue.extend({
   name: 'CartView',
-  components: { SpinnerAnimation, CollapseTreeIcon },
+  components: { SpinnerAnimation, CollapseTreeIcon, ToastComponent },
   data () {
     return {
-      openItems: ['accordion-0']
+      openItems: ['accordion-0'],
+      toast: [{ type: 'warning', textType: 'dark', message: this.$t('lifelines-webshop-cart-empty-variables-warning') }]
     }
   },
-  created () {
-    this.setToast({ type: 'warning', textType: 'dark', message: this.$t('lifelines-webshop-cart-empty-variables-warning') })
-  },
-  destroyed () {
-    this.removeToast({ type: 'warning', textType: 'dark', message: this.$t('lifelines-webshop-cart-empty-variables-warning') })
-  },
   methods: {
-    ...mapMutations(['setToast', 'removeToast']),
     ...mapActions(['save']),
     async onSave () {
       const orderNumber = await this.save()
