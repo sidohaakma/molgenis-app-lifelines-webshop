@@ -313,12 +313,12 @@ export default {
     }
 
     const formFields = [...state.orderFormFields, { id: 'contents', type: 'file' }]
-    const orderNumber = await createOrder(formData, [...formFields, { id: 'creationDate', type: 'date' }]).catch(() => {
+    const orderNumber = await createOrder(formData, [...formFields, { id: 'creationDate', type: 'date' }]).catch((e) => {
       return Promise.reject(new Error('Failed to copy order'))
     })
     await api.get(`/api/v2/lifelines_order/${orderNumber}`)
 
-    successMessage(`Order copied`, commit)
+    successMessage(`Order copied to new order ${orderNumber}`, commit)
     return orderNumber
   }),
   givePermissionToOrder: tryAction(async ({ state, commit }: { state: ApplicationState, commit: any }) => {

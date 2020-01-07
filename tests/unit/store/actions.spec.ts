@@ -31,6 +31,17 @@ const mockResponses: { [key: string]: Object } = {
       id: 'xxyyzz'
     }
   },
+  '/api/v2/lifelines_order/source_order': {
+    contents: {
+      id: 'source_cart'
+    }
+  },
+  '/files/source_cart': {
+    items: [
+      { id: 1, name: 'section1' },
+      { id: 2, name: 'section2' }
+    ]
+  },
   '/api/v2/lifelines_order/12345': {
     contents: {
       id: 'bla'
@@ -450,12 +461,31 @@ describe('actions', () => {
         assessments: { 1: { id: 1, name: '1A' } },
         variables: {
           1: { id: 1, name: 'VAR1', label: 'Variable 1', subsections: [1, 2] },
-          2: { id: 2, name: 'VAR2', label: 'Variable 2', subsections: [2] } }
+          2: { id: 2, name: 'VAR2', label: 'Variable 2', subsections: [2] }
+        }
       }
       await actions.load({ commit, state }, 'fghij')
       expect(commit).toHaveBeenCalledWith('setToast', { message: 'Loaded order with orderNumber fghij', textType: 'light', timeout: Vue.prototype.$global.toastTimeoutTime, title: 'Success', type: 'success' })
       expect(commit).toHaveBeenCalledWith('updateGridSelection', { 1: [1], 2: [1] })
       expect(commit).toHaveBeenCalledWith('updateFacetFilter', { ...emptyState.facetFilter, ageGroupAt1A: ['2', '3'] })
+      done()
+    })
+  })
+
+  describe('copyOrder', () => {
+    it('copies order and changes order number', async (done) => {
+      const sourceNumber = 'source_order'
+      const commit = jest.fn()
+      const state: ApplicationState = {
+        ...emptyState
+      }
+      jest.spyOn(orderService, 'buildFormData').mockImplementation(() => new FormData())
+      jest.spyOn(orderService, 'generateOrderNumber').mockImplementation(() => 'copyTo')
+      post.mockResolvedValue('success')
+
+      const newOrderNumber = await actions.copyOrder({ commit, state }, sourceNumber)
+
+      expect(newOrderNumber).not.toMatch(sourceNumber)
       done()
     })
   })

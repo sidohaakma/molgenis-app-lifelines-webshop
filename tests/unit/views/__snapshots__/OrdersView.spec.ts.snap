@@ -6,6 +6,7 @@ exports[`OrdersView.vue checks content of order tables 1`] = `
     <tr>
       <th scope="col"></th>
       <th scope="col"></th>
+      <th scope="col"></th>
       <!---->
       <th scope="col">lifelines-webshop-orders-col-header-title</th>
       <th scope="col">lifelines-webshop-orders-col-header-sub-date</th>
@@ -18,10 +19,13 @@ exports[`OrdersView.vue checks content of order tables 1`] = `
   <tbody>
     <tr>
       <td>
-        <router-link-stub to="/shop/edcba" tag="a" event="click" class="btn btn-primary btn-sm">
+        <router-link-stub to="/shop/edcba" tag="a" event="click" class="btn btn-secondary btn-sm">
           <font-awesome-icon-stub icon="edit" aria-label="edit"></font-awesome-icon-stub>
         </router-link-stub>
       </td>
+      <td><button type="button" class="btn btn-secondary btn-sm">
+          <font-awesome-icon-stub icon="copy" aria-label="copy"></font-awesome-icon-stub>
+        </button></td>
       <td>
         <router-link-stub to="[object Object]" tag="a" event="click" class="btn btn-danger btn-sm t-btn-order-delete">
           <font-awesome-icon-stub icon="trash" aria-label="delete"></font-awesome-icon-stub>
@@ -42,6 +46,9 @@ exports[`OrdersView.vue checks content of order tables 1`] = `
       <td>
         <!---->
       </td>
+      <td><button type="button" class="btn btn-secondary btn-sm">
+          <font-awesome-icon-stub icon="copy" aria-label="copy"></font-awesome-icon-stub>
+        </button></td>
       <td>
         <!---->
         <!---->
