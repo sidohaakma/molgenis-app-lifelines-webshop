@@ -6,6 +6,7 @@ exports[`CartView.vue renders cart view 1`] = `
     <div class="row">
       <div class="col-sm-12 col-md-12 col-lg-6">
         <h3 class="h4">lifelines-webshop-cart-header</h3>
+        <toast-component-stub value="[object Object]" class="my-3"></toast-component-stub>
         <!---->
         <div role="tablist" class="mt-3 mb-2">
           <div class="mb-2 d-flex justify-content-end"><button type="button" class="btn btn-primary save">lifelines-webshop-save-btn-label</button> <button type="button" class="btn btn-success ml-2">lifelines-webshop-order-btn-label</button></div>
