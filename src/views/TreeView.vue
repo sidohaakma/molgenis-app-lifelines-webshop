@@ -41,6 +41,6 @@ export default Vue.extend({
 <style lang="scss" scoped>
   // Required for IE11
   #tree-view {
-    min-width: 350px;
+    min-width: 20rem;
   }
 </style>
