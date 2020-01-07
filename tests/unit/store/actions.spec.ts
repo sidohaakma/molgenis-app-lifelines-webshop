@@ -11,6 +11,7 @@ import axios from 'axios'
 import ApplicationState from '@/types/ApplicationState'
 import { OrderState } from '@/types/Order'
 import * as orderService from '@/services/orderService'
+import * as helperService from '@/services/helperService'
 
 const cart: Cart = {
   selection: [{
@@ -34,6 +35,20 @@ const mockResponses: { [key: string]: Object } = {
   '/api/v2/lifelines_order/source_order': {
     contents: {
       id: 'source_cart'
+    }
+  },
+  '/api/v2/lifelines_order/source_order_with_form': {
+    contents: {
+      id: 'source_cart'
+    },
+    applicationForm: {
+      id: 'applicationFormId'
+    }
+  },
+  '/files/applicationFormId': {
+    filename: 'test.pdf',
+    blob () {
+      return new Blob()
     }
   },
   '/files/source_cart': {
@@ -480,12 +495,28 @@ describe('actions', () => {
         ...emptyState
       }
       jest.spyOn(orderService, 'buildFormData').mockImplementation(() => new FormData())
-      jest.spyOn(orderService, 'generateOrderNumber').mockImplementation(() => 'copyTo')
+      jest.spyOn(orderService, 'generateOrderNumber').mockImplementation(() => 'Copy123')
       post.mockResolvedValue('success')
 
       const newOrderNumber = await actions.copyOrder({ commit, state }, sourceNumber)
 
       expect(newOrderNumber).not.toMatch(sourceNumber)
+      done()
+    })
+
+    it('adds submission form if it is available', async (done) => {
+      const sourceNumber = 'source_order_with_form'
+      const commit = jest.fn()
+      const state: ApplicationState = {
+        ...emptyState
+      }
+      jest.spyOn(orderService, 'buildFormData').mockImplementation(() => new FormData())
+      jest.spyOn(orderService, 'generateOrderNumber').mockImplementation(() => 'Copy123')
+      jest.spyOn(helperService, 'getApplicationForm').mockImplementation(async () => new Blob())
+
+      post.mockResolvedValue('success')
+      await actions.copyOrder({ commit, state }, sourceNumber)
+      expect(helperService.getApplicationForm).toBeCalled()
       done()
     })
   })

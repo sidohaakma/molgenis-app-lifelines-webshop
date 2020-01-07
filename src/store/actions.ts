@@ -16,6 +16,7 @@ import axios from 'axios'
 import { setPermission } from '@/services/permissionService'
 // @ts-ignore
 import { encodeRsqlValue } from '@molgenis/rsql'
+import { getApplicationForm } from '@/services/helperService'
 
 const buildPostOptions = (formData: any, formFields: FormField[]) => {
   return {
@@ -143,7 +144,7 @@ export default {
         if (!variable.subsections) {
           variable.subsections = []
         } else {
-          variable.subsections = variable.subsections.split(',').map((i:string) => parseInt(i, 10))
+          variable.subsections = variable.subsections.split(',').map((i: string) => parseInt(i, 10))
         }
         soFar[variable.id] = variable
         return soFar
@@ -305,11 +306,7 @@ export default {
     }
 
     if (response.applicationForm) {
-      const applicationForm = await api.get(`/files/${response.applicationForm.id}`)
-      const applicationFormBlob = await applicationForm.blob()
-      // @ts-ignore just add name
-      applicationFormBlob.name = response.applicationForm.filename
-      formData.applicationForm = applicationFormBlob
+      formData.applicationForm = getApplicationForm(response.applicationForm.id, response.applicationForm.filename)
     }
 
     const formFields = [...state.orderFormFields, { id: 'contents', type: 'file' }]
