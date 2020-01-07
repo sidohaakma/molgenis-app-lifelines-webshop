@@ -1,3 +1,11 @@
+## [1.2.1](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v1.2.0...v1.2.1) (2020-01-07)
+
+
+### Bug Fixes
+
+* changes px to rem ([f254789](https://github.com/molgenis/molgenis-app-lifelines-webshop/commit/f254789))
+* use min-width for tree-view(IE11) ([da67c70](https://github.com/molgenis/molgenis-app-lifelines-webshop/commit/da67c70))
+
 # [1.2.0](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v1.1.0...v1.2.0) (2020-01-03)
 
 
