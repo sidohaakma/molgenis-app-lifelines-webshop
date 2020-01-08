@@ -1,3 +1,10 @@
+## [1.2.2](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v1.2.1...v1.2.2) (2020-01-08)
+
+
+### Bug Fixes
+
+* return the fixed info bar to shop and cart ([399c9df](https://github.com/molgenis/molgenis-app-lifelines-webshop/commit/399c9df))
+
 ## [1.2.1](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v1.2.0...v1.2.1) (2020-01-07)
 
 
