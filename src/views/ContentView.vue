@@ -11,6 +11,7 @@
       <tree-view  class="col-sm-auto info-bar" />
 
       <div class="col" >
+        <toast-component v-if="!this.isSignedIn" :value="toast" :fixed="false" class="my-3"></toast-component>
         <search-component
           :searchTerm="searchTerm"
           :searching="isGridLoading"
@@ -30,10 +31,16 @@ import TreeView from './TreeView.vue'
 import GridView from './GridView.vue'
 import { mapMutations, mapActions, mapGetters, mapState } from 'vuex'
 import SearchComponent from '../components/search/SearchComponent.vue'
+import ToastComponent from '@molgenis-ui/components/src/components/ToastComponent.vue'
 
 export default Vue.extend({
   name: 'ContentView',
-  components: { TreeView, GridView, SearchComponent },
+  components: { TreeView, GridView, SearchComponent, ToastComponent },
+  data: () => {
+    return {
+      toast: [{ type: 'info', textType: 'light', message: 'Please sign in to select and order variables' }]
+    }
+  },
   computed: {
     ...mapGetters(['isSignedIn', 'isGridLoading']),
     ...mapState(['searchTerm'])

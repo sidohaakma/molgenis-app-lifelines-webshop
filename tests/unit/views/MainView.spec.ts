@@ -51,12 +51,6 @@ describe('MainView.vue', () => {
     expect(wrapper.find('#main-view').exists()).toBeTruthy()
   })
 
-  it('should show a toast telling the user to signin to select/order if the user is not signed in an no other toast is shown', () => {
-    state.toast = []
-    shallowMount(MainView, { store, localVue, mocks, stubs })
-    expect(setToastMock).toHaveBeenCalledWith(expect.anything(), { message: 'Please sign in to select and order variables', textType: 'light', type: 'info' })
-  })
-
   it('loads an order, after loading variables and assessments, if a orderNumber route param is present', (done) => {
     actions.loadVariables.mockReturnValueOnce(Promise.resolve())
     actions.loadAssessments.mockReturnValueOnce(Promise.resolve())
