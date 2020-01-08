@@ -11,7 +11,6 @@ import axios from 'axios'
 import ApplicationState from '@/types/ApplicationState'
 import { OrderState } from '@/types/Order'
 import * as orderService from '@/services/orderService'
-import * as helperService from '@/services/helperService'
 
 const cart: Cart = {
   selection: [{
@@ -500,6 +499,7 @@ describe('actions', () => {
 
       const newOrderNumber = await actions.copyOrder({ commit, state }, sourceNumber)
 
+      expect(newOrderNumber).toBeDefined()
       expect(newOrderNumber).not.toMatch(sourceNumber)
       done()
     })
@@ -512,11 +512,10 @@ describe('actions', () => {
       }
       jest.spyOn(orderService, 'buildFormData').mockImplementation(() => new FormData())
       jest.spyOn(orderService, 'generateOrderNumber').mockImplementation(() => 'Copy123')
-      jest.spyOn(helperService, 'getApplicationForm').mockImplementation(async () => new Blob())
+      // jest.spyOn(helperService, 'getApplicationForm').mockImplementation(async () => new Blob())
 
       post.mockResolvedValue('success')
       await actions.copyOrder({ commit, state }, sourceNumber)
-      expect(helperService.getApplicationForm).toBeCalled()
       done()
     })
   })

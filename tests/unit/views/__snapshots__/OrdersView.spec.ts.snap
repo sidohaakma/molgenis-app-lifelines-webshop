@@ -23,7 +23,7 @@ exports[`OrdersView.vue checks content of order tables 1`] = `
           <font-awesome-icon-stub icon="edit" aria-label="edit"></font-awesome-icon-stub>
         </router-link-stub>
       </td>
-      <td><button type="button" class="btn btn-secondary btn-sm">
+      <td><button type="button" class="btn btn-secondary btn-sm copy-btn">
           <font-awesome-icon-stub icon="copy" aria-label="copy"></font-awesome-icon-stub>
         </button></td>
       <td>
@@ -46,7 +46,7 @@ exports[`OrdersView.vue checks content of order tables 1`] = `
       <td>
         <!---->
       </td>
-      <td><button type="button" class="btn btn-secondary btn-sm">
+      <td><button type="button" class="btn btn-secondary btn-sm copy-btn">
           <font-awesome-icon-stub icon="copy" aria-label="copy"></font-awesome-icon-stub>
         </button></td>
       <td>

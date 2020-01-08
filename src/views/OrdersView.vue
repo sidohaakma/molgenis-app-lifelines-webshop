@@ -37,9 +37,9 @@
                 </router-link>
             </td>
             <td>
-              <button class="btn btn-secondary btn-sm" type="button" @click="handleCopyOrder(order.orderNumber)">
-                  <font-awesome-icon icon="copy" aria-label="copy"/>
-                </button>
+              <button class="btn btn-secondary btn-sm copy-btn" type="button" @click="handleCopyOrder(order.orderNumber)">
+                <font-awesome-icon icon="copy" aria-label="copy"/>
+              </button>
             </td>
             <td>
               <router-link

@@ -16,7 +16,6 @@ import axios from 'axios'
 import { setPermission } from '@/services/permissionService'
 // @ts-ignore
 import { encodeRsqlValue } from '@molgenis/rsql'
-import { getApplicationForm } from '@/services/helperService'
 
 const buildPostOptions = (formData: any, formFields: FormField[]) => {
   return {
@@ -75,6 +74,14 @@ const updateOrder = async (formData: any, formFields: FormField[]) => {
   return api.post(`/api/v1/lifelines_order/${formData.orderNumber}?_method=PUT`, options, true).then(() => {
     return formData.orderNumber
   })
+}
+
+const getApplicationForm = async (applicationFormId: string, filename: string) => {
+  const applicationForm = await api.get(`/files/${applicationFormId}`)
+  const applicationFormBlob = await applicationForm.blob()
+  // @ts-ignore just add name
+  applicationFormBlob.name = filename
+  return applicationFormBlob
 }
 
 export default {
@@ -306,14 +313,13 @@ export default {
     }
 
     if (response.applicationForm) {
-      formData.applicationForm = getApplicationForm(response.applicationForm.id, response.applicationForm.filename)
+      formData.applicationForm = await getApplicationForm(response.applicationForm.id, response.applicationForm.filename)
     }
 
     const formFields = [...state.orderFormFields, { id: 'contents', type: 'file' }]
     const orderNumber = await createOrder(formData, [...formFields, { id: 'creationDate', type: 'date' }]).catch((e) => {
       return Promise.reject(new Error('Failed to copy order'))
     })
-    await api.get(`/api/v2/lifelines_order/${orderNumber}`)
 
     successMessage(`Order copied to new order ${orderNumber}`, commit)
     return orderNumber
