@@ -8,6 +8,7 @@ import orders from '../fixtures/orders'
 import Spinner from '@/components/animations/SpinnerAnimation.vue'
 import mutations from '@/store/mutations'
 import { OrderState } from '@/types/Order'
+import '@/globals/variables'
 
 describe('OrdersView.vue', () => {
   let localVue: any
@@ -15,11 +16,13 @@ describe('OrdersView.vue', () => {
 
   const hasManagerRole = jest.fn()
   const sendApproveTrigger = jest.fn()
+  const copyOrder = jest.fn()
 
   let actions = {
     deleteOrder: jest.fn(),
     loadOrders: jest.fn(),
-    sendApproveTrigger
+    sendApproveTrigger,
+    copyOrder
   }
 
   let getters = {
@@ -130,6 +133,34 @@ describe('OrdersView.vue', () => {
       approveBtn.trigger('click')
 
       expect(actions.sendApproveTrigger).toHaveBeenCalled()
+    })
+  })
+
+  describe('Copy order', () => {
+    let wrapper:any
+
+    beforeEach(() => {
+      localVue.use(Router)
+      hasManagerRole.mockReturnValue(true)
+
+      wrapper = mount(OrdersView, {
+        localVue,
+        store,
+        router: new Router({ routes })
+      })
+
+      store.commit('setOrders', orders)
+    })
+
+    it('should add a copy button of each order', () => {
+      const copyButtons = wrapper.findAll('.copy-btn')
+      expect(copyButtons.length).toEqual(2)
+    })
+
+    it('should call the copy action when clicked', () => {
+      const copyButton = wrapper.find('.copy-btn')
+      copyButton.trigger('click')
+      expect(actions.copyOrder).toHaveBeenCalled()
     })
   })
 })

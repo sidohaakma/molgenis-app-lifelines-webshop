@@ -76,6 +76,14 @@ const updateOrder = async (formData: any, formFields: FormField[]) => {
   })
 }
 
+const getApplicationForm = async (applicationFormId: string, filename: string) => {
+  const applicationForm = await api.get(`/files/${applicationFormId}`)
+  const applicationFormBlob = await applicationForm.blob()
+  // @ts-ignore just add name
+  applicationFormBlob.name = filename
+  return applicationFormBlob
+}
+
 export default {
   loadOrders: tryAction(async ({ commit }: any) => {
     commit('setOrders', null)
@@ -143,7 +151,7 @@ export default {
         if (!variable.subsections) {
           variable.subsections = []
         } else {
-          variable.subsections = variable.subsections.split(',').map((i:string) => parseInt(i, 10))
+          variable.subsections = variable.subsections.split(',').map((i: string) => parseInt(i, 10))
         }
         soFar[variable.id] = variable
         return soFar
@@ -284,6 +292,37 @@ export default {
     commit('updateFacetFilter', facetFilter)
     commit('updateGridSelection', gridSelection)
     successMessage(`Loaded order with orderNumber ${orderNumber}`, commit)
+  }),
+  copyOrder: tryAction(async ({ state, commit }: { state: ApplicationState, commit: any }, sourceOrderNumber: string) => {
+    // Fetch source data
+    const response = await api.get(`/api/v2/lifelines_order/${sourceOrderNumber}`)
+    const cart: Cart = await api.get(`/files/${response.contents.id}`)
+
+    // Create copy
+    const formData = {
+      name: response.name ? `${response.name} (copy)` : `copied (from: ${sourceOrderNumber})`,
+      projectNumber: response.projectNumber,
+      applicationForm: response.applicationForm,
+      submissionDate: null,
+      creationDate: null,
+      updateDate: null,
+      state: OrderState.Draft,
+      email: response.email,
+      user: response.user,
+      contents: cartToBlob(cart)
+    }
+
+    if (response.applicationForm) {
+      formData.applicationForm = await getApplicationForm(response.applicationForm.id, response.applicationForm.filename)
+    }
+
+    const formFields = [...state.orderFormFields, { id: 'contents', type: 'file' }]
+    const orderNumber = await createOrder(formData, [...formFields, { id: 'creationDate', type: 'date' }]).catch((e) => {
+      return Promise.reject(new Error('Failed to copy order'))
+    })
+
+    successMessage(`Order copied to new order ${orderNumber}`, commit)
+    return orderNumber
   }),
   givePermissionToOrder: tryAction(async ({ state, commit }: { state: ApplicationState, commit: any }) => {
     if (state.order.orderNumber === null) {
