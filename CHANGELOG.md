@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v1.2.2...v1.3.0) (2020-01-08)
+
+
+### Features
+
+* copy order, WIP need to fix applicationData ([a8d7de4](https://github.com/molgenis/molgenis-app-lifelines-webshop/commit/a8d7de4))
+
 ## [1.2.2](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v1.2.1...v1.2.2) (2020-01-08)
 
 
