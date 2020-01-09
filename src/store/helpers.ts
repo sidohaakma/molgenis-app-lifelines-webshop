@@ -18,10 +18,16 @@ export const getErrorMessage = (response: any) =>
         ? response.message
         : 'Unknown error'
 
-export const tryAction = (action: any): any =>
-  (context: any, payload: any) =>
-    action(context, payload).catch(
-      (error: any) => context.commit('setToast', { message: getErrorMessage(error), type: 'danger', textType: 'light', title: 'Error' }))
+export const tryAction = (action: any): any => {
+  return (context: any, payload: any) => {
+    const errorHandler = (error: any) => {
+      context.commit('setToast', { message: getErrorMessage(error), type: 'danger', textType: 'light', title: 'Error' })
+      console.trace ? console.trace(error) : console.log(error)
+    }
+
+    return action(context, payload).catch(errorHandler)
+  }
+}
 
 export const successMessage = (message: string, commit: any) => {
   commit('setToast', { message, type: 'success', textType: 'light', title: 'Success', timeout: Vue.prototype.$global.toastTimeoutTime })
