@@ -1,3 +1,10 @@
+## [1.3.1](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v1.3.0...v1.3.1) (2020-01-09)
+
+
+### Bug Fixes
+
+* log stacktrace in tryAction ([217655c](https://github.com/molgenis/molgenis-app-lifelines-webshop/commit/217655c)), closes [#145](https://github.com/molgenis/molgenis-app-lifelines-webshop/issues/145)
+
 # [1.3.0](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v1.2.2...v1.3.0) (2020-01-08)
 
 
