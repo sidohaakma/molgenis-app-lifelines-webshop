@@ -38,31 +38,24 @@ const cartToBlob = (cart: Cart) => {
 }
 
 const createOrder = async (formData: any, formFields: FormField[]) => {
-  // Generate 'unique' order number
-  formData.orderNumber = generateOrderNumber()
   formFields.push({ id: 'orderNumber', type: 'text' })
 
-  const options = buildPostOptions(formData, formFields)
-
-  let reTryCount = 0
-
-  const trySubmission = () => {
-    const orderNumber = generateOrderNumber().toString()
-    options.body.set('orderNumber', orderNumber)
+  const trySubmission = (reTryCount:number) => {
+    var orderNr = generateOrderNumber()
+    formData.orderNumber = orderNr
+    const options = buildPostOptions(formData, formFields)
     return api.post('/api/v1/lifelines_order', options, true).then(() => {
-      return orderNumber
+      return orderNr
     }, (error: any) => {
-      // OrderNumber must be unique, just guess untill we find one
-      if (reTryCount < 10) {
-        reTryCount++
-        return trySubmission()
+      // OrderNumber must be unique, just guess until we find one
+      if (reTryCount > 0) {
+        return trySubmission(--reTryCount)
       } else {
         return Promise.reject(error)
       }
     })
   }
-
-  return trySubmission()
+  return trySubmission(10)
 }
 
 const updateOrder = async (formData: any, formFields: FormField[]) => {
