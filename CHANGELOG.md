@@ -1,3 +1,10 @@
+## [1.3.3](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v1.3.2...v1.3.3) (2020-01-13)
+
+
+### Bug Fixes
+
+* retain cart permission for user ([#235](https://github.com/molgenis/molgenis-app-lifelines-webshop/issues/235)) ([cfa2487](https://github.com/molgenis/molgenis-app-lifelines-webshop/commit/cfa2487)), closes [#234](https://github.com/molgenis/molgenis-app-lifelines-webshop/issues/234)
+
 ## [1.3.2](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v1.3.1...v1.3.2) (2020-01-09)
 
 
