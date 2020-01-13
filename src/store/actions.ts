@@ -338,17 +338,37 @@ export default {
       return Promise.reject(new Error('Failed to copy order'))
     })
 
+    // If admin copies the user's order, user needs to be given permission to the copy
+    if (state.context.context.username !== response.user) {
+      const copyOrderResponse = await api.get(`/api/v2/lifelines_order/${orderNumber}`)
+      commit('restoreOrderState', copyOrderResponse)
+      const setPermissionRequests = [
+        setUserPermission(orderNumber, 'lifelines_order', copyOrderResponse.user, 'WRITE'),
+        setUserPermission(copyOrderResponse.contents.id, 'sys_FileMeta', copyOrderResponse.user, 'WRITE')
+      ]
+      if (copyOrderResponse.applicationForm) {
+        setPermissionRequests.push(setUserPermission(copyOrderResponse.applicationForm.id, 'sys_FileMeta', copyOrderResponse.user, 'WRITE'))
+      }
+      await Promise.all(setPermissionRequests)
+    }
+
     successMessage(`Order copied to new order ${orderNumber}`, commit)
     return orderNumber
   }),
   givePermissionToOrder: tryAction(async ({ state, commit }: { state: ApplicationState, commit: any }) => {
-    if (state.order.orderNumber === null) {
+    if (state.order.orderNumber === null || state.order.contents === null) {
       throw new Error('Can not set permission if orderNumber is not set')
     }
-    setRolePermission(state.order.orderNumber, 'lifelines_order', 'LIFELINES_MANAGER', 'WRITE')
+    const setPermissionRequests = [
+      setRolePermission(state.order.orderNumber, 'lifelines_order', 'LIFELINES_MANAGER', 'WRITE'),
+      setRolePermission(state.order.contents.id, 'sys_FileMeta', 'LIFELINES_MANAGER', 'WRITE')
+    ]
     if (state.order.applicationForm && state.order.applicationForm.id) {
-      setRolePermission(state.order.applicationForm.id, 'sys_FileMeta', 'LIFELINES_MANAGER', 'WRITE')
+      setPermissionRequests.push(
+        setRolePermission(state.order.applicationForm.id, 'sys_FileMeta', 'LIFELINES_MANAGER', 'WRITE')
+      )
     }
+    Promise.all(setPermissionRequests)
   }),
   fixUserPermission: tryAction(async ({ state }: { state: ApplicationState }) => {
     if (state.order.orderNumber === null || state.order.contents === null || state.order.user === null) {
@@ -356,7 +376,6 @@ export default {
     }
     // @ts-ignore
     const results = [
-      setUserPermission(state.order.orderNumber, 'lifelines_order', state.order.user, 'WRITE'),
       setUserPermission(state.order.contents.id, 'sys_FileMeta', state.order.user, 'WRITE')
     ]
 
