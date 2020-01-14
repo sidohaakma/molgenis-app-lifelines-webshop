@@ -1,3 +1,10 @@
+## [1.3.4](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v1.3.3...v1.3.4) (2020-01-14)
+
+
+### Bug Fixes
+
+* let ie11 be able to save an order ([aa5a685](https://github.com/molgenis/molgenis-app-lifelines-webshop/commit/aa5a685))
+
 ## [1.3.3](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v1.3.2...v1.3.3) (2020-01-13)
 
 
