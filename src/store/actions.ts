@@ -160,12 +160,12 @@ export default {
       let variables = null
       if (state.treeSelected >= 0) {
         // we need to have specific subsection: query in subsection table
-        const attrs = '~id,id,subsection_id,variable_id(id,name,label,variants(id,assessment_id),definition_en,definition_nl,options(label_en))'
+        const attrs = '~id,id,subsection_id,variable_id(id,name,label,subvariable_of,subvariables,variants(id,assessment_id),definition_en,definition_nl,options(label_en))'
         const response = await api.get(`/api/v2/lifelines_subsection_variable?q=${encodeRsqlValue(searchTermQuery)}&attrs=${attrs}&num=10000&sort=variable_id`)
         variables = response.items.map((sv: any) => sv.variable_id)
       } else {
         // query variable table
-        const attrs = 'id,name,label,variants(id,assessment_id),definition_en,definition_nl,options(label_en)'
+        const attrs = 'id,name,label,subvariable_of,subvariables,variants(id,assessment_id),definition_en,definition_nl,options(label_en)'
         const response = await api.get(`/api/v2/lifelines_variable?q=${encodeRsqlValue(searchTermQuery)}&attrs=${attrs}&num=10000&sort=id`)
         variables = response.items
       }

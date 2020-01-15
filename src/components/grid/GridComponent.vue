@@ -3,9 +3,11 @@
     <grid-info-dialog v-if="dialogInfo !== null" :data="dialogInfo" @close="closeInfoDialog"></grid-info-dialog>
     <div class="row">
       <div class="col vld-parent">
+
         <table ref="gridheader" class="grid-header-table" :class="{'sticky':stickyTableHeader}">
           <tr>
             <th></th>
+            <th class='collapse-holder'></th>
             <th></th>
             <th v-for="assessment in gridAssessments" :key="assessment.id" class="text-center">
               <div class="assessments-title">
@@ -14,6 +16,7 @@
             </th>
           </tr>
         </table>
+
         <div :class="{'space-holder':stickyTableHeader || !grid}"></div>
         <div class="table-holder">
           <loading
@@ -23,6 +26,7 @@
             color="var(--secondary)"
             background-color="var(--light)"
           ></loading>
+
           <table
             v-if="grid"
             ref="grid"
@@ -32,6 +36,7 @@
           >
             <tr>
               <th></th>
+              <th class='collapse-holder'></th>
               <th class="all-toggle grid-toggle">
                 <button
                   :disabled="!isSignedIn"
@@ -58,11 +63,14 @@
               </th>
             </tr>
 
-            <tr v-for="(row, rowIndex) in grid" :key="rowIndex">
+            <tr v-for="(row, rowIndex) in grid" :key="rowIndex" :class="{'d-none': !isVisableVariable(gridVariables[rowIndex])}">
               <th @click="openInfoDialog(rowIndex)"
                   :class="{'selected-variable': rowIndex === selectedRowIndex }"
               >
                 <grid-titel-info v-bind="gridVariables[rowIndex]" />
+              </th>
+              <th class="collapse-holder" :class="variableSetClass(gridVariables[rowIndex])" @click="variableSetClickHandler(gridVariables[rowIndex])">
+                <font-awesome-icon class="mb-1" v-if="gridVariables[rowIndex].subvariables.length>0" :icon="variableSetIsOpen(gridVariables[rowIndex])?'eye':'eye-slash'" />
               </th>
               <th class="row-toggle grid-toggle">
                 <button
@@ -101,13 +109,15 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import {
   faArrowDown,
   faArrowRight,
-  faArrowsAlt
+  faArrowsAlt,
+  faEye,
+  faEyeSlash
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 // @ts-ignore
 import { formatSI } from 'format-si-prefix'
 
-library.add(faArrowDown, faArrowRight, faArrowsAlt)
+library.add(faArrowDown, faArrowRight, faArrowsAlt, faEye, faEyeSlash)
 
 export default Vue.extend({
   name: 'GridComponent',
@@ -168,7 +178,8 @@ export default Vue.extend({
       hoverAllCells: false,
       stickyTableHeader: false,
       dialogInfo: null,
-      selectedRowIndex: ''
+      selectedRowIndex: '',
+      openVariableSets: [ 698291 ]
     }
   },
   filters: {
@@ -184,6 +195,43 @@ export default Vue.extend({
     }
   },
   methods: {
+    variableSetIsOpen (variable) {
+      if (variable.subvariables.length > 0 && this.openVariableSets.includes(variable.id)) {
+        return true
+      }
+      return false
+    },
+    variableSetClickHandler (variable) {
+      if (variable.subvariables.length > 0) {
+        if (this.variableSetIsOpen(variable)) {
+          this.openVariableSets = this.openVariableSets.filter(varid => !variable.id)
+        } else {
+          this.openVariableSets.push(variable.id)
+        }
+      }
+    },
+    isVisableVariable (variable) {
+      if (variable.subvariable_of && this.openVariableSets.includes(variable.subvariable_of.id)) {
+        return false
+      }
+      return true
+    },
+    variableSetClass (variable) {
+      if (this.openVariableSets.includes(variable.id)) { return 'closed' }
+
+      if (variable.subvariable_of) {
+        /*
+        if (this.gridVariables.filter(varid => variable.subvariable_of.id)) {
+          console.log(this.gridVariables[variable.subvariable_of.id].subvariables)
+        }
+        if (this.gridVariables[variable.subvariable_of.id] && this.gridVariables[variable.subvariable_of.id].subvariables[this.gridVariables[variable.subvariable_of.id].subvariables.length - 1].id === variable.id) {
+          return 'end'
+        }
+        */
+        return 'line'
+      }
+      if (variable.subvariables.length > 0) { return 'start' }
+    },
     closeInfoDialog () {
       this.dialogInfo = null
       this.selectedRowIndex = ''
@@ -299,6 +347,54 @@ table {
     font-weight: normal;
     vertical-align: middle;
     white-space: nowrap;
+
+    &.collapse-holder {
+      max-width: 3rem;
+      min-width: 3rem;
+      width: 3rem;
+
+      svg path {
+        fill: $primary;
+      }
+
+      &::after {
+        bottom: 0;
+        content: "";
+        position: absolute;
+        right: 5px;
+        top: 0;
+        width: 10px;
+      }
+
+      &.closed,
+      &.start {
+        cursor: pointer;
+      }
+
+      &.closed::after {
+        border-bottom: 2px solid $primary;
+        border-bottom-left-radius: 10px;
+        border-left: 2px solid $primary;
+        border-top: 2px solid $primary;
+        border-top-left-radius: 10px;
+      }
+
+      &.start::after {
+        border-left: 2px solid $primary;
+        border-top: 2px solid $primary;
+        border-top-left-radius: 10px;
+      }
+
+      &.end::after {
+        border-bottom: 2px solid $primary;
+        border-bottom-left-radius: 10px;
+        border-left: 2px solid $primary;
+      }
+
+      &.line::after {
+        border-left: 2px solid $primary;
+      }
+    }
   }
 }
 
