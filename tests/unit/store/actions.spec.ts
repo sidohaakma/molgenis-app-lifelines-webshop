@@ -13,12 +13,6 @@ import { OrderState } from '@/types/Order'
 import * as orderService from '@/services/orderService'
 import { setRolePermission, setUserPermission } from '@/services/permissionService'
 
-// @ts-ignore
-global.console = {
-  log: jest.fn(),
-  error: jest.fn()
-}
-
 const cart: Cart = {
   selection: [{
     assessment: '1A',
@@ -796,7 +790,7 @@ describe('actions', () => {
       state = {
         order: {
           orderNumber: '12345',
-          constents: { id: 'contents-id' },
+          contents: { id: 'contents-id' },
           applicationForm: {
             id: 'app-form'
           }
@@ -808,8 +802,8 @@ describe('actions', () => {
 
     it('should call permission service', () => {
       expect(setRolePermission).nthCalledWith(1, '12345', 'lifelines_order', 'LIFELINES_MANAGER', 'WRITE')
-      // expect(setRolePermission).nthCalledWith(2, 'contents-id', 'sys_FileMeta', 'LIFELINES_MANAGER', 'WRITE')
-      // expect(setRolePermission).nthCalledWith(3, 'app-form', 'sys_FileMeta', 'LIFELINES_MANAGER', 'WRITE')
+      expect(setRolePermission).nthCalledWith(2, 'contents-id', 'sys_FileMeta', 'LIFELINES_MANAGER', 'WRITE')
+      expect(setRolePermission).nthCalledWith(3, 'app-form', 'sys_FileMeta', 'LIFELINES_MANAGER', 'WRITE')
     })
   })
 
@@ -828,15 +822,23 @@ describe('actions', () => {
 
   describe('sendSubmissionTrigger error handling', () => {
     let mockPost = jest.fn()
+
     beforeEach(async (done) => {
+      console.log = jest.fn()
       mockPost.mockRejectedValue('my err')
       axios.post = mockPost
       await actions.sendSubmissionTrigger()
       done()
     })
+
     it('should send a trigger of type submit', () => {
       expect(console.log).toBeCalledWith('Send submit trigger failed')
       expect(console.log).toBeCalledWith('my err')
+    })
+
+    afterEach(() => {
+      // @ts-ignore
+      console.log.mockClear()
     })
   })
 })
