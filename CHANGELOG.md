@@ -1,3 +1,10 @@
+## [1.3.5](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v1.3.4...v1.3.5) (2020-01-15)
+
+
+### Bug Fixes
+
+* order permissions ([55452a0](https://github.com/molgenis/molgenis-app-lifelines-webshop/commit/55452a0))
+
 ## [1.3.4](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v1.3.3...v1.3.4) (2020-01-14)
 
 
