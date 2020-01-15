@@ -63,6 +63,15 @@ const mockResponses: { [key: string]: Object } = {
     },
     user: 'anonymous'
   },
+  '/api/v2/lifelines_order/sourceOrderNumber_dm_test': {
+    contents: {
+      id: 'dm_test'
+    },
+    user: 'bert',
+    email: 'bert@test.org',
+    name: 'dm_test_name',
+    projectNumber: 'dm_test_projectNumber'
+  },
   '/api/v2/lifelines_order/Copy123': {
     contents: {
       id: 'copy_cart'
@@ -77,6 +86,11 @@ const mockResponses: { [key: string]: Object } = {
       id: 'applicationFormId'
     },
     user: 'anonymous'
+  },
+  '/api/v2/lifelines_order/dm-copy': {
+    user: 'bert',
+    contents: { id: 'dm-copy-order-content-id' },
+    applicationForm: { id: 'dm-copy-order-applicationForm-id' }
   },
   '/files/applicationFormId': {
     filename: 'test.pdf',
@@ -96,6 +110,7 @@ const mockResponses: { [key: string]: Object } = {
     }
   },
   '/files/xxyyzz': cart,
+  '/files/dm_test': cart,
   '/api/v2/lifelines_section?num=10000': {
     items: [
       { id: 1, name: 'section1' },
@@ -528,42 +543,74 @@ describe('actions', () => {
   })
 
   describe('copyOrder', () => {
-    beforeEach(async (done) => {
-      const sourceNumber = 'source_order_with_form'
-      const commit = jest.fn()
-      const state: ApplicationState = {
-        ...emptyState
-      }
-      await actions.copyOrder({ commit, state }, sourceNumber)
-      done()
+    describe('copyOrder as shopper / creator', () => {
+      beforeEach(async (done) => {
+        const sourceNumber = 'source_order_with_form'
+        const commit = jest.fn()
+        const state: ApplicationState = {
+          ...emptyState
+        }
+        await actions.copyOrder({ commit, state }, sourceNumber)
+        done()
+      })
+
+      it('copies order and changes order number', async (done) => {
+        const sourceNumber = 'source_order'
+        const commit = jest.fn()
+        const state: ApplicationState = {
+          ...emptyState
+        }
+        jest.spyOn(orderService, 'buildFormData').mockImplementation(() => new FormData())
+        jest.spyOn(orderService, 'generateOrderNumber').mockImplementation(() => 'Copy123')
+        post.mockResolvedValue('success')
+
+        const newOrderNumber = await actions.copyOrder({ commit, state }, sourceNumber)
+
+        expect(newOrderNumber).toBeDefined()
+        expect(newOrderNumber).not.toMatch(sourceNumber)
+        done()
+      })
+
+      it('adds application form if it is available', () => {
+        expect(post).toBeCalledWith('/api/v1/lifelines_order', expect.anything(), expect.anything())
+        const formIterator = post.mock.calls[0][1].body.entries()
+        const arrayData = Array.from(formIterator)
+        // @ts-ignore
+        const file = arrayData[2][1] // position of the uploaded file
+        expect(file).not.toEqual('')
+      })
     })
 
-    it('copies order and changes order number', async (done) => {
-      const sourceNumber = 'source_order'
-      const commit = jest.fn()
-      const state: ApplicationState = {
-        ...emptyState
-      }
-      jest.spyOn(orderService, 'buildFormData').mockImplementation(() => new FormData())
-      jest.spyOn(orderService, 'generateOrderNumber').mockImplementation(() => 'Copy123')
-      post.mockResolvedValue('success')
+    describe('copyOrder as data manager', () => {
+      beforeEach(async (done) => {
+        const sourceOrderNumber = 'sourceOrderNumber_dm_test'
+        const commit = jest.fn()
+        const state = {
+          context: {
+            context: {
+              username: 'dm-name'
+            }
+          },
+          orderFormFields: []
+        }
+        jest.spyOn(orderService, 'buildFormData').mockImplementation(() => new FormData())
+        jest.spyOn(orderService, 'generateOrderNumber').mockImplementation(() => 'dm-copy')
+        post.mockResolvedValue('success')
+        await actions.copyOrder({ commit, state }, sourceOrderNumber)
+        done()
+      })
 
-      const newOrderNumber = await actions.copyOrder({ commit, state }, sourceNumber)
-
-      expect(newOrderNumber).toBeDefined()
-      expect(newOrderNumber).not.toMatch(sourceNumber)
-      done()
-    })
-
-    it('adds application form if it is available', () => {
-      expect(post).toBeCalledWith('/api/v1/lifelines_order', expect.anything(), expect.anything())
-      const formIterator = post.mock.calls[0][1].body.entries()
-      const arrayData = Array.from(formIterator)
-      // @ts-ignore
-      const file = arrayData[2][1] // position of the uploaded file
-      expect(file).not.toEqual('')
+      it('should give order creator permissions on copy', () => {
+        // give perm to order
+        expect(setUserPermission).nthCalledWith(1, 'dm-copy', 'lifelines_order', 'bert', 'WRITE')
+        // give perm to cart data
+        expect(setUserPermission).nthCalledWith(2, 'dm-copy-order-content-id', 'sys_FileMeta', 'bert', 'WRITE')
+        // give perm to applicationForm file
+        expect(setUserPermission).nthCalledWith(3, 'dm-copy-order-applicationForm-id', 'sys_FileMeta', 'bert', 'WRITE')
+      })
     })
   })
+
   describe('save', () => {
     describe('if orderNumber is set', () => {
       it('saves grid selection', async (done) => {
