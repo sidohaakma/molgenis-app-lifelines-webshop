@@ -17,6 +17,7 @@
             <th scope="col"></th>
             <th scope="col"></th>
             <th scope="col"></th>
+            <th v-if="hasManagerRole" scope="col"></th>
             <th v-if="hasManagerRole" scope="col">{{$t('lifelines-webshop-orders-col-header-email')}}</th>
             <th scope="col">{{$t('lifelines-webshop-orders-col-header-title')}}</th>
             <th scope="col">{{$t('lifelines-webshop-orders-col-header-sub-date')}}</th>
@@ -30,7 +31,7 @@
           <tr v-for="order in orders" :key="order.id">
             <td>
               <router-link
-                v-if="order.state === 'Draft'"
+                v-if="order.state === 'Draft' || hasManagerRole"
                 class="btn btn-secondary btn-sm"
                 :to="`/shop/${order.orderNumber}`">
                   <font-awesome-icon icon="edit" aria-label="edit"/>
@@ -43,15 +44,17 @@
             </td>
             <td>
               <router-link
-                v-if="order.state === 'Draft'"
+                v-if="order.state === 'Draft' || hasManagerRole"
                 :to="{ name: 'orderDelete', params: {orderNumber: order.orderNumber}}"
                 class="btn btn-danger btn-sm t-btn-order-delete">
               <font-awesome-icon icon="trash" aria-label="delete"/>
               </router-link>
+            </td>
+            <td v-if="hasManagerRole">
               <button
-              v-if="order.state === 'Submitted' && hasManagerRole"
-              @click="handleApproveOrder(order.orderNumber)"
-              class="btn btn-success">
+                v-if="order.state === 'Submitted'"
+                @click="handleApproveOrder(order.orderNumber)"
+                class="btn btn-success">
                 <span v-if="approvingOrder == order.orderNumber">
                   Approving
                 </span>

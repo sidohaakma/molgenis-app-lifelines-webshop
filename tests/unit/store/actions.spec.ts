@@ -35,7 +35,11 @@ function getApplicationState () {
       submissionDate: 'submissionDate',
       creationDate: 'creationDate',
       updateDate: 'updateDate',
-      contents: null,
+      contents: {
+        id: 'content-id',
+        filename: 'filename',
+        url: 'url'
+      },
       user: 'test',
       email: 'test@molgenis.org'
     }
@@ -56,7 +60,23 @@ const mockResponses: { [key: string]: Object } = {
   '/api/v2/lifelines_order/source_order': {
     contents: {
       id: 'source_cart'
-    }
+    },
+    user: 'anonymous'
+  },
+  '/api/v2/lifelines_order/sourceOrderNumber_dm_test': {
+    contents: {
+      id: 'dm_test'
+    },
+    user: 'bert',
+    email: 'bert@test.org',
+    name: 'dm_test_name',
+    projectNumber: 'dm_test_projectNumber'
+  },
+  '/api/v2/lifelines_order/Copy123': {
+    contents: {
+      id: 'copy_cart'
+    },
+    user: 'anonymous'
   },
   '/api/v2/lifelines_order/source_order_with_form': {
     contents: {
@@ -64,7 +84,13 @@ const mockResponses: { [key: string]: Object } = {
     },
     applicationForm: {
       id: 'applicationFormId'
-    }
+    },
+    user: 'anonymous'
+  },
+  '/api/v2/lifelines_order/dm-copy': {
+    user: 'bert',
+    contents: { id: 'dm-copy-order-content-id' },
+    applicationForm: { id: 'dm-copy-order-applicationForm-id' }
   },
   '/files/applicationFormId': {
     filename: 'test.pdf',
@@ -84,6 +110,7 @@ const mockResponses: { [key: string]: Object } = {
     }
   },
   '/files/xxyyzz': cart,
+  '/files/dm_test': cart,
   '/api/v2/lifelines_section?num=10000': {
     items: [
       { id: 1, name: 'section1' },
@@ -516,42 +543,74 @@ describe('actions', () => {
   })
 
   describe('copyOrder', () => {
-    it('copies order and changes order number', async (done) => {
-      const sourceNumber = 'source_order'
-      const commit = jest.fn()
-      const state: ApplicationState = {
-        ...emptyState
-      }
-      jest.spyOn(orderService, 'buildFormData').mockImplementation(() => new FormData())
-      jest.spyOn(orderService, 'generateOrderNumber').mockImplementation(() => 'Copy123')
-      post.mockResolvedValue('success')
+    describe('copyOrder as shopper / creator', () => {
+      beforeEach(async (done) => {
+        const sourceNumber = 'source_order_with_form'
+        const commit = jest.fn()
+        const state: ApplicationState = {
+          ...emptyState
+        }
+        await actions.copyOrder({ commit, state }, sourceNumber)
+        done()
+      })
 
-      const newOrderNumber = await actions.copyOrder({ commit, state }, sourceNumber)
+      it('copies order and changes order number', async (done) => {
+        const sourceNumber = 'source_order'
+        const commit = jest.fn()
+        const state: ApplicationState = {
+          ...emptyState
+        }
+        jest.spyOn(orderService, 'buildFormData').mockImplementation(() => new FormData())
+        jest.spyOn(orderService, 'generateOrderNumber').mockImplementation(() => 'Copy123')
+        post.mockResolvedValue('success')
 
-      expect(newOrderNumber).toBeDefined()
-      expect(newOrderNumber).not.toMatch(sourceNumber)
-      done()
+        const newOrderNumber = await actions.copyOrder({ commit, state }, sourceNumber)
+
+        expect(newOrderNumber).toBeDefined()
+        expect(newOrderNumber).not.toMatch(sourceNumber)
+        done()
+      })
+
+      it('adds application form if it is available', () => {
+        expect(post).toBeCalledWith('/api/v1/lifelines_order', expect.anything(), expect.anything())
+        const formIterator = post.mock.calls[0][1].body.entries()
+        const arrayData = Array.from(formIterator)
+        // @ts-ignore
+        const file = arrayData[2][1] // position of the uploaded file
+        expect(file).not.toEqual('')
+      })
     })
 
-    beforeEach(async (done) => {
-      const sourceNumber = 'source_order_with_form'
-      const commit = jest.fn()
-      const state: ApplicationState = {
-        ...emptyState
-      }
-      await actions.copyOrder({ commit, state }, sourceNumber)
-      done()
-    })
+    describe('copyOrder as data manager', () => {
+      beforeEach(async (done) => {
+        const sourceOrderNumber = 'sourceOrderNumber_dm_test'
+        const commit = jest.fn()
+        const state = {
+          context: {
+            context: {
+              username: 'dm-name'
+            }
+          },
+          orderFormFields: []
+        }
+        jest.spyOn(orderService, 'buildFormData').mockImplementation(() => new FormData())
+        jest.spyOn(orderService, 'generateOrderNumber').mockImplementation(() => 'dm-copy')
+        post.mockResolvedValue('success')
+        await actions.copyOrder({ commit, state }, sourceOrderNumber)
+        done()
+      })
 
-    it('adds application form if it is available', () => {
-      expect(post).toBeCalledWith('/api/v1/lifelines_order', expect.anything(), expect.anything())
-      const formIterator = post.mock.calls[0][1].body.entries()
-      const arrayData = Array.from(formIterator)
-      // @ts-ignore
-      const file = arrayData[2][1] // position of the uploaded file
-      expect(file).not.toEqual('')
+      it('should give order creator permissions on copy', () => {
+        // give perm to order
+        expect(setUserPermission).nthCalledWith(1, 'dm-copy', 'lifelines_order', 'bert', 'WRITE')
+        // give perm to cart data
+        expect(setUserPermission).nthCalledWith(2, 'dm-copy-order-content-id', 'sys_FileMeta', 'bert', 'WRITE')
+        // give perm to applicationForm file
+        expect(setUserPermission).nthCalledWith(3, 'dm-copy-order-applicationForm-id', 'sys_FileMeta', 'bert', 'WRITE')
+      })
     })
   })
+
   describe('save', () => {
     describe('if orderNumber is set', () => {
       it('saves grid selection', async (done) => {
@@ -749,7 +808,6 @@ describe('actions', () => {
       })
 
       it('calls setUserPermission', () => {
-        expect(setUserPermission).toHaveBeenCalledWith('12345', 'lifelines_order', 'user', 'WRITE')
         expect(setUserPermission).toHaveBeenCalledWith('contents', 'sys_FileMeta', 'user', 'WRITE')
         expect(setUserPermission).toHaveBeenCalledWith('applicationForm', 'sys_FileMeta', 'user', 'WRITE')
       })
@@ -776,10 +834,10 @@ describe('actions', () => {
   describe('givePermissionToOrder with file attached', () => {
     let state: any
     beforeEach(async (done) => {
-      post.mockReset()
       state = {
         order: {
           orderNumber: '12345',
+          contents: { id: 'contents-id' },
           applicationForm: {
             id: 'app-form'
           }
@@ -788,9 +846,11 @@ describe('actions', () => {
       await actions.givePermissionToOrder({ state, commit: jest.fn() })
       done()
     })
+
     it('should call permission service', () => {
       expect(setRolePermission).nthCalledWith(1, '12345', 'lifelines_order', 'LIFELINES_MANAGER', 'WRITE')
-      expect(setRolePermission).nthCalledWith(2, 'app-form', 'sys_FileMeta', 'LIFELINES_MANAGER', 'WRITE')
+      expect(setRolePermission).nthCalledWith(2, 'contents-id', 'sys_FileMeta', 'LIFELINES_MANAGER', 'WRITE')
+      expect(setRolePermission).nthCalledWith(3, 'app-form', 'sys_FileMeta', 'LIFELINES_MANAGER', 'WRITE')
     })
   })
 
@@ -809,17 +869,23 @@ describe('actions', () => {
 
   describe('sendSubmissionTrigger error handling', () => {
     let mockPost = jest.fn()
+
     beforeEach(async (done) => {
-      // @ts-ignore
-      global.console = { log: jest.fn() }
+      console.log = jest.fn()
       mockPost.mockRejectedValue('my err')
       axios.post = mockPost
       await actions.sendSubmissionTrigger()
       done()
     })
+
     it('should send a trigger of type submit', () => {
       expect(console.log).toBeCalledWith('Send submit trigger failed')
       expect(console.log).toBeCalledWith('my err')
+    })
+
+    afterEach(() => {
+      // @ts-ignore
+      console.log.mockClear()
     })
   })
 })
