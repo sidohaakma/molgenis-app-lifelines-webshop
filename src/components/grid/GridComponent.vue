@@ -341,9 +341,9 @@ table {
 
   th:nth-child(2) {
     cursor: pointer;
-    max-width: 10rem;
-    min-width: 10rem;
-    width: 10rem;
+    max-width: 14rem;
+    min-width: 14rem;
+    width: 14rem;
   }
 
   td,
