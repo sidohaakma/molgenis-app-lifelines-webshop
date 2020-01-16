@@ -179,7 +179,7 @@ export default Vue.extend({
       stickyTableHeader: false,
       dialogInfo: null,
       selectedRowIndex: '',
-      openVariableSets: [ 698291 ]
+      openVariableSets: [ ]
     }
   },
   filters: {
@@ -218,16 +218,11 @@ export default Vue.extend({
     },
     variableSetClass (variable) {
       if (this.openVariableSets.includes(variable.id)) { return 'closed' }
-
       if (variable.subvariable_of) {
-        /*
-        if (this.gridVariables.filter(varid => variable.subvariable_of.id)) {
-          console.log(this.gridVariables[variable.subvariable_of.id].subvariables)
-        }
-        if (this.gridVariables[variable.subvariable_of.id] && this.gridVariables[variable.subvariable_of.id].subvariables[this.gridVariables[variable.subvariable_of.id].subvariables.length - 1].id === variable.id) {
+        const parent = this.gridVariables.filter(varid => varid.id === variable.subvariable_of.id)[0]
+        if (parent.subvariables[parent.subvariables.length - 1].id === variable.id) {
           return 'end'
         }
-        */
         return 'line'
       }
       if (variable.subvariables.length > 0) { return 'start' }
@@ -271,10 +266,18 @@ export default Vue.extend({
       if (data.col || data.row) {
         if (data.col && data.row) {
           this.$emit('gridCellToggle', parseInt(data.row), parseInt(data.col))
+          // TODO: if parent element, select child elements
         } else if (data.col && !data.row) {
           this.$emit('gridColumnToggle', this.gridAssessments[data.col].id)
         } else if (!data.col && data.row) {
-          this.$emit('gridRowToggle', this.gridVariables[parseInt(data.row)].id)
+          const variable = this.gridVariables[parseInt(data.row)]
+          this.$emit('gridRowToggle', variable.id)
+          // TODO: if parent row, select child rows
+          if (this.openVariableSets.includes(variable.id)) {
+            variable.subvariables.forEach(subVariable => {
+              this.$emit('gridRowToggle', subVariable.id)
+            })
+          }
         }
       }
     },
@@ -294,6 +297,20 @@ export default Vue.extend({
       return this.$refs.gridheader
         ? this.$refs.gridheader.getBoundingClientRect().height
         : null
+    }
+  },
+  watch: {
+    // Start with all grouped variables closed
+    gridVariables: function () {
+      if (this.gridVariables) {
+        this.gridVariables.forEach(variable => {
+          if (variable.subvariables.length > 0) {
+            if (!this.openVariableSets.includes(variable.id)) {
+              this.openVariableSets.push(variable.id)
+            }
+          }
+        })
+      }
     }
   },
   created: function () {
