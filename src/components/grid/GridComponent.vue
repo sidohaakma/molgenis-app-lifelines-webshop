@@ -6,8 +6,8 @@
 
         <table ref="gridheader" class="grid-header-table" :class="{'sticky':stickyTableHeader}">
           <tr>
-            <th></th>
             <th class='collapse-holder'></th>
+            <th></th>
             <th></th>
             <th v-for="assessment in gridAssessments" :key="assessment.id" class="text-center">
               <div class="assessments-title">
@@ -35,8 +35,8 @@
             :class="{'hover-all-cells': hoverAllCells}"
           >
             <tr>
-              <th></th>
               <th class='collapse-holder'></th>
+              <th></th>
               <th class="all-toggle grid-toggle">
                 <button
                   :disabled="!isSignedIn"
@@ -64,13 +64,13 @@
             </tr>
 
             <tr v-for="(row, rowIndex) in grid" :key="rowIndex" :class="{'d-none': !isVisableVariable(gridVariables[rowIndex])}">
+              <th class="collapse-holder" :class="variableSetClass(gridVariables[rowIndex])" @click="variableSetClickHandler(gridVariables[rowIndex])">
+                <font-awesome-icon class="mb-1" v-if="gridVariables[rowIndex].subvariables.length>0" :icon="variableSetIsOpen(gridVariables[rowIndex])?'plus-square':'minus-square'" />
+              </th>
               <th @click="openInfoDialog(rowIndex)"
                   :class="{'selected-variable': rowIndex === selectedRowIndex }"
               >
                 <grid-titel-info v-bind="gridVariables[rowIndex]" />
-              </th>
-              <th class="collapse-holder" :class="variableSetClass(gridVariables[rowIndex])" @click="variableSetClickHandler(gridVariables[rowIndex])">
-                <font-awesome-icon class="mb-1" v-if="gridVariables[rowIndex].subvariables.length>0" :icon="variableSetIsOpen(gridVariables[rowIndex])?'eye':'eye-slash'" />
               </th>
               <th class="row-toggle grid-toggle">
                 <button
@@ -110,14 +110,14 @@ import {
   faArrowDown,
   faArrowRight,
   faArrowsAlt,
-  faEye,
-  faEyeSlash
+  faPlusSquare,
+  faMinusSquare
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 // @ts-ignore
 import { formatSI } from 'format-si-prefix'
 
-library.add(faArrowDown, faArrowRight, faArrowsAlt, faEye, faEyeSlash)
+library.add(faArrowDown, faArrowRight, faArrowsAlt, faMinusSquare, faPlusSquare)
 
 export default Vue.extend({
   name: 'GridComponent',
@@ -266,18 +266,11 @@ export default Vue.extend({
       if (data.col || data.row) {
         if (data.col && data.row) {
           this.$emit('gridCellToggle', parseInt(data.row), parseInt(data.col))
-          // TODO: if parent element, select child elements
         } else if (data.col && !data.row) {
           this.$emit('gridColumnToggle', this.gridAssessments[data.col].id)
         } else if (!data.col && data.row) {
           const variable = this.gridVariables[parseInt(data.row)]
           this.$emit('gridRowToggle', variable.id)
-          // TODO: if parent row, select child rows
-          if (this.openVariableSets.includes(variable.id)) {
-            variable.subvariables.forEach(subVariable => {
-              this.$emit('gridRowToggle', subVariable.id)
-            })
-          }
         }
       }
     },
@@ -334,7 +327,7 @@ export default Vue.extend({
     border-radius: 3px;
     bottom: -0.4rem;
     content: "";
-    left: 1rem;
+    left: -0.5rem;
     position: absolute;
     right: 0.7rem;
     top: -0.4rem;
@@ -346,15 +339,15 @@ table {
   overflow: hidden;
   position: relative;
 
-  th:first-child {
+  th:nth-child(2) {
     cursor: pointer;
-    max-width: 15rem;
-    min-width: 15rem;
-    width: 15rem;
+    max-width: 10rem;
+    min-width: 10rem;
+    width: 10rem;
   }
 
   td,
-  th:not(:first-child) {
+  th:not(:nth-child(2)) {
     max-width: 4rem;
     min-width: 4rem;
     width: 4rem;
@@ -370,8 +363,14 @@ table {
       min-width: 3rem;
       width: 3rem;
 
-      svg path {
-        fill: $primary;
+      svg {
+        left: 0.5rem;
+        position: relative;
+        top: 0.05rem;
+
+        path {
+          fill: $primary;
+        }
       }
 
       &::after {
@@ -386,14 +385,6 @@ table {
       &.closed,
       &.start {
         cursor: pointer;
-      }
-
-      &.closed::after {
-        border-bottom: 2px solid $primary;
-        border-bottom-left-radius: 10px;
-        border-left: 2px solid $primary;
-        border-top: 2px solid $primary;
-        border-top-left-radius: 10px;
       }
 
       &.start::after {

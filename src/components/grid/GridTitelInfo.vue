@@ -1,12 +1,13 @@
 <template>
   <div class="grid-titel">
-    <span class="variable-title" :title="variableName" :id="`variable-${name}`" tabindex="0">
       <font-awesome-icon
+        v-if="subvariables && !subvariables.length>0"
         class="ml-1 grid-variable-info"
         icon="info-circle"
         aria-label="info"
         focusable="true"
       />
+    <span class="variable-title" :title="variableName" :id="`variable-${name}`" tabindex="0">
       {{variableName}}
     </span>
   </div>
@@ -23,6 +24,10 @@ export default Vue.extend({
   name: 'GridTitelInfo',
   components: { FontAwesomeIcon },
   props: {
+    subvariables: {
+      type: Array,
+      required: false
+    },
     name: {
       type: String,
       required: true
@@ -41,29 +46,28 @@ export default Vue.extend({
 </script>
 
 <style lang="scss" scoped>
+.grid-titel:hover {
+  cursor: pointer;
+
+  .grid-variable-info {
+    opacity: 0.7;
+  }
+}
+
 .variable-title {
   display: block;
   margin-right: 1rem;
   outline: none;
   overflow: hidden;
-  padding-left: 1rem;
-  padding-right: 1rem;
   text-overflow: ellipsis;
-
-  &:hover {
-    cursor: pointer;
-
-    .grid-variable-info {
-      opacity: 0.7;
-    }
-  }
 }
 
 .grid-variable-info {
   color: $primary;
-  margin-right: 0.25rem;
+  left: -2.7rem;
   opacity: 0;
-  padding-bottom: 2px;
+  position: absolute;
+  top: 0.55rem;
   transition: opacity 0.2s;
 }
 </style>
