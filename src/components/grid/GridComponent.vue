@@ -65,7 +65,7 @@
 
             <tr v-for="(row, rowIndex) in grid" :key="rowIndex" :class="{'d-none': !isVisableVariable(gridVariables[rowIndex])}">
               <th class="collapse-holder" :class="variableSetClass(gridVariables[rowIndex])" @click="variableSetClickHandler(gridVariables[rowIndex])">
-                <font-awesome-icon class="mb-1" v-if="gridVariables[rowIndex].subvariables.length>0" :icon="variableSetIsOpen(gridVariables[rowIndex])?'plus-square':'minus-square'" />
+                <font-awesome-icon class="mb-1" v-if="gridVariables[rowIndex].subvariables && gridVariables[rowIndex].subvariables.length>0" :icon="variableSetIsOpen(gridVariables[rowIndex])?'plus-square':'minus-square'" />
               </th>
               <th @click="openInfoDialog(rowIndex)"
                   :class="{'selected-variable': rowIndex === selectedRowIndex }"
@@ -196,13 +196,13 @@ export default Vue.extend({
   },
   methods: {
     variableSetIsOpen (variable) {
-      if (variable.subvariables.length > 0 && this.openVariableSets.includes(variable.id)) {
+      if (variable.subvariables && variable.subvariables.length > 0 && this.openVariableSets.includes(variable.id)) {
         return true
       }
       return false
     },
     variableSetClickHandler (variable) {
-      if (variable.subvariables.length > 0) {
+      if (variable.subvariables && variable.subvariables.length > 0) {
         if (this.variableSetIsOpen(variable)) {
           this.openVariableSets = this.openVariableSets.filter(varid => varid !== variable.id)
         } else {
@@ -225,7 +225,7 @@ export default Vue.extend({
         }
         return 'line'
       }
-      if (variable.subvariables.length > 0) { return 'start' }
+      if (variable.subvariables && variable.subvariables.length > 0) { return 'start' }
     },
     closeInfoDialog () {
       this.dialogInfo = null
@@ -297,7 +297,7 @@ export default Vue.extend({
     gridVariables: function () {
       if (this.gridVariables) {
         this.gridVariables.forEach(variable => {
-          if (variable.subvariables.length > 0) {
+          if (variable.subvariables && variable.subvariables.length > 0) {
             if (!this.openVariableSets.includes(variable.id)) {
               this.openVariableSets.push(variable.id)
             }
@@ -341,9 +341,9 @@ table {
 
   th:nth-child(2) {
     cursor: pointer;
-    max-width: 14rem;
-    min-width: 14rem;
-    width: 14rem;
+    max-width: 15rem;
+    min-width: 15rem;
+    width: 15rem;
   }
 
   td,

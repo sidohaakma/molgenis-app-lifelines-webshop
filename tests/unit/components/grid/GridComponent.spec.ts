@@ -59,7 +59,6 @@ describe('GridComponent.vue', () => {
   describe('when not signed in ', () => {
     let wrapper: Wrapper<Vue>
     let props
-
     beforeEach(() => {
       props = {
         grid: [[1, 2], [3, 4]],
