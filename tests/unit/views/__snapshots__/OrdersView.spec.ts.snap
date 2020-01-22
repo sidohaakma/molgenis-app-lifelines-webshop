@@ -8,6 +8,7 @@ exports[`OrdersView.vue checks content of order tables 1`] = `
       <th scope="col"></th>
       <th scope="col"></th>
       <!---->
+      <!---->
       <th scope="col">lifelines-webshop-orders-col-header-title</th>
       <th scope="col">lifelines-webshop-orders-col-header-sub-date</th>
       <th scope="col">lifelines-webshop-orders-col-header-project</th>
@@ -30,8 +31,8 @@ exports[`OrdersView.vue checks content of order tables 1`] = `
         <router-link-stub to="[object Object]" tag="a" event="click" class="btn btn-danger btn-sm t-btn-order-delete">
           <font-awesome-icon-stub icon="trash" aria-label="delete"></font-awesome-icon-stub>
         </router-link-stub>
-        <!---->
       </td>
+      <!---->
       <!---->
       <td></td>
       <td></td>
@@ -51,8 +52,8 @@ exports[`OrdersView.vue checks content of order tables 1`] = `
         </button></td>
       <td>
         <!---->
-        <!---->
       </td>
+      <!---->
       <!---->
       <td>My draft order</td>
       <td></td>
