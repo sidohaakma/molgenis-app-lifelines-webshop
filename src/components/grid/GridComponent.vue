@@ -70,7 +70,7 @@
               <th @click="openInfoDialog(rowIndex)"
                   :class="{'selected-variable': rowIndex === selectedRowIndex }"
               >
-                <grid-titel-info v-bind="gridVariables[rowIndex]" />
+                <grid-titel-info :class="{'ml-3': !!gridVariables[rowIndex].subvariable_of}" v-bind="gridVariables[rowIndex]" />
               </th>
               <th class="row-toggle grid-toggle">
                 <button
@@ -204,7 +204,7 @@ export default Vue.extend({
     variableSetClickHandler (variable) {
       if (variable.subvariables.length > 0) {
         if (this.variableSetIsOpen(variable)) {
-          this.openVariableSets = this.openVariableSets.filter(varid => !variable.id)
+          this.openVariableSets = this.openVariableSets.filter(varid => varid !== variable.id)
         } else {
           this.openVariableSets.push(variable.id)
         }
