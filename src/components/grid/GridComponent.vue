@@ -220,12 +220,12 @@ export default Vue.extend({
       if (this.openVariableSets.includes(variable.id)) { return 'closed' }
       if (variable.subvariable_of) {
         const parent = this.gridVariables.filter(varid => varid.id === variable.subvariable_of.id)[0]
-        if (parent.subvariables[parent.subvariables.length - 1].id === variable.id) {
+        if (parent && parent.subvariables && parent.subvariables[parent.subvariables.length - 1].id === variable.id) {
           return 'end'
         }
         return 'line'
       }
-      if (variable.subvariables && variable.subvariables.length > 0) { return 'start' }
+      if (variable && variable.subvariables && variable.subvariables.length > 0) { return 'start' }
     },
     closeInfoDialog () {
       this.dialogInfo = null
