@@ -18,6 +18,7 @@ import { setRolePermission, setUserPermission } from '@/services/permissionServi
 import { encodeRsqlValue } from '@molgenis/rsql'
 
 const finalVariableSetSort = (gridVariables: any) => {
+  if (!gridVariables) { return [] }
   // Final re-sort. Make sure subvariables are below there containing variables
   let orderedGridVariables:any = []
   let variableSets:any = []
@@ -26,7 +27,7 @@ const finalVariableSetSort = (gridVariables: any) => {
     if (!variable.subvariable_of) {
       orderedGridVariables.push(variable)
     }
-    if (variable.subvariables.length > 0) {
+    if (variable.subvariables && variable.subvariables.length > 0) {
       variableSets.push(variable)
     }
   })
@@ -40,6 +41,7 @@ const finalVariableSetSort = (gridVariables: any) => {
       }
     })
   })
+  console.assert(orderedGridVariables.length === gridVariables.length)
   return orderedGridVariables
 }
 
@@ -195,10 +197,6 @@ export default {
         const response = await api.get(`/api/v2/lifelines_variable?q=${encodeRsqlValue(searchTermQuery)}&attrs=${attrs}&num=10000&sort=id`)
         variables = response.items
       }
-      // Randomize test
-      variables.sort(function () {
-        return 0.5 - Math.random()
-      })
       // Map assessment_id to assessmentId somewhere deep in the structure
       const gridVariables = variables.map((variable: any) => ({
         ...variable,
@@ -213,7 +211,6 @@ export default {
       }))
 
       const orderedGridVariables = finalVariableSetSort(gridVariables)
-      console.assert(orderedGridVariables.length === gridVariables.length)
       if (searchTermQuery === getters.searchTermQuery) {
         commit('updateGridVariables', orderedGridVariables)
       }
