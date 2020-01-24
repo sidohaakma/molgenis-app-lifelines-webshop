@@ -17,6 +17,32 @@ import { setRolePermission, setUserPermission } from '@/services/permissionServi
 // @ts-ignore
 import { encodeRsqlValue } from '@molgenis/rsql'
 
+const finalVariableSetSort = (gridVariables: any) => {
+  // Final re-sort. Make sure subvariables are below there containing variables
+  let orderedGridVariables:any = []
+  let variableSets:any = []
+  // Step 1: ADD all non sub variables
+  gridVariables.forEach((variable:any) => {
+    if (!variable.subvariable_of) {
+      orderedGridVariables.push(variable)
+    }
+    if (variable.subvariables.length > 0) {
+      variableSets.push(variable)
+    }
+  })
+  // Step 2: select variables with subvariables
+  variableSets.forEach((setVariable:any) => {
+    // Step 3: add subvariables in correct order
+    gridVariables.forEach((variable:any) => {
+      if (variable.subvariable_of && variable.subvariable_of.id === setVariable.id) {
+        const index:number = orderedGridVariables.findIndex((item:any) => item.id === setVariable.id)
+        orderedGridVariables.splice(index + 1, 0, variable)
+      }
+    })
+  })
+  return orderedGridVariables
+}
+
 const buildPostOptions = (formData: any, formFields: FormField[]) => {
   return {
     headers: {
@@ -169,6 +195,10 @@ export default {
         const response = await api.get(`/api/v2/lifelines_variable?q=${encodeRsqlValue(searchTermQuery)}&attrs=${attrs}&num=10000&sort=id`)
         variables = response.items
       }
+      // Randomize test
+      variables.sort(function () {
+        return 0.5 - Math.random()
+      })
       // Map assessment_id to assessmentId somewhere deep in the structure
       const gridVariables = variables.map((variable: any) => ({
         ...variable,
@@ -181,8 +211,11 @@ export default {
           label_en: option['label_en']
         }))
       }))
+
+      const orderedGridVariables = finalVariableSetSort(gridVariables)
+      console.assert(orderedGridVariables.length === gridVariables.length)
       if (searchTermQuery === getters.searchTermQuery) {
-        commit('updateGridVariables', gridVariables)
+        commit('updateGridVariables', orderedGridVariables)
       }
     }
   }),

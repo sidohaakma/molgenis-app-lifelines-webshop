@@ -220,7 +220,8 @@ export default Vue.extend({
       if (this.openVariableSets.includes(variable.id)) { return 'closed' }
       if (variable.subvariable_of) {
         const parent = this.gridVariables.filter(varid => varid.id === variable.subvariable_of.id)[0]
-        if (parent && parent.subvariables && parent.subvariables[parent.subvariables.length - 1].id === variable.id) {
+        const index = this.gridVariables.findIndex(varid => varid.id === variable.id)
+        if (index + 1 < this.gridVariables.length && this.gridVariables[index + 1] && !this.gridVariables[index + 1].subvariable_of) {
           return 'end'
         }
         return 'line'
