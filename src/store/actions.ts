@@ -16,34 +16,7 @@ import axios from 'axios'
 import { setRolePermission, setUserPermission } from '@/services/permissionService'
 // @ts-ignore
 import { encodeRsqlValue } from '@molgenis/rsql'
-
-const finalVariableSetSort = (gridVariables: any) => {
-  if (!gridVariables) { return [] }
-  // Final re-sort. Make sure subvariables are below there containing variables
-  let orderedGridVariables:any = []
-  let variableSets:any = []
-  // Step 1: ADD all non sub variables
-  gridVariables.forEach((variable:any) => {
-    if (!variable.subvariable_of) {
-      orderedGridVariables.push(variable)
-    }
-    if (variable.subvariables && variable.subvariables.length > 0) {
-      variableSets.push(variable)
-    }
-  })
-  // Step 2: select variables with subvariables
-  variableSets.forEach((setVariable:any) => {
-    // Step 3: add subvariables in correct order
-    gridVariables.forEach((variable:any) => {
-      if (variable.subvariable_of && variable.subvariable_of.id === setVariable.id) {
-        const index:number = orderedGridVariables.findIndex((item:any) => item.id === setVariable.id)
-        orderedGridVariables.splice(index + 1, 0, variable)
-      }
-    })
-  })
-  console.assert(orderedGridVariables.length === gridVariables.length)
-  return orderedGridVariables
-}
+import { finalVariableSetSort } from '@/services/variableSetOrderService'
 
 const buildPostOptions = (formData: any, formFields: FormField[]) => {
   return {
@@ -210,9 +183,8 @@ export default {
         }))
       }))
 
-      const orderedGridVariables = finalVariableSetSort(gridVariables)
       if (searchTermQuery === getters.searchTermQuery) {
-        commit('updateGridVariables', orderedGridVariables)
+        commit('updateGridVariables', finalVariableSetSort(gridVariables))
       }
     }
   }),
