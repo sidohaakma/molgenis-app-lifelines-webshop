@@ -7,10 +7,18 @@ import GridSelection from '@/types/GridSelection'
 import Filter from '@/types/Filter'
 import { Section } from '@/types/Section.ts'
 import { TreeParent } from '@/types/Tree'
-import { Order } from '@/types/Order'
+import { Order, OrderState } from '@/types/Order'
 import FormField from '@/types/FormField'
 
 export default {
+  changeOrderStatus (state: ApplicationState, status: OrderState) {
+    state.order.state = status
+  },
+  async deleteOrder (state: ApplicationState, orderNumber:String) {
+    if (state.orders) {
+      state.orders = state.orders.filter((order) => order.orderNumber !== orderNumber)
+    }
+  },
   setOrderFormFields (state: ApplicationState, formFields: FormField[]) {
     state.orderFormFields = formFields
   },
@@ -58,8 +66,9 @@ export default {
       user: loadOrderResponse.user
     }
   },
-  setOrders (state: ApplicationState, orders: Order[]) {
-    state.orders = orders
+  setOrders (state: ApplicationState, response:any) {
+    state.orders = response.items
+    state.ordersTotal = response.total
   },
   updateFacetFilter (state: ApplicationState, facetFilter: Filter) {
     state.facetFilter = facetFilter
