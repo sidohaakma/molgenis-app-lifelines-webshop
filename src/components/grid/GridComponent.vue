@@ -196,10 +196,7 @@ export default Vue.extend({
   },
   methods: {
     variableSetIsOpen (variable) {
-      if (variable.subvariables && variable.subvariables.length > 0 && this.openVariableSets.includes(variable.id)) {
-        return true
-      }
-      return false
+      return variable.subvariables && variable.subvariables.length > 0 && this.openVariableSets.includes(variable.id)
     },
     variableSetClickHandler (variable) {
       if (variable.subvariables && variable.subvariables.length > 0) {
@@ -298,10 +295,8 @@ export default Vue.extend({
     gridVariables: function () {
       if (this.gridVariables) {
         this.gridVariables.forEach(variable => {
-          if (variable.subvariables && variable.subvariables.length > 0) {
-            if (!this.openVariableSets.includes(variable.id)) {
-              this.openVariableSets.push(variable.id)
-            }
+          if (variable.subvariables && variable.subvariables.length > 0 && !this.openVariableSets.includes(variable.id)) {
+            this.openVariableSets.push(variable.id)
           }
         })
       }

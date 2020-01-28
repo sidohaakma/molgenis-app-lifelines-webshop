@@ -37,7 +37,6 @@ describe('finalVariableSetSort', () => {
       id: 4,
       subvariable_of: { id: 2 }
     }]
-
     expect(finalVariableSetSort(data)).toEqual(out)
   })
 })
