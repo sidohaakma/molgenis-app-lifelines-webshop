@@ -1,3 +1,10 @@
+## [1.5.1](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v1.5.0...v1.5.1) (2020-01-28)
+
+
+### Bug Fixes
+
+* Replace and with or for joining subcohort filters ([e002d9a](https://github.com/molgenis/molgenis-app-lifelines-webshop/commit/e002d9a)), closes [#243](https://github.com/molgenis/molgenis-app-lifelines-webshop/issues/243)
+
 # [1.5.0](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v1.4.0...v1.5.0) (2020-01-28)
 
 
