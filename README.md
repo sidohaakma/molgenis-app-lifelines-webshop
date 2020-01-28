@@ -70,27 +70,27 @@ You need to configure a couple of things to run this app in production.
 
 #### Compile and minify
 ```
-yarn run build
+yarn build
 ```
 
 ### Run your tests
 ```
-yarn run test
+yarn test
 ```
 
 ### Lints and fixes files
 ```
-yarn run lint
+yarn lint
 ```
 
 ### Run your end-to-end tests
 ```
-yarn run test:e2e
+yarn test:e2e
 ```
 
 ### Run your unit tests
 ```
-yarn run test:unit
+yarn test:unit
 ```
 
 ## Data
@@ -109,8 +109,6 @@ Now configure your molgenis commander to run on the lifelines server using `mcmd
 cp ~/molgenis-app-lifelines-webshop/deployment/lifelines ~/.mcmd/scripts/
 mcmd run lifelines -i
 ```
-
-## Workflow
 
 ### Workflow of the catalogue
 ![order states](docs/img/catalogue-work-flow.svg)
