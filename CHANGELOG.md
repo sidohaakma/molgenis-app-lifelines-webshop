@@ -1,3 +1,21 @@
+# [1.4.0](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v1.3.5...v1.4.0) (2020-01-28)
+
+
+### Bug Fixes
+
+* added space for label ([eab9978](https://github.com/molgenis/molgenis-app-lifelines-webshop/commit/eab9978))
+* can now open and close multiple variablesets ([a20917e](https://github.com/molgenis/molgenis-app-lifelines-webshop/commit/a20917e))
+* implemented feedback ([69a79a0](https://github.com/molgenis/molgenis-app-lifelines-webshop/commit/69a79a0))
+* merge with master ([1b8c959](https://github.com/molgenis/molgenis-app-lifelines-webshop/commit/1b8c959))
+* review changes ([68f8d89](https://github.com/molgenis/molgenis-app-lifelines-webshop/commit/68f8d89))
+* toggle styling ([f025ef4](https://github.com/molgenis/molgenis-app-lifelines-webshop/commit/f025ef4))
+
+
+### Features
+
+* collapse variables ([98d60e2](https://github.com/molgenis/molgenis-app-lifelines-webshop/commit/98d60e2))
+* sort variable sets ([dc5e883](https://github.com/molgenis/molgenis-app-lifelines-webshop/commit/dc5e883))
+
 ## [1.3.5](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v1.3.4...v1.3.5) (2020-01-15)
 
 
