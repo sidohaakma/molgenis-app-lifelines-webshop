@@ -1,3 +1,10 @@
+# [1.5.0](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v1.4.0...v1.5.0) (2020-01-28)
+
+
+### Features
+
+* updated order view ([3545e7a](https://github.com/molgenis/molgenis-app-lifelines-webshop/commit/3545e7a))
+
 # [1.4.0](https://github.com/molgenis/molgenis-app-lifelines-webshop/compare/v1.3.5...v1.4.0) (2020-01-28)
 
 
