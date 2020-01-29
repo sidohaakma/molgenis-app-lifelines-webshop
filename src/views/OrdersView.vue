@@ -1,6 +1,6 @@
 <template>
 
-  <div id="orders-view" class="container-fw pt-1">
+  <div id="orders-view" class="container pt-1">
 
     <ConfirmationModal
       v-if="$route && $route.name === 'orderDelete'"
@@ -66,6 +66,7 @@
 
     <b-table
       ref="table"
+      :class="{'order-table':true, 'container-fluid': hasManagerRole}"
       striped
       show-empty
       :items="orders"
@@ -78,18 +79,18 @@
     >
 
       <template v-slot:cell(actions)="data">
-        <router-link class="btn btn-secondary" tag="button"
+        <router-link class="btn btn-secondary ml-2" tag="button"
           v-if="data.item.state === 'Draft' || hasManagerRole"
           :to="`/shop/${data.item.orderNumber}`">
             <font-awesome-icon icon="edit" aria-label="edit"/>
         </router-link>
 
-        <button class="btn btn-secondary copy-btn" type="button"
+        <button class="btn btn-secondary copy-btn ml-2" type="button"
           @click="handleCopyOrder(data.item.orderNumber)">
           <font-awesome-icon icon="copy" aria-label="copy"/>
         </button>
 
-        <router-link class="btn btn-danger t-btn-order-delete" tag="button"
+        <router-link class="btn btn-danger t-btn-order-delete ml-2" tag="button"
           v-if="data.item.state === 'Draft' || hasManagerRole"
           :to="{ name: 'orderDelete', params: {orderNumber: data.item.orderNumber}}">
           <font-awesome-icon icon="trash" aria-label="delete"/>
@@ -123,11 +124,12 @@
           :options="stateOptions"
           :title="$t(data.item.state)"
         />
-
-        <span v-else
-          class="badge badge-pill"
-          :class="`badge-${classes.state[data.item.state]}`"
-        >{{ data.item.state }}</span>
+        <h5 v-else>
+          <span
+            class="badge badge-pill"
+           :class="`badge-${classes.state[data.item.state]}`"
+          >{{ data.item.state }}</span>
+        </h5>
       </template>
     </b-table>
 
@@ -151,7 +153,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import SpinnerAnimation from '../components/animations/SpinnerAnimation.vue'
 import ConfirmationModal from '../components/ConfirmationModal.vue'
 import SearchComponent from '../components/search/SearchComponent.vue'
-import Dropdown from '../components/dropdown.vue'
+import Dropdown from '../components/Dropdown.vue'
 import { mapActions, mapState, mapMutations, mapGetters } from 'vuex'
 import moment from 'moment'
 import { successMessage } from '@/store/helpers'
@@ -310,49 +312,16 @@ export default Vue.extend({
     margin: $spacer 0;
   }
 
+  .order-table {
+    min-width: 60rem; // Make sure the table stays big enough to display the 7 rows in smaller devices or browsers
+  }
+
   .td-actions {
-    width: 11rem;
-
-    button {
-      margin-right: $spacer;
-    }
-  }
-
-  .td-order {
-    width: 10rem;
-  }
-
-  .td-project {
-    width: 7rem;
-  }
-
-  .badge {
-    font-size: 0.9rem;
-    padding: $spacer $spacer * 2;
+    width: 11rem; // Needed to hold the edit, copy and delete button and there margins
   }
 
   .td-state {
-    overflow: visible !important;
-    width: 140px;
-  }
-
-  .dropdown-filter-state {
-    button {
-      width: 8rem;
-    }
-  }
-
-  @media screen and (max-width: $breakpoint-tablet) {
-    .td-email,
-    .td-project {
-      display: none;
-    }
-  }
-
-  @media screen and (max-width: $breakpoint-desktop) {
-    .td-submitted {
-      display: none;
-    }
+    overflow: visible;
   }
 }
 
